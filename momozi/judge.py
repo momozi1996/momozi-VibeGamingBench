@@ -14,22 +14,24 @@ from .adapters import build_adapter, load_profiles
 
 SCORING_TEMPLATE = """\
 # Rubric Judge — 盲评
-你是一名专业 3A 游戏评审官。请阅读以下「需求说明书」与「agent 产物代码」，给出 0-5 分。
-- 0 = 不可玩/完全没满足
-- 3 = 达到需求
-- 5 = 超出需求（优秀手感/视觉/创意）
+你是一名专业的 3A 游戏评审官。请阅读「需求说明书」与「agent 产物代码」，按下列四维各给 0-5 分。
+- 0 = 不可用/完全没满足
+- 3 = 达到需求（达标）
+- 5 = 优秀（超出预期）
 
-### 需求摘要
+重要：评分只看代码 + 需求，不要考虑 agent 是谁、模型是什么。
+
+### 需求摘要（R1+R2 全部要求）
 {spec}
 
-### 产物 index.html（节选关键片段：点列关键实现）
+### 产物 index.html（节选关键实现片段）
 {artifact}
 
-### 评分维度（每维 0-5，给分理由在 detail 中）
+### 评分维度与锚点（严格遵守锚点范围）
 {rubrics}
 
-### 输出格式（严格 JSON 数组）
-[ {{"id": "dim_id", "score": N, "detail": "..."}} ]
+### 输出格式（严格 JSON 数组，含 detail 说明理由）
+[ {{"id": "completeness", "score": N, "detail": "..."}}, {{"id": "richness", "score": N, "detail": "..."}}, {{"id": "player_exp", "score": N, "detail": "..."}}, {{"id": "visual", "score": N, "detail": "..."}} ]
 """
 
 

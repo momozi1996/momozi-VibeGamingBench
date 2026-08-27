@@ -1,0 +1,319 @@
+id: gc_openworld-necromancer
+title: "openworld necromancer"
+family: openworld
+difficulty: expert
+engine: godot
+rounds:
+  - name: R1
+    spec: |
+      # Open-World Necromancer
+      
+      Build an **Open-World Necromancer** game in Godot 4 at `/workspace/game/`.
+      This is not a prototype. It is a **complete, shippable micro-game** that could
+      sit on an itch.io page or Steam as a polished vertical slice.
+      
+      ## Core Vision
+      
+      The player is a necromancer wandering a dark fantasy world, raising the dead from
+      fallen enemies to build an ever-growing undead army. The fantasy is forbidden
+      power: every battlefield becomes a recruitment ground, every graveyard a goldmine.
+      Tension comes from hero NPCs who hunt you — paladins, witch-hunters, and
+      adventuring parties that grow stronger as your infamy rises. You must conquer
+      territory, fortify positions with undead garrisons, and choose which minions to
+      raise based on the corpses available.
+      
+      ## What the Player Experiences
+      
+      1. **Title Screen** — A dark, atmospheric title with the game name in gothic
+         lettering over a misty graveyard scene. A play button pulses with eerie light.
+      2. **The World** — The player moves freely across a dark open world with villages,
+         graveyards, forests, and ruined keeps. Each area has different enemy types and
+         corpse quality.
+      3. **Combat** — Enemies (guards, militia, wildlife) attack on sight. The player
+         has a dark magic attack and commands their undead minions to fight. Combat is
+         real-time with simple click-to-attack and ability hotkeys.
+      4. **Raising the Dead** — After enemies fall, their corpses remain on the ground.
+         The player channels a raise spell on corpses to add them to their army. Different
+         corpse types yield different undead: skeleton warriors, zombie brutes, spectral
+         archers.
+      5. **Army Management** — A minion panel shows the current army composition, health,
+         and count. The player can dismiss weak undead to make room for stronger ones.
+         Army size is capped by the player's necromantic power level.
+      6. **Territory Conquest** — Capturing a village or keep turns it into a dark
+         stronghold. Garrisoned undead defend it. Conquered territory generates soul
+         energy over time.
+      7. **Hero Hunters** — As infamy grows, hero NPCs spawn and hunt the player. They
+         are powerful, have unique abilities, and require strategy to defeat. Defeating
+         them yields elite corpses.
+      
+      ## Assets
+      
+      2D assets are mounted read-only at:
+      
+      - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+      - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+        subdir's `LICENSE.txt`.
+      
+      Browse the library and choose packs.
+      Copy what you need into your project's `assets/` folder.
+      
+      ## Project layout
+      
+      ```
+      /workspace/game/
+        project.godot
+        Main.tscn
+        demo_outputs/    ← your input traces (1–10 files)
+        scripts/  scenes/  assets/
+      ```
+      
+      The build must launch cleanly with:
+      
+      ```
+      godot --headless --path /workspace/game --quit-after 5
+      ```
+      
+      A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+      **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+      anything after `--` is forwarded to the project as user args and silently
+      ignored by the engine. Correct shape:
+      `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+      
+      A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+      result screens look like.
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/frame.png --frames 60
+      ```
+      
+      To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+      helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+      `OS.get_cmdline_user_args()` for your game code to read. Example:
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+      ```
+      
+      ## Demos
+      
+      Ship **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+      demo, each named `*.json`. The evaluator launches a fresh game per trace,
+      replays your trace as synthetic mouse and keyboard input at 1280×720, and
+      records the screen. Only the first 10 traces by filename are evaluated;
+      recordings longer than 20 s are sampled from a random 20 s window.
+      
+      ### Scenarios
+      
+      Normal play should start from the title screen and demonstrate the task's
+      core gameplay loop.
+      Demo playback must be deterministic. For demos that need a specific state
+      (a specific level, combat state, upgrade screen, result state, or late-game
+      setup), define named scenarios your game loads when launched with:
+      
+      ```
+      godot --path /workspace/game -- --scenario <id>
+      ```
+      
+      When `--scenario <id>` is present the game must skip menus, set up the named
+      state deterministically (seed any RNG), and begin accepting input immediately.
+      
+      ### Trace file format
+      
+      ```json
+      {
+        "scenario": "title_flow",
+        "duration_frames": 360,
+        "events": [
+          {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+          {"frame": 90,  "type": "key_press",   "keycode": "1"},
+          {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+          {"frame": 300, "type": "wait"}
+        ]
+      }
+      ```
+      
+      - `scenario` — optional; omit for a normal game launch from the title screen.
+      - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+      - `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+        viewport. Supported types:
+        - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+        - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+          use these for drag interactions: emit `mouse_down` at the start point,
+          one or more `mouse_move` events along the way, and `mouse_up` at the end.
+          A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+          succession.
+        - `mouse_move`: `{frame, type, x, y}`
+        - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+          `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+          `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+        - `wait`: `{frame, type}` — anchor frame, no input.
+      
+      Replay must be deterministic: same trace, fresh launch, same outcome every time.
+      
+      ---
+      
+      # 中文版提示词
+      
+      # 开放世界死灵法师（Open-World Necromancer）
+      
+      在 `/workspace/game/` 用 Godot 4 开发一个**开放世界死灵法师（Open-World Necromancer）**游戏。
+      这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+      纵向切片放到 itch.io 页面或 Steam 上。
+      
+      ## 核心构想
+      
+      玩家是一名死灵法师，游荡在一个黑暗奇幻世界中，从倒下的敌人身上唤起亡者，
+      组建一支不断壮大的亡灵军团。这里的幻想是禁忌之力：每一处战场都成为征兵场，
+      每一座墓地都是金矿。张力来自追猎你的英雄 NPC——圣骑士、女巫猎人和冒险者小队，
+      它们会随着你的恶名上升而变得更强。你必须征服领地、用亡灵驻军加固据点，并根据
+      可用的尸体来选择要唤起哪些仆从。
+      
+      ## 玩家体验流程
+      
+      1. **标题画面** —— 一个黑暗而有氛围的标题，游戏名称以哥特字体呈现，背景是
+         雾气弥漫的墓地场景。开始按钮伴着诡异的光脉动。
+      2. **世界** —— 玩家在一个黑暗的开放世界中自由移动，其中有村庄、墓地、森林和
+         废弃要塞。每个区域都有不同的敌人类型和尸体品质。
+      3. **战斗** —— 敌人（卫兵、民兵、野生动物）一见到你就会攻击。玩家拥有一种
+         黑暗魔法攻击，并可以指挥自己的亡灵仆从作战。战斗为实时进行，采用简单的
+         点击攻击和技能快捷键。
+      4. **唤起亡者** —— 敌人倒下后，尸体会留在地上。玩家对尸体引导一个唤起法术，
+         将其加入自己的军团。不同的尸体类型产出不同的亡灵：骷髅战士、僵尸蛮兵、
+         幽灵弓手。
+      5. **军团管理** —— 一个仆从面板显示当前军团的构成、生命值和数量。玩家可以
+         解散弱小的亡灵，为更强的腾出位置。军团规模上限由玩家的死灵法力等级决定。
+      6. **领地征服** —— 攻占一座村庄或要塞会把它变成一处黑暗堡垒。驻守的亡灵会
+         防卫它。被征服的领地会随时间产出灵魂能量。
+      7. **英雄猎手** —— 随着恶名增长，英雄 NPC 会生成并追猎玩家。他们很强大，
+         拥有独特能力，需要策略才能击败。击败他们可获得精英尸体。
+      
+      ## 资产
+      
+      2D 资产以只读方式挂载在：
+      
+      - `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+      - `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+        `LICENSE.txt`。
+      
+      浏览资产库并挑选合适的资产包。
+      把需要的文件复制到你项目的 `assets/` 目录下。
+      
+      ## 项目结构
+      
+      ```
+      /workspace/game/
+        project.godot
+        Main.tscn
+        demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+        scripts/  scenes/  assets/
+      ```
+      
+      构建必须能通过以下命令干净启动：
+      
+      ```
+      godot --headless --path /workspace/game --quit-after 5
+      ```
+      
+      Godot 命令行参数的参考文档在 `/workspace/tools/godot_command_line.md`。
+      **像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+      `--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+      `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+      
+      `/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+      UI / battlefield / result 画面长什么样。
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/frame.png --frames 60
+      ```
+      
+      要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+      `--out` / `--frames` / `--scene`；其余参数会留在
+      `OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+      ```
+      
+      ## 演示
+      
+      在 `/workspace/game/demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+      命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+      分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+      前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+      
+      ### 场景（Scenarios）
+      
+      常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+      演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+      升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+      
+      ```
+      godot --path /workspace/game -- --scenario <id>
+      ```
+      
+      当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+      （为任何随机数发生器设定种子），并立即开始接受输入。
+      
+      ### 轨迹文件格式
+      
+      ```json
+      {
+        "scenario": "title_flow",
+        "duration_frames": 360,
+        "events": [
+          {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+          {"frame": 90,  "type": "key_press",   "keycode": "1"},
+          {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+          {"frame": 300, "type": "wait"}
+        ]
+      }
+      ```
+      
+      - `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+      - `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+      - `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+        支持的类型：
+        - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+        - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+          用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+          `mouse_move` 事件，在终点发出 `mouse_up`。
+          一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+        - `mouse_move`：`{frame, type, x, y}`
+        - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+          `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+          `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+        - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+      
+      回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。
+static:
+  - kind: required_file
+    role: entry
+    path: project.godot
+    weight: 1.0
+  - kind: required_file
+    path: demo_outputs
+    weight: 1.0
+behavior:
+  script: beh_build.mjs
+  timeout: 300
+rubric:
+  - id: completeness
+    weight: 0.30
+    max: 5
+    anchors: ["M1", "M2", "M3"]
+  - id: richness
+    weight: 0.25
+    max: 5
+    anchors: ["D1", "D2", "D3", "D4"]
+  - id: player_exp
+    weight: 0.25
+    max: 5
+    anchors: ["V1", "V2"]
+  - id: visual
+    weight: 0.20
+    max: 5
+    anchors: ["A1", "A2", "A3", "A4"]

@@ -34,6 +34,8 @@ WORKSPACE_ROOT = ROOT / "workspaces"
 RUNS_ROOT = ROOT / "runs"
 
 WEIGHTS = {"behavior": 0.55, "structure": 0.20, "presentation": 0.25}
+# 家族 → 参考实现目录别名（新建家族时可复用既有参考实现）
+FAMILY_REF_ALIAS = {"physics_breakout": "tg1"}
 
 
 def _prepare_workspace(task: Task, agent: str, stamp: str) -> Path:
@@ -89,8 +91,12 @@ def _task_public_suite(task: Task) -> Path:
 
 def _build(task: Task, agent: str) -> object:
     if agent == "mock":
-        rel = task.reference_dir or f"bench/references/{task.id}"
-        return MockAdapter(ROOT / rel)
+        # 参考实现：任务声明为准；否则按题族_参考目录别名推
+        rel = task.reference_dir or f"bench/references/{task.family}"
+        ref = ROOT / rel
+        if not ref.exists():
+            ref = ROOT / "bench" / "references" / FAMILY_REF_ALIAS.get(task.family, task.family)
+        return MockAdapter(ref)
     return build_adapter(agent, load_profiles(PROFILES_PATH))
 
 
@@ -166,9 +172,11 @@ def run_task(task_path: str, agent: str = "mock", out_path: str = None,
         except Exception as e:  # judge 拉闸不致命
             judge = {"error": str(e)}
     if judge and "scores" in judge:
-        P = round(sum(judge["scores"].get(r["id"], 0) * r.get("weight", 0)
-                      for r in task.rubric) / max(1e-9, sum(r.get("weight", 0) for r in task.rubric)) * 2, 4)
+        # GameXpert 式四维（completeness/richness/player_exp/visual，各 0-5）
+        dims = {k: round(float(v), 2) for k, v in judge["scores"].items()}
+        P = round(sum(dims.values()) / (5.0 * len(dims)), 4) if dims else None
     else:
+        dims = None
         P = None
 
     total = B * WEIGHTS["behavior"] + S * WEIGHTS["structure"] if P is None else \
@@ -188,6 +196,9 @@ def run_task(task_path: str, agent: str = "mock", out_path: str = None,
             "B": B, "S": S, "P": P,
             "total": round(total, 4),
             "weights": WEIGHTS,
+            "dimensions": dims,        # 四维原始分(0-5)
+            "judge_raw": judge.get("raw") if judge else None,
+            "judge_details": judge.get("details") if judge else None,
         },
         "behavior_pass_rate_final": b_rate_final,
         "regression_rate": regression_rate,

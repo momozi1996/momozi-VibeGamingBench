@@ -1,0 +1,307 @@
+id: gc_tycoon-farm
+title: "tycoon farm"
+family: tycoon
+difficulty: expert
+engine: godot
+rounds:
+  - name: R1
+    spec: |
+      # Tycoon: Village Farm
+      
+      Build a **2D village-farm tycoon** in Godot 4 at `/workspace/game/`.
+      This is not a prototype. It is a **complete, shippable micro-game** that could
+      sit on an itch.io page or Steam as a polished vertical slice.
+      
+      ## Core Vision
+      
+      The player inherits a small plot of land and turns it into a living farm through
+      daily ritual. The fantasy is cozy accumulation — waking each morning to tend
+      crops that grew overnight, selling the harvest for just enough gold to plant
+      something new, and watching the homestead slowly fill with colour and life. The
+      interesting tension is that every day is finite: stamina runs out before
+      ambition does, so the player must choose which chores matter most right now.
+      The pressure is gentle but real — skip watering and crops stall, overextend and
+      tomorrow starts hungry. The risk is never catastrophic, just the quiet cost of
+      a wasted day. Over many mornings the farm transforms from bare dirt into a
+      thriving patchwork, and the satisfaction is entirely earned one tile at a time.
+      
+      ## What the Player Experiences
+      
+      The player opens a saved farm or starts fresh and sees their homestead — a
+      fenced plot of tillable earth, a farmhouse, a shop, and water glinting at the
+      edge. Early mornings are simple: till a few squares, drop seeds, water them,
+      and head inside to sleep. Each action visibly marks the land and costs a sliver
+      of the day's energy.
+      
+      As gold accumulates the player diversifies — new seed types with longer growth
+      but bigger payoffs, a fishing spot for side income, maybe an expanded field.
+      The daily loop stays the same but the decisions inside it deepen: which crops
+      to prioritize, when to harvest versus when to water the next batch, whether to
+      spend the last stamina fishing or saving it for tomorrow's planting.
+      
+      Crops grow only overnight, so sleeping is the punctuation that gives each day
+      meaning. The morning reveal — seeing sprouts advance a stage, mature plants
+      ready to pick — is the hook that pulls the player into one more day. Progress
+      is banked at bedtime, so a returning player wakes to the same farm, the same
+      season of growth, and the same quiet momentum.
+      
+      The art direction is warm, sunlit, cartoon-pastoral — greens, ochres, soft
+      wood — never naked Godot grey. The tone is gentle and unhurried, the opposite
+      of a twitch game.
+      
+      ## Assets
+      
+      2D assets are mounted read-only at:
+      
+      - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+      - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+        subdir's `LICENSE.txt`.
+      
+      Browse the library and choose packs.
+      Copy what you need into your project's `assets/` folder.
+      
+      ## Project layout
+      
+      ```
+      /workspace/game/
+        project.godot
+        Main.tscn
+        demo_outputs/    ← your input traces (1–10 files)
+        scripts/  scenes/  assets/
+      ```
+      
+      The build must launch cleanly with:
+      
+      ```
+      godot --headless --path /workspace/game --quit-after 5
+      ```
+      
+      A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+      **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+      anything after `--` is forwarded to the project as user args and silently
+      ignored by the engine. Correct shape:
+      `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+      
+      A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+      result screens look like.
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/frame.png --frames 60
+      ```
+      
+      To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+      helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+      `OS.get_cmdline_user_args()` for your game code to read. Example:
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+      ```
+      
+      ## Demos
+      
+      Ship **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+      demo, each named `*.json`. The evaluator launches a fresh game per trace,
+      replays your trace as synthetic mouse and keyboard input at 1280×720, and
+      records the screen. Only the first 10 traces by filename are evaluated;
+      recordings longer than 20 s are sampled from a random 20 s window.
+      
+      ### Scenarios
+      
+      Normal play should start from the title screen and demonstrate the task's
+      core gameplay loop.
+      Demo playback must be deterministic. For demos that need a specific state
+      (a specific level, combat state, upgrade screen, result state, or late-game
+      setup), define named scenarios your game loads when launched with:
+      
+      ```
+      godot --path /workspace/game -- --scenario <id>
+      ```
+      
+      When `--scenario <id>` is present the game must skip menus, set up the named
+      state deterministically (seed any RNG), and begin accepting input immediately.
+      
+      ### Trace file format
+      
+      ```json
+      {
+        "scenario": "title_flow",
+        "duration_frames": 360,
+        "events": [
+          {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+          {"frame": 90,  "type": "key_press",   "keycode": "1"},
+          {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+          {"frame": 300, "type": "wait"}
+        ]
+      }
+      ```
+      
+      - `scenario` — optional; omit for a normal game launch from the title screen.
+      - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+      - `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+        viewport. Supported types:
+        - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+        - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+          use these for drag interactions: emit `mouse_down` at the start point,
+          one or more `mouse_move` events along the way, and `mouse_up` at the end.
+          A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+          succession.
+        - `mouse_move`: `{frame, type, x, y}`
+        - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+          `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+          `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+        - `wait`: `{frame, type}` — anchor frame, no input.
+      
+      Replay must be deterministic: same trace, fresh launch, same outcome every time.
+      
+      ---
+      
+      # 中文版提示词
+      
+      # 经营：乡村农场（Tycoon: Village Farm）
+      
+      在 `/workspace/game/` 用 Godot 4 开发一个 **2D 乡村农场经营**游戏。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+      
+      ## 核心构想
+      
+      玩家继承了一小块土地，通过日复一日的例行劳作把它变成一座充满生机的农场。这里的幻想是惬意的累积感——每天清晨醒来照料一夜之间长大的作物，卖掉收成换来刚够种下新东西的金币，看着自家庄园慢慢填满色彩与生命。有趣的张力在于每一天都是有限的：体力总在雄心之前耗尽，所以玩家必须选择当下哪些活儿最重要。压力温和但真实——不浇水作物就停滞，透支了明天就得饿着肚子开始。风险从不是灾难性的，只是虚度一天的那份静默代价。经过许多个清晨，农场从裸土变成生机盎然的拼布图景，而这份满足感完完全全是一块图块一块图块挣来的。
+      
+      ## 玩家体验流程
+      
+      玩家打开已存档的农场或从头开始，看到自己的庄园——一块围起来的可耕土地、一间农舍、一家商店，还有边缘处闪着微光的水面。最初的清晨很简单：耕几格地、撒下种子、浇上水，然后回屋睡觉。每个动作都会在土地上留下可见的痕迹，也消耗掉一天精力中的一小片。
+      
+      随着金币累积，玩家开始多元化经营——生长期更长但回报更高的新种子类型、带来副业收入的钓鱼点，也许还有一片扩建的田地。每日循环保持不变，但其中的决策变得更有深度：优先种哪些作物，什么时候该收割、什么时候该给下一批浇水，最后一点体力是拿去钓鱼还是留给明天播种。
+      
+      作物只在夜间生长，所以睡觉就是赋予每一天意义的标点。清晨的揭晓时刻——看到幼苗推进一个阶段、成熟的植株已可采摘——正是把玩家拉进"再来一天"的钩子。进度在就寝时存档，因此回来的玩家醒来面对的是同一座农场、同一段生长季节、同样静静向前的势头。
+      
+      美术方向是温暖、洒满阳光的卡通田园风——绿色、赭色、柔和的木质——绝不出现裸露的 Godot 灰。整体基调温和从容，与手速游戏截然相反。
+      
+      ## 资产
+      
+      2D 资产以只读方式挂载在：
+      
+      - `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+      - `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+        `LICENSE.txt`。
+      
+      浏览资产库并挑选合适的资产包。
+      把需要的文件复制到你项目的 `assets/` 目录下。
+      
+      ## 项目结构
+      
+      ```
+      /workspace/game/
+        project.godot
+        Main.tscn
+        demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+        scripts/  scenes/  assets/
+      ```
+      
+      构建必须能通过以下命令干净启动：
+      
+      ```
+      godot --headless --path /workspace/game --quit-after 5
+      ```
+      
+      Godot 命令行参数的参考文档在 `/workspace/tools/godot_command_line.md`。
+      **像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+      `--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+      `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+      
+      `/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+      UI / battlefield / result 画面长什么样。
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/frame.png --frames 60
+      ```
+      
+      要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+      `--out` / `--frames` / `--scene`；其余参数会留在
+      `OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+      ```
+      
+      ## 演示
+      
+      在 `/workspace/game/demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+      命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+      分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+      前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+      
+      ### 场景（Scenarios）
+      
+      常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+      演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+      升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+      
+      ```
+      godot --path /workspace/game -- --scenario <id>
+      ```
+      
+      当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+      （为任何随机数发生器设定种子），并立即开始接受输入。
+      
+      ### 轨迹文件格式
+      
+      ```json
+      {
+        "scenario": "title_flow",
+        "duration_frames": 360,
+        "events": [
+          {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+          {"frame": 90,  "type": "key_press",   "keycode": "1"},
+          {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+          {"frame": 300, "type": "wait"}
+        ]
+      }
+      ```
+      
+      - `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+      - `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+      - `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+        支持的类型：
+        - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+        - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+          用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+          `mouse_move` 事件，在终点发出 `mouse_up`。
+          一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+        - `mouse_move`：`{frame, type, x, y}`
+        - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+          `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+          `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+        - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+      
+      回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。
+static:
+  - kind: required_file
+    role: entry
+    path: project.godot
+    weight: 1.0
+  - kind: required_file
+    path: demo_outputs
+    weight: 1.0
+behavior:
+  script: beh_build.mjs
+  timeout: 300
+rubric:
+  - id: completeness
+    weight: 0.30
+    max: 5
+    anchors: ["M1", "M2", "M3", "M4", "M5"]
+  - id: richness
+    weight: 0.25
+    max: 5
+    anchors: ["D1", "D2", "D3", "D4"]
+  - id: player_exp
+    weight: 0.25
+    max: 5
+    anchors: ["V1", "V2", "V3", "V4"]
+  - id: visual
+    weight: 0.20
+    max: 5
+    anchors: ["A1", "A2", "A3", "A4"]

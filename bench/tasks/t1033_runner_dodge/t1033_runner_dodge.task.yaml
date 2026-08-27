@@ -1,0 +1,51 @@
+id: t1033_runner_dodge
+title: 跑酷躲避 #1033（参数化种子）
+family: runner_dodge
+difficulty: easy
+rounds:
+  - name: R1
+    spec: |
+      # Round 1：基础可玩「跑酷躲避」
+      交付：index.html + game_logic.js（单目录，纯前端 three.js，可离线打开）。
+      逻辑层必须导出 createGame(opts) 与 advance(game, input, dt)。
+      本轮参数：3 条跑道，重力 18.71，跳跃初速 7.24，滚动速度 6.24。
+      宏观要求：可玩、可暂停、可重开。
+  - name: R2
+    spec: |
+      # Round 2：在此产物基础上做增量
+      目标：加二段跳 + 减速道具；保持 R1 的跑酷手感不破。
+      **必须**保证 R1 的行为不破（beh_runner 的断言仍全过）。
+static:
+  - kind: required_file
+    role: entry
+    path: index.html
+    weight: 1.0
+  - kind: required_file
+    role: logic
+    path: game_logic.js
+    weight: 1.0
+  - kind: contains
+    path: index.html
+    pattern: "game_logic.js"
+    weight: 1.0
+  - kind: line_budget
+    path: game_logic.js
+    max_lines: 220
+    weight: 1.0
+behavior:
+  script: beh_runner.mjs
+  timeout: 60
+rubric:
+  - id: completeness
+    weight: 0.30
+    max: 5
+  - id: richness
+    weight: 0.25
+    max: 5
+  - id: player_exp
+    weight: 0.25
+    max: 5
+  - id: visual
+    weight: 0.20
+    max: 5
+reference_dir: bench/references/runner_dodge

@@ -1,0 +1,285 @@
+# Rogue Joker Poker
+
+Build **Rogue Joker Poker**, a compact **poker-hand roguelite score-chaser** in
+Godot 4 at `/workspace/game/`. The player builds a scoring engine from poker
+hands, strange jokers, and shop upgrades to beat escalating blind targets in a
+single high-stakes run.
+
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The player sits at a surreal felt table trying to beat a rising sequence of
+score targets using nothing but poker hands and a growing roster of bizarre
+jokers. Every round is a readable tactical choice: which cards to hold, which
+to discard, when to spend a hand versus fishing for a better combination, and
+how the current joker lineup warps the value of a flush, straight, pair, or
+high-card play. The pressure comes from limited hands and discards per round,
+escalating blind targets, and boss rules that twist the scoring math. The tone
+is **sleek, strange, casino-arcade, and score-hungry**: felt tables, neon chips,
+animated cards, odd joker portraits, compact tooltips, and clear score math
+should make the game feel designed rather than assembled from default controls.
+
+Do not clone a named commercial game's exact UI, art, copy, card names, or
+iconography. Use original terminology, jokers, rules, palette, and screen
+composition while preserving the broad genre fantasy of poker scoring plus
+roguelite modifiers.
+
+## What the Player Experiences
+
+The run opens on a styled title screen that sets the casino-arcade mood and
+invites the player to begin. Once started, the player faces a sequence of
+blinds with rising score targets. Each round deals a hand of cards showing
+rank, suit, and selection state. The player studies the hand, selects cards to
+form a poker combination, and either plays them to score or discards unwanted
+cards to draw replacements, burning limited resources either way.
+
+When a hand is played, the scoring moment unfolds visibly: the poker hand type
+is identified, base chips and multiplier are calculated, and then each active
+joker fires in sequence, visibly altering the math. The score animates toward
+the blind target. The player watches the joker row like a machine, learning
+which combinations trigger which bonuses.
+
+Between blinds, a shop offers new jokers, deck modifications, and upgrades.
+Purchases reshape the scoring engine for future rounds. The run escalates
+through small blinds, big blinds, and boss blinds. Boss rounds introduce
+special rules that force the player to rethink hand evaluation: a disabled
+suit, a discard tax, a hand-size cap, or a reversed joker.
+
+Victory means beating the final target. Defeat means running out of hands
+below a blind. Either way, a styled result screen offers retry or return to
+title.
+
+## Assets
+
+2D assets are mounted read-only at:
+
+- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+  subdir's `LICENSE.txt`.
+
+Browse the library and choose packs.
+Copy what you need into your project's `assets/` folder.
+
+## Project layout
+
+```
+/workspace/game/
+  project.godot
+  Main.tscn
+  demo_outputs/    ← your input traces (1–10 files)
+  scripts/  scenes/  assets/
+```
+
+The build must launch cleanly with:
+
+```
+godot --headless --path /workspace/game --quit-after 5
+```
+
+A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+**Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+anything after `--` is forwarded to the project as user args and silently
+ignored by the engine. Correct shape:
+`godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+result screens look like.
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+`OS.get_cmdline_user_args()` for your game code to read. Example:
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## Demos
+
+Ship **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+demo, each named `*.json`. The evaluator launches a fresh game per trace,
+replays your trace as synthetic mouse and keyboard input at 1280×720, and
+records the screen. Only the first 10 traces by filename are evaluated;
+recordings longer than 20 s are sampled from a random 20 s window.
+
+### Scenarios
+
+Normal play should start from the title screen and demonstrate the task's
+core gameplay loop.
+Demo playback must be deterministic. For demos that need a specific state
+(a specific level, combat state, upgrade screen, result state, or late-game
+setup), define named scenarios your game loads when launched with:
+
+```
+godot --path /workspace/game -- --scenario <id>
+```
+
+When `--scenario <id>` is present the game must skip menus, set up the named
+state deterministically (seed any RNG), and begin accepting input immediately.
+
+### Trace file format
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` — optional; omit for a normal game launch from the title screen.
+- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+  viewport. Supported types:
+  - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+    use these for drag interactions: emit `mouse_down` at the start point,
+    one or more `mouse_move` events along the way, and `mouse_up` at the end.
+    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+    succession.
+  - `mouse_move`: `{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+  - `wait`: `{frame, type}` — anchor frame, no input.
+
+Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+---
+
+# 中文版提示词
+
+# 盗贼小丑扑克（Rogue Joker Poker）
+
+在 `/workspace/game/` 用 Godot 4 开发 **Rogue Joker Poker**，一款小而精的**扑克牌型 Roguelite 刷分游戏**。玩家用扑克牌型、稀奇古怪的小丑牌与商店升级搭建出一台计分引擎，在一轮高风险的游戏中击破不断升级的盲注目标。
+
+这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+玩家坐在一张超现实的绒布赌桌前，仅凭扑克牌型和一支不断扩充的古怪小丑牌阵容，去击破一连串水涨船高的分数目标。每一轮都是一次清晰可读的战术选择：留哪些牌、弃哪些牌、何时用掉一次出牌机会而不是继续钓一手更好的组合，以及当前的小丑牌阵容如何扭曲同花、顺子、对子或高牌打法的价值。压力来自每轮有限的出牌与弃牌次数、不断升级的盲注目标，以及扭曲计分算法的 Boss 规则。基调是**利落、诡奇、赌场街机风、渴求分数**：绒布赌桌、霓虹筹码、动态卡牌、古怪的小丑肖像、紧凑的提示框，以及清晰的计分算式，应当让这款游戏显得是被设计出来的，而不是用默认控件拼凑出来的。
+
+不要克隆任何具名商业游戏的确切 UI、美术、文案、卡牌名称或图标体系。请使用原创的术语、小丑牌、规则、配色与画面构图，同时保留"扑克计分加 Roguelite 修正"这一大类的类型幻想。
+
+## 玩家体验流程
+
+一轮游戏以一个精心设计的标题画面开场，定下赌场街机的情绪，并邀请玩家开始。开始之后，玩家会面对一连串分数目标不断攀升的盲注。每一轮会发一手卡牌，显示点数、花色与选中状态。玩家研究手牌，选出卡牌组成一个扑克组合，然后要么打出去计分，要么弃掉不想要的牌以抽取替补——两种做法都会烧掉有限的资源。
+
+当一手牌被打出时，计分的瞬间会可见地展开：先识别扑克牌型，计算基础筹码与倍率，然后每张激活的小丑牌依次生效，肉眼可见地改变算式。分数会朝盲注目标动画攀升。玩家像看一台机器那样观察小丑牌行列，逐渐学会哪些组合会触发哪些加成。
+
+盲注之间，一家商店会提供新的小丑牌、牌组改造与升级。购买会为后续轮次重塑计分引擎。一轮游戏会经由小盲、大盲与 Boss 盲逐级升级。Boss 轮会引入迫使玩家重新思考牌型评估的特殊规则：某个花色被禁用、弃牌需要额外代价、手牌上限被压缩，或某张小丑牌被反转。
+
+击破最终目标即胜利。在某个盲注之下用尽出牌次数则为失败。无论哪种结局，一个精心设计的结算画面都会提供重试或返回标题画面的选项。
+
+## 资产
+
+2D 资产以只读方式挂载在：
+
+- `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+  `LICENSE.txt`。
+
+浏览资产库并挑选合适的资产包。
+把需要的文件复制到你项目的 `assets/` 目录下。
+
+## 项目结构
+
+```
+/workspace/game/
+  project.godot
+  Main.tscn
+  demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+  scripts/  scenes/  assets/
+```
+
+构建必须能通过以下命令干净启动：
+
+```
+godot --headless --path /workspace/game --quit-after 5
+```
+
+Godot 命令行参数的参考文档在 `/workspace/tools/godot_command_line.md`。
+**像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+`--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+`godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+UI / battlefield / result 画面长什么样。
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+`--out` / `--frames` / `--scene`；其余参数会留在
+`OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## 演示
+
+在 `/workspace/game/demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+
+### 场景（Scenarios）
+
+常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+
+```
+godot --path /workspace/game -- --scenario <id>
+```
+
+当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+（为任何随机数发生器设定种子），并立即开始接受输入。
+
+### 轨迹文件格式
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+- `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+  支持的类型：
+  - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+    用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+    `mouse_move` 事件，在终点发出 `mouse_up`。
+    一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+  - `mouse_move`：`{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+    `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+
+回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。
