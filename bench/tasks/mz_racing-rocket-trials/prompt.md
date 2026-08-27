@@ -19,7 +19,7 @@ reward speed and flawless runs.
 
 1. **Title Screen** — A grungy industrial backdrop with the game name in
    stencil-style bold font, a motorcycle silhouette mid-wheelie, and
-   Play/Level Select buttons. No plain Godot grey.
+   Play/Level Select buttons. No plain HTML grey.
 2. **Level Select** — A grid of 20+ levels organized into 4 difficulty tiers
    (Easy/Medium/Hard/Extreme). Each shows medal status, best time, and a small
    preview. Levels unlock sequentially within each tier.
@@ -49,7 +49,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -66,7 +66,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 火箭摩托越野赛（Racing Rocket Trials）
 
-在 `/workspace/game/` 用 Godot 4 开发一个火箭摩托越野赛游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个火箭摩托越野赛游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -82,7 +82,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一片粗粝的工业背景，游戏名称采用镂空模板风格的粗体字体，
-   一辆摩托车剪影正在翘前轮，另有"开始"/"关卡选择"按钮。不要出现 Godot 的
+   一辆摩托车剪影正在翘前轮，另有"开始"/"关卡选择"按钮。不要出现 HTML 引擎 的
    裸灰色。
 2. **关卡选择** —— 一个包含 20 个以上关卡的网格，按 4 个难度档位组织
    （简单/中等/困难/极限）。每关都显示奖牌状态、最佳成绩和一张小预览图。
@@ -106,7 +106,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

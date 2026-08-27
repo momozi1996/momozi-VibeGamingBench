@@ -47,7 +47,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -64,7 +64,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 电路奇才（Circuit Wizard）
 
-在 `/workspace/game/` 用 Godot 4 开发 **Circuit Wizard**，一个 2D 逻辑电路解谜游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Circuit Wizard**，一个 2D 逻辑电路解谜游戏。
 玩家在电路板上摆放并连接逻辑门（AND、OR、NOT、XOR），把信号从输入端布线到输出端，
 在整个战役中攻克难度不断攀升的信号布线挑战。
 
@@ -102,7 +102,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

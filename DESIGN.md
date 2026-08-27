@@ -1,11 +1,11 @@
-# GameGen-Bench 设计文档（v0.1 草案）
+# momozi-3A-GamegenBench 设计文档（v0.1）
 
 > 定位：**评测 coding agent「创造类任务」能力的游戏生成 benchmark（生成向）**，核心命题——
 > **衡量 agent 能否在多轮迭代中持续构建、修改可玩游戏，并守住已经成立的玩法。**
 
 ## 0. 一句话定位
 
-- 工作名：**GameGen-Bench**
+- 工作名：**momozi-3A-GamegenBench**（140 题 · 生产级）
 - 给 agent 一段「值得连续迭代的游戏设想」(game arc)，agent 分 3–5 轮生成 Web 3D 游戏；每轮的历史行为 golden suite 必须保持通过，新增玩法必须正确实现；评审按 rubric 出分。
 
 ## 1. 为什么存在（对照现有工作找空白）
@@ -17,7 +17,7 @@
 | Orak (2506.03610) | **玩** | 12 款商业游戏 | — | leaderboard+arena | — | CC-BY |
 | OmniGameArena (2606.09826) | 玩 | UE5 自建 12 款 | 多轮反思 | 冷启动+IDC 曲线 | — | 待确认 |
 | 3DGameAgentBench | 造 | Three.js 单文件 | 多轮 | 人工视频复核 | 概念有、无标准判分 | 数据保密 |
-| **GameGen-Bench（本设计）** | **造** | Three.js/Web（v1） | **3–5 轮增量** | **确定性 golden suite ≥70% + rubric 补视觉 + 自动行为回归（乘法硬惩罚）** | ✅ 核心卖点 | 计划开源 |
+| **momozi-3A-GamegenBench（本设计）** | **造** | Three.js/Web（v1） | **3–5 轮增量** | **确定性 golden suite ≥70% + rubric 补视觉 + 自动行为回归（乘法硬惩罚）** | ✅ 核心卖点 | 计划开源 |
 
 **空白点（差异化）**：
 1. **多轮增量 + 行为回归硬约束**：现有生成 BMK 全是「一次造对」；真实开发是长程的。GameBench 参考原型最强 agent 才 41.46%，多轮只会更糟——这正是拉开差距的地方。

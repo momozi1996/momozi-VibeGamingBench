@@ -1,26 +1,21 @@
-# agent 适配 profile —— 优先适配 claude code / codex 两个主流 agent
+# agent 适配 profile —— momozi-3A-GamegenBench
+# 用最新版 claude code / codex 两个主流 agent
 # 占位符: $PROMPT_FILE(传文件路径) $PROMPT(直接内联) $WORKDIR
-# 两个 adapter 都在"外部沙箱"下运行：子进程 cwd=workspace，读写被限在产品目录。
+# mock 是内置测试用,直接复刻参考实现,0 token。
 claude:
   label: claude-code
-  argv:
-    - claude
-    - -p
-    - $PROMPT_FILE
+  argv: [claude, -p, $PROMPT_FILE]
   write_args:
     - --permission-mode
     - acceptEdits
     - --allowedTools
-    - "Edit,Write"
+    - "Edit,Write,Bash"
+  env:
+    # Opus 5 是最新默认；如需锁模型宿加 --
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
   timeout: 1800
 
 codex:
   label: codex
-  argv:
-    - codex
-    - exec
-    - --sandbox
-    - workspace-write
-    - --skip-git-repo-check
-    - $PROMPT_FILE
+  argv: [codex, exec, --sandbox, workspace-write, --skip-git-repo-check, $PROMPT_FILE]
   timeout: 1800

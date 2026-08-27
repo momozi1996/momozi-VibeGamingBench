@@ -18,7 +18,7 @@ whose attack patterns form complex polyrhythms.
 
 1. **Title Screen** — A styled menu with the game name pulsing to a beat,
    a play button, and a dark dungeon backdrop with flickering torchlight. No
-   plain Godot grey.
+   plain HTML 引擎 grey.
 2. **The Beat** — A persistent rhythm indicator (bouncing icon, pulsing border,
    or metronome bar) shows the current beat. The player taps movement or attack
    keys in time with this pulse. Perfect timing flashes gold; early/late shows
@@ -46,7 +46,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -63,7 +63,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 节奏节拍地牢（Rhythm Beat Dungeon）
 
-在 `/workspace/game/` 用 Godot 4 开发一个节奏节拍地牢游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个节奏节拍地牢游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -78,7 +78,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一个有设计感的菜单，游戏名随节拍脉动，配有一个开始按钮，
-   以及一片火炬光闪烁的黑暗地牢背景。不要出现 Godot 默认的纯灰。
+   以及一片火炬光闪烁的黑暗地牢背景。演出 GameX其灰色。
 2. **节拍** —— 一个持续显示的节奏指示器（弹跳图标、脉动边框或节拍器条）标示
    当前节拍。玩家要踩着这个脉动按下移动键或攻击键。完美的时机会闪出金色；
    偏早/偏晚则显示另一种颜色。
@@ -101,7 +101,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

@@ -47,7 +47,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -64,7 +64,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 规则改写（Rule Rewrite）
 
-在 `/workspace/game/` 用 Godot 4 开发 **Rule Rewrite**，一个 2D 基于网格的
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Rule Rewrite**，一个 2D 基于网格的
 文字方块解谜游戏。玩家在图块网格上推动词块，拼成句子来改写这一关的规则，
 从而改变物体的作用和世界的运行方式。
 
@@ -104,7 +104,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

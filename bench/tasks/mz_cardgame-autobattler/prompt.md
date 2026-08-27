@@ -21,7 +21,7 @@ opposition.
 
 1. **Title Screen** — A tavern interior with the game name on a wooden sign
    above the bar, creature silhouettes seated at tables, and a "Find Match"
-   button styled as a tavern door. No plain Godot grey.
+   button styled as a tavern door. No plain HTML grey.
 2. **Shop Phase** — Each round, a shop displays 3-5 random creatures for
    purchase. The player buys creatures (spending gold), places them on a
    bench or directly onto the board (limited slots). Selling creatures
@@ -52,7 +52,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -69,7 +69,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 卡牌自动战斗（Cardgame Autobattler）
 
-在 `/workspace/game/` 用 Godot 4 开发一个卡牌自动战斗游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个卡牌自动战斗游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -85,7 +85,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一间酒馆内景，游戏名写在吧台上方的木制招牌上，生物剪影坐在
-   桌旁，还有一个做成酒馆门样式的"寻找对战"按钮。不要出现 Godot 默认的纯灰。
+   桌旁，还有一个做成酒馆门样式的"寻找对战"按钮。演出 GameX其灰色。
 2. **商店阶段** —— 每一轮，商店展示 3-5 个随机生物供购买。玩家花金币买下生物，
    把它们放到备战席或直接放上棋盘（槽位有限）。出售生物会返还部分金币。一个
    计时器倒数至战斗阶段。
@@ -107,7 +107,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

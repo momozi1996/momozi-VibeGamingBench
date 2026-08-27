@@ -18,7 +18,7 @@ characters with different trick styles and visual flair provide long-term goals.
 
 1. **Title Screen** — A snowy mountain vista with the game name in a frosty
    stylized font, a silhouetted rider mid-backflip, and Play/Collection
-   buttons. No plain Godot grey.
+   buttons. No plain HTML grey.
 2. **The Run** — Side-scrolling endless descent. The character automatically
    moves downhill; the player controls jump timing, trick execution, and
    landing angle. Terrain scrolls with parallax mountain backgrounds.
@@ -48,7 +48,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -65,7 +65,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 特技滑降跑者（Racing Trick Runner）
 
-在 `/workspace/game/` 用 Godot 4 开发一个特技滑降跑者游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个特技滑降跑者游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -80,7 +80,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一幅雪山远景，游戏名称采用带霜感的风格化字体，一位剪影
-   车手正在做后空翻，另有"开始"/"收藏"按钮。不要出现 Godot 的裸灰色。
+   车手正在做后空翻，另有"开始"/"收藏"按钮。不要出现 HTML 引擎 的裸灰色。
 2. **一轮滑降** —— 横向卷轴的无尽下坡。角色自动向坡下移动；玩家控制起跳时机、
    特技执行和落地角度。地形随视差山脉背景一同滚动。
 3. **特技系统** —— 在空中时，玩家用方向键输入特技指令（翻转、旋转、抓板）。
@@ -103,7 +103,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

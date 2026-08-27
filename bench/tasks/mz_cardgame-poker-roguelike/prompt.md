@@ -19,7 +19,7 @@ hand. Fail to meet the blind and the run ends.
 
 1. **Title Screen** — A casino-noir aesthetic with the game name in gold
    embossed lettering on green felt, animated card shuffling in the background,
-   and New Run / Stats buttons. No plain Godot grey.
+   and New Run / Stats buttons. No plain HTML grey.
 2. **The Hand** — The player is dealt 8 cards from a standard deck. They select
    up to 5 cards to form a poker hand and submit it for scoring. Remaining
    cards can be discarded and redrawn (limited discards per round).
@@ -48,7 +48,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -65,7 +65,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 扑克 Roguelike（Cardgame Poker Roguelike）
 
-在 `/workspace/game/` 用 Godot 4 开发一个扑克 Roguelike 卡牌游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`）：开发一个扑克 Roguelike 卡牌游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -81,7 +81,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 赌场黑色电影风格，游戏名以烫金浮雕字体呈现在绿色台面呢上，
-   背景中有洗牌动画，以及新的一轮 / 统计按钮。不要出现 Godot 默认的纯灰。
+   背景中有洗牌动画，以及新的一轮 / 统计按钮。演出 GameX其灰色。
 2. **手牌** —— 玩家从一副标准牌组中拿到 8 张牌。他们最多选出 5 张组成一个扑克
    牌型并提交计分。剩下的牌可以弃掉并重抽（每轮弃牌次数有限）。
 3. **计分** —— 每种牌型都有基础筹码值和倍率（例如：对子 = 10 筹码 x2，同花 =
@@ -103,7 +103,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

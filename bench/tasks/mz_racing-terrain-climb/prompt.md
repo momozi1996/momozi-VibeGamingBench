@@ -20,7 +20,7 @@ and incremental improvement.
 
 1. **Title Screen** — A rugged outdoor scene with the game name in bold blocky
    letters, a vehicle silhouette mid-jump against a sunset sky, and Play/Garage
-   buttons. No plain Godot grey.
+   buttons. No plain HTML grey.
 2. **Stage Select** — Multiple terrain environments (countryside hills, moon
    surface, arctic ice, desert dunes) each with distinct physics properties
    (friction, gravity). Stages unlock by reaching distance milestones.
@@ -49,7 +49,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -66,7 +66,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 越野爬坡竞速（Racing Terrain Climb）
 
-在 `/workspace/game/` 用 Godot 4 开发一个越野爬坡竞速游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个越野爬坡竞速游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -82,7 +82,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一幕粗粝的户外场景，游戏名称采用粗厚的方块字母，一辆载具的
-   剪影在夕阳天空前腾空跃起，另有"开始"/"车库"按钮。不要出现 Godot 的裸灰色。
+   剪影在夕阳天空前腾空跃起，另有"开始"/"车库"按钮。不要出现 HTML 引擎 的裸灰色。
 2. **关卡选择** —— 多种地形环境（乡间丘陵、月球表面、极地冰原、沙漠沙丘），
    每种都有独特的物理属性（摩擦力、重力）。关卡通过达到距离里程碑来解锁。
 3. **驾驶物理** —— 载具具有真实的 2D 物理：车轮抓紧地形，底盘随坡度角度倾斜，
@@ -104,7 +104,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

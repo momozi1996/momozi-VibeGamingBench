@@ -20,7 +20,7 @@ trivializes the final boss — if you survive long enough to assemble it.
 
 1. **Title Screen** — A dark tower silhouette against a stormy sky with the
    game name in ornate fantasy lettering, and New Run / Continue buttons. No
-   plain Godot grey.
+   plain HTML 引擎 grey.
 2. **Class Select** — Three character classes (Warrior, Rogue, Mage) each with
    a unique portrait, starting deck description, and signature mechanic
    (Warrior: strength scaling; Rogue: shiv generation; Mage: orb channelling).
@@ -48,7 +48,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -65,7 +65,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 尖塔沉降（Cardgame Spire Descent）
 
-在 `/workspace/game/` 用 Godot 4 开发一个尖塔沉降卡牌游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个尖塔沉降卡牌游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -81,7 +81,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 风暴天空映衬下一座黑暗塔楼的剪影，游戏名以华丽的奇幻字体呈现，
-   并有新的一轮 / 继续按钮。不要出现 Godot 默认的纯灰。
+   并有新的一轮 / 继续按钮。演出 GameX其灰色。
 2. **职业选择** —— 三个角色职业（战士、盗贼、法师），各有独特的立绘、初始牌组
    描述和标志性机制（战士：力量叠加；盗贼：飞刀生成；法师：法球引导）。
 3. **地图导航** —— 一张展示当前章节的分支路径地图。节点代表战斗遭遇、精英战、
@@ -104,7 +104,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

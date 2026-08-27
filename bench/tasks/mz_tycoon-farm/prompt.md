@@ -38,7 +38,7 @@ is banked at bedtime, so a returning player wakes to the same farm, the same
 season of growth, and the same quiet momentum.
 
 The art direction is warm, sunlit, cartoon-pastoral — greens, ochres, soft
-wood — never naked Godot grey. The tone is gentle and unhurried, the opposite
+wood — never naked HTML 引擎 grey. The tone is gentle and unhurried, the opposite
 of a twitch game.
 
 ## HTML Submission Format
@@ -48,7 +48,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -65,7 +65,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 经营：乡村农场（Tycoon: Village Farm）
 
-在 `/workspace/game/` 用 Godot 4 开发一个 **2D 乡村农场经营**游戏。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个 **2D 乡村农场经营**游戏。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
 
 ## 核心构想
 
@@ -79,7 +79,7 @@ CLI invocation, no download, no runtime dependency.
 
 作物只在夜间生长，所以睡觉就是赋予每一天意义的标点。清晨的揭晓时刻——看到幼苗推进一个阶段、成熟的植株已可采摘——正是把玩家拉进"再来一天"的钩子。进度在就寝时存档，因此回来的玩家醒来面对的是同一座农场、同一段生长季节、同样静静向前的势头。
 
-美术方向是温暖、洒满阳光的卡通田园风——绿色、赭色、柔和的木质——绝不出现裸露的 Godot 灰。整体基调温和从容，与手速游戏截然相反。
+美术方向是温暖、洒满阳光的卡通田园风——绿色、赭色、柔和的木质——绝不出现裸露的 HTML 引擎 灰。整体基调温和从容，与手速游戏截然相反。
 
 ## 提交格式（HTML）
 
@@ -87,7 +87,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

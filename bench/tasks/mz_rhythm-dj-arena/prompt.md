@@ -18,7 +18,7 @@ characters with distinct musical styles and move sets provide variety.
 
 1. **Title Screen** — A vibrant neon club aesthetic with the game name in
    glowing graffiti-style text, character select and versus mode buttons, and
-   animated equalizer bars in the background. No plain Godot grey.
+   animated equalizer bars in the background. No plain HTML grey.
 2. **Character Select** — At least 4 playable characters, each with a distinct
    musical theme (electronic, rock, jazz, hip-hop), unique sprite design, and
    different special move sets. Each character's selection shows a preview
@@ -46,7 +46,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -63,7 +63,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 节奏 DJ 竞技场（Rhythm DJ Arena）
 
-在 `/workspace/game/` 用 Godot 4 开发一个节奏 DJ 竞技场游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个节奏 DJ 竞技场游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -78,7 +78,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 鲜艳的霓虹夜店美学，游戏名采用发光的涂鸦风字体，配有
-   角色选择和对战模式按钮，背景是动态的均衡器条。不要出现 Godot 默认的纯灰。
+   角色选择和对战模式按钮，背景是动态的均衡器条。演出 GameX其灰色。
 2. **角色选择** —— 至少 4 名可玩角色，各有独特的音乐主题（电子、摇滚、爵士、
    嘻哈）、独特的精灵图设计和不同的特殊招式组合。选中每个角色时会显示一段
    预览动画及其招式列表。
@@ -100,7 +100,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

@@ -20,7 +20,7 @@ creatures for power, wrapped in a cabin-horror atmosphere.
 
 1. **Title Screen** — A dimly lit wooden table with the game name scratched
    into the surface in rough lettering, a flickering candle, and a "Begin"
-   card the player clicks. No plain Godot grey.
+   card the player clicks. No plain HTML grey.
 2. **The Table** — Battles take place on a 4-lane grid. The player's row faces
    the opponent's row. Cards are played from hand into lanes. Each card has
    attack power, health, a blood cost, and zero or more sigils.
@@ -51,7 +51,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -68,7 +68,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 黑暗铭刻（Cardgame Inscription Dark）
 
-在 `/workspace/game/` 用 Godot 4 开发一个黑暗铭刻卡牌游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个黑暗铭刻卡牌游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -84,7 +84,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一张光线昏暗的木桌，游戏名以粗糙的字体刻在桌面上，一支摇曳的
-   蜡烛，以及一张供玩家点击的"开始"卡牌。不要出现 Godot 默认的纯灰。
+   蜡烛，以及一张供玩家点击的"开始"卡牌。演出 GameX其灰色。
 2. **牌桌** —— 战斗在 4 条通道的网格上展开。玩家的一排面对对手的一排。卡牌从手牌
    打进各条通道。每张卡都有攻击力、生命值、鲜血消耗，以及零个或多个印记。
 3. **献祭机制** —— 要打出一张消耗 2 点鲜血的卡，玩家必须先献祭场上自己已有的
@@ -107,7 +107,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

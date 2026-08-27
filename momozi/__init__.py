@@ -1,8 +1,9 @@
 """momozi-3A-GamegenBench
-三层定价 + 三维评分（B/P/S）+ 多轮回归检测的 3A 游戏生成 benchmark。
-公共层见 bench/，私有内窥见 momozi/scripts/__init__.py。
-版本 v0.1,BSD-2 License。
+
+3A 游戏生成评估框架 — 三维评分 (B/P/S) + 多轮增量 + HTML 静态门控。
+
+v0.1.0 — 140 道生产级题 (bench/tasks/mz_*/)
 """
 
 __version__ = "0.1.0"
-DESCRIPTION = "Multi-round incremental game generation benchmark (behavior-audited)"
+__all__ = ["run", "judge", "leaderboard", "task", "verifiers", "adapters"]

@@ -22,7 +22,7 @@ made of history.
 
 1. **Title Screen** — A styled opening with the game name, a "Begin Journey"
    or "Play" button, and a temporal backdrop (overlapping landscapes bleeding
-   into each other, clock gears, aurora). No naked Godot grey.
+   into each other, clock gears, aurora). No naked HTML 引擎 grey.
 2. **Three Eras** — The same geographical region rendered in three visually
    distinct time periods: an ancient wilderness with warm saturated greens, an
    industrial cityscape with muted greys and oranges, and a ruined future with
@@ -53,7 +53,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -70,7 +70,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 开放世界时空穿越（Open-World Time Travel）
 
-在 `/workspace/game/` 用 Godot 4 开发一个**2D 开放世界时空穿越游戏**。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**2D 开放世界时空穿越游戏**。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -88,7 +88,7 @@ CLI invocation, no download, no runtime dependency.
 
 1. **标题画面** —— 一个有设计感的开场，包含游戏名称、一个"开始旅程"或"开始
    游戏"按钮，以及一幅时间主题背景（彼此交叠、相互渗透的地景、时钟齿轮、极光）。
-   不要出现 Godot 的裸灰色。
+   不要出现 HTML 引擎 的裸灰色。
 2. **三个时代** —— 同一片地理区域被呈现为三个视觉上截然不同的时期：一片带有
    温暖高饱和绿色的远古荒野、一座色调低沉、灰橙交织的工业城景，以及一个冷蓝
    与紫色调的废墟未来。玩家可以在每个时代中自由行走，并认出跨越时间留存下来的
@@ -111,7 +111,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

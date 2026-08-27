@@ -1,13 +1,4 @@
 {
-  "leaderboard": [
-    {
-      "agent": "mock",
-      "runs": 4,
-      "B_mean": 1.0,
-      "S_mean": 1.0,
-      "P_mean": null,
-      "total": 1.0
-    }
-  ],
-  "n_runs": 4
+  "leaderboard": [],
+  "n_runs": 0
 }

@@ -18,7 +18,7 @@ think *Burnout* meets *A Short Hike* at a smaller scale.
 
 1. **Title Screen** — A styled opening with the game name, a play button, and
    a dynamic racing backdrop (speed lines, car silhouette, sunset highway).
-   No naked Godot grey.
+   No naked HTML 引擎 grey.
 2. **The World** — The player spawns in an open-world map with at least three
    visually distinct biomes: coastal road, desert canyon, and mountain pass.
    The vehicle can drive freely in all directions, exploring at will.
@@ -46,7 +46,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -63,7 +63,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 开放世界竞速（Open-World Racing）
 
-在 `/workspace/game/` 用 Godot 4 开发一个**2D 开放世界竞速游戏**。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**2D 开放世界竞速游戏**。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -78,7 +78,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一个有设计感的开场，包含游戏名称、一个开始按钮，以及一幅
-   富有动感的竞速背景（速度线、汽车剪影、日落公路）。不要出现 Godot 的裸灰色。
+   富有动感的竞速背景（速度线、汽车剪影、日落公路）。不要出现 HTML 引擎 的裸灰色。
 2. **世界** —— 玩家出生在一张开放世界地图上，其中至少有三个视觉上截然不同的
    生态区：海岸公路、沙漠峡谷和山间隘口。载具可以朝任意方向自由行驶，随意探索。
 3. **散布的赛道** —— 每个生态区至少包含一条赛道，由可见的起终点线和检查点门
@@ -99,7 +99,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

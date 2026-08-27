@@ -20,7 +20,7 @@ opponent to waste cards chasing it.
 
 1. **Title Screen** — A medieval war-table aesthetic with the game name in
    iron-forged lettering, faction banners flanking the sides, and Campaign /
-   Quick Match / Deck Builder buttons. No plain Godot grey.
+   Quick Match / Deck Builder buttons. No plain HTML grey.
 2. **Deck Builder** — At least 3 factions (Northern Realms, Monsters, Elves)
    each with 15+ unique cards. The player builds a deck of exactly 25 cards
    from their chosen faction plus neutral cards. Each card shows art, strength
@@ -53,7 +53,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -70,7 +70,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 昆特战争（Cardgame Gwent War）
 
-在 `/workspace/game/` 用 Godot 4 开发一个昆特战争卡牌游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个昆特战争卡牌游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -86,7 +86,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 中世纪战争沙盘美学，游戏名以铁铸字体呈现，两侧列着阵营旗帜，
-   并有战役 / 快速对战 / 牌组编辑器按钮。不要出现 Godot 默认的纯灰。
+   并有战役 / 快速对战 / 牌组编辑器按钮。演出 GameX其灰色。
 2. **牌组编辑器** —— 至少 3 个阵营（北方王国、怪物、精灵），每个阵营各有 15 张
    以上独特卡牌。玩家从所选阵营加上中立卡中构建一副恰好 25 张的牌组。每张卡牌
    展示卡面美术、战力数值、所属排位，以及任何特殊能力。
@@ -109,7 +109,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

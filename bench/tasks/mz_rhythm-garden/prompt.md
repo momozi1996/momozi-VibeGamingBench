@@ -19,7 +19,7 @@ blooms in response to rhythmic mastery.
 
 1. **Title Screen** — A pastel garden scene with the game name in a playful
    hand-drawn font, flowers swaying to a gentle beat, and a "Play" button
-   shaped like a watering can. No plain Godot grey.
+   shaped like a watering can. No plain HTML grey.
 2. **Garden Hub** — An overworld map showing garden plots, each representing a
    minigame. Completed games bloom with flowers; locked ones show wilted buds.
    The player clicks a plot to enter its minigame.
@@ -52,7 +52,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -69,7 +69,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 节奏花园（Rhythm Garden）
 
-在 `/workspace/game/` 用 Godot 4 开发一个节奏花园游戏。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个节奏花园游戏。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -85,7 +85,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一幅粉彩色调的花园场景，游戏名采用活泼的手绘字体，花朵
-   随着轻缓的节拍摇曳，还有一个做成洒水壶形状的"开始"按钮。不要出现 Godot
+   随着轻缓的节拍摇曳，还有一个做成洒水壶形状的"开始"按钮。不要出现 HTML 引擎
    默认的纯灰。
 2. **花园枢纽** —— 一张大地图，展示一块块园圃，每块代表一个小游戏。已完成的
    游戏会开出花来；未解锁的则显示枯萎的花蕾。玩家点击某块园圃即可进入对应的
@@ -115,7 +115,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 

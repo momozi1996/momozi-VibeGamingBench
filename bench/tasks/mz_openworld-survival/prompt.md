@@ -18,7 +18,7 @@ immersive** -- think *Don't Starve* meets *A Short Hike* at a smaller scale.
 ## What the Player Experiences
 
 1. **Title Screen** -- A stylised opening with the game name, a play button, and
-   a wilderness backdrop (forest, campsite, or mountain vista). No naked Godot
+   a wilderness backdrop (forest, campsite, or mountain vista). No naked HTML 引擎
    grey.
 
 2. **The Wilderness** -- The player spawns in an open-world map with multiple
@@ -58,7 +58,7 @@ You must deliver **two files**:
 - `index.html` — one self-contained page, uses `three.js` from CDN
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
   opens by double-clicking in any modern browser. **No build step, no `npm install`,
-  no Python server, no Godot.** It must render within 3 seconds on a normal laptop.
+  no Python server.** It must render within 3 seconds on a normal laptop.
 - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
   imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
 
@@ -75,7 +75,7 @@ CLI invocation, no download, no runtime dependency.
 
 # 开放世界生存（Open-World Survival）
 
-在 `/workspace/game/` 用 Godot 4 开发一个**2D 开放世界生存游戏**。
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**2D 开放世界生存游戏**。
 这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
 纵向切片放到 itch.io 页面或 Steam 上。
 
@@ -91,7 +91,7 @@ CLI invocation, no download, no runtime dependency.
 ## 玩家体验流程
 
 1. **标题画面** —— 一个有设计感的开场，包含游戏名称、一个开始按钮，以及一幅
-   荒野背景（森林、营地或山景）。不要出现 Godot 的裸灰色。
+   荒野背景（森林、营地或山景）。不要出现 HTML 引擎 的裸灰色。
 
 2. **荒野** —— 玩家出生在一张开放世界地图上，其中有多个视觉上截然不同的生态区：
    青草平原、茂密森林，以及多岩地形或水域。玩家可以在一片广阔的可探索空间中
@@ -122,7 +122,7 @@ CLI invocation, no download, no runtime dependency.
 
 - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
   (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-  **不允许** `npm install` / 构建工具 / Python 服务器 / Godot。普通笔记本 3 秒内必须渲染出来。
+  **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
 - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
   由 `index.html` import。规范参考 `bench/references/tg1/game_logic.js`。
 
