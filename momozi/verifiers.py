@@ -34,12 +34,19 @@ class StaticChecker:
                     "detail": f"file {rel} {'present' if ok else 'MISSING'}",
                 })
             elif kind == "contains":
-                target = Path(item["path"]).name
+                path_field = item.get("check_in", item["path"])
+                target = Path(path_field).name
                 needle = item["pattern"]
-                ok = target in files and needle in files[target].read_text(encoding="utf-8", errors="ignore")
+                if target not in files:
+                    ok = None                       # 文件缺失 → 不计分母，weight 归零
+                    weight = 0.0
+                else:
+                    ok = needle in files[target].read_text(encoding="utf-8", errors="ignore")
+                    weight = item.get("weight", 1.0)
                 results.append({
-                    "id": rid, "ok": ok, "weight": item.get("weight", 1.0),
-                    "detail": f"{item['path']} contains {needle!r}: {ok}",
+                    "id": rid, "ok": ok, "weight": weight,
+                    "detail": f"{path_field} contains {needle!r}: {ok}" if ok is not None
+                              else f"{path_field} MISSING — contains check not covered",
                 })
             elif kind == "no_external_js":
                 target = Path(item.get("path", req["entry"])).name

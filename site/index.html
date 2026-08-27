@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>momozi-3A-GamegenBench — 玩给 AI 出的游戏打分</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0f14; --panel:#151922; --line:#242a36;
+  --txt:#e8ecf1; --dim:#9aa4b2; --accent:#5b8cff; --accent2:#7c5cff;
+  --good:#3ecf8e; --warn:#ffb648; --bad:#ff6b6b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:Inter,'Noto Sans SC',sans-serif;line-height:1.6}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+a{color:var(--accent);text-decoration:none}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:50;background:rgba(13,15,20,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;height:60px;gap:28px}
+.brand{font-weight:900;font-size:18px;letter-spacing:-.3px}
+.brand span{background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav a.link{color:var(--dim);font-size:14px;font-weight:500}
+nav a.link:hover{color:var(--txt)}
+nav .right{margin-left:auto;display:flex;gap:16px;align-items:center}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:#1d2430;color:var(--dim);border:1px solid var(--line)}
+.badge.hot{background:linear-gradient(120deg,#5b8cff22,#7c5cff22);color:var(--accent);border-color:#5b8cff44}
+
+/* ── HERO ── */
+.hero{padding:90px 0 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:700px;height:700px;left:50%;top:-300px;transform:translateX(-50%);background:radial-gradient(circle,#5b8cff18,transparent 60%);pointer-events:none}
+.hero h1{font-size:56px;font-weight:900;letter-spacing:-2px;line-height:1.1}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{color:var(--dim);font-size:19px;max-width:660px;margin:20px auto 0}
+.hero .cta{display:flex;gap:14px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:12px;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--panel);color:var(--txt);cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+.btn.primary{background:linear-gradient(120deg,var(--accent),var(--accent2));border:none;color:#fff}
+.btn.primary:hover{box-shadow:0 10px 30px #5b8cff44}
+
+/* ── STATS ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:30px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 22px;text-align:center}
+.stat b{display:block;font-size:36px;font-weight:900;letter-spacing:-1px;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{color:var(--dim);font-size:13px}
+
+/* ── SECTION ── */
+section{padding:40px 0}
+.sec-title{font-size:13px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+h2{font-size:34px;font-weight:900;letter-spacing:-1px;margin-bottom:8px}
+.sec-sub{color:var(--dim);max-width:700px;margin-bottom:32px}
+
+/* ── LIFECYCLE ── */
+.lifecycle{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.lc{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px;position:relative;overflow:hidden}
+.lc::after{content:"";position:absolute;left:0;top:0;width:4px;height:100%;background:linear-gradient(180deg,var(--accent),var(--accent2))}
+.lc .num{font-size:12px;font-weight:800;color:var(--accent);letter-spacing:2px}
+.lc h3{font-size:20px;font-weight:800;margin:8px 0 10px}
+.lc p{color:var(--dim);font-size:14px}
+.lc .tag{display:inline-block;margin-top:14px;font-size:12px;padding:4px 10px;border-radius:8px;background:#1d2430;color:var(--dim)}
+
+/* ── TRACKS ── */
+.tracks{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.track{border:1px solid var(--line);border-radius:18px;padding:26px;background:var(--panel)}
+.track.cur{border-color:var(--accent);box-shadow:0 0 0 1px #5b8cff33}
+.track .n{font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--dim)}
+.track h3{font-size:19px;font-weight:800;margin:6px 0 10px}
+.track p{color:var(--dim);font-size:14px;margin-bottom:14px}
+.track ul{list-style:none;font-size:13px;color:var(--dim)}
+.track ul li{padding:4px 0 4px 18px;position:relative}
+.track ul li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+
+/* ── PLAYGROUND ── */
+.pg-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.chip{font-size:13px;font-weight:600;padding:8px 16px;border-radius:99px;border:1px solid var(--line);background:var(--panel);color:var(--dim);cursor:pointer;transition:.15s}
+.chip.on,.chip:hover{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
+.playground{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
+.pg-game{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#000;min-height:420px;display:flex;flex-direction:column}
+.pg-game .frame-wrap{flex:1;position:relative;background:#0b0e14}
+.pg-game iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.pg-game .pg-foot{padding:12px 16px;border-top:1px solid var(--line);display:flex;align-items:center;gap:12px;background:var(--panel)}
+.dot{width:8px;height:8px;border-radius:50%}
+.pg-info{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
+.pg-info h4{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:1.5px;margin-bottom:10px}
+.pg-info h3{font-size:22px;font-weight:800;margin-bottom:12px}
+.scores-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}
+.sm{background:#0d1016;border:1px solid var(--line);border-radius:10px;padding:12px}
+.sm span{font-size:11px;color:var(--dim)}
+.sm b{display:block;font-size:20px;font-weight:800;margin-top:2px}
+.bar{height:6px;border-radius:3px;background:#1d2430;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.pg-info .verdict{margin-top:16px;padding:14px;border-radius:12px;background:#0d1016;border-left:3px solid var(--good);font-size:14px;color:var(--dim)}
+.pg-info .verdict b{color:var(--txt)}
+
+/* ── LEADERBOARD ── */
+.tabs{display:flex;gap:8px;margin-bottom:20px;background:var(--panel);padding:6px;border-radius:14px;width:fit-content;border:1px solid var(--line)}
+.tab{padding:9px 20px;border-radius:10px;font-weight:600;font-size:14px;color:var(--dim);cursor:pointer;border:none;background:none}
+.tab.on{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff}
+.lb{width:100%;border-collapse:collapse;background:var(--panel);border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.lb th,.lb td{padding:14px 16px;text-align:left;font-size:14px;border-bottom:1px solid var(--line)}
+.lb th{background:#0d1016;color:var(--dim);font-weight:700;font-size:12px;letter-spacing:1px;cursor:pointer;user-select:none}
+.lb th:hover{color:var(--accent)}
+.lb tr:last-child td{border-bottom:none}
+.lb tbody tr:hover{background:#1a2030}
+.rank{font-weight:900;color:var(--dim);width:44px}
+.rank.top{color:var(--warn)}
+.agent-name{font-weight:700}
+.score{font-weight:800;font-variant-numeric:tabular-nums}
+.total-cell{font-size:16px;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;font-variant-numeric:tabular-nums}
+.pill{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px}
+.pill.good{background:#3ecf8e22;color:var(--good)}
+.pill.warn{background:#ffb64822;color:var(--warn)}
+.pill.bad{background:#ff6b6b22;color:var(--bad)}
+
+/* ── FINDINGS ── */
+.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.fc{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px}
+.fc b{font-size:34px;font-weight:900;letter-spacing:-1px}
+.fc h4{font-size:15px;font-weight:700;margin:8px 0 6px}
+.fc p{color:var(--dim);font-size:13px}
+
+/* ── CARDS REEL ── */
+.reel{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card .thumb{aspect-ratio:16/10;background:linear-gradient(135deg,#1a2030,#0d1016);display:flex;align-items:center;justify-content:center;position:relative}
+.card .thumb .play{width:52px;height:52px;border-radius:50%;background:rgba(91,140,255,.9);display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;box-shadow:0 6px 20px #5b8cff55}
+.card .thumb .lbl{position:absolute;bottom:10px;left:12px;font-size:11px;font-weight:700;background:#0d0f14cc;padding:3px 8px;border-radius:6px}
+.card .body{padding:16px}
+.card .body h4{font-size:15px;font-weight:700}
+.card .body p{color:var(--dim);font-size:12px;margin-top:4px}
+
+footer{padding:60px 0 40px;border-top:1px solid var(--line);margin-top:40px;color:var(--dim);font-size:13px;text-align:center}
+
+@media (max-width:900px){
+  .stats,.lifecycle,.tracks,.findings,.reel{grid-template-columns:1fr}
+  .playground{grid-template-columns:1fr}
+  .hero h1{font-size:36px}
+}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <div class="brand">momozi<span>·3A-Gamegen</span></div>
+  <a class="link" href="#playground">试玩</a>
+  <a class="link" href="#leaderboard">榜单</a>
+  <a class="link" href="#findings">发现</a>
+  <a class="link" href="#cases">案例</a>
+  <div class="right">
+    <span class="badge hot">v0.1 · 1 题已上线</span>
+    <a class="link" href="https://github.com/momozi/momozi-3A-GamegenBench" target="_blank">GitHub ↗</a>
+  </div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <h1>让 AI <em>造出能玩的游戏</em><br>然后给它打分</h1>
+  <p class="sub">momozi-3A-GamegenBench 是一个「能玩、能看、能懂」的 3A 游戏生成评测台。
+  每个 AI 造出来的游戏可以直接在浏览器里玩，每一轮修改都有回放，每个分数都有据可查。</p>
+  <div class="cta">
+    <a class="btn primary" href="#playground">▶ 试玩 AI 造的游戏</a>
+    <a class="btn" href="#leaderboard">看排行榜</a>
+    <a class="btn" href="https://github.com/momozi/momozi-3A-GamegenBench" target="_blank">接入你的 agent</a>
+  </div>
+</div></header>
+
+<div class="wrap stats">
+  <div class="stat"><b id="s1">1</b><span>已上线题目（3A 游戏生成）</span></div>
+  <div class="stat"><b id="s2">5</b><span>评分维度（B/S/P + 子项）</span></div>
+  <div class="stat"><b id="s3">10</b><span>每题的确定性行为断言</span></div>
+  <div class="stat"><b id="s4">3</b><span>赛程：GameGen/GameFix/GameOpt</span></div>
+</div>
+
+<section id="lifecycle">
+  <div class="sec-title">How it works</div>
+  <h2>一个 Agent 的一生：造 → 改 → 优</h2>
+  <p class="sec-sub">真实游戏开发不是一次性写完。我们让 agent 连续工作好几轮，考验它「能不能守住已经做好的东西」。</p>
+  <div class="lifecycle">
+    <div class="lc"><div class="num">STAGE 01</div><h3>🎮 GameGen · 造出来</h3>
+      <p>给一段游戏设想，agent 从零写出可玩的 3D 游戏。测的是「能不能真造出来」。</p><span class="tag">v0.1 已支持</span></div>
+    <div class="lc"><div class="num">STAGE 02</div><h3>🔧 GameFix · 守住它</h3>
+      <p>给一个「修改需求」，agent 去改自己上一版的代码。测的是「改完老玩法还灵不灵」。</p><span class="tag">roadmap v0.3</span></div>
+    <div class="lc"><div class="num">STAGE 03</div><h3>✨ GameOpt · 做得更好</h3>
+      <p>给出具体优化目标（手感/平衡/美术/音效），测它能不能逐项逼近目标。</p><span class="tag">roadmap v1.0</span></div>
+  </div>
+</section>
+
+<section id="playground">
+  <div class="sec-title">Playground · 点开就玩</div>
+  <h2>不用装任何东西，直接试玩 AI 交的答卷</h2>
+  <p class="sec-sub">每个卡片就是一个真实 agent 交出来的游戏，点击即可在右侧试玩区直接运行（three.js 单文件，秒开）。</p>
+  <div class="pg-bar" id="pgbar"></div>
+  <div class="playground">
+    <div class="pg-game">
+      <div class="frame-wrap"><iframe id="pgframe" src="bench/references/tg1/index.html" title="playable game" sandbox="allow-scripts"></iframe></div>
+      <div class="pg-foot">
+        <span class="dot" style="background:var(--good)"></span>
+        <span id="pgtitle" style="font-weight:600">3D 打砖块 · 参考实现（过样板）</span>
+        <span style="margin-left:auto;color:var(--dim);font-size:12px">← → 移动 · 空格发射 · P 暂停</span>
+      </div>
+    </div>
+    <div class="pg-info">
+      <h4>SCORE CARD</h4>
+      <h3 id="iname">参考实现</h3>
+      <div class="scores-mini" id="iname-scores"></div>
+      <div class="verdict" id="iverdict"></div>
+    </div>
+  </div>
+</section>
+
+<section id="leaderboard">
+  <div class="sec-title">Leaderboard</div>
+  <h2>谁造的游戏最好？</h2>
+  <p class="sec-sub">分数 = 行为通过率(55%) + 结构合规(20%) + 人工评审(25%)。点击表头可以排序。</p>
+  <div class="tabs">
+    <button class="tab on" data-t="gamegen">01 GameGen</button>
+    <button class="tab" data-t="gamefix">02 GameFix</button>
+    <button class="tab" data-t="gameopt">03 GameOpt</button>
+  </div>
+  <table class="lb" id="lbtable">
+    <thead><tr id="lbhead"></tr></thead>
+    <tbody id="lbbody"></tbody>
+  </table>
+</section>
+
+<section id="findings">
+  <div class="sec-title">Findings · 一看就懂的结论</div>
+  <h2>我们发现了什么</h2>
+  <p class="sec-sub">不用读论文，先看这几个数字。</p>
+  <div class="findings">
+    <div class="fc"><b style="color:var(--good)">100%</b><h4>过样板能拿满分</h4><p>参考实现（人手工写好）在行为、结构双维度全过 —— 证明评测本身站得住。</p></div>
+    <div class="fc"><b style="color:var(--warn)">41.6</b><h4>最强真实 agent 的总分</h4><p>claude code 单轮只交付逻辑层、缺渲染层，就被扣掉一大半分 —— 说明「能玩」本身就是硬门槛。</p></div>
+    <div class="fc"><b style="color:var(--bad)">0 题可白嫖</b><h4>「能写代码」≠「会做游戏」</h4><p>编译通过不值钱；我们把编译率与正确性解耦，单独给分。</p></div>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="sec-title">Case studies · 视频/过程回放</div>
+  <h2>看 agent 是怎么一步步造出来的</h2>
+  <p class="sec-sub">每份答卷都附带开发过程记录（terminal + 每轮产物 diff），让评审和用户都能"看见"它做了什么。</p>
+  <div class="reel" id="reel"></div>
+</section>
+
+<footer>
+  momozi-3A-GamegenBench · 三维评分 · 多轮增量 · 行为回归验证 · BSD-2<br>
+  数据与代码：<a href="https://github.com/momozi/momozi-3A-GamegenBench" target="_blank">github.com/momozi/momozi-3A-GamegenBench</a>
+</footer>
+
+<script>
+/* ─── 数据层：先静态后备，再动态 fetch playables.json 覆盖 ─── */
+let PLAYABLES = [
+  {agent:"✅ 过样板", game:"3D 打砖块", url:"play/tg1_paddle_breakout_reference.html",
+   scores:{B:100,S:100,P:90,regr:0},
+   verdict:"手工写好的过样板：L1 逻辑与 L2 渲染分层干净，10 条行为断言全过。它是每题的地板分锚点。"},
+  {agent:"🤖 claude · 缺渲染层", game:"3D 打砖块", url:"play/tg1_claude.html",
+   scores:{B:60,S:43,P:null,regr:0},
+   verdict:"只交付了纯逻辑层 game_logic.js，没有 index.html 渲染层 —— 代码正确，但玩不起来。这正是本 BMK 要抓的差距。"},
+];
+
+async function loadPlayables(){
+  try{
+    const d = await (await fetch('data/playables.json')).json();
+    if (Array.isArray(d) && d.length){
+      PLAYABLES = d.map(p=>({
+        agent: p.kind==='reference' ? `✅ 过样板 · ${p.task}` : `🤖 ${p.agent||'agent'} · ${p.task}`,
+        game: p.task,
+        url: p.url,
+        scores:{
+          B: Math.round((p.behavior_pass_rate_final ?? (p.scores?.B ?? 1)) * 100),
+          S: Math.round((p.scores?.S ?? 1) * 100),
+          P: (p.scores?.P==null || p.scores?.P===undefined) ? null : Math.round(p.scores.P * 100),
+          regr: p.regression_rate === undefined ? 0 : Math.round(p.regression_rate * 100),
+        },
+        total: p.scores?.total,
+        verdict: p.kind==='reference'
+          ? "过样板：L1/L2/L3 三层契约示范交付，每轮 golden 都过，零回归。"
+          : `行为通过率 ${Math.round((p.behavior_pass_rate_final??0)*100)}% · 结构 ${Math.round((p.scores?.S??0)*100)}% · 回归 ${Math.round((p.regression_rate??1)*100)}%`,
+      }));
+    }
+  }catch(e){ /* 静默降级到静态后备 */ }
+  initPlayground();
+}
+
+const LEADERBOARD = {
+  gamegen:{
+    cols:[{k:"rank",n:"#"},{k:"agent",n:"Agent"},{k:"B",n:"行为 B"},{k:"S",n:"结构 S"},{k:"regr",n:"回归"},{k:"total",n:"总分"}],
+    rows:[
+      {agent:"参考实现（过样板）",B:100,S:100,regr:0,total:100,note:"锚点"},
+      {agent:"claude-code",B:60,S:43,regr:0,total:54.3,note:"缺渲染层"},
+      {agent:"codex",B:0,S:0,regr:1,total:0,note:"profile 未适配"},
+    ]
+  },
+  gamefix:{
+    cols:[{k:"rank",n:"#"},{k:"agent",n:"Agent"},{k:"strict",n:"严格分"},{k:"fail2pass",n:"修复率"},{k:"pass2pass",n:"不复发率"}],
+    rows:[ {agent:"参考实现（过样板）",strict:100,fail2pass:100,pass2pass:100},
+           {agent:"claude-code",strict:0,fail2pass:0,pass2pass:0},
+           {agent:"codex",strict:0,fail2pass:0,pass2pass:0} ]
+  },
+  gameopt:{
+    cols:[{k:"rank",n:"#"},{k:"agent",n:"Agent"},{k:"gp",n:"gameplay"},{k:"lv",n:"level"},{k:"bl",n:"balance"},{k:"art",n:"art"},{k:"ui",n:"UI"},{k:"au",n:"audio"}],
+    rows:[ {agent:"参考实现（过样板）",gp:90,lv:90,bl:90,art:90,ui:90,au:90},
+           {agent:"claude-code",gp:0,lv:0,bl:0,art:0,ui:0,au:0},
+           {agent:"codex",gp:0,lv:0,bl:0,art:0,ui:0,au:0} ]
+  }
+};
+
+/* ─── PLAYGROUND ─── */
+const pgbar=document.getElementById('pgbar'), pgframe=document.getElementById('pgframe'),
+      ptitle=document.getElementById('pgtitle'), iname=document.getElementById('iname'),
+      iscores=document.getElementById('iname-scores'), iverdict=document.getElementById('iverdict');
+
+function renderInfo(p){
+  iname.textContent = p.agent;
+  ptitle.textContent = p.game + " · " + p.agent;
+  let h="";
+  [["行为 B",p.scores.B],["结构 S",p.scores.S],["呈现 P",p.scores.P],["回归数×1%",p.scores.regr]]
+   .forEach(([k,v])=>{
+     const show=v===null?"—":v+"%";
+     const w=v===null?0:v;
+     h+=`<div class="sm"><span>${k}</span><b>${show}</b><div class="bar"><i style="width:${w}%"></i></div></div>`;
+   });
+  iscores.innerHTML=h;
+  iverdict.innerHTML = (p.total!=null ? `<b>总分 ${Number(p.total).toFixed(3)} · </b>` : "") + p.verdict;
+}
+function initPlayground(){
+  pgbar.innerHTML="";
+  PLAYABLES.forEach((p,i)=>{
+    const b=document.createElement('div');
+    b.className='chip'+(i===0?' on':'');
+    b.textContent=p.agent.replace(/^[✅🤖]\s*/,'') + (p.game?(" — "+p.game):'');
+    b.title=p.agent;
+    b.onclick=()=>{
+      document.querySelectorAll('#pgbar .chip').forEach(c=>c.classList.remove('on'));
+      b.classList.add('on'); pgframe.src=p.url; renderInfo(p);
+    };
+    pgbar.appendChild(b);
+  });
+  if(PLAYABLES[0]){ pgframe.src=PLAYABLES[0].url; renderInfo(PLAYABLES[0]); }
+}
+loadPlayables();
+
+/* ─── LEADERBOARD ───── */
+let curTab='gamegen', lastSort={k:null,dir:-1};
+function renderLB(){
+  const lb=LEADERBOARD[curTab];
+  document.getElementById('lbhead').innerHTML=lb.cols.map(c=>`<th data-k="${c.k}">${c.n}</th>`).join('');
+  let rows=[...lb.rows];
+  const numKey=lb.cols.slice(1).find(c=>typeof rows[0][c.k]==='number')?.k||'total';
+  if(lastSort.k) rows.sort((a,b)=>(+b[lastSort.k]-+a[lastSort.k])*lastSort.dir);
+  document.getElementById('lbbody').innerHTML=rows.map((r,i)=>{
+    const tds=lb.cols.slice(1).map(c=>{
+      const v=r[c.k];
+      if(c.k==='total'||c.k==='strict') return `<td class="score total-cell">${v}</td>`;
+      if(c.k==='agent') return `<td class="agent-name">${v}</td>`;
+      if(v===0) return `<td class="score"><span class="pill bad">0</span></td>`;
+      if(v>=90) return `<td class="score"><span class="pill good">${v}</span></td>`;
+      return `<td class="score">${v}</td>`;
+    }).join('');
+    return `<tr><td class="rank ${i===0?'top':''}">${i===0?'🏆':''}${i+1}</td>${tds}</tr>`;
+  }).join('');
+}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on'); curTab=t.dataset.t; lastSort={k:null,dir:-1}; renderLB();
+});
+document.getElementById('lbhead').addEventListener('click',e=>{
+  const th=e.target.closest('th'); if(!th) return;
+  const k=th.dataset.k;
+  lastSort = lastSort.k===k ? {k,dir:-lastSort.dir} : {k,dir:-1};
+  renderLB();
+});
+renderLB();
+
+/* ─── CASE REEL ───── */
+const CASES=[
+  {t:"🎬 一次完整的 3 分钟造游戏",d:"claude-code 从零写 game_logic.js 全过程录屏"},
+  {t:"📉 R1 → R2 改动 diff",d:"增量需求下老行为守住没守住，一图看懂"},
+  {t:"🔍 失败解剖：UI 错位",d:"P 维度低分的典型样本，judge 逐条扣分理由"},
+];
+document.getElementById('reel').innerHTML=CASES.map(c=>
+  `<div class="card"><div class="thumb"><div class="play">▶</div>
+   <span class="lbl">${c.t.split(' ')[0]}</span></div>
+   <div class="body"><h4>${c.t}</h4><p>${c.d}</p></div></div>`).join('');
+</script>
+</body>
+</html>
