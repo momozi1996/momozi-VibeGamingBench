@@ -3,11 +3,10 @@
 > **三维评分 · 多轮增量 · 行为回归验证 的 3A 游戏生成 benchmark**
 > 度量 AI coding agent「创造类任务」的能力：**让 agent 造出的游戏从零开始「能玩」，并在连续修改中守住已经做好的玩法。**
 >
-> 已落题目 **1140** 道（两套来源合并）：`scripts/gen_tasks.py` 参数化 1000 道（4 家族覆盖物理/跑酷/回合制/市场）+ `scripts/import_gamecraft.py` 导入原 BMK 140 道 Godot 生产级题目。
+> 一道题 = 一段自然语言需求 + 隐藏评分锚点。**140 道生产级真题**（含 12 页任务书 + 隐藏 M*/D*/V*/A* 共 ~14 条评分锚点 + HTML 4 项静态门控）。判分沿用题源 BMK 三档制（0/0.5/1）与公式 `score = BUILD · (0.15mean(M) + 0.35mean(D) + 0.15mean(V) + 0.35mean(A))`。
 
 [![CI](https://github.com/momozi/momozi-3A-GamegenBench/actions/workflows/ci.yml/badge.svg)](https://github.com/momozi/momozi-3A-GamegenBench/actions/workflows/ci.yml)
 ![License](https://img.shields.io/badge/license-BSD--2-blue)
-![Tasks](https://img.shields.io/badge/tasks-1140-orange)
 
 ---
 
@@ -21,11 +20,12 @@ npm i -g node@25     # 或 nvm（Node ≥ 20）
 # smoke（mock）：走完整 harness，参考实现全过 = 题目可信
 python3 scripts/smoke.sh
 
-# 单个任务的真实 agent 跑（claude code）
-python3 -m momozi run bench/tasks/t1000_runner_dodge/tg1.run --agent claude --rounds R1,R2
+# 任一真 agent 跑一道真题（claude code）
+python3 -m momozi run bench/tasks/mz_cardgame-autobattler/mz_cardgame-autobattler.task.yaml \
+    --agent claude
 
-# 全量门禁：1000 mock 题在 1 分钟内出结果
-python3 scripts/validate_pool.py --workers 16
+# 门禁：140 道题的 HTML 静态合规全部过
+python3 scripts/validate_pool.py --workers 16 --only-gc
 
 # 生成 leaderboard
 python3 -m momozi leaderboard --out leaderboard.json
@@ -57,20 +57,18 @@ momozi-3A-GamegenBench/
 │  └─ verify.py                  提交包复评（防止虚报）
 │
 ├─ bench/                        公共资产
-│  ├─ tasks/                     主榜单题目池（140 道 gc_*）
-│  │  ├─ gc_<name>/             GameCraft 140 题（prompt.md + rubric.original.json + rubric.mapping.json + beh_build.mjs）
-│  ├─ tasks_synthetic/           合成题（1000 道，仅 harness 压测，不算监督分）
-│  │  ├─ t####_<family>/        工厂 1000 题（physics_breakout/runner_dodge/turn_combat/economy_market）
-│  │  └─ gc_<name>/             GameCraft 140 题（prompt.md + rubric.original.json + rubric.mapping.json）
+│  ├─ tasks/                     主榜单题目池（140 道 mz_*）
+│  │  └─ mz_<name>/             GameBench 140 题（prompt.md + rubric.original.json + rubric.mapping.json + beh_html.mjs）
 │  ├─ tests/beh_*.mjs            家族行为套件（deterministic golden suite）
 │  ├─ rubrics/                   逐题 rubric（人可读）
 │  ├─ references/<family>/       每题参考实现（mock 复刻）
-│  └─ POOL_AUDIT.md              1000 mock 题一次性门禁结果
+│  └─ POOL_AUDIT.md              140 gc 题一次性门禁结果
 │
 ├─ scripts/
-│  ├─ gen_tasks.py               参数化生成第 1000..N 题（--count N）
-│  ├─ validate_pool.py           全题门禁：mock 通过算"可靠"
-│  ├─ import_gamecraft.py        拉入 GameCraft 原题 rubric
+│  ├─ validate_pool.py           全题门禁：140 gc 题全过 HTML 门控
+│  ├─ import_bundle.py        从 题源 BMK 原生 bundle 导入 140 题
+│  ├─ convert_mz_to_html.py      把原 bundle 从 Godot 2D 转成 HTML/three.js 单页
+│  ├─ import_bundle.py        拉入题源 BMK rubric
 │  ├─ gen_site.sh                生成展示站 site/data/
 │  └─ smoke.sh                   mock 端到端冒烟
 │
@@ -86,7 +84,7 @@ momozi-3A-GamegenBench/
 
 ### v0.1 主榜单（GC，真实生产级题）
 
-**140 道 Godot 2D 游戏题**，改编自 GameCraft-Bench。每道包含:
+**140 道 Godot 2D 游戏题**，题目改编自题源 BMK 家族化模板。每道包含:
 
 - 一份 12 页《开发任务书》(`prompt.md`)，含核心愿景、7 条玩家体验、场景定义、资产清单；
 - 一份**隐藏 grading rubric**（`rubric.original.json`，含 M*/D*/V*/A* 共 ~14 条 requirement，每条一段三档锚点）；
@@ -111,15 +109,6 @@ momozi-3A-GamegenBench/
 | racing 竞速 | 4 | `rocket-trials` |
 | sports 运动 | 4 | `fishing-tournament` |
 | **合计** | **140** | — |
-
-### v0.1 合成题（Synthetic，不计入主榜单）
-
-**1000 道参数化题**（4 家族 × 250 镜面），放在 `bench/tasks_synthetic/`：
-
-- 家族：physics_breakout 打砖块 / runner_dodge 跑酷 / turn_combat 回合制 / economy_market 市场
-- 每道 = 同一模板换数值参数 + 一份 5–10 条纯逻辑断言 golden suite
-- **用途**：harness 压力测试（**一次跑 1000 题看 runner/校验器稳不稳**），**不算监督评分依据**；分数不计入正式 leaderboard
-- 全量门禁：`python3 scripts/validate_pool.py --workers 16` 已 1000/1000 通过（72s）
 
 ### 赛道规划
 
@@ -174,7 +163,7 @@ Total = 0.55·B + 0.20·S + 0.25·P         （P 缺失时其他两维按 0.75 �
 `mock` adapter 直接把 `bench/references/<family>` 的参考实现复制到 `product/`，跑通整条 chain：
 
 ```bash
-python3 -m momozi run bench/tasks/t1000_runner_dodge/t1000_runner_dodge.task.yaml --agent mock
+python3 -m momozi run bench/tasks/mz_cardgame-autobattler/mz_cardgame-autobattler.task.yaml --agent mock
 ```
 
 ### 2) 真实 agent 跑（claude code）
@@ -202,12 +191,12 @@ python3 -m momozi run <task.yaml> --agent claude --rounds R1,R2
 
 Adapter 支持的占位符：`$PROMPT_FILE`（prompt 已落盘的文件）、`$PROMPT`（直接 inline）、`$WORKDIR`（本轮工作目录）。任何 CLI 只需这 3 个占位符，就能接入 `momozi`。
 
-### 3) 门禁：1000 题对参考实现全场通过
+### 3) 门禁：140 题全部过 HTML 静态门控
 
 ```bash
-python3 scripts/validate_pool.py --workers 16
+python3 scripts/validate_pool.py --workers 16 --only-gc
 # 输出 bench/POOL_AUDIT.md：
-# 总题数 1000 · 通过 1000 · 失败 0
+# 总题数 140 · 通过 140 · 失败 0
 ```
 
 ### 4) 提交 leaderboard（3 种）
@@ -236,7 +225,7 @@ python3 -m http.server        # 打开 127.0.0.1:8000/site/index.html
 - **必装**：Node ≥ 20（跑 behavior 套件）+ Python ≥ 3.9 + PyYAML
 - **adapter**：默认内置 `claude` / `codex` 两个 profile；mock 联调不需要任何真实 agent
 - **network**：none（离网沙箱）。mock 优先跑通 harness 时不需要，跑真实 agent 需要被隔离在 sandbox 内（`--sandbox workspace-write`）
-- **可选**：无需 Godot UE5 也能烤 mock 行为分；要跑 `gc_*` Godot 题再到 Godot 4 本地 + `godot --headless --quit-after 5`（原 BMK 的 BUILD gate）——Momozi 会接 `beh_build.mjs`。
+- **可选**：无需 Godot UE5 也能烤 mock 行为分；要跑 `mz_*` Godot 题再到 Godot 4 本地 + `godot --headless --quit-after 5`（原 BMK 的 BUILD gate）——Momozi 会接 `beh_build.mjs`。
 
 ---
 
@@ -255,7 +244,7 @@ python3 -m http.server        # 打开 127.0.0.1:8000/site/index.html
 ## 已知边界（honest disclosure）
 
 - `mock` adapter 的参考实现**本身**就是地板：它能过所有行为、静态，但**不代表真 agent 不能更优**。mock 只用于门禁 harness。
-- `gc_*` 的 Godot BUILD gate（`godot --headless --quit-after 5`）需要本地安装 Godot 4；在没装的环境里，本仓只能跑 `t####_*` 三种规则题。
+- `mz_*` 的 Godot BUILD gate（`godot --headless --quit-after 5`）需要本地安装 Godot 4；在没装的环境里，本仓只能跑 `t####_*` 三种规则题。
 - 评测**不测**模型"美术素养"，只测行为正确性、结构合规和呈现分（P 维度里视觉只占 0.20/0.25 权重）。
 - 权重 0.55/0.20/0.25 是 starter set，任何题族都可以在 yaml 里覆盖 `rubric` weights。
 - 回归分支题（R2+）**永远强制**前置几轮 PASS 的行为不能崩，但**没有严格反作弊**（agent 可能"改完先骗过 judge"，这需要后续加 behavior diff 引入规则）。

@@ -47,10 +47,10 @@ def _run_one(task_yaml: str, idx: int) -> dict:
         res = json.load(open(out_path))
         s = res.get("scores") or {}
         # 两套题判定标准：
-        # - gc_* (GameCraft HTML 化) -> HTML BUILD gate 过 = ok
+        # - gc_* (gamebench-init HTML 化) -> HTML BUILD gate 过 = ok
         # - 工厂题                  -> B=S=1.0 + 零回归 = ok
         tid = res.get("task") or ""
-        if tid.startswith("gc_"):
+        if tid.startswith("mz_"):
             gate = res.get("build_gate", {}) or {}
             ok_gc = bool(gate.get("ok"))
             return {
@@ -75,17 +75,17 @@ def main(argv=None):
     ap.add_argument("--tasks", type=int, default=None, help="按排序取前 N 条")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--include-gc", action="store_true",
-                    help="连带 gamecraft 题一起跑（需要本机有 Godot 4 + 原 BMK 资产，默认关）")
-    ap.add_argument("--only-gc", action="store_true", help="只跑 gamecraft 题")
+                    help="连带 gamebench-init 题一起跑（需要本机有 Godot 4 + 原 BMK 资产，默认关）")
+    ap.add_argument("--only-gc", action="store_true", help="只跑 gamebench-init 题")
     args = ap.parse_args(argv)
 
     all_tasks = sorted(glob.glob(str(BENCH / "tasks" / "*" / "*.task.yaml")))
     if args.only_gc:
-        tasks = [t for t in all_tasks if "/gc_" in t]
+        tasks = [t for t in all_tasks if "/mz_" in t]
     elif args.include_gc:
         tasks = all_tasks
     else:
-        tasks = [t for t in all_tasks if "/gc_" not in t]
+        tasks = [t for t in all_tasks if "/mz_" not in t]
     if args.tasks:
         tasks = tasks[: args.tasks]
     print(f"auditing {len(tasks)} tasks with {args.workers} workers")

@@ -1,0 +1,372 @@
+id: mz_openworld-archaeology
+title: "openworld archaeology"
+family: openworld
+difficulty: expert
+engine: html
+rounds:
+  - name: R1
+    spec: |
+      # Open-World Archaeology
+      
+      Build a **2D open-world archaeology game** in Godot 4 at `/workspace/game/`:
+      an expedition across ancient ruins where the player excavates buried artefacts,
+      deciphers forgotten inscriptions, and reconstructs lost civilisations one dig
+      at a time.
+      
+      This is not a prototype. It is a **complete, shippable micro-game** that could
+      sit on an itch.io page or Steam as a polished vertical slice.
+      
+      ## Core Vision
+      
+      Unearth the past. The player is an archaeologist who travels to remote dig
+      sites, carefully removes layers of earth and stone, and discovers artefacts
+      that tell the story of vanished cultures. The fantasy is patient revelation:
+      each brush stroke peels back time, each shard connects to a larger picture, and
+      the deeper you dig the rarer and more fragile the finds become. One careless
+      swing of the pickaxe can shatter a legendary relic; one solved inscription can
+      unlock a hidden chamber no one has entered in millennia.
+      
+      The pressure comes from the sites themselves. Sandstorms bury progress, floors
+      collapse underfoot, oxygen runs thin in flooded passages. The player must read
+      the terrain, choose the right tool, and decide when to push deeper versus when
+      to retreat and catalogue what they have. A growing museum back at base camp
+      makes every expedition feel worthwhile -- each new display fills in a gap in
+      the timeline and unlocks access to the next frontier.
+      
+      ## What the Player Experiences
+      
+      1. **Title and Entry** -- The player arrives at a styled title screen that
+         establishes the mysterious, ancient tone -- torchlit stone, weathered maps,
+         sand drifting across glyphs. Starting an expedition drops them into the
+         overworld.
+      
+      2. **Exploration** -- The world stretches across multiple biomes, each hiding
+         its own dig sites. Desert temples shimmer under a scorching sun, jungle ruins
+         drip with moss and vine, sunken pillars glow beneath turquoise water, and
+         mountain tombs sit locked in ice. Walking between sites feels like a journey
+         -- the terrain changes, the palette shifts, the ambient mood transforms.
+      
+      3. **Excavation** -- At a dig site the player switches between tools -- a
+         delicate brush for fragile surfaces, a trowel for packed earth, a pickaxe
+         for solid rock. Each tool removes material at a different speed and risk.
+         Layers peel away visually, revealing colour changes and texture shifts as
+         depth increases, until an artefact edge glimmers into view.
+      
+      4. **Discovery and Cataloguing** -- Unearthed artefacts range from common
+         pottery shards to legendary golden idols. Each has a distinct look, a rarity
+         tier, and a short historical description. Rare finds are buried deeper and
+         demand more careful tool selection. The player feels the thrill of not
+         knowing what lies beneath the next layer.
+      
+      5. **Puzzles and Secrets** -- Some sites hide inscribed tablets or symbol murals
+         that gate access to sealed chambers. The player manipulates symbols -- matching,
+         rotating, tracing -- until the lock yields and a passage opens with a
+         satisfying rumble. Inside waits a guaranteed rare artefact or a new wing of
+         ruins to explore.
+      
+      6. **Museum and Progression** -- Back at base camp, a museum tent displays
+         every collected artefact on labelled shelves. Arranging finds by culture or
+         era earns research points that unlock improved tools and new dig sites on the
+         map. The museum grows from empty shelves to a rich gallery, charting the
+         player's journey through history.
+      
+      7. **Hazards and Tension** -- Each biome threatens the player differently:
+         sandstorms obscure vision, jungle floors collapse, underwater oxygen depletes,
+         mountain ice triggers avalanches. The player watches a health or safety gauge,
+         decides whether to press on or retreat, and scavenges safety gear to push
+         further next time.
+      
+      ## Assets
+      
+      2D assets are mounted read-only at:
+      
+      - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+      - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+        subdir's `LICENSE.txt`.
+      
+      Browse the library and choose packs.
+      Copy what you need into your project's `assets/` folder.
+      
+      ## Project layout
+      
+      ```
+      /workspace/game/
+        project.godot
+        Main.tscn
+        demo_outputs/    ← your input traces (1–10 files)
+        scripts/  scenes/  assets/
+      ```
+      
+      The build must launch cleanly with:
+      
+      ```
+      godot --headless --path /workspace/game --quit-after 5
+      ```
+      
+      A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+      **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+      anything after `--` is forwarded to the project as user args and silently
+      ignored by the engine. Correct shape:
+      `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+      
+      A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+      result screens look like.
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/frame.png --frames 60
+      ```
+      
+      To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+      helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+      `OS.get_cmdline_user_args()` for your game code to read. Example:
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+      ```
+      
+      ## Demos
+      
+      Ship **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+      demo, each named `*.json`. The evaluator launches a fresh game per trace,
+      replays your trace as synthetic mouse and keyboard input at 1280×720, and
+      records the screen. Only the first 10 traces by filename are evaluated;
+      recordings longer than 20 s are sampled from a random 20 s window.
+      
+      ### Scenarios
+      
+      Normal play should start from the title screen and demonstrate the task's
+      core gameplay loop.
+      Demo playback must be deterministic. For demos that need a specific state
+      (a specific level, combat state, upgrade screen, result state, or late-game
+      setup), define named scenarios your game loads when launched with:
+      
+      ```
+      godot --path /workspace/game -- --scenario <id>
+      ```
+      
+      When `--scenario <id>` is present the game must skip menus, set up the named
+      state deterministically (seed any RNG), and begin accepting input immediately.
+      
+      ### Trace file format
+      
+      ```json
+      {
+        "scenario": "title_flow",
+        "duration_frames": 360,
+        "events": [
+          {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+          {"frame": 90,  "type": "key_press",   "keycode": "1"},
+          {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+          {"frame": 300, "type": "wait"}
+        ]
+      }
+      ```
+      
+      - `scenario` — optional; omit for a normal game launch from the title screen.
+      - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+      - `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+        viewport. Supported types:
+        - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+        - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+          use these for drag interactions: emit `mouse_down` at the start point,
+          one or more `mouse_move` events along the way, and `mouse_up` at the end.
+          A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+          succession.
+        - `mouse_move`: `{frame, type, x, y}`
+        - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+          `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+          `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+        - `wait`: `{frame, type}` — anchor frame, no input.
+      
+      Replay must be deterministic: same trace, fresh launch, same outcome every time.
+      
+      ---
+      
+      # 中文版提示词
+      
+      # 开放世界考古（Open-World Archaeology）
+      
+      在 `/workspace/game/` 用 Godot 4 开发一个**2D 开放世界考古游戏**：
+      一场穿越远古遗迹的考察远征，玩家在其中挖掘埋藏的文物、解读被遗忘的铭文，
+      并一次次通过发掘重建失落的文明。
+      
+      这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+      纵向切片放到 itch.io 页面或 Steam 上。
+      
+      ## 核心构想
+      
+      发掘过去。玩家是一名考古学家，前往偏远的发掘现场，小心地剥离层层泥土与
+      岩石，发现讲述消亡文化故事的文物。这里的幻想是耐心的揭示：每一次刷扫都
+      拂开时间，每一块碎片都连向更大的图景，而挖得越深，出土之物越稀有、越脆弱。
+      一次不慎的鹤嘴锄挥击就能砸碎一件传说级遗物；一段解开的铭文则可能打开一间
+      千年无人踏入的密室。
+      
+      压力来自遗址本身。沙暴会掩埋进度，地面会在脚下塌陷，被水淹没的通道里氧气
+      日渐稀薄。玩家必须读懂地形、选对工具，并判断何时该继续深入、何时该撤回去
+      整理已有的收获。大本营里不断扩充的博物馆让每一次远征都显得值得——每一件
+      新展品都填补了时间线上的一处空白，并解锁通往下一片未知疆域的资格。
+      
+      ## 玩家体验流程
+      
+      1. **标题与进入** —— 玩家看到一个有设计感的标题画面，它奠定神秘而古老的
+         基调——火把照亮的石墙、风化的地图、掠过刻纹的流沙。开启一次远征后，玩家
+         进入大地图。
+      
+      2. **探索** —— 世界横跨多个生态区，每个区域都藏着自己的发掘现场。沙漠神庙
+         在灼热的日光下泛着微光，丛林遗迹上苔藓与藤蔓滴着水珠，沉没的石柱在青绿色
+         的水下发亮，山地陵墓封锁在坚冰之中。在遗址之间行走本身就像一段旅程——
+         地形在变，配色在变，环境氛围也随之转变。
+      
+      3. **发掘** —— 在发掘现场，玩家在多种工具间切换——用于脆弱表面的精细毛刷、
+         用于板结泥土的手铲、用于坚硬岩石的鹤嘴锄。每种工具的清除速度和风险都不同。
+         土层在视觉上逐层剥落，随着深度增加显现出颜色变化与质感差异，直到一件文物的
+         边缘闪入视野。
+      
+      4. **发现与编目** —— 出土文物从常见的陶片到传说级的黄金神像不等。每一件都有
+         独特的外观、稀有度等级和一段简短的历史描述。稀有发现埋得更深，也要求更谨慎
+         的工具选择。玩家能感受到那种不知道下一层之下究竟藏着什么的兴奋。
+      
+      5. **谜题与秘密** —— 有些遗址藏着刻字石板或符号壁画，它们把通往封闭密室的
+         道路锁住。玩家操作这些符号——配对、旋转、描摹——直到机关松动，通道在一声
+         令人满足的轰隆中打开。里面等着的是一件必定稀有的文物，或者一片可供探索的
+         新遗迹区域。
+      
+      6. **博物馆与进程** —— 回到大本营，一顶博物馆帐篷把收集到的每件文物陈列在
+         带标签的架子上。按文化或年代整理藏品可获得研究点数，用来解锁更好的工具和
+         地图上的新发掘现场。博物馆从空荡的货架成长为丰富的展廊，记录着玩家穿越
+         历史的旅程。
+      
+      7. **危险与张力** —— 每个生态区威胁玩家的方式各不相同：沙暴遮蔽视野，丛林
+         地面塌陷，水下氧气耗尽，山地坚冰引发雪崩。玩家盯着一条生命值或安全度
+         量表，决定是继续推进还是撤退，并搜集安全装备以便下次走得更远。
+      
+      ## 资产
+      
+      2D 资产以只读方式挂载在：
+      
+      - `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+      - `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+        `LICENSE.txt`。
+      
+      浏览资产库并挑选合适的资产包。
+      把需要的文件复制到你项目的 `assets/` 目录下。
+      
+      ## 项目结构
+      
+      ```
+      /workspace/game/
+        project.godot
+        Main.tscn
+        demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+        scripts/  scenes/  assets/
+      ```
+      
+      构建必须能通过以下命令干净启动：
+      
+      ```
+      godot --headless --path /workspace/game --quit-after 5
+      ```
+      
+      Godot 命令行参数的参考文档在 `/workspace/tools/godot_command_line.md`。
+      **像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+      `--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+      `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+      
+      `/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+      UI / battlefield / result 画面长什么样。
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/frame.png --frames 60
+      ```
+      
+      要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+      `--out` / `--frames` / `--scene`；其余参数会留在
+      `OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+      
+      ```
+      /workspace/tools/screenshot.sh --path /workspace/game \
+            -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+      ```
+      
+      ## 演示
+      
+      在 `/workspace/game/demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+      命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+      分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+      前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+      
+      ### 场景（Scenarios）
+      
+      常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+      演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+      升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+      
+      ```
+      godot --path /workspace/game -- --scenario <id>
+      ```
+      
+      当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+      （为任何随机数发生器设定种子），并立即开始接受输入。
+      
+      ### 轨迹文件格式
+      
+      ```json
+      {
+        "scenario": "title_flow",
+        "duration_frames": 360,
+        "events": [
+          {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+          {"frame": 90,  "type": "key_press",   "keycode": "1"},
+          {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+          {"frame": 300, "type": "wait"}
+        ]
+      }
+      ```
+      
+      - `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+      - `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+      - `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+        支持的类型：
+        - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+        - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+          用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+          `mouse_move` 事件，在终点发出 `mouse_up`。
+          一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+        - `mouse_move`：`{frame, type, x, y}`
+        - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+          `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+          `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+        - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+      
+      回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。
+static:
+  - kind: required_file
+    role: entry
+    path: project.godot
+    weight: 1.0
+  - kind: required_file
+    path: demo_outputs
+    weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+  - id: completeness
+    weight: 0.30
+    max: 5
+    anchors: ["M1", "M2", "M3", "M4", "M5"]
+  - id: richness
+    weight: 0.25
+    max: 5
+    anchors: ["D1", "D2", "D3", "D4", "D5"]
+  - id: player_exp
+    weight: 0.25
+    max: 5
+    anchors: ["V1", "V2", "V3", "V4"]
+  - id: visual
+    weight: 0.20
+    max: 5
+    anchors: ["A1", "A2", "A3", "A4"]

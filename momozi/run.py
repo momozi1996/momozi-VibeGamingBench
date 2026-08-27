@@ -103,7 +103,7 @@ def _task_public_suite(task: Task) -> Path:
     return cand
 
 
-def _run_gc_path(task, work, prod, agent, skip_judge, judge_agent, stamp):
+def _run_mz_path(task, work, prod, agent, skip_judge, judge_agent, stamp):
     """gc 路径：adapter 一次性生成，然后 BUILD gate → judge → GC 公式。"""
     adapter = _build(task, agent)
     # 把 prompt 落盘然后让 adapter 生成（无多轮，是为 gc 单轮命题）
@@ -117,11 +117,11 @@ def _run_gc_path(task, work, prod, agent, skip_judge, judge_agent, stamp):
             "export function advance(g,a,dt){return g;}\n", encoding="utf-8")
     gen = adapter.generate(work, prompt_text, 0)
     if not skip_judge:
-        from .run_gc import run_gc_task as _gc
+        from .run_zhen import run_gamebench_task as _gc
         res = _gc(task, work, adapter, prod, judge_agent or "claude")
     else:
         # skip_judge 也要跑 BUILD gate 拿个便宜分
-        from .run_gc import run_gc_task as _gc
+        from .run_zhen import run_gamebench_task as _gc
         res = _gc(task, work, adapter, prod, "mock")
     return {
         "benchmark": "momozi-3A-GamegenBench",
@@ -133,7 +133,7 @@ def _run_gc_path(task, work, prod, agent, skip_judge, judge_agent, stamp):
         "engine": task.engine,
         "agent": adapter.name,
         "timestamp": stamp,
-        "scores": {"gc_formula": res.get("status_score"),
+        "scores": {"zhen_score": res.get("status_score"),
                    "dimensions": res.get("judge", {}).get("dimensions")},
         "build_gate": res.get("build_gate", {}),
         "gen_ok": bool(gen.get("ok")),
@@ -161,13 +161,13 @@ def run_task(task_path: str, agent: str = "mock", out_path: str = None,
 
     # gc-* 题：HTML 静态合规 BUILD gate × GC 公式(0.15M+0.35D+0.15V+0.35A)
     # 工厂参数化题不计入排行榜，移到 tasks_synthetic 单独维护
-    if task.id.startswith("gc_"):
+    if task.id.startswith("mz_"):
         if agent == "mock":
             (prod / "index.html").write_text(_GC_PLACEHOLDER, encoding="utf-8")
             (prod / "game_logic.js").write_text(
                 "export function createGame(){return {bricks:[],lives:3,score:0,state:'playing'};}\n"
                 "export function advance(g,a,dt){return g;}\n", encoding="utf-8")
-        res = _run_gc_path(task, work, prod, agent, skip_judge, judge_agent, stamp)
+        res = _run_mz_path(task, work, prod, agent, skip_judge, judge_agent, stamp)
         if out_path:
             Path(out_path).write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")
         print(json.dumps(res, ensure_ascii=False, indent=2))
