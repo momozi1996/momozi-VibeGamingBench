@@ -1,0 +1,26 @@
+# agent 适配 profile —— 优先适配 claude code / codex 两个主流 agent
+# 占位符: $PROMPT_FILE(传文件路径) $PROMPT(直接内联) $WORKDIR
+# 两个 adapter 都在"外部沙箱"下运行：子进程 cwd=workspace，读写被限在产品目录。
+claude:
+  label: claude-code
+  argv:
+    - claude
+    - -p
+    - $PROMPT_FILE
+  write_args:
+    - --permission-mode
+    - acceptEdits
+    - --allowedTools
+    - "Edit,Write"
+  timeout: 1800
+
+codex:
+  label: codex
+  argv:
+    - codex
+    - exec
+    - --sandbox
+    - workspace-write
+    - --skip-git-repo-check
+    - $PROMPT_FILE
+  timeout: 1800

@@ -1,0 +1,2 @@
+# 运行时依赖（pyyaml 解析 task.yaml；其余为 python 标准库）
+PyYAML>=5.4

@@ -1,0 +1,109 @@
+"""校验器：静态检查（文件/内容/依赖） + 行为套件（node 跑 task 自带 .mjs）。
+
+行为套件协议（node 脚本零 stdout JSON 数组）：
+  [{"id": "B1", "ok": true, "detail": "..."}, ...]
+脚本从 env.ARTIFACT 读产物目录；脚本 args: ARTIFACT。
+subprocess.run(argv("python","-m","gamegenbench","run",task,agent,out))（占位）
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import subprocess
+from pathlib import Path
+
+
+class StaticChecker:
+    """按 task.static 列表执行检查。"""
+    def __init__(self, static_items: list):
+        self.items = static_items or []
+
+    def run(self, workspace: Path, req: dict) -> list:
+        results = []
+        files = {p.name: p for p in workspace.glob("*") if p.is_file()}
+        for item in self.items:
+            kind = item.get("kind")
+            rid = item.get("id", kind)
+            if kind == "required_file":
+                rel = item["path"]
+                want = Path(rel).name
+                ok = want in files
+                results.append({
+                    "id": rid, "ok": ok, "weight": item.get("weight", 1.0),
+                    "detail": f"file {rel} {'present' if ok else 'MISSING'}",
+                })
+            elif kind == "contains":
+                target = Path(item["path"]).name
+                needle = item["pattern"]
+                ok = target in files and needle in files[target].read_text(encoding="utf-8", errors="ignore")
+                results.append({
+                    "id": rid, "ok": ok, "weight": item.get("weight", 1.0),
+                    "detail": f"{item['path']} contains {needle!r}: {ok}",
+                })
+            elif kind == "no_external_js":
+                target = Path(item.get("path", req["entry"])).name
+                text = files.get(target, None)
+                text = text.read_text(encoding="utf-8", errors="ignore") if text else ""
+                bad_tags = re.findall(r"(https?://|src=[\"'][^\"']*cdnjs)", text)
+                ok = not bad_tags
+                results.append({
+                    "id": rid, "ok": ok, "weight": item.get("weight", 1.0),
+                    "detail": f"no external js tags: {not bad_tags}",
+                })
+            elif kind == "max_size_kb":
+                limit = int(item["kb"])
+                overs = [p.name for p in files.values() if p.stat().st_size / 1024 > limit]
+                ok = not overs
+                results.append({
+                    "id": rid, "ok": ok, "weight": item.get("weight", 1.0),
+                    "detail": f"files over {limit}KB: {overs or 'none'}",
+                })
+            elif kind == "line_budget":
+                limit = int(item["max_lines"])
+                rel = item.get("path", req["logic"])
+                target = Path(rel).name
+                if target in files:
+                    lines = len(files[target].read_text(encoding="utf-8", errors="ignore").splitlines())
+                else:
+                    lines = None                      # 文件缺失 → 该检查“未覆盖”，不计分母
+                ok = lines is not None and lines <= limit
+                results.append({
+                    "id": rid, "ok": ok if lines is not None else None,
+                    "weight": item.get("weight", 0.0 if lines is None else 1.0),
+                    "detail": f"{target} lines={lines} (<= {limit})" if lines is not None
+                              else f"{target} MISSING — not covered",
+                })
+            else:
+                results.append({"id": rid, "ok": None, "weight": 0.0, "detail": f"unknown static kind {kind}"})
+        return results
+
+
+class BehaviorSuite:
+    """跑 task 自带的行为套件脚本（每任务 scripts/*.mjs）。"""
+    def __init__(self, workspace: Path, suite_rel: str, timeout: int = 60):
+        self.workspace = workspace
+        self.suite_rel = suite_rel
+        self.timeout = timeout
+
+    def run(self) -> list:
+        script = self.workspace / self.suite_rel
+        if not script.exists():
+            return [{"id": "suite_exists", "ok": False, "detail": f"missing {self.suite_rel}"}]
+        try:
+            proc = subprocess.run(
+                ["node", str(script), str(self.workspace)],
+                cwd=self.workspace, capture_output=True, text=True, timeout=self.timeout,
+            )
+            raw = proc.stdout.strip()
+            if not raw:
+                return [{"id": "suite_json", "ok": False, "detail": f"no JSON stdout; stderr={proc.stderr[-300:]}"}]
+            data = json.loads(raw)
+            out = []
+            for d in data:
+                out.append({"id": d.get("id", "?"), "ok": bool(d.get("ok")), "detail": d.get("detail", "")})
+            return out
+        except subprocess.TimeoutExpired:
+            return [{"id": "suite_timeout", "ok": False, "detail": "behavior suite timed out"}]
+        except json.JSONDecodeError as e:
+            return [{"id": "suite_json", "ok": False, "detail": f"invalid JSON: {e}"}]

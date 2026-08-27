@@ -1,0 +1,14 @@
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# 产物与日志
+workspaces/
+runs/
+submissions/tmp/
+*.tar.gz
+
+# 系统
+.DS_Store
