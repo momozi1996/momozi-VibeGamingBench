@@ -2,7 +2,7 @@ id: gc_visualnovel-keepsake
 title: "visualnovel keepsake"
 family: visualnovel
 difficulty: expert
-engine: godot
+engine: html
 rounds:
   - name: R1
     spec: |
@@ -322,7 +322,7 @@ static:
     path: demo_outputs
     weight: 1.0
 behavior:
-  script: beh_build.mjs
+  script: beh_html.mjs
   timeout: 300
 rubric:
   - id: completeness

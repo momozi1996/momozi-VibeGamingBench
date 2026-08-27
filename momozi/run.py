@@ -38,6 +38,20 @@ WEIGHTS = {"behavior": 0.55, "structure": 0.20, "presentation": 0.25}
 FAMILY_REF_ALIAS = {"physics_breakout": "tg1"}
 
 
+_GC_PLACEHOLDER = """<!doctype html>
+<html><head><meta charset="utf-8"><title>gc mock placeholder</title>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.169.0/build/three.module.js"}}</script></head>
+<body><canvas id="c"></canvas>
+<script type="module">
+import * as THREE from 'three';
+import { createGame, advance } from './game_logic.js';
+const g = createGame({});
+function loop(){ advance(g, {}, 1/60); requestAnimationFrame(loop); }
+loop();
+</script></body></html>
+"""
+
+
 def _prepare_workspace(task: Task, agent: str, stamp: str) -> Path:
     """init workspace: 清空 product/, 落 tests 套件 + _prompt.md。"""
     work = WORKSPACE_ROOT / stamp / task.id / agent
@@ -90,17 +104,25 @@ def _task_public_suite(task: Task) -> Path:
 
 
 def _run_gc_path(task, work, prod, agent, skip_judge, judge_agent, stamp):
-    """gc 路径：adapter 一次性生成，然后 BUILD → judge → GC 公式。"""
+    """gc 路径：adapter 一次性生成，然后 BUILD gate → judge → GC 公式。"""
     adapter = _build(task, agent)
     # 把 prompt 落盘然后让 adapter 生成（无多轮，是为 gc 单轮命题）
     prompt_text = task.rounds[0].spec if task.rounds else ""
     (work / "_prompt.md").write_text(prompt_text, encoding="utf-8")
+    # gc 题联调：mock adapter 不产物，我们用 _GC_PLACEHOLDER 手动补齐纯净 HTML 壳
+    if agent == "mock":
+        (prod / "index.html").write_text(_GC_PLACEHOLDER, encoding="utf-8")
+        (prod / "game_logic.js").write_text(
+            "export function createGame(){return {bricks:[],lives:3,score:0,state:'playing'};}\n"
+            "export function advance(g,a,dt){return g;}\n", encoding="utf-8")
     gen = adapter.generate(work, prompt_text, 0)
     if not skip_judge:
         from .run_gc import run_gc_task as _gc
         res = _gc(task, work, adapter, prod, judge_agent or "claude")
     else:
-        res = {"status_score": 0.0, "skipped": True}
+        # skip_judge 也要跑 BUILD gate 拿个便宜分
+        from .run_gc import run_gc_task as _gc
+        res = _gc(task, work, adapter, prod, "mock")
     return {
         "benchmark": "momozi-3A-GamegenBench",
         "version": "0.1.0",
@@ -137,8 +159,14 @@ def run_task(task_path: str, agent: str = "mock", out_path: str = None,
     work = _prepare_workspace(task, agent, stamp)
     prod = work / "product"
 
-    # gc-* 题（Godot UE5 等重型引擎）：走 BUILD gate + GC 公式，跳过 suite 回归测试
-    if task.id.startswith("gc_") or task.engine not in ("three.js", "html", "logic"):
+    # gc-* 题：HTML 静态合规 BUILD gate × GC 公式(0.15M+0.35D+0.15V+0.35A)
+    # 工厂参数化题不计入排行榜，移到 tasks_synthetic 单独维护
+    if task.id.startswith("gc_"):
+        if agent == "mock":
+            (prod / "index.html").write_text(_GC_PLACEHOLDER, encoding="utf-8")
+            (prod / "game_logic.js").write_text(
+                "export function createGame(){return {bricks:[],lives:3,score:0,state:'playing'};}\n"
+                "export function advance(g,a,dt){return g;}\n", encoding="utf-8")
         res = _run_gc_path(task, work, prod, agent, skip_judge, judge_agent, stamp)
         if out_path:
             Path(out_path).write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -154,7 +182,8 @@ def run_task(task_path: str, agent: str = "mock", out_path: str = None,
     adapter = _build(task, agent)
     static = StaticChecker(task.static)
     req = task.artifact_requirements()
-    suite = BehaviorSuite(prod, task.behavior.get("script", "beh_behavior.mjs"),
+    suite_path = task.behavior.get("script", "beh_behavior.mjs") if task.behavior else "beh_behavior.mjs"
+    suite = BehaviorSuite(prod, suite_path,
                           timeout=task.behavior.get("timeout", 60)) if task.behavior else None
 
     rounds_log = []

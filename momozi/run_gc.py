@@ -7,28 +7,50 @@ from __future__ import annotations
 import json
 import subprocess
 import shutil
+import re
 from pathlib import Path
 
 from .judge_gc import run_gc_rubric_judge
 
 
-def build_gate(work: Path, cmd_override: str = None, timeout: int = 60) -> dict:
-    """跑 BUILD 门控：原 BMK build_check.cmd = `godot --headless --path <dir> --quit-after 5`。"""
-    cmd_tokens = (cmd_override or "godot --headless --path <GAME> --quit-after 5").split()
-    # 替换 <GAME> → product 目录
-    cmd = [c.replace("<GAME>", str(work / "product")) for c in cmd_tokens]
-    try:
-        proc = subprocess.run(cmd, cwd=work, capture_output=True, text=True, timeout=timeout)
-        return {
-            "ok": proc.returncode == 0 and "SCRIPT ERROR" not in proc.stdout.upper() and "ERROR:" not in proc.stderr.upper(),
-            "returncode": proc.returncode,
-            "stdout": proc.stdout[-600:],
-            "stderr": proc.stderr[-600:],
-        }
-    except subprocess.TimeoutExpired:
-        return {"ok": False, "returncode": -1, "stderr": "timeout"}
-    except FileNotFoundError:
-        return {"ok": False, "returncode": -2, "stderr": "godot not installed"}
+def build_gate(work: Path, cmd_override: str = None, timeout: int = 30) -> dict:
+    """HTML 硬门控：无 CLI, 只做静态合规。
+    门控内容:
+      - product/index.html 存在
+      - product/game_logic.js 存在
+      - HTML 不引用除 three.js 之外的运行时外链(fetch/XHR/other CDN)
+      - HTML 有 <canvas> 或 WebGL 引用迹象
+    """
+    prod = work / "product"
+    html_files = list(prod.glob("index.html")) + list(prod.glob("*.html"))
+    js_files = list(prod.glob("game_logic.js"))
+    checks = {
+        "index_html_present": len(html_files) > 0,
+        "game_logic_present": len(js_files) > 0,
+        "canvas_or_webgl": False,
+        "no_external_heavy_refs": True,
+    }
+    reasons = []
+    if html_files:
+        txt = html_files[0].read_text(encoding="utf-8", errors="ignore")
+        if "<canvas" in txt or "WebGLRenderer" in txt or "getContext(" in txt:
+            checks["canvas_or_webgl"] = True
+        else:
+            reasons.append("no <canvas>/WebGL signal")
+        # 外链(不允许 three.js CDN 之外): fetch/XMLHttpRequest/img的http
+        heavy = re.findall(r"(?:fetch\(|XMLHttpRequest|src=\"http[^\"]*\.(?:png|jpg|mp3|wav|mp4)\")", txt)
+        if heavy:
+            checks["no_external_heavy_refs"] = False
+            reasons.append(f"external runtime refs: {heavy[:3]}")
+    else:
+        reasons.append("index.html missing")
+    ok = all(checks.values())
+    return {
+        "ok": ok,
+        "checks": checks,
+        "reasons": reasons,
+        "detail": "HTML static gates pass" if ok else "; ".join(reasons),
+    }
 
 
 def run_gc_task(task, work, adapter, prod, judge_agent):
@@ -36,7 +58,11 @@ def run_gc_task(task, work, adapter, prod, judge_agent):
     gate = build_gate(work)
     judge = None
     if not gate["ok"]:
-        judge = {"ok": False, "error": "build gate failed", "stderr": gate["stderr"]}
+        judge = {"ok": False, "error": "build gate failed", "detail": gate.get("detail", "")}
+    elif (judge_agent or "claude") == "mock":
+        # mock 模式：跳过真 judge，直接给 0；由调用方决定是否用 gate 分
+        judge = {"ok": True, "dimensions": {"completeness": 0, "richness": 0, "player_exp": 0, "visual": 0},
+                 "gc_formula_score": 0.0}
     else:
         try:
             judge = run_gc_rubric_judge(task, prod, judge_agent or "claude")
