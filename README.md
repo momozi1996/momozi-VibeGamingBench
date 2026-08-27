@@ -57,7 +57,9 @@ momozi-3A-GamegenBench/
 │  └─ verify.py                  提交包复评（防止虚报）
 │
 ├─ bench/                        公共资产
-│  ├─ tasks/                     题目池（1140 个 task 目录）
+│  ├─ tasks/                     主榜单题目池（140 道 gc_*）
+│  │  ├─ gc_<name>/             GameCraft 140 题（prompt.md + rubric.original.json + rubric.mapping.json + beh_build.mjs）
+│  ├─ tasks_synthetic/           合成题（1000 道，仅 harness 压测，不算监督分）
 │  │  ├─ t####_<family>/        工厂 1000 题（physics_breakout/runner_dodge/turn_combat/economy_market）
 │  │  └─ gc_<name>/             GameCraft 140 题（prompt.md + rubric.original.json + rubric.mapping.json）
 │  ├─ tests/beh_*.mjs            家族行为套件（deterministic golden suite）
@@ -82,18 +84,42 @@ momozi-3A-GamegenBench/
 
 ## 题目分布
 
-### v0.1 已上线：1140 题
+### v0.1 主榜单（GC，真实生产级题）
 
-| 来源 | 家族 | 数量 | 轮次 | 引擎 | 参考 |
-|---|---|---:|---|---|---|
-| 工厂参数化 | physics_breakout 打砖块 | 250 | R1 造 → R2 增量 | three.js | **`bench/references/tg1`** |
-| 工厂参数化 | runner_dodge 跑酷 | 250 | 同上 | 逻辑+html | `bench/references/runner_dodge` |
-| 工厂参数化 | turn_combat 回合制 | 250 | 同上 | 逻辑+html | `bench/references/turn_combat` |
-| 工厂参数化 | economy_market 市场 | 250 | 同上 | 逻辑+html | `bench/references/economy_market` |
-| GameCraft 导入 | cardgame / horror / idle / openworld / platformer / puzzle / racing / rhythm / roguelike / shooter / simulation / sports / strategy / tycoon / visualnovel | 140 | 单轮（原文 prompt.md 里含 R1 主体 + 隐藏 grading JSON） | Godot 4 | `bench/tasks/gc_*/rubric.original.json` |
-| **合计** | — | **1140** | — | — | — |
+**140 道 Godot 2D 游戏题**，改编自 GameCraft-Bench。每道包含:
 
-> 难度标签：`t####_*` 家族全部 `difficulty: easy`（入门好过）；`gc_*` 一律 `difficulty: expert`（生产级，15 rubric/题）。实际难度分层见 `bench/POOL_AUDIT.md`。
+- 一份 12 页《开发任务书》(`prompt.md`)，含核心愿景、7 条玩家体验、场景定义、资产清单；
+- 一份**隐藏 grading rubric**（`rubric.original.json`，含 M*/D*/V*/A* 共 ~14 条 requirement，每条一段三档锚点）；
+- 一份 `beh_build.mjs` build gate（`godot --headless --path <game> --quit-after 5` 0 fatal → BUILD=1）；
+- 原 BMK 的 judge prompt 结构（SYSTEM + USER + rubric 全量），见 `momozi/judge_gc.py`。
+
+| 家族 | 数量 | 族样本 |
+|---|---:|---|
+| platformer 平台 | 19 | `knight-quest` / `momentum-lab` |
+| strategy 策略 | 17 | `spell-tactics` / `siege-engineer` |
+| tycoon 经营 | 16 | `potion-shop` / `pirate-port` |
+| openworld 开放世界 | 15 | `airship-trader` / `ghost` |
+| roguelike | 14 | `action-void-harvest` / `garden-crawl` |
+| visualnovel 视觉小说 | 11 | `spy-handler` / `courtroom-clue-trial` |
+| puzzle 解谜 | 8 | `sokoban-dungeon` / `circuit-wizard` |
+| shooter 射击 | 7 | — |
+| simulation 模拟经营 | 6 | `kitchen-rush` / `border-check` |
+| cardgame 卡牌 | 5 | `poker-roguelike` / `spire-descent` |
+| horror 恐怖 | 5 | `dollhouse` / `lighthouse` |
+| rhythm 音游 | 5 | `beat-dungeon` / `note-highway` |
+| idle 放置 | 4 | `ant-empire` / `factory-planet` |
+| racing 竞速 | 4 | `rocket-trials` |
+| sports 运动 | 4 | `fishing-tournament` |
+| **合计** | **140** | — |
+
+### v0.1 合成题（Synthetic，不计入主榜单）
+
+**1000 道参数化题**（4 家族 × 250 镜面），放在 `bench/tasks_synthetic/`：
+
+- 家族：physics_breakout 打砖块 / runner_dodge 跑酷 / turn_combat 回合制 / economy_market 市场
+- 每道 = 同一模板换数值参数 + 一份 5–10 条纯逻辑断言 golden suite
+- **用途**：harness 压力测试（**一次跑 1000 题看 runner/校验器稳不稳**），**不算监督评分依据**；分数不计入正式 leaderboard
+- 全量门禁：`python3 scripts/validate_pool.py --workers 16` 已 1000/1000 通过（72s）
 
 ### 赛道规划
 

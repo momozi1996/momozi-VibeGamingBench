@@ -89,6 +89,36 @@ def _task_public_suite(task: Task) -> Path:
     return cand
 
 
+def _run_gc_path(task, work, prod, agent, skip_judge, judge_agent, stamp):
+    """gc 路径：adapter 一次性生成，然后 BUILD → judge → GC 公式。"""
+    adapter = _build(task, agent)
+    # 把 prompt 落盘然后让 adapter 生成（无多轮，是为 gc 单轮命题）
+    prompt_text = task.rounds[0].spec if task.rounds else ""
+    (work / "_prompt.md").write_text(prompt_text, encoding="utf-8")
+    gen = adapter.generate(work, prompt_text, 0)
+    if not skip_judge:
+        from .run_gc import run_gc_task as _gc
+        res = _gc(task, work, adapter, prod, judge_agent or "claude")
+    else:
+        res = {"status_score": 0.0, "skipped": True}
+    return {
+        "benchmark": "momozi-3A-GamegenBench",
+        "version": "0.1.0",
+        "task": task.id,
+        "title": task.title,
+        "family": task.family,
+        "difficulty": task.difficulty,
+        "engine": task.engine,
+        "agent": adapter.name,
+        "timestamp": stamp,
+        "scores": {"gc_formula": res.get("status_score"),
+                   "dimensions": res.get("judge", {}).get("dimensions")},
+        "build_gate": res.get("build_gate", {}),
+        "gen_ok": bool(gen.get("ok")),
+        "workspace": str(work),
+    }
+
+
 def _build(task: Task, agent: str) -> object:
     if agent == "mock":
         # 参考实现：任务声明为准；否则按题族_参考目录别名推
@@ -106,6 +136,14 @@ def run_task(task_path: str, agent: str = "mock", out_path: str = None,
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     work = _prepare_workspace(task, agent, stamp)
     prod = work / "product"
+
+    # gc-* 题（Godot UE5 等重型引擎）：走 BUILD gate + GC 公式，跳过 suite 回归测试
+    if task.id.startswith("gc_") or task.engine not in ("three.js", "html", "logic"):
+        res = _run_gc_path(task, work, prod, agent, skip_judge, judge_agent, stamp)
+        if out_path:
+            Path(out_path).write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(json.dumps(res, ensure_ascii=False, indent=2))
+        return res
 
     # prompt 逐轮
     prompt_specs = list(task.rounds)
