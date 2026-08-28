@@ -1,0 +1,105 @@
+id: mz_rhythm-rhythm-striker-zh
+title: 极简 3D 节奏大师 (中文)
+family: rhythm
+difficulty: medium
+engine: html
+language: zh
+base_task_id: mz_rhythm-rhythm-striker
+provenance:
+  kind: adapted_user_prompt
+  source_name: benchmark author expansion prompts
+  source_item: user-05
+rounds:
+- name: R1
+  spec: |-
+    # 极简 3D 节奏大师
+
+    制作一个完整可玩的 **3D 节奏动作游戏**，交付为经过打磨的浏览器纵向切片。
+
+    ## 核心构想
+
+    一款发生在无限自发光隧道中的极简 3D 节奏游戏。几何目标随节拍抵达；准确按键会把它们击碎成物理碎片，而隧道、材质和镜头会响应合成音频。
+
+    ## 必须实现的可玩系统
+
+    1. **系统 1** - 在多条轨道生成几何节拍目标，并依据确定性谱面对按键进行 Perfect、Good 和 Miss 判定。
+    2. **系统 2** - 使用 Web Audio API 合成与分析器，让自发光材质、隧道分段和镜头冲击响应当前频段。
+    3. **系统 3** - 成功击中时把目标打碎成具有速度感的物理碎片；漏过时目标穿过玩家并造成独特隧道扭曲。
+    4. **系统 4** - 实现连击、倍率、得分、生命、歌曲进度、暂停、重试以及带判定统计的结算画面。
+    5. **系统 5** - 提供至少三张谱面或难度模式，节奏、速度、轨道组合和视觉身份均有区别。
+    6. **系统 6** - 在辉光、镜头运动、碎片和音频响应特效下仍保持判定清晰，并提供降低晃动与闪烁的辅助设置。
+
+    ## 成长与推进
+
+    通关谱面可解锁更密集节奏、长按目标、交替打击方向和装饰性隧道主题，同时不破坏确定性节拍。
+
+    ## 美术方向
+
+    克制的霓虹隧道，以黑色负空间、强轨道色、自发光几何体、频率响应表面和清晰冲击文字呈现。
+
+    ## HTML 提交格式
+
+    用两个文件交付一个可独立运行的 3D 浏览器游戏：
+
+    - `index.html` - 使用 Three.js 完成全部可玩呈现。
+    - `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
+      `advance(game, input, dt)`。
+
+    页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
+    几何体、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、视频或音频。
+    Three.js 可以从官方 CDN 加载；若本题明确要求其他库，也可以使用固定版本的 CDN。
+
+    必须支持键盘和鼠标。可按题目需要加入触摸或设备传感器控制，但必须提供桌面端替代
+    方案。主游戏在 1280x720 下应清晰可读。需要有经过设计的标题画面、简短的游戏内引导、
+    暂停或重新开始控制、完整的胜负或完成闭环，以及每项关键操作的明确反馈。最终结果应当
+    是打磨过的纵向切片，而不是被动场景或彼此割裂的技术演示。
+
+    `index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
+    160 KB 以内，`game_logic.js` 控制在 320 行以内。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, progression, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent 3D art direction, authored environments, effects, and motion polish.

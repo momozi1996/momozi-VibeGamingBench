@@ -1,0 +1,122 @@
+id: mz_aiga-world-b65d7720-zh
+title: 曼谷暗影 (中文)
+family: strategy
+difficulty: high
+engine: html
+language: zh
+base_task_id: mz_aiga-world-b65d7720
+provenance:
+  kind: adapted_aiga_shared_world
+  source_name: AIGA Shared Worlds
+  source_index_url: https://www.aiga.io/zh/shared-worlds?langCode=zh%2Cen
+  source_url: https://www.aiga.io/shared-worlds/shared/b65d7720-6353-4a7b-86fb-2d0bdc43a3d5
+  source_api_url: https://www.aiga.io/api/public-worlds/b65d7720-6353-4a7b-86fb-2d0bdc43a3d5
+  source_world_id: b65d7720-6353-4a7b-86fb-2d0bdc43a3d5
+  source_title: เงาแห่งกรุงเทพ
+  source_language: th
+  source_genre: noir
+  source_mode: open-world-kingpin
+  source_api_sha256: 97f538347d0f07cddbc8f6a1d52c7e671fd55238e6848526a7c856e454dcc8d8
+  source_sitemap_sha256: 5248fa9baefbf6758a81a684a4fd3bfc2f5b07d24248b2bf9cf65c9e7184372c
+  adaptation_language: zh
+rounds:
+- name: R1
+  spec: |-
+    # 曼谷暗影
+
+    制作一个完整可玩的 **3D 策略游戏**，以
+    **第三人称** 呈现为经过打磨的浏览器纵向切片。
+
+    ## 核心构想
+
+    一名新人在霓虹曼谷通过谈判、战斗、联盟和谨慎应对后果建立地下声望。
+
+    ## 世界参数
+
+    把它作为原创的 **黑色侦探** 共享世界改写，范围为 **超大型**，叙事基调为 **冷峻写实**。不得复刻商业角色、名称、设定、标志或受保护的视觉设计。
+
+    ## 必须实现的可玩系统
+
+    1. **系统 1** - 探索《曼谷暗影》中的至少三个相连城区或领地，每处都有不同机会、危险和归属状态。
+    2. **系统 2** - 通过谈判、贸易、战术冲突或服务完成差事，并用透明规则获得或失去声望。
+    3. **系统 3** - 管理至少三个派系，其信任、敌意、联盟和控制权会在玩家选择后持续变化。
+    4. **系统 4** - 平衡健康、资源、影响力和警觉度，领地事件会在玩家不介入时继续演化。
+    5. **系统 5** - 在整局中持续保存声望、派系关系、占有或保护地点、消耗资源与未解决后果。
+    6. **系统 6** - 抵达同时检验领地、派系、资源和声望系统的可玩影响力里程碑，并支持继续游玩或计分结局。
+
+    ## 推进与持久状态
+
+    使用三个阶段组成短流程：先清楚引入中心交互，再与世界压力和有意义选择组合，最后用
+    综合场景检验掌握程度。重要规则、目标、资源、关系、选择状态、危险、进度和结果必须
+    显示在稳定 HUD 区域，并在 `game_logic.js` 中有对应状态。各系统必须通过共享状态
+    互相影响，不能只是彼此割裂的按钮、菜单或视觉演示。
+
+    ## 美术方向
+
+    战术场地便于扫视，单位定位、范围与归属清楚；特效保持克制，信息层级支持连续决策。
+
+    ## HTML 提交格式
+
+    用两个文件交付一个可独立运行的浏览器游戏：
+
+    - `index.html` - 完整可玩的呈现层。使用 Three.js 和 WebGL 完成可玩呈现。
+    - `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
+      `advance(game, input, dt)`。
+
+    页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
+    几何体、生成纹理、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、
+    视频或音频。使用 Three.js 时可以从官方 CDN 加载；允许的库必须锁定具体版本。
+
+    必须支持键盘和鼠标，并按玩法需要加入触摸或手柄控制。完整游戏区与 HUD 在
+    1280x720 下应清晰可读。需要有经过设计的开始流程、简短游戏内引导、暂停与重开控制、
+    完整结果闭环，以及每项关键操作的明确反馈。
+
+    `index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
+    160 KB 以内，`game_logic.js` 控制在 320 行以内。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, persistence, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent authored art direction, functional composition, effects, and motion polish.

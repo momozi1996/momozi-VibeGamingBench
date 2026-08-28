@@ -1,5 +1,5 @@
-# agent 适配 profile —— momozi-3A-GamegenBench
-# 用最新版 claude code / codex 两个主流 agent
+# agent adapter profiles - momozi-VibeGamingBench
+# The installed CLI default model is used unless a profile explicitly pins one.
 # 占位符: $PROMPT_FILE(传文件路径) $PROMPT(直接内联) $WORKDIR
 # mock 是内置测试用,直接复刻参考实现,0 token。
 claude:
@@ -11,7 +11,6 @@ claude:
     - --allowedTools
     - "Edit,Write,Bash"
   env:
-    # Opus 5 是最新默认；如需锁模型宿加 --
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
   timeout: 1800
 

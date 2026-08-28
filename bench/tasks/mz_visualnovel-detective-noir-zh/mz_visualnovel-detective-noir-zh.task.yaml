@@ -1,0 +1,107 @@
+id: mz_visualnovel-detective-noir-zh
+title: visualnovel detective noir (中文)
+family: visualnovel
+difficulty: low
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 黑色侦探（Detective Noir）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Detective Noir**——一款
+    **侦探推理视觉小说**。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨
+    程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    一名私家侦探在一座浸满雨水的城市里办案：勘查犯罪现场、询问嫌疑人，并在一块
+    推理板上拼凑出谁在何时、为何做了什么。每个案件都是一桩自成一体的谜案，包含
+    物证、证人陈述，以及一张玩家必须解开的关系网。张力是认知层面的：所有线索都
+    摆在那里，但要正确地把它们连起来，需要仔细阅读和逻辑排除。错误的指控会白白
+    消耗信誉，并锁死部分信息。整体调性是经典黑色电影：阴影、风衣、爵士底韵，以及
+    一群人人都有所隐瞒的道德灰色角色。
+
+    ## 玩家体验流程
+
+    从标题画面开始，玩家在案件板上选择一个案件。每个案件以一个犯罪现场开场——一处
+    以黑色电影风格呈现的地点，带有可交互热点。点击热点会揭示证据：一片血迹、一封
+    被撕碎的信、一件放错位置的物品。每一份证据都会连同其细节被加入玩家的笔记本。
+
+    随后玩家会走访各个地点，询问嫌疑人和证人。每个角色都有能揭示信息的对话——有些
+    是真话，有些是误导。玩家可以对某些陈述追问以深入挖掘，有时能解锁新的证据或
+    矛盾点。
+
+    推理板是核心的解谜界面：玩家通过在卡片之间拖出连线，把证据与嫌疑人、时间线和
+    动机连接起来。当连接足够多时，玩家就可以提出指控——选定何人、何种凶器、何时
+    作案。正确的指控会以一段戏剧性的揭晓演出破案。错误的指控则要付出信誉点数；
+    错得太多，案件就会变成悬案。
+
+    游戏提供多个难度不同的案件。一个有设计感的结算画面会展示案件结果、找到的证据
+    以及推理准确率。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  - V4
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_visualnovel-detective-noir

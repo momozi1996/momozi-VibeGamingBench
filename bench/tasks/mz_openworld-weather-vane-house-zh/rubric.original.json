@@ -1,0 +1,118 @@
+{
+  "score_formula": "BUILD * (0.15*((M1+M2+M3)/3) + 0.35*((D1+D2+D3+D4)/4) + 0.15*((V1+V2+V3)/3) + 0.35*((A1+A2+A3+A4)/4))",
+  "max_demos": 10,
+  "max_demo_seconds": 20,
+  "build_check": {
+    "id": "BUILD",
+    "cmd": "momozi HTML static BUILD gate",
+    "description": "index.html and game_logic.js exist, a canvas/WebGL renderer is present, and no disallowed heavy runtime asset references are used."
+  },
+  "categories": [
+    {
+      "name": "Core Mechanics",
+      "items": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "name": "Content Depth",
+      "items": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "name": "Functional Visuals",
+      "items": [
+        "V1",
+        "V2",
+        "V3"
+      ]
+    },
+    {
+      "name": "Presentation & Art",
+      "items": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "M1",
+      "agg": "max",
+      "description": "Explore a multi-floor mansion, greenhouse, frozen grounds, service tunnels, and weather-vane tower with unlockable shortcuts. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "M2",
+      "agg": "max",
+      "description": "Manage room temperature by operating boilers, vents, fireplaces, shutters, and power circuits while fuel remains limited. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "M3",
+      "agg": "max",
+      "description": "Observe and question family members whose schedules, alliances, and access permissions change after each discovered clause. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "D1",
+      "agg": "max",
+      "description": "Solve inheritance puzzles using portraits, keys, legal documents, mechanical locks, and environmental temperature states. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D2",
+      "agg": "max",
+      "description": "Survive escalating cold effects such as frozen doors, brittle floors, blackouts, and blizzard exposure during exterior trips. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D3",
+      "agg": "max",
+      "description": "Reach the weather-vane mechanism and enforce, reinterpret, or destroy the final clause, producing different family outcomes. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D4",
+      "agg": "max",
+      "description": "Recovered clauses and repaired heating zones expand safe exploration time, reveal hidden wings, and grant leverage in family negotiations. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "V1",
+      "agg": "mean",
+      "description": "The HUD clearly communicates current objective, critical resources, selected target or mode, progress, and danger states in stable regions. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "V2",
+      "agg": "mean",
+      "description": "Every important player action has immediate, distinguishable feedback for valid input, invalid input, success, damage or failure, and state change. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "V3",
+      "agg": "mean",
+      "description": "The full loop is connected: styled title and start flow, playable core systems, progression or escalation, final success/failure state, and retry or return navigation all work without reloading the page. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "A1",
+      "agg": "mean",
+      "description": "The project has a coherent authored art direction: A snowbound gothic manor with warm candle interiors, icy blue encroachment, brass heating machinery, stained glass, and wind-driven snow effects. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A2",
+      "agg": "mean",
+      "description": "The 3D environment has deliberate composition, lighting, material contrast, depth cues, and themed landmarks rather than an empty floor with scattered objects. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A3",
+      "agg": "mean",
+      "description": "Primary interactive actors, machines, targets, hazards, and UI symbols have readable silhouettes and visibly different functional states. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A4",
+      "agg": "mean",
+      "description": "Movement, impacts, transitions, alerts, completion moments, and interface changes use smooth multi-frame animation, particles, camera treatment, or audio-reactive motion. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    }
+  ]
+}

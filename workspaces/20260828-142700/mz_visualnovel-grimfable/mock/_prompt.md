@@ -1,0 +1,322 @@
+# Grim Fable
+
+Build **Grim Fable**, a branching dark-fairytale visual novel, in HTML 4 at
+`./`. This is not a prototype. It is a **complete, shippable
+micro-game** that could sit on an itch.io page or Steam as a polished vertical
+slice.
+
+## Core Vision
+
+You step into fairy tales you think you already know — but the woods are darker
+than you remember, the kind are not always good, and the wicked may have their
+reasons. Grim Fable is a **choice-driven visual novel** where the player relives
+familiar storybook tales as their protagonist, yet the choices on offer were
+never in the original telling. What looks like a bedtime story hides an uneasy
+truth, and the player's decisions decide which version of that truth comes to
+pass.
+
+The fantasy is **rewriting a story you assume you know**. The game should turn
+the player's own expectations into the trap: a beloved tale opens the familiar
+way, then forks toward outcomes the fairy tale never allowed. The heart of the
+loop is **read, examine, weigh, decide** — taking in a richly written scene,
+looking closely at what the illustration is hiding, sizing up who and what to
+trust, and committing to a choice that the story remembers and pays off later.
+It should feel like turning the pages of a haunted picture book where text,
+portraits, backdrops, and choice menus all belong to the same authored world.
+This is a polished, atmospheric storybook with real stakes and genuinely
+different endings, not a linear text dump with a single path.
+
+## What the Player Experiences
+
+1. **An Authored Opening** — From a styled title the player begins the tale and
+   is eased into a familiar fairy-tale premise, presented as an illustrated
+   storybook scene with characters, narration, and a clear sense of who they
+   are and where they stand.
+2. **Reading & Examining the Scene** — The story unfolds through paced dialogue
+   and narration over illustrated backdrops, but the scene is not just read — it
+   invites investigation. Props, details of the setting, and the characters
+   present can hide narration, clues, or secrets the player would otherwise
+   miss, so the comforting tale's darker underside is something the player
+   uncovers, not just something told to them.
+3. **Clues That Add Up** — What the player examines and learns is **gathered and
+   remembered**: a blood-flecked knife noticed on a table, a confession teased
+   out of a character, a detail that contradicts the storybook version. These
+   discoveries accumulate into the player's understanding and unlock or color
+   the choices and revelations that follow, rewarding a curious player who looks
+   closely over one who rushes ahead.
+4. **Meaningful Choices** — At key moments the player is offered choices that
+   the original story never gave them — whom to trust, what to reveal, which
+   path to take through the wood. Choices are deliberate decisions with stakes,
+   not cosmetic flavor; what the player has uncovered shapes which options are
+   available and what they mean, and the game makes clear that a decision has
+   been made and registered.
+5. **Consequences That Stick** — Earlier choices are remembered and shape what
+   comes later: which characters confide in the player, what truths surface,
+   and which doors close. The player should feel the story bending around their
+   decisions rather than running on rails, and recurring tales or returning
+   characters should reflect what the player did before.
+6. **Divergent Endings** — The tale resolves in one of several genuinely
+   different endings — a subversion of the happy ending, a grim reckoning, a
+   hidden truth uncovered, or a quiet escape — each reachable through different
+   choices and clearly tied to how the player played. The ending is an authored,
+   styled conclusion that names what the player's path brought about, and the
+   player can begin again to seek a different one.
+
+## Assets
+
+2D assets are mounted read-only at:
+
+- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+  subdir's `LICENSE.txt`.
+
+Browse the library and choose packs.
+Copy what you need into your project's `assets/` folder.
+
+## Project layout
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ← your input traces (1–10 files)
+  scripts/  scenes/  assets/
+```
+
+The build must launch cleanly with:
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+A reference for HTML CLI flags is at `/workspace/tools/html_command_line.md`.
+ —
+anything after `--` is forwarded to the project as user args and silently
+ignored by the engine. Correct shape:
+`html --headless --quit-after 5 --path . -- --scenario ending_truth`.
+
+A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to
+actually see what your title / dialogue / choice / ending screens look like.
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+`OS.get_cmdline_user_args()` for your game code to read. Example:
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/ending_debug.png --frames 120 --scenario ending_truth
+```
+
+## Demos
+
+Ship **1–10 input-trace files** under `./demo_outputs/`, one per
+demo, each named `*.json`. The evaluator launches a fresh game per trace,
+replays your trace as synthetic mouse and keyboard input at 1280×720, and
+records the screen. Only the first 10 traces by filename are evaluated;
+recordings longer than 20 s are sampled from a random 20 s window.
+
+### Scenarios
+
+Normal play should start from the title screen and play through the story's
+core loop of reading, choosing, and reaching an outcome. Demo playback must be
+deterministic. For demos that need a specific state (a particular tale or
+chapter, a key branching choice, or one of the divergent endings), define named
+scenarios your game loads when launched with:
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+When `--scenario <id>` is present the game must skip menus, set up the named
+state deterministically (seed any RNG), and begin accepting input immediately.
+
+### Trace file format
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` — optional; omit for a normal game launch from the title screen.
+- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+  viewport. Supported types:
+  - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+    use these for drag interactions: emit `mouse_down` at the start point,
+    one or more `mouse_move` events along the way, and `mouse_up` at the end.
+    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+    succession.
+  - `mouse_move`: `{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+  - `wait`: `{frame, type}` — anchor frame, no input.
+
+Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+---
+
+# 中文版提示词
+
+# 暗黑寓言（Grim Fable）
+
+在 `./` 用 HTML 4 开发 **Grim Fable**——一款分支叙事的黑暗童话
+视觉小说。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以
+作为纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+你踏入了那些你以为自己早已熟知的童话——但林子比你记忆中更幽暗，善良的人并不
+总是好人，而邪恶者或许自有其理由。Grim Fable 是一款**选择驱动的视觉小说**，
+玩家以主角的身份重历那些耳熟能详的故事书篇章，但摆在面前的选项从来不曾出现在
+原本的讲述里。看似睡前故事的东西藏着一个令人不安的真相，而玩家的决定决定了
+那个真相的哪个版本会成真。
+
+游戏的幻想内核是**重写一个你自以为知道的故事**。游戏应当把玩家自身的预期变成
+陷阱：一个深受喜爱的故事以熟悉的方式开场，随后岔向童话从不允许的结果。循环的
+核心是**阅读、检视、权衡、决断**——沉浸进一个文笔丰盈的场景，仔细看清插画在
+隐藏什么，估量该信谁、该信什么，然后敲定一个故事会记住并在后续给出回报的选项。
+它应当让人感觉像在翻动一本闹鬼的图画书，其中文本、立绘、背景与选项菜单都属于
+同一个精心编排的世界。这是一本打磨精良、氛围浓厚且真有代价的故事书，拥有确实
+不同的结局，而不是一份只有单一路径的线性文本倾泻。
+
+## 玩家体验流程
+
+1. **精心编排的开场** —— 从一个有设计感的标题画面出发，玩家开启这个故事，被
+   缓缓引入一个熟悉的童话前提，以带有角色、旁白的插画故事书场景呈现，并清晰
+   交代他们是谁、身处何地。
+2. **阅读与检视场景** —— 故事通过节奏得当的对话与旁白在插画背景上展开，但场景
+   不只是被阅读——它邀请你去调查。道具、场景中的细节以及在场的角色，都可能藏着
+   玩家原本会错过的旁白、线索或秘密，因此那个温馨故事的阴暗面是玩家自己揭开的，
+   而不只是被告知的。
+3. **逐渐拼合的线索** —— 玩家检视到、了解到的东西会被**收集并记住**：桌上那把
+   注意到的带血斑的刀、从某个角色口中套出的一句自白、一个与故事书版本相矛盾的
+   细节。这些发现会累积成玩家的认知，并解锁或渲染其后的选项与揭晓，从而奖励
+   那些仔细观察的好奇玩家，而不是一路猛冲的玩家。
+4. **有意义的选项** —— 在关键时刻，玩家会得到原本故事从未给过他们的选项——信任
+   谁、揭露什么、走林中的哪条路。选项是有代价的审慎决定，而不是装点门面的风味
+   文本；玩家已揭开的内容会塑造哪些选项可用、以及它们意味着什么，而游戏会明确
+   表示一个决定已经做出并被记录。
+5. **会留下痕迹的后果** —— 早先的选项会被记住，并塑造后续的走向：哪些角色会向
+   玩家吐露心事、哪些真相会浮出水面、哪些门会关上。玩家应当感觉故事在围着他们
+   的决定弯折，而不是在轨道上照跑，而反复出现的故事或回归的角色也应当反映出
+   玩家先前做过的事。
+6. **分岔的结局** —— 故事会以数个确实不同的结局之一收束——对幸福结局的颠覆、
+   一场冷酷的清算、一个被揭开的隐秘真相，或一次静默的逃离——每一个都通过不同的
+   选项抵达，并与玩家的玩法明确挂钩。结局是一段精心编排、有设计感的结语，点明
+   玩家所走的路带来了什么，而玩家可以重新开始，去寻找另一个结局。
+
+## 资产
+
+2D 资产以只读方式挂载在：
+
+- `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+  `LICENSE.txt`。
+
+浏览资产库并挑选合适的资产包。
+把需要的文件复制到你项目的 `assets/` 目录下。
+
+## 项目结构
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+  scripts/  scenes/  assets/
+```
+
+构建必须能通过以下命令干净启动：
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+HTML 命令行参数的参考文档在 `/workspace/tools/html_command_line.md`。
+**像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+`--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+`html --headless --quit-after 5 --path . -- --scenario ending_truth`。
+
+`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+title / dialogue / choice / ending 画面长什么样。
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+`--out` / `--frames` / `--scene`；其余参数会留在
+`OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/ending_debug.png --frames 120 --scenario ending_truth
+```
+
+## 演示
+
+在 `./demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+
+### 场景（Scenarios）
+
+常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+（为任何随机数发生器设定种子），并立即开始接受输入。
+
+### 轨迹文件格式
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+- `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+  支持的类型：
+  - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+    用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+    `mouse_move` 事件，在终点发出 `mouse_up`。
+    一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+  - `mouse_move`：`{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+    `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+
+回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。

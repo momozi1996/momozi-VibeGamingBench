@@ -1,0 +1,110 @@
+id: mz_evolink-08-wuxia-valley-rpg-zh
+title: 双式山谷 (中文)
+family: rpg
+difficulty: high
+engine: html
+language: zh
+base_task_id: mz_evolink-08-wuxia-valley-rpg
+provenance:
+  kind: adapted_evolink_prompt
+  source_name: EvoLink Kimi K3 Games & 3D prompts
+  source_url: https://evolink.ai/zh/kimi-k3-prompts
+  source_prompt_id: prompt-browser-wuxia-rpg
+  source_html_sha256: 9fd72ca9c53103f6073cfd03a95bda593b494e00d19e4946b743a42ac6295371
+rounds:
+- name: R1
+  spec: |-
+    # 双式山谷
+
+    制作一个完整可玩的 **3D 角色扮演游戏**，以
+    **第三人称** 呈现为经过打磨的浏览器纵向切片。
+
+    ## 核心构想
+
+    一款连贯武侠 RPG，把村庄、野外、灵敏移动、两种战技、天气、背包、对话和最终遭遇连接起来。
+
+    ## 必须实现的可玩系统
+
+    1. **系统 1** - 探索一座村庄、一条野外路线和可进入室内，并保持移动响应灵敏。
+    2. **系统 2** - 使用两种不同战技、防御时机和体力系统战斗，敌人状态必须清楚。
+    3. **系统 3** - 通过 NPC 对话、背包物品和世界状态变化完成任务链。
+    4. **系统 4** - 应对天气，并完成同时检验移动、战斗和任务选择的最终遭遇。
+    5. **系统 5** - 提供至少三种功能不同的内容变化，实质改变时机、路线、资源使用或风险，不能只更换标签和颜色。
+    6. **系统 6** - 使用三阶段短流程：教学核心交互、在压力下组合系统，并以完整胜利、失败或计分完成闭环收束。
+
+    ## 推进与持久状态
+
+    使用三个阶段组成短流程：先清楚引入中心交互，再与世界压力和有意义选择组合，最后用
+    综合场景检验掌握程度。重要规则、目标、资源、关系、选择状态、危险、进度和结果必须
+    显示在稳定 HUD 区域，并在 `game_logic.js` 中有对应状态。各系统必须通过共享状态
+    互相影响，不能只是彼此割裂的按钮、菜单或视觉演示。
+
+    ## 美术方向
+
+    建立统一世界身份、清晰角色与敌人定位、富有表现力的技能和分层地点；装备与成长变化应可见。
+
+    ## HTML 提交格式
+
+    用两个文件交付一个可独立运行的浏览器游戏：
+
+    - `index.html` - 完整可玩的呈现层。使用 Three.js 和 WebGL 完成可玩呈现。
+    - `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
+      `advance(game, input, dt)`。
+
+    页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
+    几何体、生成纹理、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、
+    视频或音频。使用 Three.js 时可以从官方 CDN 加载；允许的库必须锁定具体版本。
+
+    必须支持键盘和鼠标，并按玩法需要加入触摸或手柄控制。完整游戏区与 HUD 在
+    1280x720 下应清晰可读。需要有经过设计的开始流程、简短游戏内引导、暂停与重开控制、
+    完整结果闭环，以及每项关键操作的明确反馈。
+
+    `index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
+    160 KB 以内，`game_logic.js` 控制在 320 行以内。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, persistence, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent authored art direction, functional composition, effects, and motion polish.

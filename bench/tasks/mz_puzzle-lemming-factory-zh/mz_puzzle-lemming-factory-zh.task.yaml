@@ -1,0 +1,104 @@
+id: mz_puzzle-lemming-factory-zh
+title: puzzle lemming factory (中文)
+family: puzzle
+difficulty: low
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 旅鼠工厂（Lemming Factory）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Lemming Factory**，一个 2D 生物引导解谜
+    游戏。玩家给一队不停行进的工厂工人分配职业——挖掘工、建造工、阻挡工、攀爬工
+    ——引导它们从入口舱门安全走到出口大门，并在每关救下规定的配额。
+
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    这是一款关于间接控制的实时解谜游戏。生物会自主地沿直线行进，碰墙转身，从平台
+    边缘掉落，若玩家不干预就会一头撞进危险中。玩家无法直接移动生物，但可以点击
+    某个工人，从数量有限的工具栏中给它分配一个职业。每个职业都会改变该生物的行为：
+    挖掘工向下凿穿地形，建造工搭出斜向阶梯，阻挡工变成不可通行的墙来改变人流走向，
+    攀爬工则能攀上垂直表面。张力来自职业名额有限、生物不断向危险行进带来的时间压力，
+    以及把一大群生物疏导穿过复杂地形所需的空间推理。最理想的版本会让人感觉像在
+    指挥一支小工人组成的交响乐团，每一次分配都会在人群的路线上层层扩散。
+
+    ## 玩家体验流程
+
+    标题画面用行进中的生物剪影营造出工厂氛围，并给出清晰的开始入口。玩家进入关卡后
+    能看到地形、危险物（深坑、锯片、岩浆）、入口舱门和出口大门。工具栏显示可用职业
+    及其剩余数量。舱门打开，生物开始以稳定的速率涌出。
+
+    前期关卡一次只教一个职业：派一个挖掘工凿穿地板，或派一个建造工架桥跨过缝隙。
+    很快，关卡就会要求组合使用职业——用阻挡工改变人流方向，同时让挖掘工打开另一条
+    通路。中期引入用于垂直移动的攀爬工、用于安全降落的漂浮工，以及用于紧急清除地形
+    的爆破工。每关都规定一个救援配额；被危险物害死的生物太多就算失败。
+
+    玩家可以调整放出速率，也可以暂停来做规划。当足够多的生物抵达出口时，结算画面
+    展示救援百分比，并给出下一个挑战。战役中的关卡按难度层级分组，每一层级都引入
+    新的地形类型和职业组合。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+language: zh
+base_task_id: mz_puzzle-lemming-factory

@@ -1,0 +1,103 @@
+id: mz_sports-archery-quest-zh
+title: sports archery quest (中文)
+family: sports
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 弓箭手远征（Sports Archery Quest）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**弓箭手远征**游戏。
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    玩家扮演一名弓箭手，踏上穿越奇幻大陆的旅程，靠技术性的瞄准去猎杀怪物、命中远处
+    的靶子，并用精准的射击击败 Boss。这里的幻想是那一记完美的箭：算准风力与距离，
+    将弓拉到满力，然后看着箭矢划过屏幕命中弱点。张力来自有限的箭数、拉弓中途会变向
+    的风力，以及在玩家瞄准时不断逼近的怪物。升级可以提升弓的力量、箭的种类，以及
+    玩家的拉弓速度。
+
+    ## 玩家体验流程
+
+    1. **标题画面** —— 一片林间空地，一支箭插在靶子上，游戏名称采用符文风格的字体，
+       以及一个箭头形状的开始按钮。
+    2. **世界地图** —— 一张基于节点的地图，展示各个地点：森林、峡谷、遗迹、龙之峰。
+       每个地点包含多个关卡。完成关卡会解锁下一个区域。
+    3. **瞄准机制** —— 玩家按住按钮来拉弓（力度条填充），用方向输入瞄准，松开射出。
+       箭的弹道遵循受重力和风力影响的物理抛物线。一个风力指示器显示当前的风向和
+       强度。
+    4. **靶场关卡** —— 有些关卡是纯粹的射术考验：命中越来越远的靶心、射击移动靶，
+       或者让箭穿过狭窄的缝隙。得分基于精度和速度。
+    5. **怪物狩猎** —— 怪物从右侧逼近。玩家必须击中弱点（发光的斑点）才能造成最大
+       伤害。不同的怪物有不同的弱点位置和移动模式。
+    6. **Boss 靶标** —— 每个区域以一个 Boss 收尾：一头巨大的生物，身上有多个弱点，
+       必须按顺序命中。Boss 有攻击阶段，此时玩家必须一边闪避（垂直移动）一边寻找
+       出手的窗口。
+    7. **弓的升级** —— 赚到的金币可以购买升级：更长的射程、更快的拉弓、元素箭
+       （火焰造成额外伤害、冰霜减速、闪电连锁）。一个商店画面展示可购买的升级项，
+       并附有清晰的属性对比。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_sports-archery-quest

@@ -1,0 +1,59 @@
+# Chess Variant
+
+Build **Chess Variant**, a **tactical chess game with cooldowns and terrain** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It is a **complete,
+shippable micro-game** that could sit on an itch.io page or Steam as a polished
+vertical slice.
+
+## Core Vision
+
+Classic chess pieces gain special abilities on cooldown timers, and the board
+itself becomes terrain — some tiles heal, some damage, some block movement.
+The result is a game that rewards chess intuition but demands new tactical
+thinking: a knight's fork matters less when the bishop can teleport every four
+turns, and controlling the healing fountain tile can swing an endgame. A
+campaign mode unlocks new pieces and abilities level by level, teaching the
+player each mechanic before combining them into complex puzzles. The tone is
+medieval-fantasy: stone boards, glowing runes, and pieces that feel like
+enchanted warriors.
+
+## What the Player Experiences
+
+From the title screen the player enters a campaign map with sequential levels.
+Each level is a chess puzzle or skirmish on a themed board with specific terrain
+tiles and piece rosters. Early levels teach one mechanic at a time — a piece
+with a dash ability, a tile that blocks, a cooldown that must be tracked.
+
+During play the board shows terrain overlays on specific tiles: green for
+healing, red for damage, grey for impassable. Pieces move by standard chess
+rules but each also has a unique ability (charge, shield, teleport, area
+attack) shown as a button with a cooldown counter. Using an ability consumes
+the turn and starts the cooldown.
+
+The AI opponent uses the same rules and abilities. Capturing the enemy king
+wins; losing yours loses. The campaign escalates by introducing new piece types
+with new abilities and more complex terrain layouts. Completing a level unlocks
+the next and sometimes adds a new piece to the player's roster for future
+levels.
+
+A styled result screen shows victory or defeat with the option to retry or
+advance.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

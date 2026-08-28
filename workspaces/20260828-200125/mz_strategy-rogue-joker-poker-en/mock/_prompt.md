@@ -1,0 +1,71 @@
+# Rogue Joker Poker
+
+Build **Rogue Joker Poker**, a compact **poker-hand roguelite score-chaser** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). The player builds a scoring engine from poker
+hands, strange jokers, and shop upgrades to beat escalating blind targets in a
+single high-stakes run.
+
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The player sits at a surreal felt table trying to beat a rising sequence of
+score targets using nothing but poker hands and a growing roster of bizarre
+jokers. Every round is a readable tactical choice: which cards to hold, which
+to discard, when to spend a hand versus fishing for a better combination, and
+how the current joker lineup warps the value of a flush, straight, pair, or
+high-card play. The pressure comes from limited hands and discards per round,
+escalating blind targets, and boss rules that twist the scoring math. The tone
+is **sleek, strange, casino-arcade, and score-hungry**: felt tables, neon chips,
+animated cards, odd joker portraits, compact tooltips, and clear score math
+should make the game feel designed rather than assembled from default controls.
+
+Do not clone a named commercial game's exact UI, art, copy, card names, or
+iconography. Use original terminology, jokers, rules, palette, and screen
+composition while preserving the broad genre fantasy of poker scoring plus
+roguelite modifiers.
+
+## What the Player Experiences
+
+The run opens on a styled title screen that sets the casino-arcade mood and
+invites the player to begin. Once started, the player faces a sequence of
+blinds with rising score targets. Each round deals a hand of cards showing
+rank, suit, and selection state. The player studies the hand, selects cards to
+form a poker combination, and either plays them to score or discards unwanted
+cards to draw replacements, burning limited resources either way.
+
+When a hand is played, the scoring moment unfolds visibly: the poker hand type
+is identified, base chips and multiplier are calculated, and then each active
+joker fires in sequence, visibly altering the math. The score animates toward
+the blind target. The player watches the joker row like a machine, learning
+which combinations trigger which bonuses.
+
+Between blinds, a shop offers new jokers, deck modifications, and upgrades.
+Purchases reshape the scoring engine for future rounds. The run escalates
+through small blinds, big blinds, and boss blinds. Boss rounds introduce
+special rules that force the player to rethink hand evaluation: a disabled
+suit, a discard tax, a hand-size cap, or a reversed joker.
+
+Victory means beating the final target. Defeat means running out of hands
+below a blind. Either way, a styled result screen offers retry or return to
+title.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

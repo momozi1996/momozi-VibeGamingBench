@@ -1,0 +1,106 @@
+id: mz_openworld-festival-disaster-zh
+title: 节庆委员会大灾难 (中文)
+family: openworld
+difficulty: high
+engine: html
+language: zh
+base_task_id: mz_openworld-festival-disaster
+provenance:
+  kind: adapted_article_prompt
+  source_name: AIGA AI RPG prompts
+  source_url: https://www.aiga.io/zh/blog/ai-rpg-prompts-playable-campaigns
+  source_item: '12'
+rounds:
+- name: R1
+  spec: |-
+    # 节庆委员会大灾难
+
+    制作一个完整可玩的 **3D 开放世界冒险游戏**，交付为经过打磨的浏览器纵向切片。
+
+    ## 核心构想
+
+    一款喜剧风开放村庄管理游戏：玩家要筹办大型节庆，而每位委员会成员都会制造新的危机。玩家在各场地间奔走、安排活动、解决本地事故，并努力保住庆典和社区信任。
+
+    ## 必须实现的可玩系统
+
+    1. **系统 1** - 探索相连村庄，包含至少四个节庆场地、商贩街、仓储区以及布置期间可开启的捷径。
+    2. **系统 2** - 放置摊位、装饰、舞台、电线和人群护栏，同时满足空间、预算、通行和安全约束。
+    3. **系统 3** - 建立限时活动日程，并亲自完成游行引导、烹饪、音乐提示或烟花布置等短玩法。
+    4. **系统 4** - 处理天气、物资丢失、动物逃跑、演员冲突、停电和人群拥堵等动态事件。
+    5. **系统 5** - 通过可见后果管理委员信任、商贩满意、到场人数、预算和安全，而不是只显示文字报表。
+    6. **系统 6** - 从开幕到闭幕完整运行最终节庆日，并提供成功、部分失败或喜剧性灾难状态。
+
+    ## 成长与推进
+
+    完成准备工作可解锁更好设备与志愿者能力；未解决事件会延续到最终节庆日并增加复杂度。
+
+    ## 美术方向
+
+    欢快手工低多边形村庄，包含彩旗、多样摊位、表情丰富角色、可读人流和滑稽事件特效。
+
+    ## HTML 提交格式
+
+    用两个文件交付一个可独立运行的 3D 浏览器游戏：
+
+    - `index.html` - 使用 Three.js 完成全部可玩呈现。
+    - `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
+      `advance(game, input, dt)`。
+
+    页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
+    几何体、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、视频或音频。
+    Three.js 可以从官方 CDN 加载；若本题明确要求其他库，也可以使用固定版本的 CDN。
+
+    必须支持键盘和鼠标。可按题目需要加入触摸或设备传感器控制，但必须提供桌面端替代
+    方案。主游戏在 1280x720 下应清晰可读。需要有经过设计的标题画面、简短的游戏内引导、
+    暂停或重新开始控制、完整的胜负或完成闭环，以及每项关键操作的明确反馈。最终结果应当
+    是打磨过的纵向切片，而不是被动场景或彼此割裂的技术演示。
+
+    `index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
+    160 KB 以内，`game_logic.js` 控制在 320 行以内。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, progression, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent 3D art direction, authored environments, effects, and motion polish.

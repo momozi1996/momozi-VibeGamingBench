@@ -1,0 +1,290 @@
+# Racing Drift Circuit
+
+Build a Racing Drift Circuit as self-contained HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+A precision time-trial racing game where mastering the drift is everything. The
+player pilots a car through tight circuits, initiating controlled drifts around
+corners to maintain speed. Each track is a puzzle of racing lines — brake too
+early and you lose seconds; drift too wide and you clip the barrier. Ghost
+replays of your best run haunt every attempt, pushing you to shave milliseconds.
+A medal system (Gold/Silver/Bronze) across 10+ tracks provides clear progression
+goals, and the satisfaction of a perfect drift chain through a complex chicane
+is the core reward.
+
+## What the Player Experiences
+
+1. **Title Screen** — A dynamic menu with the game name in speed-styled italic
+   font, a blurred track in the background with a ghost car drifting past, and
+   buttons for Campaign and Time Trial. No plain HTML grey.
+2. **Track Select** — A grid of 10+ tracks with preview thumbnails, medal
+   status (empty/bronze/silver/gold), and best time displayed. Tracks unlock
+   sequentially by earning at least bronze on the previous track.
+3. **Driving Feel** — Top-down or angled-top view. The car accelerates smoothly,
+   brakes with visible deceleration, and steers with momentum. Holding a drift
+   key while turning initiates a drift: the car slides sideways with tyre smoke
+   particles trailing behind.
+4. **Drift Boost** — Maintaining a drift builds a boost meter. Releasing the
+   drift at the right moment grants a speed burst with a visible flame/trail
+   effect. Longer drifts yield bigger boosts but risk hitting walls.
+5. **Ghost Replay** — A translucent ghost of the player's best lap drives
+   alongside them in real time. The ghost is clearly distinguishable (different
+   colour, slight transparency) and shows exactly where time is being gained
+   or lost.
+6. **Medal System** — Each track has Gold/Silver/Bronze time thresholds shown
+   before the race. Finishing awards the appropriate medal with a podium
+   animation. Medals are tracked on the track select screen.
+7. **Track Variety** — Tracks range from simple ovals to complex circuits with
+   hairpins, chicanes, elevation changes (visual only), and varying widths.
+   Each track has a distinct visual theme (city, desert, forest, night).
+
+## Assets
+
+2D assets are mounted read-only at:
+
+- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+  subdir's `LICENSE.txt`.
+
+Browse the library and choose packs.
+Copy what you need into your project's `assets/` folder.
+
+## Project layout
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ← your input traces (1–10 files)
+  scripts/  scenes/  assets/
+```
+
+The build must launch cleanly with:
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+A reference for HTML CLI flags is at `/workspace/tools/html_command_line.md`.
+ —
+anything after `--` is forwarded to the project as user args and silently
+ignored by the engine. Correct shape:
+`html --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+result screens look like.
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+`OS.get_cmdline_user_args()` for your game code to read. Example:
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## Demos
+
+Ship **1–10 input-trace files** under `./demo_outputs/`, one per
+demo, each named `*.json`. The evaluator launches a fresh game per trace,
+replays your trace as synthetic mouse and keyboard input at 1280×720, and
+records the screen. Only the first 10 traces by filename are evaluated;
+recordings longer than 20 s are sampled from a random 20 s window.
+
+### Scenarios
+
+Normal play should start from the title screen and demonstrate the task's
+core gameplay loop.
+Demo playback must be deterministic. For demos that need a specific state
+(a specific level, combat state, upgrade screen, result state, or late-game
+setup), define named scenarios your game loads when launched with:
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+When `--scenario <id>` is present the game must skip menus, set up the named
+state deterministically (seed any RNG), and begin accepting input immediately.
+
+### Trace file format
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` — optional; omit for a normal game launch from the title screen.
+- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+  viewport. Supported types:
+  - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+    use these for drag interactions: emit `mouse_down` at the start point,
+    one or more `mouse_move` events along the way, and `mouse_up` at the end.
+    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+    succession.
+  - `mouse_move`: `{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+  - `wait`: `{frame, type}` — anchor frame, no input.
+
+Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+---
+
+# 中文版提示词
+
+# 漂移赛道竞速（Racing Drift Circuit）
+
+在 `./` 用 HTML 4 开发一个漂移赛道竞速游戏。
+这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+一款精准操作向的计时赛竞速游戏，掌握漂移就是一切。玩家驾车穿越狭窄的赛道，
+在弯道处发起可控的漂移以维持速度。每条赛道都是一道关于走线的谜题——刹车太早
+就会白丢几秒；漂移幅度太大就会擦到护栏。你最佳一轮的幽灵车回放会萦绕在每一次
+尝试中，逼着你去抠掉那几毫秒。横跨 10 条以上赛道的奖牌系统（金/银/铜）提供了
+清晰的进程目标，而在复杂的连续弯道中串出一条完美的漂移链所带来的满足感，
+就是核心奖励。
+
+## 玩家体验流程
+
+1. **标题画面** —— 一个动态菜单，游戏名称采用速度感十足的斜体字体，背景是一条
+   虚化的赛道，一辆幽灵车正漂移而过，另有"生涯"和"计时赛"按钮。不要出现 HTML 的
+   裸灰色。
+2. **赛道选择** —— 一个包含 10 条以上赛道的网格，配有预览缩略图、奖牌状态
+   （无/铜/银/金）以及显示出来的最佳成绩。赛道按顺序解锁，需在前一条赛道上
+   至少拿到铜牌。
+3. **驾驶手感** —— 俯视视角或斜俯视角。车辆平顺地加速，刹车时有可见的减速，
+   转向时带有动量。转弯时按住漂移键即可发起漂移：车身横向滑出，身后拖出轮胎
+   烟雾粒子。
+4. **漂移加速** —— 维持漂移会积攒一条加速槽。在恰当的时机结束漂移会获得一次
+   速度爆发，并伴有可见的火焰/尾迹特效。漂移时间越长，加速越强，但也越有可能
+   撞墙。
+5. **幽灵车回放** —— 玩家最佳单圈的半透明幽灵车会实时地与其并驾齐驱。幽灵车
+   清晰可辨（颜色不同、略微透明），能准确显示出时间是在哪里赚到或亏掉的。
+6. **奖牌系统** —— 每条赛道都有金/银/铜的时间门槛，在比赛开始前展示。完赛后
+   会颁发相应奖牌，并播放一段颁奖台动画。奖牌会记录在赛道选择画面上。
+7. **赛道多样性** —— 赛道从简单的椭圆形，到带有发夹弯、连续弯道、高低落差
+   （仅视觉效果）和宽窄变化的复杂赛道，各不相同。每条赛道都有独特的视觉主题
+   （城市、沙漠、森林、夜晚）。
+
+## 资产
+
+2D 资产以只读方式挂载在：
+
+- `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+  `LICENSE.txt`。
+
+浏览资产库并挑选合适的资产包。
+把需要的文件复制到你项目的 `assets/` 目录下。
+
+## 项目结构
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+  scripts/  scenes/  assets/
+```
+
+构建必须能通过以下命令干净启动：
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+HTML 命令行参数的参考文档在 `/workspace/tools/html_command_line.md`。
+**像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+`--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+`html --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+UI / battlefield / result 画面长什么样。
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+`--out` / `--frames` / `--scene`；其余参数会留在
+`OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## 演示
+
+在 `./demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+
+### 场景（Scenarios）
+
+常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+（为任何随机数发生器设定种子），并立即开始接受输入。
+
+### 轨迹文件格式
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+- `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+  支持的类型：
+  - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+    用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+    `mouse_move` 事件，在终点发出 `mouse_up`。
+    一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+  - `mouse_move`：`{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+    `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+
+回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。

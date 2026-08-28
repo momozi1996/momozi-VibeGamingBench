@@ -1,0 +1,56 @@
+# Potion Craft
+
+Build **Potion Craft**, a potion-brewing roguelike with ingredient maps and
+recipe discovery as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It
+is a **complete, shippable micro-game** that could sit on an itch.io page or
+Steam as a polished vertical slice.
+
+## Core Vision
+
+An alchemist navigates a procedural ingredient map, gathering herbs, minerals,
+and essences to brew potions that fulfill customer orders. Brewing is a
+navigation puzzle on an alchemy map — the player steers a mixing cursor through
+ingredient space, and the path taken determines the potion's properties. Each
+customer wants a specific potion type (healing, fire resistance, invisibility)
+and the alchemist must discover recipes by experimentation, then reproduce them
+reliably. Between days the shop earns reputation that unlocks rarer ingredients
+and harder customers. Failing too many orders loses reputation until the shop
+closes. Each run is a fresh start with a new ingredient layout to discover.
+
+## What the Player Experiences
+
+A title screen shows bubbling cauldrons and potion bottles. Starting a run
+opens the shop on Day 1 with three customer orders visible.
+
+The brewing screen shows an alchemy map — a 2D space with ingredient nodes
+connected by paths. The player navigates a cursor from the center outward,
+passing through ingredient zones that add properties to the brew. Reaching a
+recipe zone and bottling creates a potion of that type. The map is partially
+hidden and revealed through exploration.
+
+Customers arrive with orders (icons showing desired potion type). Fulfilling
+an order earns gold and reputation. Gold buys map reveals, better tools (faster
+navigation, wider paths), and ingredient restocks. Each day brings new
+customers with harder requests. After a set number of days, a final evaluation
+scores the run based on reputation, gold earned, and recipes discovered. Losing
+all reputation ends the run early.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

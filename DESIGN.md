@@ -1,104 +1,147 @@
-# momozi-3A-GamegenBench 设计文档（v0.1）
+# momozi-VibeGamingBench 设计文档（v0.4.0）
 
-> 定位：**评测 coding agent「创造类任务」能力的游戏生成 benchmark（生成向）**，核心命题——
-> **衡量 agent 能否在多轮迭代中持续构建、修改可玩游戏，并守住已经成立的玩法。**
+## 1. 定位
 
-## 0. 一句话定位
+本 benchmark 评测 coding agent 将游戏设计需求转化为完整、可玩的浏览器游戏的能力。
+题目强调互相连接的玩法系统、明确的胜负或完成闭环、可读反馈和成品级呈现，而不是静态
+场景、交互演示或只有菜单的原型。
 
-- 工作名：**momozi-3A-GamegenBench**（140 题 · 生产级）
-- 给 agent 一段「值得连续迭代的游戏设想」(game arc)，agent 分 3–5 轮生成 Web 3D 游戏；每轮的历史行为 golden suite 必须保持通过，新增玩法必须正确实现；评审按 rubric 出分。
+当前题池：
 
-## 1. 为什么存在（对照现有工作找空白）
+- 491 个游戏概念。
+- 每个概念拆成英文和中文两个独立样本，共 982 题。
+- 21 个标准化游戏 `family`。
+- 低、中、高三个实现难度等级。
 
-| Benchmark | 造/玩 | 引擎 | 轮次 | 判分确定性 | 行为回归验证 | 开放度 |
-|---|---|---|---|---|---|---|
-| GameBench 原型(2606.17861 参考原型) | 造 | Godot，140 任务/15 家族 | 单轮 | 交互 replay + 多模态 judge | ❌ | 开源 demos+代码+数据 |
-| Mage (2605.07342) | 造 | Unity(C#)，26 模式 | 单轮 | 四轴（编译/运行/结构/机制） | ❌ | benchmark+replay |
-| Orak (2506.03610) | **玩** | 12 款商业游戏 | — | leaderboard+arena | — | CC-BY |
-| OmniGameArena (2606.09826) | 玩 | UE5 自建 12 款 | 多轮反思 | 冷启动+IDC 曲线 | — | 待确认 |
-| 3DGameAgentBench | 造 | Three.js 单文件 | 多轮 | 人工视频复核 | 概念有、无标准判分 | 数据保密 |
-| **momozi-3A-GamegenBench（本设计）** | **造** | Three.js/Web（v1） | **3–5 轮增量** | **确定性 golden suite ≥70% + rubric 补视觉 + 自动行为回归（乘法硬惩罚）** | ✅ 核心卖点 | 计划开源 |
+## 2. 单题结构
 
-**空白点（差异化）**：
-1. **多轮增量 + 行为回归硬约束**：现有生成 BMK 全是「一次造对」；真实开发是长程的。GameBench 参考原型最强 agent 才 41.46%，多轮只会更糟——这正是拉开差距的地方。
-2. **逻辑/呈现分层**：Mage 证明直接 NL→代码的机制遵循度会崩（F1≈0.12），加结构化 IR 后 F1→1.00。我们的任务契约天然分层可单测（§2），把这条 insight 做成 BMK 机制。
-3. **确定性判分占大头**：现在主要靠多模态 judge（贵、不稳）；我们 ≥70% 给确定性测试，judge 只补视觉与创意。
-4. **编译率 ≠ 正确性**：Mage 发现反相关；我们单设「结构空洞」惩罚（呈现维度的 spec check）。
+每个任务目录严格包含四个文件：
 
-## 2. 核心概念模型：三层产物契约
+| 文件 | 作用 |
+|---|---|
+| `*.task.yaml` | ID、语言、类型、难度、提示词、产物合同和评分维度 |
+| `prompt.md` | 直接提供给生成 agent 的单语提示词 |
+| `rubric.original.json` | 具体玩法、深度、体验与美术锚点 |
+| `rubric.mapping.json` | 细粒度锚点到四个评分维度的映射 |
 
-每道题要求 agent 产出：
+`prompt.md` 必须与 YAML 中 `rounds[0].spec` 完全一致。中英文变体共享
+`base_task_id`、`family`、`difficulty` 和 rubric 结构。
 
-| 层 | 内容 | 判分方式 |
-|---|---|---|
-| **L1 Contract**（逻辑契约） | `game_logic.js`：纯逻辑 `advance(state, action) → state`，无 DOM/无渲染依赖 | 确定性 golden suite，node 秒级，可无限回归 |
-| **L2 Presentation**（呈现层） | `index.html`：调用 L1，完成渲染/音效/交互/手感 | rubric judge 盲评 + 硬 spec check |
-| **L3 Arc**（出题人资产） | R1..Rk 连续增量 spec + 每轮黄金行为测试点 | 人工维护 |
+## 3. 产物合同
 
-## 3. 评分体系
+agent 在工作区的 `product/` 中交付：
 
+| 文件 | 合同 |
+|---|---|
+| `index.html` | 双击可运行的完整浏览器游戏；包含 Canvas 2D 或 WebGL/Three.js 呈现 |
+| `game_logic.js` | 确定性规则层；导出 `createGame(opts)` 和 `advance(game, input, dt)` |
+
+任务禁止构建步骤、本地服务器和运行时下载图片、模型、视频或音频。允许按题面约定加载
+固定版本的 Three.js。完整玩法、HUD 和主要反馈应在 1280x720 下可读。
+
+## 4. 自动评测流程
+
+1. 选择题目，可按 task、语言、类型、难度、offset 和 limit 过滤。
+2. runner 创建隔离工作区并写入当前单语提示词。
+3. `profiles.yaml` adapter 或外部 harness 生成 `index.html` 与 `game_logic.js`。
+4. collector 兼容产物写入 `product/` 或工作区根目录的 harness。
+5. BUILD gate 检查必需文件、Canvas/WebGL 信号和外部资源限制。
+6. CONTRACT 通过 Node.js 导入规则层并检查两个导出和基本状态推进。
+7. BUILD 与 CONTRACT 允许时，DeepSeek judge 读取需求、代码和详细 rubric 锚点。
+8. 每题结果写入 `runs/auto/<run-id>/`，随后更新 JSON 与 Markdown 排行榜。
+
+用户必须显式指定 `--all`、`--task` 或筛选条件，避免误触发 982 题的真实生成和评分成本。
+`--resume` 只复用指定 run ID 下已经存在的每题结果。
+
+## 5. 评分协议
+
+四个维度均为 0-5：
+
+| 维度 | 权重 | 关注点 |
+|---|---:|---|
+| `completeness` | 0.15 | 核心机制是否存在、可操作且互相连接 |
+| `richness` | 0.35 | 内容变化、升级、资源、风险和策略深度 |
+| `player_exp` | 0.15 | 状态可读、输入反馈、失败恢复和完整闭环 |
+| `visual` | 0.35 | 构图、美术一致性、动效、镜头和完成度 |
+
+```text
+rubric_score_100 = 100 × Σ(dimension_score / 5 × dimension_weight)
+overall_score = BUILD × CONTRACT × rubric_score_100
 ```
-Total = 0.55·Behavior + 0.25·Presentation + 0.20·Structure
 
-Behavior（确定性行为套件通过率 + 回归惩罚）
-  B_score = max(0, pass_rate_k)                      # 末轮关键行为通过率
-  B_final = B_score · (1 − 0.20 · regression_rate)   # regression_rate = 前轮通过行为在末轮失败的比例
+- `BUILD`：静态硬门控，值为 0 或 1。
+- `CONTRACT`：通用行为合同的通过率，值为 0-1。
+- `overall_score`：正式总分，值为 0-100。
 
-Presentation（LLM rubric 盲评 0–5，多 judge 取中频）
-  P: 视觉质感 / 交互响应 / 手感与反馈 / 创意与说明
-  每题 2 锚点（明显好/明显差）先校准，judge 一致率 ≥80% 入库
+BUILD 失败或规则层完全不可导入时，跳过付费 LLM judge 并直接记 0 分。部分合同失败会按
+通过率降低总分，避免一个只满足文件名的项目获得完整主观评分。
 
-Structure（确定性 + rubric）
-  S: L1/L2 分层合规 / L1 无框架逃逸 / 文件集约数与离线自包含 / 结构空洞惩罚
-```
+## 6. Judge 约束
 
-要点：
-- **regression 是乘法硬惩罚**——「改着改着玩法没了」被量化成对总分的直接压制（3DGameAgentBench 的痛点）。
-- **judge 盲评 + 位置对调**：不看模型名/版本；正序反序各评一次取中频防位置效应。
-- duet anchors：2 锚模型（康健/崩溃）做 p∩q≥0.8 签 cmake，不签就 breakdown  arbitration。
+自动 judge 默认模型为 `deepseek-v4-flash`，可通过 `.env` 或 `--judge-model` 覆盖。
+API 调用采用 OpenAI 兼容的 `/chat/completions` JSON 接口，不增加厂商 SDK 依赖。
 
-## 4. 多轮运行协议（runner 语义）
+评分提示词要求：
 
-```
-Round 1: prompt = r1_spec
-Round k>1: prompt = rk_delta（硬性要求：保持既有行为不破坏；与上一产物 diff 对照）
-每轮结束：快照 artifact → 跑 behavior suite 记录逐例 PASS/FAIL → 计算 regression
-末轮：追加 rubric（L2）+ structure check
-```
+- agent 和被测模型身份不可见。
+- 0、1、2、3、4、5 每档都有明确语义。
+- 只能按 `index.html` 与 `game_logic.js` 的可验证代码证据评分。
+- 不得依据变量名、菜单标签、注释、计划或 TODO 推断功能存在。
+- 每个维度必须返回理由、代码证据和关键缺失项。
+- 返回结构经过本地严格校验，维度缺失、越界或非 JSON 均视为 judge 基础设施错误。
 
-- **行为历史**：`runlog.json` 保留每轮每例行为结果，回归矩阵可视化。
-- **全灭即终止**：若某轮 golden 全灭，runner 记 0 分并终止——对应真实工程「崩了就崩了」。
-- 对抗暴露设计：Rk 常设「诱使模型『优化』老行为」的 delta——例如改物理手感时球速被悄悄改坏、计分边界位移——比纯增量更能压出回归防护能力。这条我们主观定义为 3DGameAgentBench 的辨证代价，这才是直接给 PoC 的。
+HTTP 429 与 5xx 会指数退避重试。judge 错误的结果不会进入正式排行榜，可用原 run ID
+修复后断点续跑。
 
-## 5. 反作弊与泄漏防护
+## 7. 排行榜
 
-- 离网沙箱：runner 内 `--network none`，禁止引用外链 CDN 之外的资源（白名单 CDN 允许 hash pin）。
-- 模板/教程抄袭检查：跨题 embedding 相似度 >0.95 触发人工核查；对已知教程/仓库检索。
-- closed/held-out 变体：Family 内同模式换场景+数值，榜单混入 15% held-out（同 OmniGameArena 泛化维度）。
-- 锚点防放水：每题附人工过样板 + 模板最小答案各 1 个。
-- prompt 注入测试混入：index.html 内审「隐藏约束」类注入，L1 若执行可疑指令即 fail。
+正式 leaderboard 只聚合 `evaluation_protocol == "auto-v1"` 且
+`leaderboard_eligible == true` 的每题结果。mock judge、协议夹具和 judge 基础设施错误
+不会进入榜单。
 
-## 6. 成本模型
+每个模型展示：
 
-- 模型侧：单任务完整 3–5 轮 ≈15–25 万 tokens；一模型刷 15 题 ≈5M tokens。
-- 出题人侧：一题（L1 suite + 4 轮 delta spec）≈6–8 小时（参考 3DGameAgentBench 的 4–5 小时/题）。
-- 机器侧：行为 suite 毫秒级；rubric judge 每题 2 次（首+末轮）共 ~2 分钟。
-- 发布：v0.1 公开 15 题 → 回访校准 → v1 150 题 + 全开源工具链（open+closed 双数据集，仿 ClawProBench）。
+- 总分均值。
+- 四个维度的 0-5 均分。
+- BUILD 通过率。
+- CONTRACT 平均通过率。
+- 已完成题目数和结果数。
 
-## 7. 开源与数据发布
+排序依次使用总分、未乘门控的 rubric 分和 CONTRACT 均值。
 
-- 工具链全开源（MIT）；数据集 HuggingFace：`{task.yaml, r1_spec, rk_delta, behavior_suite, rubric, codebook}`。
-- **golden suite 公开但 inject_guard 私有**（仿 SWE-Bench 双集思路），防止 models 直接背答案。
-- leaderboard 维度：Behavior / Presentation / Change-Robustness（回归子分单列）。
+## 8. 难度语义
 
-## 8. 路线图
+难度表示在浏览器垂直切片中实现题面要求的工程复杂度，不表示游戏类型价值，也不表示
+模型预期得分。确定性分类器使用以下信号：
 
-- v0.1：3 示例任务 + harness 单轮/多轮跑通，mock+真实 agent 双通道（本仓库）。
-- v0.3：15 题、judge 锚定校准、离网沙箱。
-- v1.0：150 题（6 族×25）、公开数据集+leaderboard、多 judge 一致性报告。
+- 游戏类型的基础复杂度。
+- 2D/3D 范围。
+- 明确要求的系统数量。
+- 物理、AI、寻路、模拟、经济、持久状态、联网、程序生成和高级渲染信号。
 
-## 9. 风险与开放问题
+分数不高于 4 为 `low`，5-7 为 `medium`，8 以上为 `high`。分类规则集中在
+`scripts/task_metadata.py`，生成器和统计门禁共用同一实现。
 
-- **judge 稳定性**：rubric 主观维度靠锚点+多 judge；结构维尽量转确定性。
-- **基准漂移**：模型刷榜后退 L1 泄漏；closed set + 周期性 refresh。
-- **分层契约的元难度**：强制分层可能惩罚「不会分层」的模型——但 Mage 数据表明这正是能力差距显现点，我们以「结构分」透明扣分，不藏。
+## 9. 数据门禁
+
+`scripts/generate_task_distribution.py --check` 验证：
+
+- 491 个完整中英文概念对。
+- 982 个任务目录，每目录严格四个文件。
+- ID、目录、语言后缀与 `base_task_id` 一致。
+- 提示词和 YAML R1 完全一致。
+- 双语变体的类型和难度一致。
+- 静态产物合同是 `index.html + game_logic.js`。
+- rubric 权重合计为 1，所有映射锚点真实存在。
+- 声明的行为检查脚本存在。
+- `bench/TASK_DISTRIBUTION.md` 与当前题池完全一致。
+
+`scripts/validate_pool.py --only-mz` 进一步运行 982 题的 mock runner/build gate
+兼容性门禁，并更新 `bench/POOL_AUDIT.md`。
+
+## 10. 当前边界
+
+- 当前题池是单轮生成任务；旧式多轮 runner 保留兼容，但不作为正式自动榜单协议。
+- BUILD 和 CONTRACT 是确定性合同检查，不等同于完整浏览器玩法、性能或视觉回归测试。
+- visual 维度由代码证据判断；严肃发布前仍应做浏览器截图抽样和多 judge 校准。
+- 不同模型的排行榜对比应使用相同题目集合、相同 judge 模型与相同协议版本。

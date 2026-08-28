@@ -1,0 +1,57 @@
+# Open-World Cartographer
+
+Build an **Open-World Cartographer** game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The player is a cartographer venturing into unmapped wilderness, drawing the map
+as they explore. The fantasy is discovery and mastery of the unknown: every step
+reveals new terrain, every landmark sketched onto the map brings profit and
+prestige. Tension comes from dangerous terrain — cliffs, swamps, predator
+territories — and limited supplies. Completed maps sell to merchants in town,
+funding better equipment for deeper expeditions. The map itself is the primary
+UI element, filling in as the player moves.
+
+## What the Player Experiences
+
+1. **Title Screen** — A parchment-styled title with the game name in hand-drawn
+   lettering, an ink bottle and quill motif, and a play button.
+2. **The Wilderness** — The player moves freely through procedurally varied
+   terrain: forests, mountains, rivers, caves, and ruins. Fog of war hides
+   unexplored areas.
+3. **Map Drawing** — As the player explores, a minimap and full-screen map fill
+   in with terrain details. Landmarks (ruins, unique trees, cave entrances) can
+   be annotated for bonus value.
+4. **Dangers** — Hostile wildlife, treacherous cliffs, and quicksand threaten the
+   player. Health is limited and healing requires returning to camp or using
+   scarce supplies.
+5. **Supplies** — The player carries food, ink, and rope. Food depletes over time;
+   ink is consumed when annotating landmarks; rope is needed to cross cliffs.
+   Running out forces a retreat.
+6. **Selling Maps** — Returning to the starting town lets the player sell completed
+   map sections. Larger, more detailed maps with annotations fetch higher prices.
+7. **Equipment Upgrades** — Profits buy better boots (faster movement), a compass
+   (reveals terrain type ahead), a lantern (explores caves), and a sturdy pack
+   (more supply capacity).
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

@@ -1,0 +1,62 @@
+# Zoo Keeper
+
+Build **Zoo Keeper**, a **zoo management tycoon game** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It is a **complete, shippable
+micro-game** that could sit on an itch.io page or Steam as a polished vertical
+slice.
+
+## Core Vision
+
+The player builds and manages a zoo, constructing enclosures for diverse
+animals, keeping visitors happy, and pursuing conservation goals. Each animal
+species has habitat requirements — size, terrain type, temperature, companions
+— and meeting them keeps animals healthy and breeds new ones. Visitors pay
+admission and spend at gift shops and food stalls, but they come for the
+animals: rare species and well-designed enclosures draw bigger crowds. The
+tension is between commercial pressure (visitors want spectacle) and animal
+welfare (cramped exhibits stress animals). The tone is bright and educational:
+lush habitats, informational plaques, and the joy of seeing animals thrive.
+
+## What the Player Experiences
+
+From the title screen the player starts a new zoo. The view shows a top-down
+park grid with an entrance gate. The player builds paths, enclosures, visitor
+amenities, and staff buildings.
+
+Enclosures are built by fencing an area and assigning a biome type (savanna,
+arctic, jungle, aquatic). Animals are acquired from a catalog — each has a
+purchase cost, habitat requirement, and popularity rating. Placing an animal
+in a matching habitat keeps it happy; mismatched habitats cause stress shown
+by a visible mood indicator.
+
+Visitors enter through the gate, walk paths, view enclosures, and spend money.
+Visitor happiness depends on animal variety, enclosure quality, path layout,
+and amenity availability. Happy visitors stay longer and spend more.
+
+Breeding is triggered when compatible animals share a well-maintained
+enclosure. Baby animals are a major visitor draw and can be kept or traded for
+conservation points. Conservation goals (breed endangered species, maintain
+genetic diversity) provide bonus objectives beyond pure profit.
+
+Staff (keepers, vets, janitors) must be hired and assigned. The game tracks
+money, visitor count, animal welfare score, and conservation progress. A styled
+result screen shows zoo statistics at the end of each season.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

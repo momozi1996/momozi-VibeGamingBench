@@ -1,0 +1,2594 @@
+[
+  {
+    "task": "mz_cardgame-autobattler-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-autobattler-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-gwent-war-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-gwent-war-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-inscription-dark-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-inscription-dark-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-poker-roguelike-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-poker-roguelike-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-spire-descent-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-spire-descent-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-dollhouse-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-dollhouse-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-floor-13-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-floor-13-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-lighthouse-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-lighthouse-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-signal-lost-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-signal-lost-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-tape-archive-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-tape-archive-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-ant-empire-en",
+    "family": "idle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-ant-empire-zh",
+    "family": "idle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-dungeon-guild-en",
+    "family": "idle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-dungeon-guild-zh",
+    "family": "idle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-factory-planet-en",
+    "family": "idle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-factory-planet-zh",
+    "family": "idle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-spell-tower-en",
+    "family": "idle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-spell-tower-zh",
+    "family": "idle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-airship-trader-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-airship-trader-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-archaeology-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-archaeology-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-aurora-final-audition-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-aurora-final-audition-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-beast-tamer-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-beast-tamer-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-bounty-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-bounty-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-cartographer-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-cartographer-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-drifting-lanterns-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-drifting-lanterns-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-every-road-midnight-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-every-road-midnight-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-festival-disaster-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-festival-disaster-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-fishing-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-fishing-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-forgotten-students-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-forgotten-students-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-ghost-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-ghost-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-last-reservoir-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-last-reservoir-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-missing-second-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-missing-second-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-necromancer-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-necromancer-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-pokemon-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-pokemon-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-racing-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-racing-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-seasons-witch-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-seasons-witch-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-sky-islands-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-sky-islands-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-sleeping-titan-city-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-sleeping-titan-city-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-solarline-rally-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-solarline-rally-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-submarine-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-submarine-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-survival-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-survival-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-time-travel-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-time-travel-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-twelve-ashes-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-twelve-ashes-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-vanta-last-broadcast-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-vanta-last-broadcast-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-weather-vane-house-en",
+    "family": "openworld",
+    "language": "en",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-weather-vane-house-zh",
+    "family": "openworld",
+    "language": "zh",
+    "source_kind": "adapted_article_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-arcborne-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-arcborne-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-cozy-harbor-delivery-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-cozy-harbor-delivery-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-dig-descent-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-dig-descent-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-dread-wings-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-dread-wings-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-echo-climb-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-echo-climb-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-ink-trail-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-ink-trail-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-iron-vanguard-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-iron-vanguard-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-ivory-beats-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-ivory-beats-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-knight-quest-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-knight-quest-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-magnet-dash-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-magnet-dash-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-meat-gauntlet-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-meat-gauntlet-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-momentum-lab-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-momentum-lab-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-orbital-salvage-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-orbital-salvage-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-shape-shift-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-shape-shift-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-stealth-shadow-courier-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-stealth-shadow-courier-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-thunder-valkyrie-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-thunder-valkyrie-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-time-loop-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-time-loop-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-vessel-of-hallownest-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-vessel-of-hallownest-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-wall-dancer-en",
+    "family": "platformer",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-wall-dancer-zh",
+    "family": "platformer",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-3d-terminal-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-3d-terminal-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-circuit-wizard-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-circuit-wizard-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-exploded-view-repair-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-exploded-view-repair-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-goo-architect-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-goo-architect-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-gravity-shift-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-gravity-shift-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-lemming-factory-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-lemming-factory-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-neon-gravity-marble-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-neon-gravity-marble-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-perspective-path-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-perspective-path-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-pipe-crisis-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-pipe-crisis-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-portal-lab-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-portal-lab-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-rule-rewrite-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-rule-rewrite-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-sokoban-dungeon-en",
+    "family": "puzzle",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-sokoban-dungeon-zh",
+    "family": "puzzle",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-drift-circuit-en",
+    "family": "racing",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-drift-circuit-zh",
+    "family": "racing",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-rocket-trials-en",
+    "family": "racing",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-rocket-trials-zh",
+    "family": "racing",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-terrain-climb-en",
+    "family": "racing",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-terrain-climb-zh",
+    "family": "racing",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-trick-runner-en",
+    "family": "racing",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-trick-runner-zh",
+    "family": "racing",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-beat-dungeon-en",
+    "family": "rhythm",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-beat-dungeon-zh",
+    "family": "rhythm",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-conductor-en",
+    "family": "rhythm",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-conductor-zh",
+    "family": "rhythm",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-dj-arena-en",
+    "family": "rhythm",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-dj-arena-zh",
+    "family": "rhythm",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-garden-en",
+    "family": "rhythm",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-garden-zh",
+    "family": "rhythm",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-note-highway-en",
+    "family": "rhythm",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-note-highway-zh",
+    "family": "rhythm",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-rhythm-striker-en",
+    "family": "rhythm",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-rhythm-striker-zh",
+    "family": "rhythm",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-action-void-harvest-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-action-void-harvest-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-breach-tactics-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-breach-tactics-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-dice-throne-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-dice-throne-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-dungeon-shop-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-dungeon-shop-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-ftl-voyage-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-ftl-voyage-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-garden-crawl-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-garden-crawl-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-potion-craft-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-potion-craft-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-relic-pinball-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-relic-pinball-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-rulescape-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-rulescape-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-slot-fortune-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-slot-fortune-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-spelunk-depths-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-spelunk-depths-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-train-heist-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-train-heist-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-wildwood-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-wildwood-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-word-spell-en",
+    "family": "roguelike",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-word-spell-zh",
+    "family": "roguelike",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-bullet-cathedral-en",
+    "family": "shooter",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-bullet-cathedral-zh",
+    "family": "shooter",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-hotline-heist-en",
+    "family": "shooter",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-hotline-heist-zh",
+    "family": "shooter",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-mech-sortie-en",
+    "family": "shooter",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-mech-sortie-zh",
+    "family": "shooter",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-neon-arena-en",
+    "family": "shooter",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-neon-arena-zh",
+    "family": "shooter",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-sky-duel-en",
+    "family": "shooter",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-sky-duel-zh",
+    "family": "shooter",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-void-patrol-en",
+    "family": "shooter",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-void-patrol-zh",
+    "family": "shooter",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-wave-commander-en",
+    "family": "shooter",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-wave-commander-zh",
+    "family": "shooter",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-ai-agent-lab-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-ai-agent-lab-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-air-control-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-air-control-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-border-check-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-border-check-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-kitchen-rush-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-kitchen-rush-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-liquid-interaction-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-liquid-interaction-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-news-editor-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-news-editor-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-power-grid-balancer-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-power-grid-balancer-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-space-station-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-space-station-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-transit-web-en",
+    "family": "simulation",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-transit-web-zh",
+    "family": "simulation",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-archery-quest-en",
+    "family": "sports",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-archery-quest-zh",
+    "family": "sports",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-boxing-gym-en",
+    "family": "sports",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-boxing-gym-zh",
+    "family": "sports",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-fishing-tournament-en",
+    "family": "sports",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-fishing-tournament-zh",
+    "family": "sports",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-skateboard-park-en",
+    "family": "sports",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-skateboard-park-zh",
+    "family": "sports",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-ant-colony-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-ant-colony-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-ashen-spire-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-ashen-spire-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-auto-chess-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-auto-chess-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-beastclash-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-beastclash-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-chess-variant-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-chess-variant-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-cyber-attack-defense-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-cyber-attack-defense-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-hex-conquest-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-hex-conquest-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-kingdom-cards-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-kingdom-cards-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-pirate-fleet-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-pirate-fleet-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-plant-defense-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-plant-defense-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-puzzle-magnet-lab-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-puzzle-magnet-lab-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-robot-factory-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-robot-factory-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-rogue-joker-poker-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-rogue-joker-poker-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-siege-engineer-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-siege-engineer-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-signal-rail-dispatcher-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-signal-rail-dispatcher-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-skirmish-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-skirmish-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-spell-tactics-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-spell-tactics-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-towerdefense-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-towerdefense-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-voxel-tower-defense-en",
+    "family": "strategy",
+    "language": "en",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-voxel-tower-defense-zh",
+    "family": "strategy",
+    "language": "zh",
+    "source_kind": "adapted_user_prompt",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-creature-clinic-triage-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-creature-clinic-triage-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-dungeon-master-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-dungeon-master-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-farm-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-farm-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-funfair-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-funfair-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-garden-ecosystem-keeper-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-garden-ecosystem-keeper-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-gladiator-arena-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-gladiator-arena-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-music-label-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-music-label-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-pirate-port-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-pirate-port-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-potion-shop-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-potion-shop-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-railroad-baron-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-railroad-baron-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-space-colony-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-space-colony-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-submarine-pressure-rescue-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-submarine-pressure-rescue-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-tiny-factory-foreman-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-tiny-factory-foreman-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-trading-caravan-tycoon-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-trading-caravan-tycoon-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-wildhaven-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-wildhaven-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-zoo-keeper-en",
+    "family": "tycoon",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-zoo-keeper-zh",
+    "family": "tycoon",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-arcaneacademy-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-arcaneacademy-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-courtroom-clue-trial-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-courtroom-clue-trial-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-debate-club-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-debate-club-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-detective-noir-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-detective-noir-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-escape-room-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-escape-room-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-grimfable-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-grimfable-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-keepsake-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-keepsake-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-lastsignal-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-lastsignal-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-pactbound-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-pactbound-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-spy-handler-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-spy-handler-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-time-paradox-en",
+    "family": "visualnovel",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-time-paradox-zh",
+    "family": "visualnovel",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  }
+]

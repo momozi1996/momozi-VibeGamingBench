@@ -1,0 +1,105 @@
+id: mz_puzzle-exploded-view-repair-zh
+title: 零重力拆解动效 (中文)
+family: puzzle
+difficulty: medium
+engine: html
+language: zh
+base_task_id: mz_puzzle-exploded-view-repair
+provenance:
+  kind: adapted_user_prompt
+  source_name: benchmark author expansion prompts
+  source_item: user-09
+rounds:
+- name: R1
+  spec: |-
+    # 零重力拆解动效
+
+    制作一个完整可玩的 **3D 解谜游戏**，交付为经过打磨的浏览器纵向切片。
+
+    ## 核心构想
+
+    一款围绕精密无人机或相机爆炸拆解视图构建的 3D 检查维修谜题。玩家拆解设备、查看带标签零件、诊断故障，并按正确顺序恢复装配。
+
+    ## 必须实现的可玩系统
+
+    1. **系统 1** - 通过滑块和鼠标滚轮平滑控制爆炸拆解程度，不同零件组应具有不同弹性与阻尼响应。
+    2. **系统 2** - 支持环绕、缩放、悬停高亮、隔离和固定的 3D 标签；标签应始终可读并正确指向移动零件。
+    3. **系统 3** - 设计检查谜题，让玩家通过视觉线索、诊断读数和功能说明识别故障零件。
+    4. **系统 4** - 要求遵循正确拆装顺序，包含工具选择、依赖检查、吸附预览和无效操作反馈。
+    5. **系统 5** - 提供多个设备模块或故障场景，涉及光学、电源、控制板、电机、散热和结构零件。
+    6. **系统 6** - 通过可玩的系统测试验证维修，并根据诊断与装配准确度显示性能差异。
+
+    ## 成长与推进
+
+    新的维修工作加入更密集装配、更隐蔽故障、校准步骤和可选效率挑战。
+
+    ## 美术方向
+
+    高端工业可视化，以拉丝金属、透明塑料、橡胶、玻璃光学件、棚拍灯光、清晰轮廓和克制技术标签呈现。
+
+    ## HTML 提交格式
+
+    用两个文件交付一个可独立运行的 3D 浏览器游戏：
+
+    - `index.html` - 使用 Three.js 完成全部可玩呈现。
+    - `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
+      `advance(game, input, dt)`。
+
+    页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
+    几何体、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、视频或音频。
+    Three.js 可以从官方 CDN 加载；若本题明确要求其他库，也可以使用固定版本的 CDN。
+
+    必须支持键盘和鼠标。可按题目需要加入触摸或设备传感器控制，但必须提供桌面端替代
+    方案。主游戏在 1280x720 下应清晰可读。需要有经过设计的标题画面、简短的游戏内引导、
+    暂停或重新开始控制、完整的胜负或完成闭环，以及每项关键操作的明确反馈。最终结果应当
+    是打磨过的纵向切片，而不是被动场景或彼此割裂的技术演示。
+
+    `index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
+    160 KB 以内，`game_logic.js` 控制在 320 行以内。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, progression, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent 3D art direction, authored environments, effects, and motion polish.

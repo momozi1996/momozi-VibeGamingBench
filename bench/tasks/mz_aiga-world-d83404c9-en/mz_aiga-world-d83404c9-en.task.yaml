@@ -1,0 +1,127 @@
+id: mz_aiga-world-d83404c9-en
+title: Master of Shadows (English)
+family: strategy
+difficulty: high
+engine: html
+language: en
+base_task_id: mz_aiga-world-d83404c9
+provenance:
+  kind: adapted_aiga_shared_world
+  source_name: AIGA Shared Worlds
+  source_index_url: https://www.aiga.io/zh/shared-worlds?langCode=zh%2Cen
+  source_url: https://www.aiga.io/shared-worlds/padrone-delle-ombre/d83404c9-09ce-4f61-916a-59c8c61c6f42
+  source_api_url: https://www.aiga.io/api/public-worlds/d83404c9-09ce-4f61-916a-59c8c61c6f42
+  source_world_id: d83404c9-09ce-4f61-916a-59c8c61c6f42
+  source_title: Padrone delle Ombre
+  source_language: it
+  source_genre: noir
+  source_mode: open-world-kingpin
+  source_api_sha256: 0f1fe5fd059ef244f1089b8708876eea3c98f968c4970b613f8a30e7bd34e0bd
+  source_sitemap_sha256: 5248fa9baefbf6758a81a684a4fd3bfc2f5b07d24248b2bf9cf65c9e7184372c
+  adaptation_language: en
+rounds:
+- name: R1
+  spec: |-
+    # Master of Shadows
+
+    Build a complete, playable **3D strategy game** as
+    a polished browser vertical slice from a **third person** viewpoint.
+
+    ## Core Vision
+
+    A sharp observer rises through Rome's underworld by dealing with gangs, politicians, and business interests while reputation becomes the main currency.
+
+    ## World Parameters
+
+    Treat this as an original adaptation of a **noir** shared world with **huge** scope and a **gritty** tone. Do not reproduce commercial characters, names, lore, logos, or protected visual designs.
+
+    ## Required Playable Systems
+
+    1. **System 1** - Explore at least three connected districts or territories from Master of Shadows, each with distinct opportunities, hazards, and ownership state.
+    2. **System 2** - Complete jobs through negotiation, trade, tactical conflict, or service to earn reputation with transparent gain and loss rules.
+    3. **System 3** - Manage at least three factions whose trust, hostility, alliances, and control change after persistent player choices.
+    4. **System 4** - Balance health, resources, influence, and attention while territory events continue to evolve without waiting for the player.
+    5. **System 5** - Persist reputation, faction relations, owned or protected locations, depleted resources, and unresolved consequences across the whole run.
+    6. **System 6** - Reach a playable influence milestone that combines territory, faction, resource, and reputation systems, then support continued play or a scored conclusion.
+
+    ## Progression and Persistent State
+
+    Use a short three-stage arc. Introduce the central interaction, combine it with
+    world pressure and meaningful choices, then finish with a mastery scenario.
+    Important rules, objectives, resources, relationships, selection state, danger,
+    progress, and outcome must be visible in stable HUD regions and represented in
+    `game_logic.js`. Systems must share state instead of appearing as disconnected
+    buttons, menus, or visual demonstrations.
+
+    ## Art Direction
+
+    A scan-friendly tactical field, distinct roles, visible ranges and ownership, restrained effects, and information hierarchy for repeated decisions.
+
+    ## HTML Submission Format
+
+    Deliver a self-contained browser game in two files:
+
+    - `index.html` - the complete playable presentation. Use Three.js and WebGL for the playable presentation.
+    - `game_logic.js` - the deterministic state and rules layer, exporting
+      `createGame(opts)` and `advance(game, input, dt)`.
+
+    The page must open without a build step or local server and render within three
+    seconds on a normal laptop. Use procedural geometry, generated textures, shaders,
+    particles, synthesized audio, and CSS. Do not fetch external images, models,
+    video, or audio at runtime. Three.js may be loaded from its official CDN when
+    used; pin any permitted library to a specific version.
+
+    Support keyboard and pointer input, with touch or gamepad added where appropriate.
+    Keep the complete play area and HUD readable at 1280x720. Include a styled start
+    flow, concise in-game guidance, pause and restart controls, a complete outcome
+    loop, and visible feedback for every important action.
+
+    `index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
+    160 KB and `game_logic.js` under 320 lines.
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, persistence, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent authored art direction, functional composition, effects, and motion polish.

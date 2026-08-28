@@ -1,0 +1,127 @@
+id: mz_aiga-world-e8e5ea1e-en
+title: Gateway to the Golden Cities (English)
+family: shooter
+difficulty: high
+engine: html
+language: en
+base_task_id: mz_aiga-world-e8e5ea1e
+provenance:
+  kind: adapted_aiga_shared_world
+  source_name: AIGA Shared Worlds
+  source_index_url: https://www.aiga.io/zh/shared-worlds?langCode=zh%2Cen
+  source_url: https://www.aiga.io/shared-worlds/uncharted-gateway-to-the-golden-cities/e8e5ea1e-eeed-411f-b44e-97ec720be17a
+  source_api_url: https://www.aiga.io/api/public-worlds/e8e5ea1e-eeed-411f-b44e-97ec720be17a
+  source_world_id: e8e5ea1e-eeed-411f-b44e-97ec720be17a
+  source_title: 'Uncharted: Gateway to the Golden Cities'
+  source_language: en
+  source_genre: adventure
+  source_mode: open-world-game
+  source_api_sha256: 0b9b9f7389273c630f861a6bf8e80ed7091b0f5edc69c370670b6a6682ea3cff
+  source_sitemap_sha256: 5248fa9baefbf6758a81a684a4fd3bfc2f5b07d24248b2bf9cf65c9e7184372c
+  adaptation_language: en
+rounds:
+- name: R1
+  spec: |-
+    # Gateway to the Golden Cities
+
+    Build a complete, playable **3D shooter game** as
+    a polished browser vertical slice from a **third person** viewpoint.
+
+    ## Core Vision
+
+    A treasure hunter follows a lost fleet toward a legendary golden source, combining climbing, shooting, puzzles, and trusted allies against mercenaries.
+
+    ## World Parameters
+
+    Treat this as an original adaptation of a **adventure** shared world with **large** scope and a **cinematic** tone. Do not reproduce commercial characters, names, lore, logos, or protected visual designs.
+
+    ## Required Playable Systems
+
+    1. **System 1** - Explore at least three connected locations adapted from Gateway to the Golden Cities, each with a landmark, local objective, hazard, and unlockable route.
+    2. **System 2** - Implement responsive aiming, firing, reload or cooldown, projectile or hit validation, enemy telegraphs, cover or movement pressure, and distinct weapons.
+    3. **System 3** - Introduce distinct characters or factions whose schedules, trust, hostility, and available help respond to player behavior.
+    4. **System 4** - Track health or shields, ammunition or heat, weapon state, enemy alert, objective progress, and damage consequences.
+    5. **System 5** - Persist discoveries, relationships, altered locations, depleted resources, and unresolved consequences throughout the run.
+    6. **System 6** - Conclude with a mastery objective or confrontation that combines traversal, the primary challenge, relationships, and accumulated world state.
+
+    ## Progression and Persistent State
+
+    Use a short three-stage arc. Introduce the central interaction, combine it with
+    world pressure and meaningful choices, then finish with a mastery scenario.
+    Important rules, objectives, resources, relationships, selection state, danger,
+    progress, and outcome must be visible in stable HUD regions and represented in
+    `game_logic.js`. Systems must share state instead of appearing as disconnected
+    buttons, menus, or visual demonstrations.
+
+    ## Art Direction
+
+    Readable targets and projectiles, disciplined muzzle and impact effects, strong cover silhouettes, useful depth cues, and camera feedback that supports aiming.
+
+    ## HTML Submission Format
+
+    Deliver a self-contained browser game in two files:
+
+    - `index.html` - the complete playable presentation. Use Three.js and WebGL for the playable presentation.
+    - `game_logic.js` - the deterministic state and rules layer, exporting
+      `createGame(opts)` and `advance(game, input, dt)`.
+
+    The page must open without a build step or local server and render within three
+    seconds on a normal laptop. Use procedural geometry, generated textures, shaders,
+    particles, synthesized audio, and CSS. Do not fetch external images, models,
+    video, or audio at runtime. Three.js may be loaded from its official CDN when
+    used; pin any permitted library to a specific version.
+
+    Support keyboard and pointer input, with touch or gamepad added where appropriate.
+    Keep the complete play area and HUD readable at 1280x720. Include a styled start
+    flow, concise in-game guidance, pause and restart controls, a complete outcome
+    loop, and visible feedback for every important action.
+
+    `index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
+    160 KB and `game_logic.js` under 320 lines.
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, persistence, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent authored art direction, functional composition, effects, and motion polish.

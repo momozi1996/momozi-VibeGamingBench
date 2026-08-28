@@ -1,0 +1,59 @@
+# Kingdom Cards
+
+Build **Kingdom Cards**, a **card-driven kingdom management strategy game** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It is a **complete,
+shippable micro-game** that could sit on an itch.io page or Steam as a polished
+vertical slice.
+
+## Core Vision
+
+A small kingdom is governed entirely through cards. Each turn the player draws
+a hand and plays cards to build structures, recruit soldiers, gather resources,
+or launch attacks against rival lords. The deck starts bloated with weak cards;
+smart play thins it, replacing chaff with powerful upgrades. Diplomacy cards
+let the player negotiate truces or betray allies, adding a social layer to the
+engine-building. The tension is that every card played is a card not saved for
+defense, and the rivals do not wait. The tone is parchment-and-ink medieval:
+cards look like royal decrees, the kingdom is a growing map of holdings, and
+war is declared with a wax seal.
+
+## What the Player Experiences
+
+From the title screen the player starts a new campaign. The kingdom begins as
+a single castle on a map with rival territories visible. Each turn the player
+draws five cards from their deck and plays up to three. Build cards add
+structures to the map (farms for food, barracks for troops, markets for gold).
+Recruit cards add soldiers. Attack cards send armies against a rival's
+territory. Diplomacy cards open negotiations.
+
+After playing, unplayed cards can be trashed to thin the deck, or kept for
+next turn's draw. New cards are gained by building specific structures or
+winning battles — each acquisition is a permanent deck change.
+
+Rivals take their turns simultaneously, expanding and attacking. The map
+updates to show territory changes. Losing all territories ends the game in
+defeat; controlling the entire map wins. The player must balance building
+economy cards for long-term growth against military cards for immediate
+survival.
+
+A styled result screen shows the campaign outcome with territory history and
+offers a new game.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

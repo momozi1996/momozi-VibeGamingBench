@@ -1,9 +1,8 @@
 """校验器：静态检查（文件/内容/依赖） + 行为套件（node 跑 task 自带 .mjs）。
 
-行为套件协议（node 脚本零 stdout JSON 数组）：
+行为套件协议（node 脚本 stdout JSON 数组）：
   [{"id": "B1", "ok": true, "detail": "..."}, ...]
 脚本从 env.ARTIFACT 读产物目录；脚本 args: ARTIFACT。
-subprocess.run(argv("python","-m","gamegenbench","run",task,agent,out))（占位）
 """
 
 from __future__ import annotations
@@ -21,13 +20,17 @@ class StaticChecker:
 
     def run(self, workspace: Path, req: dict) -> list:
         results = []
-        files = {p.name: p for p in workspace.glob("*") if p.is_file()}
+        files = {
+            p.relative_to(workspace).as_posix(): p
+            for p in workspace.rglob("*")
+            if p.is_file()
+        }
         for item in self.items:
             kind = item.get("kind")
             rid = item.get("id", kind)
             if kind == "required_file":
                 rel = item["path"]
-                want = Path(rel).name
+                want = Path(rel).as_posix()
                 ok = want in files
                 results.append({
                     "id": rid, "ok": ok, "weight": item.get("weight", 1.0),
@@ -35,7 +38,7 @@ class StaticChecker:
                 })
             elif kind == "contains":
                 path_field = item.get("check_in", item["path"])
-                target = Path(path_field).name
+                target = Path(path_field).as_posix()
                 needle = item["pattern"]
                 if target not in files:
                     ok = None                       # 文件缺失 → 不计分母，weight 归零
@@ -49,7 +52,7 @@ class StaticChecker:
                               else f"{path_field} MISSING — contains check not covered",
                 })
             elif kind == "no_external_js":
-                target = Path(item.get("path", req["entry"])).name
+                target = Path(item.get("path", req["entry"])).as_posix()
                 text = files.get(target, None)
                 text = text.read_text(encoding="utf-8", errors="ignore") if text else ""
                 bad_tags = re.findall(r"(https?://|src=[\"'][^\"']*cdnjs)", text)
@@ -69,7 +72,7 @@ class StaticChecker:
             elif kind == "line_budget":
                 limit = int(item["max_lines"])
                 rel = item.get("path", req["logic"])
-                target = Path(rel).name
+                target = Path(rel).as_posix()
                 if target in files:
                     lines = len(files[target].read_text(encoding="utf-8", errors="ignore").splitlines())
                 else:
@@ -106,6 +109,8 @@ class BehaviorSuite:
             if not raw:
                 return [{"id": "suite_json", "ok": False, "detail": f"no JSON stdout; stderr={proc.stderr[-300:]}"}]
             data = json.loads(raw)
+            if not isinstance(data, list):
+                return [{"id": "suite_json", "ok": False, "detail": "JSON output must be an array"}]
             out = []
             for d in data:
                 out.append({"id": d.get("id", "?"), "ok": bool(d.get("ok")), "detail": d.get("detail", "")})
@@ -114,3 +119,5 @@ class BehaviorSuite:
             return [{"id": "suite_timeout", "ok": False, "detail": "behavior suite timed out"}]
         except json.JSONDecodeError as e:
             return [{"id": "suite_json", "ok": False, "detail": f"invalid JSON: {e}"}]
+        except OSError as e:
+            return [{"id": "suite_process", "ok": False, "detail": str(e)}]

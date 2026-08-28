@@ -1,0 +1,274 @@
+# Siege Engineer
+
+Build **Siege Engineer**, a **physics-based siege weapon strategy game** in
+HTML 4 at `./`. This is not a prototype. It is a **complete,
+shippable micro-game** that could sit on an itch.io page or Steam as a polished
+vertical slice.
+
+## Core Vision
+
+The player builds and aims siege weapons to demolish castle fortifications
+using realistic projectile physics. Each level presents a castle with walls,
+towers, and defenders that must be reduced to rubble within a limited number
+of shots. The player chooses weapon type, adjusts angle and power, and fires —
+watching the projectile arc through the air and crash into destructible
+terrain. The tension is resource scarcity: ammunition is limited, each shot
+must count, and the castle's geometry creates puzzles about where to strike
+for maximum structural collapse. The tone is medieval engineering: wood and
+iron machines, stone dust, and the satisfying crunch of masonry giving way.
+
+## What the Player Experiences
+
+From the title screen the player enters a campaign map of increasingly
+fortified castles. Each level shows the target castle on the right and the
+player's siege position on the left, with terrain between them.
+
+The player selects from available weapon types: trebuchets for high arcs over
+walls, ballistae for flat direct shots, and catapults for medium-range
+bombardment. Each weapon has different projectile weight, speed, and blast
+radius. The player aims by adjusting angle and power with a drag interface,
+seeing a trajectory preview line.
+
+Firing launches the projectile with physics-based flight. On impact, castle
+blocks take damage and can crack, crumble, or collapse depending on structural
+support — removing a load-bearing wall brings everything above it down. The
+player has a limited shot count per level and must destroy enough of the castle
+to meet a destruction threshold.
+
+Later levels add wind that shifts projectile paths, armored walls that resist
+certain weapon types, and defenders that repair damage between shots. The
+campaign escalates from simple walls to complex multi-tower fortresses.
+
+A styled result screen shows destruction percentage, shots used, and stars
+earned. Three stars require efficient demolition with minimal shots.
+
+## Assets
+
+2D assets are mounted read-only at:
+
+- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+  subdir's `LICENSE.txt`.
+
+Browse the library and choose packs.
+Copy what you need into your project's `assets/` folder.
+
+## Project layout
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    <- your input traces (1-10 files)
+  scripts/  scenes/  assets/
+```
+
+The build must launch cleanly with:
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+A reference for HTML CLI flags is at `/workspace/tools/html_command_line.md`.
+ —
+anything after `--` is forwarded to the project as user args and silently
+ignored by the engine. Correct shape:
+`html --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+result screens look like.
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+`OS.get_cmdline_user_args()` for your game code to read. Example:
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## Demos
+
+Ship **1-10 input-trace files** under `./demo_outputs/`, one per
+demo, each named `*.json`. The evaluator launches a fresh game per trace,
+replays your trace as synthetic mouse and keyboard input at 1280x720, and
+records the screen. Only the first 10 traces by filename are evaluated;
+recordings longer than 20 s are sampled from a random 20 s window.
+
+### Scenarios
+
+Normal play should start from the title screen and demonstrate the task's
+core gameplay loop.
+Demo playback must be deterministic. For demos that need a specific state
+(a specific level, combat state, upgrade screen, result state, or late-game
+setup), define named scenarios your game loads when launched with:
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+When `--scenario <id>` is present the game must skip menus, set up the named
+state deterministically (seed any RNG), and begin accepting input immediately.
+
+### Trace file format
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` — optional; omit for a normal game launch from the title screen.
+- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+- `events` — time-ordered inputs. Coordinates are pixels in the 1280x720
+  viewport. Supported types:
+  - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+    use these for drag interactions: emit `mouse_down` at the start point,
+    one or more `mouse_move` events along the way, and `mouse_up` at the end.
+    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+    succession.
+  - `mouse_move`: `{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+    `A`-`Z`, `0`-`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+  - `wait`: `{frame, type}` — anchor frame, no input.
+
+Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+---
+
+# 中文版提示词
+
+# 攻城工程师（Siege Engineer）
+
+在 `./` 用 HTML 4 开发 **Siege Engineer**，一款**基于物理的攻城武器策略游戏**。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+玩家搭建并瞄准攻城武器，利用真实的抛射物物理去拆毁城堡工事。每个关卡都会给出一座带有城墙、塔楼与守军的城堡，必须在有限的射击次数内把它化为废墟。玩家选择武器类型，调整角度与力度，然后开火——看着抛射物划过空中的弧线，砸进可破坏的地形。张力在于资源稀缺：弹药有限，每一发都必须算数，而城堡的几何结构本身构成了谜题：该打哪里才能造成最大的结构性崩塌。基调是中世纪工程学：木铁机械、石粉飞扬，以及砖石垮塌时那令人满足的碎裂声。
+
+## 玩家体验流程
+
+玩家从标题画面进入一张由防御日益坚固的城堡组成的战役地图。每个关卡在右侧显示目标城堡，左侧显示玩家的攻城阵位，二者之间是地形。
+
+玩家从可用的武器类型中选择：投石机用于高抛越墙，弩炮用于平直直射，抛石机用于中程轰击。每种武器的抛射物重量、速度与爆炸半径各不相同。玩家通过拖拽界面调整角度与力度来瞄准，并能看到一条弹道预览线。
+
+开火后抛射物按物理规律飞行。命中时，城堡砖块会受到伤害，并可能开裂、崩落或整体倒塌，具体取决于结构支撑——移除一段承重墙会让它上方的一切都塌下来。玩家每关的射击次数有限，必须摧毁足够多的城堡部分以达到破坏阈值。
+
+后期关卡会加入改变抛射物路径的风、抵抗特定武器类型的装甲墙，以及在两次射击之间修补损伤的守军。战役从简单的城墙一路升级到复杂的多塔要塞。
+
+一个精心设计的结算画面会展示破坏百分比、已用射击次数与获得的星数。要拿到三星，必须以最少的射击次数完成高效拆除。
+
+## 资产
+
+2D 资产以只读方式挂载在：
+
+- `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+  `LICENSE.txt`。
+
+浏览资产库并挑选合适的资产包。
+把需要的文件复制到你项目的 `assets/` 目录下。
+
+## 项目结构
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ←<- 你的输入轨迹（1-10 个文件）
+  scripts/  scenes/  assets/
+```
+
+构建必须能通过以下命令干净启动：
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+HTML 命令行参数的参考文档在 `/workspace/tools/html_command_line.md`。
+**像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+`--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+`html --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+UI / battlefield / result 画面长什么样。
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+`--out` / `--frames` / `--scene`；其余参数会留在
+`OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## 演示
+
+在 `./demo_outputs/` 下提交 **1-10 个输入轨迹文件**，每个演示一份，
+命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280x720
+分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+
+### 场景（Scenarios）
+
+常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+（为任何随机数发生器设定种子），并立即开始接受输入。
+
+### 轨迹文件格式
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+- `events` —— 按时间排序的输入。坐标是 1280x720 视口内的像素值。
+  支持的类型：
+  - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+    用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+    `mouse_move` 事件，在终点发出 `mouse_up`。
+    一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+  - `mouse_move`：`{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+    `A`-`Z`、`0`-`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+
+回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。

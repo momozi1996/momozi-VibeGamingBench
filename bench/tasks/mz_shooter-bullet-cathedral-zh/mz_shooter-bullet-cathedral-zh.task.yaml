@@ -1,0 +1,102 @@
+id: mz_shooter-bullet-cathedral-zh
+title: shooter bullet cathedral (中文)
+family: shooter
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 弹幕教堂（Bullet Cathedral）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Bullet Cathedral**，一款弹幕 Roguelike。
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    这里的幻想是一路向下穿越一座由程序化排布的敌意房间组成的教堂，每一间都是一场
+    密集的弹幕遭遇战，能否生还取决于在弹幕帷幕中千钧一发的翻滚闪避。有趣的张力来自
+    Roguelike 的无常：死亡会让玩家一无所有地被送回顶层，但每一轮都会提供不同的枪械
+    拾取与房间布局，奖励随机应变而非死记硬背。翻滚闪避会赋予短暂的无敌帧，从而形成
+    一种节奏——翻滚穿过危险，再在恢复窗口期反击。枪械的多样性——从紧束的电磁炮到
+    宽幅的霰弹爆射再到弹跳光球——意味着每一轮的玩法都会随教堂给出的东西而不同。
+
+    ## 玩家体验流程
+
+    玩家看到一个哥特风格的标题画面，开始一轮游戏，进入教堂的第一个房间。俯视视角
+    展示出一个封闭的竞技场，玩家角色位于中央。敌人生成后立刻开始发射成形的散射弹幕。
+    玩家用 WASD 移动，用鼠标瞄准，点击开火，用空格键翻滚闪避。清空一个房间里的所有
+    敌人会打开通往下一间的出口。
+
+    每个楼层由 5-7 个房间组成，末尾是一个 Boss 房。房间之间玩家可能会发现提供武器
+    替换的枪械基座、生命拾取物或被动升级。各类枪械有各自独特的射击形态与弹药机制。
+    楼层 Boss 会用精心编排的弹幕形态填满屏幕，要求精准的翻滚与站位。击败楼层 Boss
+    之后，会有一段简短的过场展示数据，然后下降到下一层。三层全部通过即完成一轮并
+    进入胜利画面；在任何时刻死亡都会显示一份本轮总结，含已清房间数与已击败敌人数。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  - V4
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_shooter-bullet-cathedral

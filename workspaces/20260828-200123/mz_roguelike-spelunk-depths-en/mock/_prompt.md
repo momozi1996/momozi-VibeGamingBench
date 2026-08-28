@@ -1,0 +1,56 @@
+# Spelunk Depths
+
+Build **Spelunk Depths**, a procedural platformer roguelike with physics objects
+and shopkeepers as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It
+is a **complete, shippable micro-game** that could sit on an itch.io page or
+Steam as a polished vertical slice.
+
+## Core Vision
+
+An explorer descends through procedurally generated cave floors, using ropes,
+bombs, and whatever objects are at hand to navigate traps, defeat creatures, and
+collect treasure. Every object in the world has physics — pots can be thrown at
+enemies, rocks tumble when supports are destroyed, and explosions chain through
+destructible terrain. Shopkeepers sell items on certain floors but turn hostile
+if the player steals. A ghost timer activates after lingering too long on any
+floor, creating an invincible pursuer that forces forward progress. Shortcuts
+unlock after meeting specific conditions, allowing experienced players to skip
+early floors. Death is permanent and sends the player back to the surface with
+nothing but knowledge.
+
+## What the Player Experiences
+
+A title screen shows the cave entrance with depth markers. Starting a run
+places the explorer at floor 1 with basic equipment: 4 ropes and 4 bombs.
+
+Each floor is a procedurally generated platformer level with an exit at the
+bottom. The explorer runs, jumps, whips enemies, throws ropes upward to create
+climbable lines, and places bombs to blast through terrain. Pots, crates, and
+skulls can be picked up and thrown. Traps include arrow traps, spike pits, and
+crush blocks. Enemies patrol with simple AI.
+
+Shops appear every few floors with items for sale — buying requires gold
+collected from gems and chests. Stealing triggers shopkeeper aggression for the
+rest of the run. After 3 minutes on a floor, a ghost spawns and chases the
+player relentlessly. Every 5 floors the environment theme changes. Death shows
+a summary of depth reached, gold collected, and enemies defeated.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

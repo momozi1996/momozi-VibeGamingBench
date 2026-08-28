@@ -1,0 +1,93 @@
+id: mz_tycoon-trading-caravan-tycoon-zh
+title: tycoon trading caravan tycoon (中文)
+family: tycoon
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 经营：贸易商队（Tycoon: Trading Caravan）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**路线规划与市场贸易经营**游戏。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    玩家是一位商队船长，驾着一支小小的商队穿行于一张城镇网络之间，而每座城镇想要的东西和给出的价格都各不相同。这里的幻想是把地图当谜题来读——找出丝绸在哪儿便宜、在哪儿贵如黄金，然后在中间那段路上下注。每条路线都是一场赌博：短路安全但乏味，山口能省下好几天却招来盗匪，而你选的货物可能在抵达之前就变质了。成长会复利累积——更好的货车装得更多，雇来的护卫打开危险的捷径，冷藏箱解锁易腐货物——但风险同样如此，因为更大的一批货意味着出事时更大的损失。压力在于你赶路时市场也在变动，所以昨天板上钉钉的利润会变成明天的累赘。整体基调是羊皮纸与墨水味的商人策略：一个由贸易路线、价格板和精算过的赌注组成的世界。
+
+    ## 玩家体验流程
+
+    玩家打开一张风格化的地图，上面散布着由长度与危险程度各异的道路相连的城镇。一枚商队标记停在当前城镇，一本账簿显示现金、货舱和任何进行中的契约。最初几分钟是扫读价格——这座城镇香料便宜，河对岸那座出价翻倍——然后把货车装满。
+
+    选定目的地意味着权衡路线选项：安全的大路在草料和过路费上花得更多，穿过盗匪地盘的捷径则有全部货物尽失的风险。一旦下定决心，商队便开始移动，事件随之展开——一场风暴延误行程，一道关卡索要钱币，路上的一位商人提出一笔额外交易。玩家实时看着货物、金钱和风险此起彼伏。
+
+    抵达一座新城镇后，玩家按当地价格出售，查看这里缺什么，再决定是补货还是继续前行。收益资助升级——增加运力的额外车厢、能提前揭示危险的斥候、把易腐货物纳入可交易范围的冷藏设施。每一项升级都会重塑哪些路线和货物才划得来。
+
+    随着时间推移，网络逐渐打开：新城镇出现，更高价值的契约变得可接，商队也从孤零零一辆货车成长为一支正经的贸易队伍。当玩家达到某个利润里程碑并看到成功画面，或是债务与失败契约堆积成破产时，这段弧线便告结束。两种结局都无需重启即可继续操作导航。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  - V4
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  - A5
+language: zh
+base_task_id: mz_tycoon-trading-caravan-tycoon

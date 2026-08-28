@@ -1,0 +1,471 @@
+{
+  "schema_version": 1,
+  "source_name": "CNBlogs 20 browser game prompts",
+  "source_url": "https://www.cnblogs.com/shuihx/articles/19853326",
+  "source_capture_date": "2026-08-28",
+  "source_html_sha256": "1fa80955c2af766bc40b2a4164fc4d70150768d0917bf24082bbadc4e0e13f79",
+  "item_count": 20,
+  "note": "Compact benchmark adaptations. Long page copy and media are not vendored; source identity and page hash preserve provenance.",
+  "items": [
+    {
+      "source_item": "01",
+      "slug": "ninja-village",
+      "title_en": "Shadows over Kagemura",
+      "title_zh": "影越雾隐村",
+      "family": "platformer",
+      "dimension": "2D",
+      "perspective": "side-scrolling",
+      "vision_en": "A side-scrolling ninja mission through an ancient village where traversal, stealth, and projectile combat form one continuous route.",
+      "vision_zh": "一场穿越古代村落的横版忍者任务，让移动、潜行和投射战斗组成一条连续路线。",
+      "mechanics_en": [
+        "Run, jump, ledge-grab, and cross layered platforms with forgiving coyote time.",
+        "Aim and throw arcing shuriken with cooldown, ammunition, and hit feedback.",
+        "Face patrol enemies that investigate sound, chase, attack, and return to posts.",
+        "Manage health and stamina while checkpoints, collectibles, and a final gate track level progress."
+      ],
+      "mechanics_zh": [
+        "支持奔跑、跳跃、边缘攀附和分层平台移动，并提供合理的土狼时间。",
+        "瞄准并投掷具有抛物线轨迹的飞镖，包含冷却、弹药和命中反馈。",
+        "敌人会巡逻、调查声响、追击、攻击并返回岗位。",
+        "管理生命与体力，并通过检查点、收集物和最终关门推进关卡。"
+      ]
+    },
+    {
+      "source_item": "02",
+      "slug": "deep-space-strike",
+      "title_en": "Deep-Space Strike",
+      "title_zh": "深空突击",
+      "family": "shooter",
+      "dimension": "3D",
+      "perspective": "third-person",
+      "vision_en": "A six-degree-of-freedom space battle in which a nimble ship survives enemy formations, upgrades weapons, and breaks a staged flagship.",
+      "vision_zh": "一场六自由度太空战斗：灵活飞船躲避敌舰编队、升级武器，并摧毁分阶段旗舰。",
+      "mechanics_en": [
+        "Fly with responsive thrust, yaw, pitch, roll, braking, and a readable chase camera.",
+        "Switch among laser, missile, and spread weapons with distinct ammunition and targeting behavior.",
+        "Fight spawned enemy formations and dodge patterned fire with shield and collision rules.",
+        "Choose weapon upgrades between waves and complete a multi-stage boss encounter."
+      ],
+      "mechanics_zh": [
+        "以响应灵敏的推进、偏航、俯仰、滚转和制动控制飞船，并使用清晰追尾镜头。",
+        "切换激光、导弹和扩散武器，各自拥有不同弹药与锁定行为。",
+        "对抗生成的敌舰编队并躲避规律弹幕，处理护盾与碰撞规则。",
+        "波次之间选择武器升级，并完成多阶段首领战。"
+      ]
+    },
+    {
+      "source_item": "03",
+      "slug": "mythic-duel",
+      "title_en": "Mythic Duel",
+      "title_zh": "神话决斗",
+      "family": "action",
+      "dimension": "2D",
+      "perspective": "side-scrolling",
+      "vision_en": "A stylized mythic fighting game built around input buffering, readable hit states, defensive timing, and branching combos.",
+      "vision_zh": "一款风格化神话格斗游戏，核心是输入缓冲、清晰受击状态、防御时机和分支连招。",
+      "mechanics_en": [
+        "Implement light and heavy strikes with hitboxes, recovery, knockback, and input buffering.",
+        "Recognize at least three combo strings with cancel windows and visible combo feedback.",
+        "Support guard, dodge, armor, hit-stun, and guard-break states with deterministic priority.",
+        "Provide an AI rival, health and energy meters, and a charged ultimate with a complete rematch loop."
+      ],
+      "mechanics_zh": [
+        "实现轻重攻击的判定框、后摇、击退和输入缓冲。",
+        "识别至少三套连招，包含取消窗口和明确连击反馈。",
+        "支持格挡、闪避、霸体、受击硬直与破防状态，并使用确定优先级。",
+        "提供 AI 对手、生命与能量槽，以及可蓄力大招和完整再战闭环。"
+      ]
+    },
+    {
+      "source_item": "04",
+      "slug": "clockwork-rider",
+      "title_en": "Clockwork Rider",
+      "title_zh": "发条骑手",
+      "family": "adventure",
+      "dimension": "2D",
+      "perspective": "side-scrolling",
+      "vision_en": "A mechanical mount crosses a gear city and abandoned factory, using momentum, steam power, and linked machinery to open the route.",
+      "vision_zh": "一具机械坐骑穿越齿轮城和废弃工厂，利用惯性、蒸汽动力与联动机械打开路线。",
+      "mechanics_en": [
+        "Control a weighty mechanical mount with acceleration, braking, jumping, and terrain-aware inertia.",
+        "Trigger linked gears, lifts, pressure plates, and factory machines that physically alter routes.",
+        "Collect fuel and salvage while balancing boost, attacks, and a limited steam-energy meter.",
+        "Reveal map fog, unlock shortcuts, and finish a factory escape sequence under escalating pressure."
+      ],
+      "mechanics_zh": [
+        "控制具有重量感的机械坐骑，支持加速、制动、跳跃和适应地形的惯性。",
+        "触发联动齿轮、升降机、压力板和工厂机械，让路线产生实际变化。",
+        "收集燃料与零件，并在加速、攻击和有限蒸汽能量之间平衡。",
+        "揭开地图迷雾、开放捷径，并在压力升级中完成工厂逃离。"
+      ]
+    },
+    {
+      "source_item": "05",
+      "slug": "cloudfront-squadron",
+      "title_en": "Cloudfront Squadron",
+      "title_zh": "云锋中队",
+      "family": "shooter",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A vertical aerial shooter climbs through cloud layers, enemy formations, upgrade branches, and a bullet-pattern boss.",
+      "vision_zh": "一款纵向空战射击游戏，穿越云层、敌机编队、升级分支和弹幕首领战。",
+      "mechanics_en": [
+        "Move with precise analog-like response while the battlefield scrolls continuously.",
+        "Fire a primary weapon and limited secondary skill with cooldown and readable targeting.",
+        "Fight distinct formations and dodge escalating projectile patterns with fair collision margins.",
+        "Select upgrades for fire rate, spread, and shield before a staged boss and score summary."
+      ],
+      "mechanics_zh": [
+        "以精确的类模拟响应移动，战场持续向前滚动。",
+        "使用主武器和次数有限的副技能，并显示冷却与目标反馈。",
+        "对抗不同编队并躲避逐步升级的弹幕，碰撞边界必须公平。",
+        "在分阶段首领战前选择射速、弹道或护盾升级，并提供得分结算。"
+      ]
+    },
+    {
+      "source_item": "06",
+      "slug": "castle-line-defense",
+      "title_en": "Castle Line Defense",
+      "title_zh": "城堡防线",
+      "family": "strategy",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A medieval tower-defense battle where placement, economy, enemy paths, and tower specialization remain visible and reversible.",
+      "vision_zh": "一场中世纪塔防战，放置、经济、敌人路径和防御塔专精都应清晰可见且可调整。",
+      "mechanics_en": [
+        "Place arrow, cannon, and mage towers on valid cells with cost checks and range previews.",
+        "Spawn multiple enemy types that follow a path, take typed damage, and threaten the castle.",
+        "Upgrade and sell towers while economy, target priority, and wave timing create tradeoffs.",
+        "Run several escalating waves with pause, speed control, victory, defeat, and restart."
+      ],
+      "mechanics_zh": [
+        "在有效格子放置箭塔、炮塔和法师塔，并检查费用和显示范围。",
+        "生成多种沿路径移动、承受不同伤害并威胁城堡的敌人。",
+        "升级或出售防御塔，让经济、目标优先级和波次时机形成取舍。",
+        "运行多轮升级进攻，支持暂停、加速、胜负和重新开始。"
+      ]
+    },
+    {
+      "source_item": "07",
+      "slug": "enchanted-block-path",
+      "title_en": "Enchanted Block Path",
+      "title_zh": "幻林方块之路",
+      "family": "puzzle",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A dreamlike forest puzzle about dragging constrained blocks to reconnect paths and awaken energy nodes in few moves.",
+      "vision_zh": "一款梦幻森林解谜游戏，玩家拖动受约束方块，用较少步数重新连通路径并唤醒能量节点。",
+      "mechanics_en": [
+        "Drag blocks with grid snapping, collision, movement limits, and clear invalid-action feedback.",
+        "Detect connected paths and energy-node activation from the actual board state.",
+        "Track moves and time, compare against a target solution, and support undo, hint, and reset.",
+        "Provide at least three layouts with distinct constraints and persistent level progress."
+      ],
+      "mechanics_zh": [
+        "拖动方块时支持网格吸附、碰撞、移动限制和无效操作反馈。",
+        "根据真实棋盘状态检测路径连通和能量节点激活。",
+        "记录步数与时间，对比目标解法，并支持撤销、提示和重置。",
+        "提供至少三个约束不同的布局，并保存关卡进度。"
+      ]
+    },
+    {
+      "source_item": "08",
+      "slug": "island-relic-mystery",
+      "title_en": "Island Relic Mystery",
+      "title_zh": "秘岛遗迹谜案",
+      "family": "adventure",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "An island exploration mystery combines environmental mechanisms, clue collection, item use, fog removal, and branching treasure outcomes.",
+      "vision_zh": "一场岛屿探索谜案，把环境机关、线索收集、物品使用、迷雾揭开和分支宝藏结局连接起来。",
+      "mechanics_en": [
+        "Explore several island zones and reveal map fog by visiting landmarks and solving local obstacles.",
+        "Collect clues and inventory items, then drag or select them for context-sensitive use.",
+        "Solve sequence, symbol, and environment puzzles with hints that respond to discovered evidence.",
+        "Unlock multiple treasure routes and endings based on optional clues and irreversible choices."
+      ],
+      "mechanics_zh": [
+        "探索多个岛屿区域，通过访问地标和解决局部阻碍揭开地图迷雾。",
+        "收集线索与物品，并通过拖拽或选择在正确场景中使用。",
+        "解决顺序、符号和环境谜题，提示会响应已发现证据。",
+        "根据可选线索和不可逆选择解锁不同宝藏路线与结局。"
+      ]
+    },
+    {
+      "source_item": "09",
+      "slug": "arcane-board-command",
+      "title_en": "Arcane Board Command",
+      "title_zh": "奥术棋盘指挥",
+      "family": "strategy",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A turn-based board duel gives every piece a distinct movement rule and active skill against a deliberate AI opponent.",
+      "vision_zh": "一场回合制棋盘对决，每枚棋子都有独立移动规则和主动技能，对手是会规划的 AI。",
+      "mechanics_en": [
+        "Select pieces and preview legal movement, attacks, and skill ranges on a custom grid.",
+        "Implement distinct line attack, area control, revival, and mobility skills with cooldowns.",
+        "Alternate timed turns against an AI that evaluates objectives, danger, and skill value.",
+        "Support win detection, undo within fair limits, replay, and several functionally different boards."
+      ],
+      "mechanics_zh": [
+        "选择棋子并在自定义网格上预览合法移动、攻击和技能范围。",
+        "实现直线攻击、范围控制、复活和位移等不同技能及冷却。",
+        "与会评估目标、危险和技能价值的 AI 进行限时交替回合。",
+        "支持胜负判定、合理悔棋、重玩和多个功能不同的棋盘。"
+      ]
+    },
+    {
+      "source_item": "10",
+      "slug": "alien-array-defense",
+      "title_en": "Alien Array Defense",
+      "title_zh": "异星阵列防御",
+      "family": "strategy",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A hybrid defense game lets the player build automated weapon networks while manually aiming emergency fire against alien waves.",
+      "vision_zh": "一款混合防御游戏：玩家建设自动武器网络，并在外星波次中手动瞄准提供紧急火力。",
+      "mechanics_en": [
+        "Deploy automated turrets, laser relays, and anti-air missiles with valid coverage previews.",
+        "Aim and fire a manual weapon while switching cleanly between manual and automatic control.",
+        "Create chained tower interactions, enemy waves, base health, and a resource economy.",
+        "Expose wave progress, damage alerts, pause and speed controls, and a decisive final assault."
+      ],
+      "mechanics_zh": [
+        "部署自动炮塔、激光中继与防空导弹，并显示有效覆盖范围。",
+        "瞄准并发射手动武器，同时在手动和自动控制间清晰切换。",
+        "实现塔之间的链式联动、敌人波次、基地生命和资源经济。",
+        "显示波次进度、受损警报、暂停与加速，并提供决定性的最终进攻。"
+      ]
+    },
+    {
+      "source_item": "11",
+      "slug": "corner-cafe-shift",
+      "title_en": "Corner Cafe Shift",
+      "title_zh": "街角咖啡馆",
+      "family": "simulation",
+      "dimension": "2D",
+      "perspective": "isometric",
+      "vision_en": "A compact cafe shift turns queues, drink preparation, customer mood, revenue, and upgrades into one timed operational loop.",
+      "vision_zh": "一段紧凑咖啡馆班次，把排队、饮品制作、顾客情绪、营收和升级连接成限时运营循环。",
+      "mechanics_en": [
+        "Seat queued customers, read orders, and route them through a visible service flow.",
+        "Prepare drinks through ordered steps with timers, mistakes, and recoverable remakes.",
+        "Track patience, satisfaction, tips, revenue, and a report derived from live transactions.",
+        "Buy equipment, decor, and menu upgrades that visibly alter later shifts and service capacity."
+      ],
+      "mechanics_zh": [
+        "安排排队顾客入座、读取订单，并让服务流程清晰可见。",
+        "按顺序完成饮品制作步骤，包含计时、失误和可恢复重做。",
+        "根据实时交易追踪耐心、满意、打赏、营收并生成报表。",
+        "购买设备、装潢和菜单升级，让后续班次与服务容量发生可见变化。"
+      ]
+    },
+    {
+      "source_item": "12",
+      "slug": "four-season-farm",
+      "title_en": "Four-Season Farm",
+      "title_zh": "四季农场",
+      "family": "simulation",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A farm life loop connects soil work, crop growth, animal care, weather, inventory, markets, and daily objectives.",
+      "vision_zh": "一套农场生活循环，把土地、作物成长、动物照料、天气、背包、市场和每日目标连接起来。",
+      "mechanics_en": [
+        "Till, plant, water, and harvest plots whose growth responds to time, season, and weather.",
+        "Feed and care for animals whose health and products depend on repeated attention.",
+        "Manage inventory, forecast yield, and trade through prices that change by supply and season.",
+        "Complete daily tasks and facility upgrades across several days with save and reset behavior."
+      ],
+      "mechanics_zh": [
+        "开垦、播种、浇水和收割，作物成长会响应时间、季节与天气。",
+        "喂养并照料动物，其健康和产物取决于持续关注。",
+        "管理库存、预测产量，并按供需与季节变化的价格交易。",
+        "跨多个游戏日完成每日任务和设施升级，并支持保存与重置。"
+      ]
+    },
+    {
+      "source_item": "13",
+      "slug": "companion-evolution",
+      "title_en": "Companion Evolution Lab",
+      "title_zh": "伙伴进化实验室",
+      "family": "rpg",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A creature-care game links feeding, training, bonding, skill learning, collection, and conditional evolution.",
+      "vision_zh": "一款伙伴养成游戏，把喂食、训练、亲密、技能学习、图鉴收集和条件进化连接起来。",
+      "mechanics_en": [
+        "Feed, train, and interact through actions that change distinct attributes and consume time or items.",
+        "Display growth curves, current needs, affection, and the consequences of overtraining or neglect.",
+        "Learn and equip skills while inventory items create meaningful build choices.",
+        "Trigger multiple evolution forms from transparent conditions and record discoveries in a collection catalog."
+      ],
+      "mechanics_zh": [
+        "通过消耗时间或道具的喂食、训练和互动改变不同属性。",
+        "显示成长曲线、当前需求、亲密度，以及过度训练或忽视的后果。",
+        "学习并装备技能，让背包道具形成有意义的构筑选择。",
+        "根据透明条件触发多种进化形态，并把发现记录到图鉴。"
+      ]
+    },
+    {
+      "source_item": "14",
+      "slug": "campus-constellations",
+      "title_en": "Campus Constellations",
+      "title_zh": "校园星轨",
+      "family": "narrative",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A campus relationship story uses schedules, dialogue choices, event flags, and affection state to produce distinct routes and endings.",
+      "vision_zh": "一段校园关系故事，以日程、对话选择、事件标记和好感状态产生不同路线与结局。",
+      "mechanics_en": [
+        "Navigate a daily schedule and select locations that trigger character-specific events.",
+        "Choose dialogue responses that update trust, affection, and remembered conversation flags.",
+        "Unlock multiple routes through prerequisites rather than a single linear script.",
+        "Provide save, load, route overview, and several endings that visibly reflect accumulated choices."
+      ],
+      "mechanics_zh": [
+        "在每日日程中选择地点，触发角色专属事件。",
+        "选择对话回应，更新信任、好感和被记住的谈话标记。",
+        "通过前置条件解锁多条路线，而不是单一线性脚本。",
+        "提供存档、读档、路线概览，以及能明显反映累积选择的多个结局。"
+      ]
+    },
+    {
+      "source_item": "15",
+      "slug": "fruit-chain-reactor",
+      "title_en": "Fruit Chain Reactor",
+      "title_zh": "水果连锁反应",
+      "family": "puzzle",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A polished fruit match game combines valid swaps, cascades, special pieces, limited turns, and adaptive goals.",
+      "vision_zh": "一款打磨过的水果消除游戏，包含合法交换、连锁、特殊棋子、有限步数和动态目标。",
+      "mechanics_en": [
+        "Swap adjacent fruit only when the move creates a valid match and animate rejection otherwise.",
+        "Resolve matches and cascades deterministically while score and combo feedback follow the board.",
+        "Create bomb, rainbow, and time-control pieces from larger patterns with distinct effects.",
+        "Run several objectives under turn or time limits with reshuffle, win, loss, and restart."
+      ],
+      "mechanics_zh": [
+        "只有形成有效匹配时才允许交换相邻水果，否则播放拒绝反馈。",
+        "确定性结算匹配与连锁，分数和连击反馈必须跟随棋盘状态。",
+        "通过更大图案生成炸弹、彩虹和时间控制道具，并具有不同效果。",
+        "在步数或时间限制下运行多个目标，支持重排、胜负和重开。"
+      ]
+    },
+    {
+      "source_item": "16",
+      "slug": "pixel-vault-run",
+      "title_en": "Pixel Vault Run",
+      "title_zh": "像素秘境疾行",
+      "family": "platformer",
+      "dimension": "2D",
+      "perspective": "side-scrolling",
+      "vision_en": "A precision pixel platformer mixes double-jump, dash, checkpoints, hidden rooms, collectibles, and a compact multi-stage route.",
+      "vision_zh": "一款精确像素平台游戏，组合二段跳、冲刺、检查点、隐藏房间、收集物和紧凑多阶段路线。",
+      "mechanics_en": [
+        "Run and jump with coyote time, buffered input, variable jump height, and stable collision.",
+        "Use double-jump and dash with readable recharge, air-control, and hazard interaction.",
+        "Activate checkpoints, respawn quickly, and track collectibles without losing legitimate progress.",
+        "Hide optional rooms behind discoverable triggers and finish several escalating platform sections."
+      ],
+      "mechanics_zh": [
+        "奔跑与跳跃支持土狼时间、输入缓冲、可变跳高和稳定碰撞。",
+        "使用二段跳与冲刺，并提供清楚充能、空中控制和危险互动。",
+        "激活检查点、快速重生并追踪收集物，不能丢失合法进度。",
+        "通过可发现触发器隐藏可选房间，并完成多段升级平台挑战。"
+      ]
+    },
+    {
+      "source_item": "17",
+      "slug": "street-court-rise",
+      "title_en": "Street Court Rise",
+      "title_zh": "街球崛起",
+      "family": "sports",
+      "dimension": "2.5D",
+      "perspective": "top-down",
+      "vision_en": "A compact basketball game combines movement, passing, shooting, steals, team selection, match timing, and player development.",
+      "vision_zh": "一场紧凑篮球比赛，把移动、传球、投篮、抢断、阵容选择、比赛计时和球员培养连接起来。",
+      "mechanics_en": [
+        "Control an active player, pass between teammates, and switch defenders responsively.",
+        "Aim shots with power and angle feedback while distance, pressure, and attributes affect accuracy.",
+        "Implement steals, rebounds, possession changes, clock rules, score validation, and a working opponent.",
+        "Improve speed, shooting, and rebounding between matches and preserve a local record history."
+      ],
+      "mechanics_zh": [
+        "控制当前球员、在队友间传球，并快速切换防守人。",
+        "通过力度与角度反馈瞄准，距离、防守压力和属性会影响命中率。",
+        "实现抢断、篮板、球权转换、计时规则、得分判定和有效对手。",
+        "比赛之间培养速度、投篮与篮板，并保留本地战绩。"
+      ]
+    },
+    {
+      "source_item": "18",
+      "slug": "aether-deck-duel",
+      "title_en": "Aether Deck Duel",
+      "title_zh": "以太卡组对决",
+      "family": "cardgame",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A fantasy card duel connects drawing, mana, targeting, status resolution, deck construction, and deterministic turn phases.",
+      "vision_zh": "一场奇幻卡牌对决，把抽牌、法力、目标、状态结算、卡组构筑和确定性回合阶段连接起来。",
+      "mechanics_en": [
+        "Draw, select, target, and play cards through clear turn phases and valid-action checks.",
+        "Resolve attack, defense, damage-over-time, buff, and debuff effects in deterministic order.",
+        "Manage mana, hand limits, discard, draw pile, and hoverable card details.",
+        "Build or edit a deck between battles and complete a full opponent, victory, defeat, and rematch loop."
+      ],
+      "mechanics_zh": [
+        "在清晰回合阶段中抽牌、选择、指定目标和出牌，并检查操作合法性。",
+        "按确定顺序结算攻击、防御、持续伤害、增益和减益。",
+        "管理法力、手牌上限、弃牌堆、抽牌堆和可悬停查看的卡牌详情。",
+        "战斗之间构筑或编辑卡组，并提供完整对手、胜负与再战闭环。"
+      ]
+    },
+    {
+      "source_item": "19",
+      "slug": "neon-vector-rally",
+      "title_en": "Neon Vector Rally",
+      "title_zh": "霓虹矢量拉力赛",
+      "family": "racing",
+      "dimension": "2.5D",
+      "perspective": "third-person",
+      "vision_en": "A future circuit racer combines analog acceleration, inertia, drifting, lap validation, opponents, and vehicle tuning.",
+      "vision_zh": "一款未来赛道竞速游戏，组合线性油门、惯性、漂移、圈数判定、对手和车辆调校。",
+      "mechanics_en": [
+        "Drive with analog-like throttle, braking, steering, grip loss, and recoverable collisions.",
+        "Validate checkpoints and laps while comparing split times and race position.",
+        "Score controlled drifts from angle, speed, duration, and track limits with visible tire trails.",
+        "Tune mutually exclusive performance parts and complete a race with rivals, finish order, and replay."
+      ],
+      "mechanics_zh": [
+        "以类模拟油门、制动、转向、抓地力损失和可恢复碰撞驾驶。",
+        "验证检查点和圈数，并比较分段时间与比赛名次。",
+        "根据角度、速度、持续时间和赛道边界计算漂移分，并显示轮胎轨迹。",
+        "调校互斥性能部件，并与对手完成包含冲线排名和重玩的比赛。"
+      ]
+    },
+    {
+      "source_item": "20",
+      "slug": "spellbound-frontier",
+      "title_en": "Spellbound Frontier",
+      "title_zh": "法术边境",
+      "family": "rpg",
+      "dimension": "2D",
+      "perspective": "isometric",
+      "vision_en": "A light fantasy RPG connects exploration, real-time abilities, monsters, quests, inventory, travel, dialogue, and a branching skill tree.",
+      "vision_zh": "一款轻量奇幻 RPG，把探索、实时技能、怪物、任务、背包、传送、对话和分支技能树连接起来。",
+      "mechanics_en": [
+        "Move through several connected zones and fight monsters with at least three cooldown abilities.",
+        "Accept, track, update, and complete quests through actual world interactions.",
+        "Collect, equip, and use inventory items while experience and levels unlock meaningful choices.",
+        "Spend skill points on a branching tree, unlock travel points, and finish a quest-line boss."
+      ],
+      "mechanics_zh": [
+        "穿越多个相连区域，并使用至少三种带冷却的技能对抗怪物。",
+        "通过真实世界交互接取、追踪、更新和完成任务。",
+        "收集、装备并使用背包物品，经验和等级会解锁有意义选择。",
+        "在分支技能树投入点数、解锁传送点，并完成任务线首领战。"
+      ]
+    }
+  ]
+}

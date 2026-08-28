@@ -1,0 +1,842 @@
+[
+  {
+    "task": "mz_cardgame-autobattler",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-gwent-war",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-inscription-dark",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-poker-roguelike",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-spire-descent",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-dollhouse",
+    "family": "horror",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-floor-13",
+    "family": "horror",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-lighthouse",
+    "family": "horror",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-signal-lost",
+    "family": "horror",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-tape-archive",
+    "family": "horror",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-ant-empire",
+    "family": "idle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-dungeon-guild",
+    "family": "idle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-factory-planet",
+    "family": "idle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_idle-spell-tower",
+    "family": "idle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-airship-trader",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-archaeology",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-beast-tamer",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-bounty",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-cartographer",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-fishing",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-ghost",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-necromancer",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-pokemon",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-racing",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-seasons-witch",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-sky-islands",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-submarine",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-survival",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_openworld-time-travel",
+    "family": "openworld",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-arcborne",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-cozy-harbor-delivery",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-dig-descent",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-dread-wings",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-echo-climb",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-ink-trail",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-iron-vanguard",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-ivory-beats",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-knight-quest",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-magnet-dash",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-meat-gauntlet",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-momentum-lab",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-orbital-salvage",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-shape-shift",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-stealth-shadow-courier",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-thunder-valkyrie",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-time-loop",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-vessel-of-hallownest",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_platformer-wall-dancer",
+    "family": "platformer",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-circuit-wizard",
+    "family": "puzzle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-goo-architect",
+    "family": "puzzle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-gravity-shift",
+    "family": "puzzle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-lemming-factory",
+    "family": "puzzle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-pipe-crisis",
+    "family": "puzzle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-portal-lab",
+    "family": "puzzle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-rule-rewrite",
+    "family": "puzzle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_puzzle-sokoban-dungeon",
+    "family": "puzzle",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-drift-circuit",
+    "family": "racing",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-rocket-trials",
+    "family": "racing",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-terrain-climb",
+    "family": "racing",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_racing-trick-runner",
+    "family": "racing",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-beat-dungeon",
+    "family": "rhythm",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-conductor",
+    "family": "rhythm",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-dj-arena",
+    "family": "rhythm",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-garden",
+    "family": "rhythm",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_rhythm-note-highway",
+    "family": "rhythm",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-action-void-harvest",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-breach-tactics",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-dice-throne",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-dungeon-shop",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-ftl-voyage",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-garden-crawl",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-potion-craft",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-relic-pinball",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-rulescape",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-slot-fortune",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-spelunk-depths",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-train-heist",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-wildwood",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_roguelike-word-spell",
+    "family": "roguelike",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-bullet-cathedral",
+    "family": "shooter",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-hotline-heist",
+    "family": "shooter",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-mech-sortie",
+    "family": "shooter",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-neon-arena",
+    "family": "shooter",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-sky-duel",
+    "family": "shooter",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-void-patrol",
+    "family": "shooter",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_shooter-wave-commander",
+    "family": "shooter",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-air-control",
+    "family": "simulation",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-border-check",
+    "family": "simulation",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-kitchen-rush",
+    "family": "simulation",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-news-editor",
+    "family": "simulation",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-space-station",
+    "family": "simulation",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_simulation-transit-web",
+    "family": "simulation",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-archery-quest",
+    "family": "sports",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-boxing-gym",
+    "family": "sports",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-fishing-tournament",
+    "family": "sports",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_sports-skateboard-park",
+    "family": "sports",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-ant-colony",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-ashen-spire",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-auto-chess",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-beastclash",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-chess-variant",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-hex-conquest",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-kingdom-cards",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-pirate-fleet",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-plant-defense",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-puzzle-magnet-lab",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-robot-factory",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-rogue-joker-poker",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-siege-engineer",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-signal-rail-dispatcher",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-skirmish",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-spell-tactics",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_strategy-towerdefense",
+    "family": "strategy",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-creature-clinic-triage",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-dungeon-master",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-farm",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-funfair",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-garden-ecosystem-keeper",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-gladiator-arena",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-music-label",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-pirate-port",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-potion-shop",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-railroad-baron",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-space-colony",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-submarine-pressure-rescue",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-tiny-factory-foreman",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-trading-caravan-tycoon",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-wildhaven",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_tycoon-zoo-keeper",
+    "family": "tycoon",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-arcaneacademy",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-courtroom-clue-trial",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-debate-club",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-detective-noir",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-escape-room",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-grimfable",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-keepsake",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-lastsignal",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-pactbound",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-spy-handler",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_visualnovel-time-paradox",
+    "family": "visualnovel",
+    "ok": true,
+    "build_gate_ok": true
+  }
+]

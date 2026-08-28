@@ -1,0 +1,110 @@
+id: mz_cnblogs-15-fruit-chain-reactor-zh
+title: 水果连锁反应 (中文)
+family: puzzle
+difficulty: medium
+engine: html
+language: zh
+base_task_id: mz_cnblogs-15-fruit-chain-reactor
+provenance:
+  kind: adapted_cnblogs_prompt
+  source_name: CNBlogs 20 browser game prompts
+  source_url: https://www.cnblogs.com/shuihx/articles/19853326
+  source_item: '15'
+  source_html_sha256: 1fa80955c2af766bc40b2a4164fc4d70150768d0917bf24082bbadc4e0e13f79
+rounds:
+- name: R1
+  spec: |-
+    # 水果连锁反应
+
+    制作一个完整可玩的 **2D 解谜游戏**，以
+    **俯视角** 呈现为经过打磨的浏览器纵向切片。
+
+    ## 核心构想
+
+    一款打磨过的水果消除游戏，包含合法交换、连锁、特殊棋子、有限步数和动态目标。
+
+    ## 必须实现的可玩系统
+
+    1. **系统 1** - 只有形成有效匹配时才允许交换相邻水果，否则播放拒绝反馈。
+    2. **系统 2** - 确定性结算匹配与连锁，分数和连击反馈必须跟随棋盘状态。
+    3. **系统 3** - 通过更大图案生成炸弹、彩虹和时间控制道具，并具有不同效果。
+    4. **系统 4** - 在步数或时间限制下运行多个目标，支持重排、胜负和重开。
+    5. **系统 5** - 提供至少三种功能不同的内容变化，实质改变时机、路线、资源使用或风险，不能只更换标签和颜色。
+    6. **系统 6** - 使用三阶段短流程：教学核心交互、在压力下组合系统，并以完整胜利、失败或计分完成闭环收束。
+
+    ## 推进与持久状态
+
+    使用三个阶段组成短流程：先清楚引入中心交互，再与世界压力和有意义选择组合，最后用
+    综合场景检验掌握程度。重要规则、目标、资源、关系、选择状态、危险、进度和结果必须
+    显示在稳定 HUD 区域，并在 `game_logic.js` 中有对应状态。各系统必须通过共享状态
+    互相影响，不能只是彼此割裂的按钮、菜单或视觉演示。
+
+    ## 美术方向
+
+    采用冷静精确的视觉语言、可区分状态色、清楚空间分组和平滑变换，任何装饰都不能遮挡谜题信息。
+
+    ## HTML 提交格式
+
+    用两个文件交付一个可独立运行的浏览器游戏：
+
+    - `index.html` - 完整可玩的呈现层。使用 HTML Canvas 2D 或 Three.js/WebGL 完成可玩呈现。
+    - `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
+      `advance(game, input, dt)`。
+
+    页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
+    几何体、生成纹理、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、
+    视频或音频。使用 Three.js 时可以从官方 CDN 加载；允许的库必须锁定具体版本。
+
+    必须支持键盘和鼠标，并按玩法需要加入触摸或手柄控制。完整游戏区与 HUD 在
+    1280x720 下应清晰可读。需要有经过设计的开始流程、简短游戏内引导、暂停与重开控制、
+    完整结果闭环，以及每项关键操作的明确反馈。
+
+    `index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
+    160 KB 以内，`game_logic.js` 控制在 320 行以内。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, persistence, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent authored art direction, functional composition, effects, and motion polish.

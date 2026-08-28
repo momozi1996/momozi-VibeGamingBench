@@ -1,9 +1,10 @@
-"""momozi-3A-GamegenBench
+"""momozi-VibeGamingBench
 
-3A 游戏生成评估框架 — 三维评分 (B/P/S) + 多轮增量 + HTML 静态门控。
+Browser game generation benchmark with bilingual tasks and HTML build gates.
 
-v0.1.0 — 140 道生产级题 (bench/tasks/mz_*/)
+v0.4.0 - 982 language-specific tasks (491 concepts x English/Chinese).
 """
 
-__version__ = "0.1.0"
-__all__ = ["run", "judge", "leaderboard", "task", "verifiers", "adapters"]
+PROJECT_NAME = "momozi-VibeGamingBench"
+__version__ = "0.4.0"
+__all__ = ["adapters", "auto_eval", "judge", "leaderboard", "run", "task", "verifiers"]

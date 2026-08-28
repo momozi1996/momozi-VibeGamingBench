@@ -1,0 +1,103 @@
+id: mz_puzzle-gravity-shift-zh
+title: puzzle gravity shift (中文)
+family: puzzle
+difficulty: low
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 重力翻转（Gravity Shift）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Gravity Shift**，一个 2D 重力旋转解谜
+    游戏。玩家旋转重力方向，引导一颗球穿过布满障碍的试验室抵达出口，并利用可破坏
+    地形与连锁反应清出通路。
+
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    这是一款建立在方向性重力之上的物理解谜游戏。玩家无法直接移动小球，但可以按
+    90 度为单位旋转重力（下、左、上、右），让试验室里的一切都朝新方向坠落。张力
+    来自对重力序列的规划：向右旋转会让球滑撞到墙上，但同时也会把一块巨石砸到可破坏
+    的平台上，为下一次旋转打开通路。连锁反应会自然涌现——爆炸箱子受撞即引爆，
+    易碎方块落地一次后碎裂，有重量的物体在落定时会踩下压力开关。最理想的版本会让人
+    感觉像在编排一台鲁布·戈德堡机械，而重力本身是唯一的工具。
+
+    ## 玩家体验流程
+
+    标题画面用漂浮的几何体和方向箭头营造氛围。玩家进入试验室后，能看到小球、出口
+    传送门、墙壁、平台、危险物和特殊物件。重力方向指示器显示当前的牵引方向。玩家
+    按方向键或按钮来旋转重力。
+
+    前期试验室教基础旋转：把重力转向右侧，让球滚向出口。很快，障碍就会要求多步序列
+    ——先向下旋转穿过一道缝隙，再向左滑过尖刺。中期引入可破坏地形（第二次受撞才
+    碎裂的易碎方块、能炸开附近墙壁的爆炸箱子）、可触发开关的有重量物体，以及在坠落
+    过程中附加横向位移的传送带表面。后期试验室要求精确的旋转序列，每一次重力翻转
+    都会触发一场重塑关卡地形的连锁反应。
+
+    撤销系统让玩家可以回退重力翻转操作。抵达出口传送门即完成该试验室，并弹出庆祝
+    画面。被危险物害死后可以立即重试。战役按主题世界推进，物理复杂度层层升级。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+language: zh
+base_task_id: mz_puzzle-gravity-shift

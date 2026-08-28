@@ -1,0 +1,104 @@
+id: mz_puzzle-sokoban-dungeon-zh
+title: puzzle sokoban dungeon (中文)
+family: puzzle
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 推箱子地牢（Sokoban Dungeon）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Sokoban Dungeon**，一个 2D 回合制推箱子
+    地牢解谜游戏。玩家在程序化生成的地牢房间中推动箱子，而敌人在每个回合同时行动，
+    玩家需要收集钥匙和道具来解锁更深的楼层。
+
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    这是一款回合制解谜与 Roguelike 的混合作品，玩家每走一步都会触发敌人走一步。
+    每个地牢房间都是一道空间谜题：箱子必须被推到压力板上才能打开门，但敌人会在网格
+    上巡逻，并在玩家一移动就朝玩家逼近。张力来自同步回合系统——推一次箱子要花一个
+    回合，而这期间敌人正在合围，所以玩家必须在不断加剧的威胁下解开空间谜题。钥匙
+    解锁新房间，道具提供一次性能力（冻结敌人、拉动箱子、传送），程序化的房间布局
+    保证了变化性。最理想的版本会让人感觉像是把国际象棋和仓库搬运谜题融合在一起，
+    每一步都有战术上的后果。
+
+    ## 玩家体验流程
+
+    标题画面用石质纹理营造出地牢氛围，并给出清晰的开始入口。玩家进入地牢房间后，
+    能在网格上看到墙壁、箱子、压力板、锁住的门、钥匙、敌人和出口楼梯。移动是回合制
+    的：方向键移动一格，同时所有敌人也移动一格。
+
+    前期房间教基础的推动：把一个箱子推到压力板上以打开一道门。很快就会出现在移动
+    时机上与玩家镜像同步的敌人，迫使玩家规划出既能推箱子又能躲开或困住威胁的动作
+    序列。中期引入多种箱子类型（重箱子需要推两次，冰箱子会一直滑到撞墙为止）、
+    解锁颜色对应门的钥匙，以及从宝箱里找到的道具。后期房间在程序化编排的布局中把
+    所有机制结合起来，玩家必须一边解空间谜题，一边管理敌人的位置。
+
+    撤销系统让玩家可以回退回合。抵达出口楼梯即前往下一层。被敌人碰到而死亡后可以
+    重试。战役会生成越来越复杂的楼层，敌人更多、箱子类型更多、空间约束更紧。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+language: zh
+base_task_id: mz_puzzle-sokoban-dungeon

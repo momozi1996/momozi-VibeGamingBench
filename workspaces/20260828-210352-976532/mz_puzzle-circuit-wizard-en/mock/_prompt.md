@@ -1,0 +1,61 @@
+# Circuit Wizard
+
+Build **Circuit Wizard**, a 2D logic-circuit puzzle game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). The player places and connects logic gates (AND, OR, NOT,
+XOR) on a board to route signals from inputs to outputs, solving increasingly
+complex signal-routing challenges across a campaign.
+
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The game is a digital logic puzzle where the player builds circuits from
+discrete components. Each level provides fixed input signals (on/off or
+patterned) and requires specific output signals. The player places gates from
+a toolbox onto a grid board and draws wires between them to create the correct
+logic path. The tension comes from spatial constraints (limited board space,
+wire crossing rules) and logical complexity (multi-bit signals, timing
+sequences, feedback loops). The best version feels like being an engineer
+with a soldering iron, where each completed circuit produces a satisfying
+cascade of signals lighting up from input to output.
+
+## What the Player Experiences
+
+A title screen sets the electronic workshop tone with circuit imagery and a
+clear way to begin. The player enters a puzzle board where input terminals
+(left side), output terminals (right side), and an empty grid workspace are
+visible. A toolbox shows available gate types with quantities.
+
+Early levels teach individual gates: connect an input through a NOT gate to
+invert the signal, or wire two inputs through an AND gate. Soon levels require
+multi-gate chains where the player must decompose a complex boolean expression
+into a physical circuit. Mid-game introduces XOR gates, multi-bit buses,
+signal splitters, and delay elements that add timing constraints. Late levels
+present real-world-inspired challenges: build an adder, construct a
+multiplexer, or create a latch with feedback.
+
+Signals flow visually through wires when the player activates the test button.
+Correct outputs light up green; incorrect ones flash red with the expected
+value shown. A completion screen celebrates the solve and shows gate count
+efficiency. The campaign progresses through themed chapters: basic logic,
+arithmetic circuits, memory circuits, and challenge rounds.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

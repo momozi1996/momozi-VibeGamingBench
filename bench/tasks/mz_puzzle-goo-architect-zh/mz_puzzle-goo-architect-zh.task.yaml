@@ -1,0 +1,104 @@
+id: mz_puzzle-goo-architect-zh
+title: puzzle goo architect (中文)
+family: puzzle
+difficulty: low
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 黏球建筑师（Goo Architect）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Goo Architect**，一个 2D 基于物理的结构
+    搭建解谜游戏。玩家把有弹性的黏球生物一个个连接起来，搭出塔、桥和其他结构，
+    让它们伸到目标管道处，同时还要对抗随时可能把作品掀翻的重力与狂风。
+
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    这是一款由软体物理驱动的建造解谜游戏。每一关呈现一片地形，目标管道被放在
+    难以到达的位置。玩家拥有数量有限的黏球，可以拖动它们并附着到已有结构的节点上，
+    形成会在重力下拉伸摇晃的弹性连接。张力来自约束条件下的结构工程学：塔太高会
+    失稳弯折，太细会断裂，一侧太重就会倾倒。不同的黏球类型带来策略多样性——刚性
+    黏球用作地基，气球黏球提供升力，易燃黏球可以烧穿障碍。最理想的版本会让人感觉
+    像是在用活的橡皮泥搭建结构，每一次放置决策都有肉眼可见的物理后果。
+
+    ## 玩家体验流程
+
+    标题画面用会动的黏球生物营造出诡趣的氛围，并给出清晰的开始入口。玩家进入关卡后
+    能看到地形、危险物和目标管道。可用的黏球放在供应区。玩家从供应区拖出一颗黏球，
+    放到已有结构节点附近；弹性连接会自动与附近的附着点生成。
+
+    前期关卡教基础的搭塔：把黏球向上堆叠，去触及上方的管道。很快，地形裂口需要架桥，
+    阵风要求加固结构，尖刺陷阱迫使玩家另寻路线。多种黏球类型陆续登场：标准绿色黏球
+    形成柔性连接，刚性灰色黏球构成坚硬关节，气球粉色黏球提供向上的升力，易燃红色
+    黏球可被点燃来清除障碍。每关都有一个最低黏球回收指标——多救下的黏球会赢得额外
+    褒奖。
+
+    玩家搭建时，结构会实时摇摆并逐渐稳定。当黏球触及目标管道时，会伴随一段令人满足
+    的动画被吸进去，关卡随之完成。结算画面展示救下的黏球数量，并给出下一个挑战。
+    战役按主题世界推进，结构要求层层升级。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+language: zh
+base_task_id: mz_puzzle-goo-architect

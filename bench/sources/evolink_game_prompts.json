@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "source_name": "EvoLink Kimi K3 Games & 3D prompts",
+  "source_url": "https://evolink.ai/zh/kimi-k3-prompts",
+  "source_capture_date": "2026-08-28",
+  "source_html_sha256": "9fd72ca9c53103f6073cfd03a95bda593b494e00d19e4946b743a42ac6295371",
+  "item_count": 8,
+  "note": "Compact benchmark adaptations. Long page copy and media are not vendored; source identity and page hash preserve provenance.",
+  "items": [
+    {
+      "source_item": "prompt-voxel-pod-racer-prototype",
+      "slug": "voxel-pod-racer",
+      "title_en": "Voxel Pod Circuit",
+      "title_zh": "体素飞梭赛道",
+      "family": "racing",
+      "dimension": "3D",
+      "perspective": "third-person",
+      "vision_en": "A generated voxel circuit tests responsive pod handling, collisions, checkpoint discipline, lap pressure, and rival racing.",
+      "vision_zh": "一条程序化体素赛道检验飞梭操控、碰撞、检查点纪律、圈速压力和对手竞速。",
+      "mechanics_en": [
+        "Drive a hovering pod with acceleration, braking, steering, drift, and recoverable wall impacts.",
+        "Build a readable voxel track with legal checkpoints, shortcuts, hazards, and a finish line.",
+        "Race at least two distinct rivals whose behavior changes with position and track region.",
+        "Track lap and split times, position, penalties, completion, and a reliable restart."
+      ],
+      "mechanics_zh": [
+        "驾驶悬浮飞梭，支持加速、制动、转向、漂移和可恢复墙体碰撞。",
+        "生成清晰体素赛道，包含合法检查点、捷径、危险和终点线。",
+        "与至少两名不同对手竞速，其行为会随名次和赛段变化。",
+        "追踪圈速、分段、名次、处罚、完成状态并可靠重开。"
+      ]
+    },
+    {
+      "source_item": "prompt-threejs-aircraft-carrier-prototype",
+      "slug": "carrier-flight-deck",
+      "title_en": "Carrier Flight-Deck Command",
+      "title_zh": "航母飞行甲板指挥",
+      "family": "simulation",
+      "dimension": "3D",
+      "perspective": "third-person",
+      "vision_en": "A playable carrier-deck simulation asks the player to marshal aircraft, manage launch timing, and recover a returning plane safely.",
+      "vision_zh": "一款可玩的航母甲板模拟，要求玩家调度飞机、管理放飞时机并安全回收返航机。",
+      "mechanics_en": [
+        "Navigate a detailed carrier deck with orbit and first-person camera modes and clear spatial scale.",
+        "Direct deck crew markers and taxi aircraft through conflict-free staging positions.",
+        "Execute one complete launch sequence involving preparation, catapult timing, and safe deck clearance.",
+        "Recover an incoming aircraft by aligning the deck state, arresting zone, and weather window."
+      ],
+      "mechanics_zh": [
+        "在细致航母甲板上使用环绕与第一人称镜头导航，并保持空间尺度清楚。",
+        "指挥甲板人员标记和滑行飞机进入不会冲突的准备位置。",
+        "完成包含准备、弹射时机和甲板清空的完整放飞流程。",
+        "通过调整甲板状态、拦阻区和天气窗口回收返航飞机。"
+      ]
+    },
+    {
+      "source_item": "prompt-paper-world-agent-game",
+      "slug": "paper-world-adventure",
+      "title_en": "Folded Frontier",
+      "title_zh": "折纸边境",
+      "family": "adventure",
+      "dimension": "2.5D",
+      "perspective": "third-person",
+      "vision_en": "A cohesive paper-world adventure mixes layered traversal, one enemy encounter, dialogue, a collectible, and a decisive completion state.",
+      "vision_zh": "一场统一的纸片世界冒险，组合分层移动、敌人遭遇、对话、收集品和明确完成状态。",
+      "mechanics_en": [
+        "Explore a layered paper environment with responsive movement and stable 2D/3D depth rules.",
+        "Fight or evade one complete enemy encounter with readable attack and damage feedback.",
+        "Collect a meaningful object that changes a route, ability, or dialogue outcome.",
+        "Talk with characters, resolve a small quest, and reach a clear completion scene."
+      ],
+      "mechanics_zh": [
+        "在分层纸片环境中探索，移动响应灵敏且 2D/3D 深度规则稳定。",
+        "完成一次可战斗或规避的敌人遭遇，并提供清楚攻击与伤害反馈。",
+        "收集会改变路线、能力或对话结果的重要物品。",
+        "与角色对话、解决小型任务并抵达明确完成场景。"
+      ]
+    },
+    {
+      "source_item": "prompt-blender-v8-engine-model",
+      "slug": "v8-repair-puzzle",
+      "title_en": "V8 Assembly Bay",
+      "title_zh": "V8 装配工位",
+      "family": "puzzle",
+      "dimension": "3D",
+      "perspective": "third-person",
+      "vision_en": "A detailed V8 engine becomes a playable disassembly, diagnosis, and repair puzzle rather than a passive model viewer.",
+      "vision_zh": "一台细致 V8 发动机被改造成拆解、诊断和维修解谜游戏，而不是被动模型浏览器。",
+      "mechanics_en": [
+        "Rotate, zoom, isolate, and explode a complete engine assembly with stable part selection.",
+        "Remove and reinstall labeled blocks, heads, intake, pulleys, belts, and exhaust components in legal order.",
+        "Diagnose randomized faults from motion, sound, heat, and inspection clues before choosing repairs.",
+        "Reassemble, calibrate, and run a final test whose results expose missed or incorrect work."
+      ],
+      "mechanics_zh": [
+        "稳定选择零件，并支持旋转、缩放、隔离和爆炸拆解完整发动机。",
+        "按合法顺序拆装缸体、缸盖、进气、皮带轮、皮带和排气部件。",
+        "根据运动、声音、热量和检查线索诊断随机故障，再选择维修方案。",
+        "重新装配、校准并运行最终测试，结果会揭示遗漏或错误操作。"
+      ]
+    },
+    {
+      "source_item": "prompt-multiplayer-voxel-browser-game",
+      "slug": "voxel-shared-outpost",
+      "title_en": "Voxel Shared Outpost",
+      "title_zh": "体素共享前哨",
+      "family": "survival",
+      "dimension": "3D",
+      "perspective": "first-person",
+      "vision_en": "A small browser voxel world supports multi-tab local players who gather, build, and defend one synchronized outpost.",
+      "vision_zh": "一个小型浏览器体素世界支持多标签页本地玩家共同采集、建造并保卫同步前哨。",
+      "mechanics_en": [
+        "Move in first person through a generated voxel world with grounded collision and tool use.",
+        "Place and remove blocks through valid range, inventory, and authoritative conflict rules.",
+        "Synchronize player names, transforms, and block edits between tabs using BroadcastChannel with a solo fallback.",
+        "Gather resources and cooperatively defend a shared objective before a timed extraction."
+      ],
+      "mechanics_zh": [
+        "以第一人称穿越生成的体素世界，包含稳定碰撞和工具使用。",
+        "根据有效距离、库存和权威冲突规则放置或移除方块。",
+        "通过 BroadcastChannel 在标签页间同步玩家姓名、位置与方块编辑，并提供单人替代。",
+        "采集资源并合作保卫共享目标，直至限时撤离。"
+      ]
+    },
+    {
+      "source_item": "prompt-self-testing-apocalyptic-fps",
+      "slug": "apocalyptic-fps",
+      "title_en": "Ashline City",
+      "title_zh": "灰线之城",
+      "family": "shooter",
+      "dimension": "3D",
+      "perspective": "first-person",
+      "vision_en": "A compact apocalyptic city FPS provides one complete objective through recognizable landmarks, scarce ammunition, and escalating enemies.",
+      "vision_zh": "一款紧凑末日城市 FPS，通过可辨识地标、稀缺弹药和不断升级的敌人提供完整目标。",
+      "mechanics_en": [
+        "Move, look, aim, fire, reload, and collide responsively in a compact first-person level.",
+        "Fight several enemy types with readable telegraphs, damage, health, ammunition, and hit feedback.",
+        "Navigate by recognizable procedural landmarks and complete a multi-step objective rather than a score-only arena.",
+        "Reach a decisive win or loss state with accessible restart and preserved control guidance."
+      ],
+      "mechanics_zh": [
+        "在紧凑第一人称关卡中实现响应灵敏的移动、观察、瞄准、射击、换弹和碰撞。",
+        "对抗多种敌人，包含清楚预警、伤害、生命、弹药和命中反馈。",
+        "通过可辨识程序化地标导航，并完成多步骤目标而不是纯刷分竞技场。",
+        "抵达明确胜负状态，并提供易用重开和持续可见的操作指引。"
+      ]
+    },
+    {
+      "source_item": "prompt-chameleon-hide-and-seek-game",
+      "slug": "chameleon-hide-seek",
+      "title_en": "Chameleon Hide and Seek",
+      "title_zh": "变色龙捉迷藏",
+      "family": "arcade",
+      "dimension": "2D",
+      "perspective": "top-down",
+      "vision_en": "A chameleon blends into procedural color zones to evade a searching predator across three increasingly demanding rounds.",
+      "vision_zh": "一只变色龙融入程序化颜色区域，在三轮逐步升级的追捕中躲避捕食者。",
+      "mechanics_en": [
+        "Move through procedural hiding areas and sample or select nearby camouflage colors.",
+        "Calculate detection from color match, movement, distance, cover, and predator attention.",
+        "Show readable camouflage quality without relying on color alone and provide generated sound feedback.",
+        "Run three fair rounds with scoring, escalating detection behavior, game over, and full restart."
+      ],
+      "mechanics_zh": [
+        "穿过程序化藏身区域，并采样或选择附近的伪装颜色。",
+        "根据颜色匹配、移动、距离、遮挡和捕食者注意计算暴露概率。",
+        "清晰显示伪装质量，不能只依赖颜色，并提供程序化声音反馈。",
+        "运行三轮公平且逐步升级的追捕，包含得分、结束和完整重开。"
+      ]
+    },
+    {
+      "source_item": "prompt-browser-wuxia-rpg",
+      "slug": "wuxia-valley-rpg",
+      "title_en": "Valley of the Two Techniques",
+      "title_zh": "双式山谷",
+      "family": "rpg",
+      "dimension": "3D",
+      "perspective": "third-person",
+      "vision_en": "A cohesive martial-arts RPG links a village, wilderness, responsive traversal, two combat techniques, weather, inventory, dialogue, and a final encounter.",
+      "vision_zh": "一款连贯武侠 RPG，把村庄、野外、灵敏移动、两种战技、天气、背包、对话和最终遭遇连接起来。",
+      "mechanics_en": [
+        "Explore one village, one wilderness route, and an enterable interior with responsive traversal.",
+        "Fight with two distinct martial techniques, defensive timing, stamina, and readable enemy states.",
+        "Complete a quest chain through NPC dialogue, inventory items, and world-state changes.",
+        "Respond to weather and finish a final encounter that tests travel, combat, and quest decisions."
+      ],
+      "mechanics_zh": [
+        "探索一座村庄、一条野外路线和可进入室内，并保持移动响应灵敏。",
+        "使用两种不同战技、防御时机和体力系统战斗，敌人状态必须清楚。",
+        "通过 NPC 对话、背包物品和世界状态变化完成任务链。",
+        "应对天气，并完成同时检验移动、战斗和任务选择的最终遭遇。"
+      ]
+    }
+  ]
+}

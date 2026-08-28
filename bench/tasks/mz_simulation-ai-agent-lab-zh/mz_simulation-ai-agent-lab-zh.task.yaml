@@ -1,0 +1,105 @@
+id: mz_simulation-ai-agent-lab-zh
+title: 智能体进化实验室 (中文)
+family: simulation
+difficulty: high
+engine: html
+language: zh
+base_task_id: mz_simulation-ai-agent-lab
+provenance:
+  kind: adapted_user_prompt
+  source_name: benchmark author expansion prompts
+  source_item: user-08
+rounds:
+- name: R1
+  spec: |-
+    # 智能体进化实验室
+
+    制作一个完整可玩的 **3D 模拟游戏**，交付为经过打磨的浏览器纵向切片。
+
+    ## 核心构想
+
+    一个位于透明玻璃栖息箱中的受控 3D 行为沙盒。多个自主智能体感知资源、危险、温度与重力；玩家改变环境并运行有评分的实验，观察适应行为，而不是只看随机运动。
+
+    ## 必须实现的可玩系统
+
+    1. **系统 1** - 模拟多个自主智能体，具有可见目标、感知范围、能量、记忆以及探索、寻路、规避、休息和合作等状态转换。
+    2. **系统 2** - 允许通过响应灵敏的控件调整温度、重力大小与方向、资源密度、危险程度和时间倍率。
+    3. **系统 3** - 点击智能体可查看当前感知、目标、能量、近期决策与轨迹，并高亮其在栖息箱中感知到的物体。
+    4. **系统 4** - 实时显示熵、群体能量、运动多样性、碰撞、资源使用和智能体状态分布曲线。
+    5. **系统 5** - 提供可重复实验场景、假设与成功条件，并支持固定种子重置和并排结果比较。
+    6. **系统 6** - 环境变化必须可见地影响轨迹和群体行为，不能直接瞬移或脚本化操纵智能体。
+
+    ## 成长与推进
+
+    完成实验可解锁新传感器、智能体特征、环境预设和更复杂的多变量研究目标。
+
+    ## 美术方向
+
+    干净科学玻璃箱景观，包含柔和实验室照明、可区分智能体颜色、半透明感知锥、轨迹和精确仪表图形。
+
+    ## HTML 提交格式
+
+    用两个文件交付一个可独立运行的 3D 浏览器游戏：
+
+    - `index.html` - 使用 Three.js 完成全部可玩呈现。
+    - `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
+      `advance(game, input, dt)`。
+
+    页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
+    几何体、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、视频或音频。
+    Three.js 可以从官方 CDN 加载；若本题明确要求其他库，也可以使用固定版本的 CDN。
+
+    必须支持键盘和鼠标。可按题目需要加入触摸或设备传感器控制，但必须提供桌面端替代
+    方案。主游戏在 1280x720 下应清晰可读。需要有经过设计的标题画面、简短的游戏内引导、
+    暂停或重新开始控制、完整的胜负或完成闭环，以及每项关键操作的明确反馈。最终结果应当
+    是打磨过的纵向切片，而不是被动场景或彼此割裂的技术演示。
+
+    `index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
+    160 KB 以内，`game_logic.js` 控制在 320 行以内。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, progression, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent 3D art direction, authored environments, effects, and motion polish.

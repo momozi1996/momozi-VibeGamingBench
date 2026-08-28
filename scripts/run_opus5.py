@@ -1,5 +1,8 @@
-"""Opus5 实跑 BMK: 用 momozi runner + claude profile (headless -p + acceptEdits)。
-用法: python3 scripts/run_opus5.py --task bench/tasks/mz_sports-fishing-tournament/mz_sports-fishing-tournament.task.yaml [--out runs/<ts>.json]
+"""Run one task with the locally installed Claude CLI.
+
+Usage:
+  python3 scripts/run_opus5.py \
+    --task bench/tasks/mz_sports-fishing-tournament-en/mz_sports-fishing-tournament-en.task.yaml
 """
 from __future__ import annotations
 
@@ -39,6 +42,8 @@ def main():
     args = ap.parse_args()
 
     task_yaml = Path(args.task).resolve()
+    task_id = task_yaml.name.removesuffix(".task.yaml")
+    language = task_id.rsplit("-", 1)[-1] if task_id.endswith(("-en", "-zh")) else None
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     work = Path("/tmp/mz_run") / stamp
     work.mkdir(parents=True, exist_ok=True)
@@ -60,7 +65,9 @@ def main():
         print(f"[stderr] {gen['stderr'][:400]}")
     # 输出摘要到 json
     summary = {
-        "task": task_yaml.stem,
+        "task": task_id,
+        "base_task_id": task_id.removesuffix("-en").removesuffix("-zh"),
+        "language": language,
         "timestamp": stamp,
         "workspace": str(work),
         "agent": "claude (opus5)",

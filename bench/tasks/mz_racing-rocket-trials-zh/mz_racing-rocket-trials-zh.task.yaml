@@ -1,0 +1,106 @@
+id: mz_racing-rocket-trials-zh
+title: racing rocket trials (中文)
+family: racing
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 火箭摩托越野赛（Racing Rocket Trials）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个火箭摩托越野赛游戏。
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    一款基于物理的摩托车障碍赛游戏，精准的油门控制与身体重心倾斜就是一切。车手要在
+    20 个以上手工设计的关卡中，穿越越来越荒诞的坡道、回环、跷跷板和爆炸油桶。摔车
+    场面十分壮观——车手在撞击瞬间变为布娃娃，在赛道上翻滚，呈现出一幕黑色幽默。
+    挑战是外科手术级别的：轻踩油门爬上一面近乎垂直的墙、向后倾身跨过一道缺口，
+    或是从摆动的危险物之间穿针引线。检查点很宽容，但计时器毫不留情——奖牌奖励的是
+    速度和零失误的一轮。
+
+    ## 玩家体验流程
+
+    1. **标题画面** —— 一片粗粝的工业背景，游戏名称采用镂空模板风格的粗体字体，
+       一辆摩托车剪影正在翘前轮，另有"开始"/"关卡选择"按钮。不要出现 HTML 引擎 的
+       裸灰色。
+    2. **关卡选择** —— 一个包含 20 个以上关卡的网格，按 4 个难度档位组织
+       （简单/中等/困难/极限）。每关都显示奖牌状态、最佳成绩和一张小预览图。
+       关卡在各档位内按顺序解锁。
+    3. **摩托车物理** —— 摩托车具有真实的 2D 物理：两个带悬挂的车轮，以及一个会
+       倾斜的车手身体。油门（右方向键）驱动后轮加速；刹车（左方向键）使其减速。
+       上/下方向键让车手前倾/后倾，从而移动重心。
+    4. **障碍多样性** —— 关卡中会出现坡道、回环、跷跷板、摆动的钟摆、爆炸油桶、
+       崩塌平台、移动平台和陡坡。每种障碍类型都有独特的视觉设计和物理交互。
+    5. **布娃娃摔车** —— 当车手的身体以不良角度撞上障碍物或地面时，他会变成布娃娃
+       飞离摩托车。摔车过程通过物理驱动的肢体运动演出。一个"失误"计数器会加一，
+       玩家在上一个检查点重生。
+    6. **检查点** —— 布置在每个关卡各处的旗帜或标记。抵达其中一个即保存进度。
+       计时器持续运行。失误越少、用时越短，就能获得越好的奖牌。
+    7. **奖牌与星级系统** —— 每关根据完成时间颁发金/银/铜奖牌。零失误完成则额外
+       获得一颗"完美"星。奖牌与星星的总数会解锁后续的难度档位。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_racing-rocket-trials

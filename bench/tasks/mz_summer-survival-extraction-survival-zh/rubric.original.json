@@ -1,0 +1,118 @@
+{
+  "score_formula": "BUILD * (0.15*((M1+M2+M3)/3) + 0.35*((D1+D2+D3+D4)/4) + 0.15*((V1+V2+V3)/3) + 0.35*((A1+A2+A3+A4)/4))",
+  "max_demos": 10,
+  "max_demo_seconds": 20,
+  "build_check": {
+    "id": "BUILD",
+    "cmd": "momozi HTML static BUILD gate",
+    "description": "index.html and game_logic.js exist, a canvas/WebGL renderer is present, and no disallowed heavy runtime asset references are used."
+  },
+  "categories": [
+    {
+      "name": "Core Mechanics",
+      "items": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "name": "Content Depth",
+      "items": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "name": "Functional Visuals",
+      "items": [
+        "V1",
+        "V2",
+        "V3"
+      ]
+    },
+    {
+      "name": "Presentation & Art",
+      "items": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "M1",
+      "agg": "max",
+      "description": "Primary mechanic A is complete and playable: Raid session structure. Score 0 if it is absent, decorative, or cannot be exercised through player input. Score 1 requires connected state changes and visible success/failure consequences in a playable flow."
+    },
+    {
+      "id": "M2",
+      "agg": "max",
+      "description": "Primary mechanic B is complete and connected to A: Persistent stash and progression. Score 0 if it is absent, decorative, or cannot be exercised through player input. Score 1 requires connected state changes and visible success/failure consequences in a playable flow."
+    },
+    {
+      "id": "M3",
+      "agg": "max",
+      "description": "Primary mechanics C and D both affect live play: Zone loot system with tiered rarity; Trader and crafting economy. Score 0 if it is absent, decorative, or cannot be exercised through player input. Score 1 requires connected state changes and visible success/failure consequences in a playable flow."
+    },
+    {
+      "id": "D1",
+      "agg": "max",
+      "description": "At least four supporting systems are implemented and connected: Raid session structure with time limit and extraction points; Persistent stash and character management; Tiered loot system by zone danger level; AI enemy with patrol and alert states; Player inventory with weight and container management; Trader/vendor system with standing and barter tasks; Crafting from salvaged components; Character skill system with use-based growth. Score 0 if the content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes player decisions."
+    },
+    {
+      "id": "D2",
+      "agg": "max",
+      "description": "Include at least three resource or threat types, crafting or construction decisions, escalating environmental pressure, persistent world changes, and complete survive/fail/retry outcomes. Score 0 if the content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes player decisions."
+    },
+    {
+      "id": "D3",
+      "agg": "max",
+      "description": "The rules layer maintains resources, objectives, selection, danger, progress, and outcome without relying on DOM text as the source of truth. Score 0 if the content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes player decisions."
+    },
+    {
+      "id": "D4",
+      "agg": "max",
+      "description": "A three-stage progression teaches the core mechanic, combines systems under greater pressure, and ends with a mastery scenario plus a working replay flow. Score 0 if the content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes player decisions."
+    },
+    {
+      "id": "V1",
+      "agg": "mean",
+      "description": "The HUD clearly communicates current objective, critical resources, selected target or mode, progress, and danger in stable regions. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from live game state at 1280x720."
+    },
+    {
+      "id": "V2",
+      "agg": "mean",
+      "description": "Important actions have immediate, distinguishable feedback for valid input, invalid input, success, damage or failure, and state changes. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from live game state at 1280x720."
+    },
+    {
+      "id": "V3",
+      "agg": "mean",
+      "description": "The full loop is connected: styled start flow, playable systems, escalation, final success/failure state, and retry navigation work without page reload. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from live game state at 1280x720."
+    },
+    {
+      "id": "A1",
+      "agg": "mean",
+      "description": "The project has a coherent authored art direction: Tactile resources and tools, readable environmental danger, weather and time changes, visible wear and construction stages, and a world that records player intervention. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A2",
+      "agg": "mean",
+      "description": "The 3D first-person composition uses deliberate lighting, contrast, depth or layering, and themed landmarks instead of an empty default scene. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A3",
+      "agg": "mean",
+      "description": "Interactive actors, targets, hazards, tools, and UI symbols have readable silhouettes and visibly different functional states. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A4",
+      "agg": "mean",
+      "description": "Movement, impacts, transitions, alerts, completion moments, and interface changes use smooth multi-frame animation, particles, camera treatment, or synchronized audio feedback. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    }
+  ]
+}

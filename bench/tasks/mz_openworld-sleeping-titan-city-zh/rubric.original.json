@@ -1,0 +1,118 @@
+{
+  "score_formula": "BUILD * (0.15*((M1+M2+M3)/3) + 0.35*((D1+D2+D3+D4)/4) + 0.15*((V1+V2+V3)/3) + 0.35*((A1+A2+A3+A4)/4))",
+  "max_demos": 10,
+  "max_demo_seconds": 20,
+  "build_check": {
+    "id": "BUILD",
+    "cmd": "momozi HTML static BUILD gate",
+    "description": "index.html and game_logic.js exist, a canvas/WebGL renderer is present, and no disallowed heavy runtime asset references are used."
+  },
+  "categories": [
+    {
+      "name": "Core Mechanics",
+      "items": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "name": "Content Depth",
+      "items": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "name": "Functional Visuals",
+      "items": [
+        "V1",
+        "V2",
+        "V3"
+      ]
+    },
+    {
+      "name": "Presentation & Art",
+      "items": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "M1",
+      "agg": "max",
+      "description": "Explore at least four vertically layered city districts connected by lifts, bridges, ladders, and routes that shift with the titan's posture. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "M2",
+      "agg": "max",
+      "description": "Read a live tremor forecast and stabilize structures by placing braces, balancing loads, and repairing utilities before movement events. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "M3",
+      "agg": "max",
+      "description": "Track the titan's breathing, stress, and sleep depth; loud construction and resource extraction must affect those systems. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "D1",
+      "agg": "max",
+      "description": "Coordinate factions with conflicting plans for evacuation, sedation, awakening, and continued expansion. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D2",
+      "agg": "max",
+      "description": "Respond to playable disasters such as bridge collapse, fires, rolling debris, and district tilting while directing civilian movement. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D3",
+      "agg": "max",
+      "description": "Complete one of several city-scale plans during a major awakening sequence, producing materially different final city states. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D4",
+      "agg": "max",
+      "description": "Survey data and district support unlock stronger engineering tools, safer transit, and larger coordinated operations. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "V1",
+      "agg": "mean",
+      "description": "The HUD clearly communicates current objective, critical resources, selected target or mode, progress, and danger states in stable regions. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "V2",
+      "agg": "mean",
+      "description": "Every important player action has immediate, distinguishable feedback for valid input, invalid input, success, damage or failure, and state change. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "V3",
+      "agg": "mean",
+      "description": "The full loop is connected: styled title and start flow, playable core systems, progression or escalation, final success/failure state, and retry or return navigation all work without reloading the page. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "A1",
+      "agg": "mean",
+      "description": "The project has a coherent authored art direction: Monumental organic urbanism: dense low-poly districts over breathing stone-like skin, sweeping altitude views, warning beacons, and rhythmic titan motion. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A2",
+      "agg": "mean",
+      "description": "The 3D environment has deliberate composition, lighting, material contrast, depth cues, and themed landmarks rather than an empty floor with scattered objects. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A3",
+      "agg": "mean",
+      "description": "Primary interactive actors, machines, targets, hazards, and UI symbols have readable silhouettes and visibly different functional states. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A4",
+      "agg": "mean",
+      "description": "Movement, impacts, transitions, alerts, completion moments, and interface changes use smooth multi-frame animation, particles, camera treatment, or audio-reactive motion. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+# Roguelike: Wildwood
+
+Build a **node-map forest-exploration roguelike with turn-based combat** in
+HTML 4 at `./`. This is not a prototype. It is a **complete,
+shippable micro-game** that could sit on an itch.io page or Steam as a polished
+vertical slice.
+
+## Core Vision
+
+The fantasy is reading a dangerous forest. Every fork in the trail is a bet
+placed with incomplete information: claw marks on a trunk, smoke curling above
+the canopy, a glint of metal in the undergrowth. The player pushes deeper not
+because the path is safe but because the clues make the risk feel knowable. When
+a beast appears, combat is deliberate and positional — a small kit of skills
+spent against creatures that each punish a different mistake. Health never
+refills for free, so every scratch from three clearings ago still matters at the
+final gate. Death is permanent for the run, but not for the player: banked gold
+and a dwindling supply of entry tickets give each expedition weight without
+making failure a dead end. The tone is hushed and watchful — dappled light,
+distant howls, the crackle of a campfire earned by surviving one more node.
+
+## What the Player Experiences
+
+The player begins at a trailhead camp that remembers them between sessions —
+tickets, gold, and whatever lasting advantages they have earned are all visible
+here. Entering the forest costs a ticket, so the decision to set out already
+carries stakes.
+
+Once inside, the run unfolds as a branching map of trail nodes stretching deeper
+into the wood. Nodes are not fully revealed; instead the map offers partial
+evidence — tracks, smoke, glitter, disturbed brush — that lets the player weigh
+risk against their current health, gold, and depth. Committing to a node strips
+away the mystery: it might be a beast, a chest, a campfire, a trader, a trap, or
+something worse.
+
+Combat is turn-based and skill-driven. The hero carries several distinct
+abilities that cost a resource, and different beasts demand different responses —
+a fast wolf, an armored bear, a venomous serpent. Lingering conditions like
+poison or bleed play out over multiple turns, rewarding the player who reads the
+threat and plans ahead.
+
+Between fights the player collects relics and gear that reshape how the hero
+fights, not just refill health. Growth within a run is tangible: new buttons, new
+options, new ways to handle what the forest throws next.
+
+A run ends in victory — reaching the heart of the wood and overcoming its
+guardian — or in death, which sends the player back to camp minus a ticket but
+richer in banked gold. Progress persists across sessions, so quitting and
+returning picks up the same hoard and the same slow accumulation of power.
+
+## Assets
+
+2D assets are mounted read-only at:
+
+- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+  subdir's `LICENSE.txt`.
+
+Browse the library and choose packs.
+Copy what you need into your project's `assets/` folder.
+
+## Project layout
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ← your input traces (1–10 files)
+  scripts/  scenes/  assets/
+```
+
+The build must launch cleanly with:
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+A reference for HTML CLI flags is at `/workspace/tools/html_command_line.md`.
+ —
+anything after `--` is forwarded to the project as user args and silently
+ignored by the engine. Correct shape:
+`html --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+result screens look like.
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+`OS.get_cmdline_user_args()` for your game code to read. Example:
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## Demos
+
+Ship **1–10 input-trace files** under `./demo_outputs/`, one per
+demo, each named `*.json`. The evaluator launches a fresh game per trace,
+replays your trace as synthetic mouse and keyboard input at 1280×720, and
+records the screen. Only the first 10 traces by filename are evaluated;
+recordings longer than 20 s are sampled from a random 20 s window.
+
+### Scenarios
+
+Normal play should start from the title screen and demonstrate the task's
+core gameplay loop.
+Demo playback must be deterministic. For demos that need a specific state
+(a specific level, combat state, upgrade screen, result state, or late-game
+setup), define named scenarios your game loads when launched with:
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+When `--scenario <id>` is present the game must skip menus, set up the named
+state deterministically (seed any RNG), and begin accepting input immediately.
+
+### Trace file format
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` — optional; omit for a normal game launch from the title screen.
+- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+  viewport. Supported types:
+  - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+    use these for drag interactions: emit `mouse_down` at the start point,
+    one or more `mouse_move` events along the way, and `mouse_up` at the end.
+    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+    succession.
+  - `mouse_move`: `{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+  - `wait`: `{frame, type}` — anchor frame, no input.
+
+Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+---
+
+# 中文版提示词
+
+# Roguelike：荒林（Roguelike: Wildwood）
+
+在 `./` 用 HTML 4 开发一款**带回合制战斗的节点地图森林探索
+Roguelike**。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当
+足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+游戏的幻想核心是读懂一片危险的森林。小径上的每一个岔口都是一场在信息不完整的
+情况下押下的赌注：树干上的爪痕、林冠上方盘绕的烟、灌木丛中一闪的金属光。玩家
+之所以继续深入，不是因为路是安全的，而是因为那些线索让风险显得可以估量。当野兽
+出现时，战斗是审慎且讲究位置的——一小套技能被花在各自惩罚不同失误的生物身上。
+生命值从不会免费回满，所以三片林间空地之前挨的每一道擦伤，到最终之门时依然要紧。
+死亡对这一轮是永久的，但对玩家不是：存入的金币和数量渐减的入场券，让每次远征
+都有分量，同时又不让失败变成死路。整体调性是压低声息、时刻警觉的——斑驳的光影、
+远处的嚎叫、以及靠多熬过一个节点换来的营火噼啪声。
+
+## 玩家体验流程
+
+玩家从一处小径起点营地开始，这里会在多次游玩之间记住他——入场券、金币，以及他
+挣得的所有持久优势都在这里一目了然。进入森林要花掉一张入场券，所以出发这个决定
+本身就已带有筹码。
+
+一旦进入，这一轮就以一张不断向林中深处延伸的小径节点分支地图展开。节点不会被
+完全揭示；地图只提供局部证据——足迹、烟、微光、被扰动的灌木——让玩家在当前的生命值、
+金币和深度之间权衡风险。选定一个节点会剥去它的神秘：那可能是一头野兽、一只箱子、
+一处营火、一名商人、一个陷阱，也可能是更糟的东西。
+
+战斗是回合制且以技能驱动的。英雄拥有若干各不相同、需要消耗一种资源的能力，而不同
+的野兽要求不同的应对——迅捷的狼、披甲的熊、含毒的蛇。中毒或流血这类持续状态会在
+多个回合内逐步发作，奖励那些读懂威胁并提前规划的玩家。
+
+战斗之间，玩家收集遗物和装备，它们会重塑英雄的战斗方式，而不只是回满生命值。
+一轮之内的成长是可触摸的：新的按钮、新的选项、应对森林下一次抛来之物的新方式。
+
+一轮的结局是胜利——抵达林之心并战胜它的守卫者——或是死亡，死亡会把玩家送回营地，
+少了一张入场券，但存入的金币更丰厚。进展在多次游玩之间持续保留，因此退出再回来
+时，接手的还是同一份积蓄和同一条缓慢累积力量的道路。
+
+## 资产
+
+2D 资产以只读方式挂载在：
+
+- `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+  `LICENSE.txt`。
+
+浏览资产库并挑选合适的资产包。
+把需要的文件复制到你项目的 `assets/` 目录下。
+
+## 项目结构
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+  scripts/  scenes/  assets/
+```
+
+构建必须能通过以下命令干净启动：
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+HTML 命令行参数的参考文档在 `/workspace/tools/html_command_line.md`。
+**像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+`--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+`html --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+UI / battlefield / result 画面长什么样。
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+`--out` / `--frames` / `--scene`；其余参数会留在
+`OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## 演示
+
+在 `./demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+
+### 场景（Scenarios）
+
+常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+（为任何随机数发生器设定种子），并立即开始接受输入。
+
+### 轨迹文件格式
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+- `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+  支持的类型：
+  - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+    用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+    `mouse_move` 事件，在终点发出 `mouse_up`。
+    一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+  - `mouse_move`：`{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+    `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+
+回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。

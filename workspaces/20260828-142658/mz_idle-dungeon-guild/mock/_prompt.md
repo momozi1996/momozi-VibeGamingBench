@@ -1,0 +1,283 @@
+# Idle Dungeon Guild
+
+Build an **Idle Dungeon Guild** game as self-contained HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The player runs an adventurer's guild, sending heroes on automated dungeon quests
+that yield loot and experience. The fantasy is the guild master: recruiting heroes,
+equipping them with found gear, and watching them grow from novices to legends.
+The idle loop sends parties into dungeons continuously; the player's decisions
+shape party composition, equipment allocation, and guild upgrades. Prestige
+retires the current generation of heroes and starts a new one with inherited
+guild reputation bonuses.
+
+## What the Player Experiences
+
+1. **Title Screen** — A guild hall interior with a quest board and hero
+   silhouettes, the game name in fantasy serif font, and a play button styled
+   as a wax-sealed letter.
+2. **Guild Hall** — The main view shows the guild hall with hero roster, quest
+   board, equipment rack, and a reputation meter. Heroes mill about when not on
+   quests.
+3. **Hero Recruitment** — The player recruits heroes from a pool. Each hero has a
+   class (warrior, mage, rogue, healer), stats, and a level. Heroes have distinct
+   sprites per class.
+4. **Quest Dispatch** — The quest board shows available dungeons with difficulty,
+   duration, and reward preview. The player assigns a party (1-4 heroes) and
+   sends them. A progress bar shows quest completion over time.
+5. **Auto-Combat Results** — When a quest completes, a results screen shows loot
+   found, experience gained, and any injuries. Heroes level up automatically.
+   Better dungeons yield rarer loot.
+6. **Equipment & Loot** — Found gear (weapons, armour, accessories) is assigned
+   to heroes from the equipment rack. Better gear improves stats and enables
+   harder dungeons. A comparison tooltip shows stat changes.
+7. **Prestige (New Generation)** — When guild reputation maxes out, the player
+   can prestige: retire all heroes, keep equipment and guild upgrades, and start
+   with a new generation that levels faster. Each generation reaches higher
+   dungeon tiers.
+
+## Assets
+
+2D assets are mounted read-only at:
+
+- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+  subdir's `LICENSE.txt`.
+
+Browse the library and choose packs.
+Copy what you need into your project's `assets/` folder.
+
+## Project layout
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ← your input traces (1–10 files)
+  scripts/  scenes/  assets/
+```
+
+The build must launch cleanly with:
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+A reference for HTML CLI flags is at `/workspace/tools/html_command_line.md`.
+ —
+anything after `--` is forwarded to the project as user args and silently
+ignored by the engine. Correct shape:
+`html --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+result screens look like.
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+`OS.get_cmdline_user_args()` for your game code to read. Example:
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## Demos
+
+Ship **1–10 input-trace files** under `./demo_outputs/`, one per
+demo, each named `*.json`. The evaluator launches a fresh game per trace,
+replays your trace as synthetic mouse and keyboard input at 1280×720, and
+records the screen. Only the first 10 traces by filename are evaluated;
+recordings longer than 20 s are sampled from a random 20 s window.
+
+### Scenarios
+
+Normal play should start from the title screen and demonstrate the task's
+core gameplay loop.
+Demo playback must be deterministic. For demos that need a specific state
+(a specific level, combat state, upgrade screen, result state, or late-game
+setup), define named scenarios your game loads when launched with:
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+When `--scenario <id>` is present the game must skip menus, set up the named
+state deterministically (seed any RNG), and begin accepting input immediately.
+
+### Trace file format
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` — optional; omit for a normal game launch from the title screen.
+- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+  viewport. Supported types:
+  - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+    use these for drag interactions: emit `mouse_down` at the start point,
+    one or more `mouse_move` events along the way, and `mouse_up` at the end.
+    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+    succession.
+  - `mouse_move`: `{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+  - `wait`: `{frame, type}` — anchor frame, no input.
+
+Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+---
+
+# 中文版提示词
+
+# 放置地牢公会（Idle Dungeon Guild）
+
+在 `./` 用 HTML 4 开发一个**放置地牢公会**游戏。
+这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+玩家经营一家冒险者公会，派遣英雄去执行自动化的地牢任务，从中获取战利品和
+经验。游戏的幻想核心是当一名公会会长：招募英雄、用捡来的装备武装他们，
+看着他们从新手成长为传奇。放置循环会持续把队伍送进地牢；玩家的决策则塑造
+队伍配置、装备分配和公会升级。转生会让当前这一代英雄退役，并以继承下来的
+公会声望加成开启新的一代。
+
+## 玩家体验流程
+
+1. **标题画面** —— 一个公会大厅内景，配有任务板和英雄剪影，游戏名采用奇幻
+   衬线字体，开始按钮做成蜡封信件的样式。
+2. **公会大厅** —— 主视图展示公会大厅，包含英雄名册、任务板、装备架和一个
+   声望量表。英雄不在执行任务时会在大厅里闲逛。
+3. **英雄招募** —— 玩家从一个候选池中招募英雄。每位英雄都有职业（战士、法师、
+   盗贼、治疗者）、属性和等级。不同职业的英雄有各自独特的精灵图。
+4. **任务派遣** —— 任务板列出可选地牢及其难度、时长和奖励预览。玩家指定一支
+   队伍（1-4 名英雄）并派出。一条进度条会显示任务随时间推进的完成度。
+5. **自动战斗结果** —— 任务完成时，结算画面会显示获得的战利品、取得的经验，
+   以及任何伤情。英雄会自动升级。更好的地牢会产出更稀有的战利品。
+6. **装备与战利品** —— 找到的装备（武器、护甲、饰品）可以从装备架分配给英雄。
+   更好的装备能提升属性并让英雄挑战更难的地牢。一个对比提示框会显示属性变化。
+7. **转生（新一代）** —— 当公会声望达到上限时，玩家可以转生：让所有英雄退役，
+   保留装备和公会升级，并以升级更快的新一代重新开始。每一代都能触及更高的
+   地牢层级。
+
+## 资产
+
+2D 资产以只读方式挂载在：
+
+- `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+  `LICENSE.txt`。
+
+浏览资产库并挑选合适的资产包。
+把需要的文件复制到你项目的 `assets/` 目录下。
+
+## 项目结构
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+  scripts/  scenes/  assets/
+```
+
+构建必须能通过以下命令干净启动：
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+HTML 命令行参数的参考文档在 `/workspace/tools/html_command_line.md`。
+**像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+`--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+`html --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+UI / battlefield / result 画面长什么样。
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+`--out` / `--frames` / `--scene`；其余参数会留在
+`OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## 演示
+
+在 `./demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+
+### 场景（Scenarios）
+
+常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+（为任何随机数发生器设定种子），并立即开始接受输入。
+
+### 轨迹文件格式
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+- `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+  支持的类型：
+  - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+    用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+    `mouse_move` 事件，在终点发出 `mouse_up`。
+    一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+  - `mouse_move`：`{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+    `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+
+回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。

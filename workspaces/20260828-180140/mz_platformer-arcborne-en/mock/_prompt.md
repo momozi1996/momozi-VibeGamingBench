@@ -1,0 +1,80 @@
+# Arcborne
+
+Build **Arcborne**, a 2D **grappling-hook swing-momentum platformer** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).: a time-attack about chaining pendulum swings across deadly
+terrain, releasing at the perfect instant to soar, and hooking again before
+gravity wins.
+
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+Fly, don't walk. The player is an acrobat who crosses chasms by firing a
+grappling hook, swinging on the line, and releasing at the apex to launch into a
+soaring arc -- then hooking again to chain momentum across the course. The
+fantasy is momentum mastery: gravity, swing arcs, and well-timed releases
+compound into speed, and the difference between a clumsy crawl and a flowing
+chain of perfect swings is visceral. One clean run of linked swings feels
+glorious; one mistimed release drops you into the spikes.
+
+The pressure comes from the clock. Every course is a time-attack where the
+player reads terrain, picks anchor points, commits to a swing, and decides the
+exact frame to let go. Multiple hook modes add tactical depth -- sometimes you
+need raw pendulum momentum, sometimes a direct yank to reposition -- and the
+worlds themselves bend the rules of motion so mastery in one biome doesn't
+guarantee mastery in the next.
+
+## What the Player Experiences
+
+1. **Title and Entry** -- The player arrives at a styled title screen that
+   establishes the acrobatic, high-velocity tone. Starting a run drops them into
+   the first world with a visible clock already ticking.
+
+2. **Swing and Chain** -- The core sensation is physical: fire a hook at an
+   overhead anchor, feel gravity pull the arc, build speed at the bottom of the
+   pendulum, and release to fling forward. A fresh hook mid-flight chains one
+   swing into the next without touching the ground. The player shapes each swing
+   -- pumping, reeling, steering -- so skilled play looks fluid and fast while
+   beginners flail and recover.
+
+3. **Multiple Hook Modes** -- The player discovers they have more than one kind
+   of hook. A swing line carries pendulum momentum; a pull line yanks them
+   straight to an anchor for tight climbs or recoveries. Switching between modes
+   becomes second nature as the terrain demands it.
+
+4. **Worlds that Change the Rules** -- The journey carries the player through
+   escalating worlds with distinct environments. Each world introduces its own
+   anchor types, hazards, and an environmental modifier that alters how swinging
+   feels -- gusts that shove mid-arc, conveyors that drag on the ground, low
+   gravity that stretches every launch into a long glide. The player must adapt
+   their timing and technique to each new set of physics.
+
+5. **Danger and Recovery** -- Pits, spikes, blades, and moving hazards punish
+   mistimed releases. Hitting a hazard or falling sends the player back to a
+   checkpoint with clear feedback. The course is forgiving enough to learn but
+   punishing enough that a clean run feels earned.
+
+6. **Resolution** -- Reaching the goal ends the course with a result showing
+   time and medal. The player can retry for a better time or advance to the next
+   course. The full loop -- title, play, result, retry or advance -- flows
+   without restarting the application.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

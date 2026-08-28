@@ -1,0 +1,90 @@
+id: mz_tycoon-tiny-factory-foreman-zh
+title: tycoon tiny factory foreman (中文)
+family: tycoon
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 小工厂车间主管（Tiny Factory Foreman）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Tiny Factory Foreman**，一款小体量的 2D 自动化与生产规划游戏。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    这里的幻想是经营一座微缩的工厂车间：原材料从一端流入，成品从另一端滚出——前提是玩家把所有环节都正确接通了。有趣的张力是空间性的：传送带只能向前运送，分流器只能分流，而机器只接受特定的输入，所以每一次图块摆放都是一道有时间压力的路径规划谜题。订单会出现在一块看板上，带着倒计时的截止期限，玩家必须决定是为新产品改造生产线，还是从当前布局里再榨出一些产能。风险始终是级联失效——一份材料走错路就卡住一台机器，积压又拖停传送带，接着三笔订单突然同时过期。成长来自赚够钱去解锁更快的传送带、更聪明的分流器，或多输出机器，但每一次升级都是在重塑路径规划难题，而不是简单地解决它。
+
+    ## 玩家体验流程
+
+    玩家一进入游戏，看到的是一个紧凑的车间视图：一侧是几处原材料来源，另一侧是空的订单料箱，两者之间是一片空地网格。一块订单看板显示需要哪些产品、还剩多少时间。最初几分钟是从来源到机器再到料箱铺出一条简单的传送带路径，看着第一只彩色板条箱咔哒咔哒穿过车间。
+
+    随着订单变得更复杂，玩家放下分流器来拆分材料流，摆放不同类型的机器把输入转化成中间品或成品，并重新布置传送带以避免冲突。车间填满了动感——小图标沿着传送带滑行，机器在加工时一下一下地脉动，分流器忽左忽右地拨动。设计良好的生产线嗡嗡运转；规划糟糕的生产线则积压堵塞、警告闪烁。
+
+    在两轮之间，或者现金允许时，玩家会进入升级画面来提升传送带速度、解锁新的机器配方，或扩充存储容量。这些选择决定了接下来能接哪些订单。最终班次结束，一个结算画面清点已完成的订单、错过的截止期限和赚到的金币，并提供重试或返回标题画面的选项。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  - V4
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_tycoon-tiny-factory-foreman

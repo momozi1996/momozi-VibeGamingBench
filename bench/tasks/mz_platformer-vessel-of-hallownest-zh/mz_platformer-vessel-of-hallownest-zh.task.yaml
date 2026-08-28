@@ -1,0 +1,95 @@
+id: mz_platformer-vessel-of-hallownest-zh
+title: platformer vessel of hallownest (中文)
+family: platformer
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 圣巢容器（Vessel of Hallownest）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一款 **2D 氛围类银河恶魔城平台动作游戏**。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    一位沉默的虫族骑士深入一座荒废的地下王国，随身只有一把骨钉和一股继续向前的意志。这里的幻想是压力之下的探索：每个房间都可能藏着新的威胁或一条回家的近道，而玩家永远在进攻与生存之间权衡。战斗迅捷且严苛——每一次挥砍都会补充驱动治疗的灵魂，因此站着不动就等于慢慢死去。有意思的张力在于资源循环逼迫你参战：你靠战斗来治疗，但战斗又会危及你正试图恢复的生命。进度把世界锁在前面区域中获得的能力之后，用通行权而不是数值来奖励熟练。整体调性阴郁、荒凉而美得悲怆——寒冷的地下废墟、在寂静中飘散的发光粒子，以及一个早已陨落的王国那份沉默的重量。
+
+    ## 玩家体验流程
+
+    一个忧郁的标题画面以游戏名和一道孤独的骑士剪影迎接玩家，随后他们选择开始新旅程或继续已保存的旅程。
+
+    王国地图出现——一张由具名关卡组成、向下延伸的网络，每个关卡都锁着，直到它前面的那个被攻克。玩家选择第一个开放的关卡并落入其中。在里面，世界是一条由相连房间构成的连续横向滚动走廊：平台从洞穴壁上探出，荆棘坑铺在地面，感染的空壳在岩架上巡逻。移动手感紧凑而灵敏——骑士平顺加速，以令人满足的弧线跳跃，能贴附墙面，并能冲刺穿过要求精确的间隙。
+
+    战斗是即刻而切身的。挥砍敌人会使其硬直、喷出吉欧货币，并填充灵魂槽。受到打击会损失一个面具的生命，并触发短暂的无敌闪光。当面具剩得不多时，玩家面对核心困境：站着不动把灵魂引导为治疗——脆弱、暴露——还是继续向前，指望下一次击杀能补足到活下来。敌人守着房间出口后方的灵魂屏障，只有当房中每一个空壳都死掉时屏障才会升起。
+
+    更深处的房间要求用贴墙和冲刺来跨越骑士无法单靠跳跃通过的深渊。抵达一个关卡的尽头会触发一个保存进度并在地图上解锁下一区域的检查点。死亡代价高昂——所有随身携带的吉欧都会掉在失败地点，骑士则返回地图重新尝试。
+
+    最后一个关卡是一间 Boss 房：一头带有预示动作攻击套路的巨大生物，考验玩家学到的一切。胜利为这一轮加冕；失败则让骑士只带着经验退回。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  - V4
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  - A5
+language: zh
+base_task_id: mz_platformer-vessel-of-hallownest

@@ -1,0 +1,118 @@
+{
+  "score_formula": "BUILD * (0.15*((M1+M2+M3)/3) + 0.35*((D1+D2+D3+D4)/4) + 0.15*((V1+V2+V3)/3) + 0.35*((A1+A2+A3+A4)/4))",
+  "max_demos": 10,
+  "max_demo_seconds": 20,
+  "build_check": {
+    "id": "BUILD",
+    "cmd": "momozi HTML static BUILD gate",
+    "description": "index.html and game_logic.js exist, a canvas/WebGL renderer is present, and no disallowed heavy runtime asset references are used."
+  },
+  "categories": [
+    {
+      "name": "Core Mechanics",
+      "items": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "name": "Content Depth",
+      "items": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "name": "Functional Visuals",
+      "items": [
+        "V1",
+        "V2",
+        "V3"
+      ]
+    },
+    {
+      "name": "Presentation & Art",
+      "items": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "M1",
+      "agg": "max",
+      "description": "Spawn geometric beat targets in multiple lanes and judge key input with Perfect, Good, and Miss timing windows tied to a deterministic chart. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "M2",
+      "agg": "max",
+      "description": "Use Web Audio API synthesis and an analyser so emissive materials, tunnel segments, and camera impulses respond to current frequency bands. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "M3",
+      "agg": "max",
+      "description": "Shatter successful targets into velocity-aware physical fragments while misses pass the player and cause a distinct tunnel distortion. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "D1",
+      "agg": "max",
+      "description": "Implement combo, multiplier, score, health, song progress, pause, retry, and a results screen with timing breakdown. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D2",
+      "agg": "max",
+      "description": "Provide at least three charts or difficulty modes with distinct rhythms, speeds, lane patterns, and visual identities. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D3",
+      "agg": "max",
+      "description": "Keep timing readable despite bloom, camera motion, debris, and audio-reactive effects; accessibility settings must reduce shake and flash. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D4",
+      "agg": "max",
+      "description": "Clearing charts unlocks denser patterns, hold targets, alternating strike directions, and cosmetic tunnel themes without compromising deterministic timing. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "V1",
+      "agg": "mean",
+      "description": "The HUD clearly communicates current objective, critical resources, selected target or mode, progress, and danger states in stable regions. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "V2",
+      "agg": "mean",
+      "description": "Every important player action has immediate, distinguishable feedback for valid input, invalid input, success, damage or failure, and state change. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "V3",
+      "agg": "mean",
+      "description": "The full loop is connected: styled title and start flow, playable core systems, progression or escalation, final success/failure state, and retry or return navigation all work without reloading the page. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "A1",
+      "agg": "mean",
+      "description": "The project has a coherent authored art direction: A restrained neon tunnel with black negative space, strong lane colors, emissive geometry, frequency-reactive surfaces, and crisp impact typography. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A2",
+      "agg": "mean",
+      "description": "The 3D environment has deliberate composition, lighting, material contrast, depth cues, and themed landmarks rather than an empty floor with scattered objects. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A3",
+      "agg": "mean",
+      "description": "Primary interactive actors, machines, targets, hazards, and UI symbols have readable silhouettes and visibly different functional states. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A4",
+      "agg": "mean",
+      "description": "Movement, impacts, transitions, alerts, completion moments, and interface changes use smooth multi-frame animation, particles, camera treatment, or audio-reactive motion. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    }
+  ]
+}

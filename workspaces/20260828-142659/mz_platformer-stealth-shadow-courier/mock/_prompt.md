@@ -1,0 +1,284 @@
+# Stealth: Shadow Courier
+
+Build **Shadow Courier**, a compact **top-down stealth infiltration game** in
+HTML 4 at `./`. This is not a prototype. It is a **complete,
+shippable micro-game** that could sit on an itch.io page or Steam as a polished
+vertical slice.
+
+## Core Vision
+
+The fantasy is being a lone courier who survives not by fighting but by reading
+the room -- memorizing patrol rhythms, threading gaps in overlapping vision
+cones, and choosing the exact moment to slip through a door or kill the lights.
+The interesting tension is that every objective changes the player's exposure:
+picking up the key means crossing a lit corridor, stealing the document means
+lingering in the most guarded room, and reaching the exit means retracing ground
+where patrols have shifted. The pressure comes from the gap between what the
+player can see (cone arcs, shadow pools, locked routes) and what they must risk
+to advance. One miscalculated step collapses the whole plan into alarm bells and
+closing nets.
+
+## What the Player Experiences
+
+The player arrives at a dark, atmospheric title screen that establishes the
+covert tone -- the game name, a shadowy facility silhouette, and a way to begin.
+
+A brief mission briefing sets the stakes: an archive holds a sealed document,
+guards patrol the corridors, and the courier must get in, steal it, and get out
+unseen.
+
+Control begins in a top-down facility map. The courier moves smoothly through
+rooms and corridors, hugging walls and cover objects. Guards walk visible patrol
+routes, their vision cones sweeping ahead of them like searchlights. The player
+reads the timing, waits for a gap, and slips past -- or finds another way
+around.
+
+Deeper in, a locked door blocks the direct path. The player hunts for a key or
+credential, picks it up, and sees the HUD confirm possession. A light switch or
+fuse box offers a different kind of power: flipping it plunges a section into
+darkness, shrinking guard awareness and opening shadow routes that were
+previously exposed.
+
+The document sits in the most dangerous room. Stealing it updates the mission
+state and shifts the objective to escape. The player retraces or finds a new
+route to the exit, now aware that patrol timing has changed or alert levels have
+risen.
+
+Getting spotted triggers escalation -- a warning state, then capture if the
+courier lingers. Reaching the exit with the document produces a styled success
+screen; getting caught produces a failure screen. Either way, retry and
+return-to-title controls keep the player in the loop without restarting the
+application.
+
+## Assets
+
+2D assets are mounted read-only at:
+
+- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+  subdir's `LICENSE.txt`.
+
+Browse the library and choose packs.
+Copy what you need into your project's `assets/` folder.
+
+## Project layout
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ← your input traces (1–10 files)
+  scripts/  scenes/  assets/
+```
+
+The build must launch cleanly with:
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+A reference for HTML CLI flags is at `/workspace/tools/html_command_line.md`.
+ —
+anything after `--` is forwarded to the project as user args and silently
+ignored by the engine. Correct shape:
+`html --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+result screens look like.
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+`OS.get_cmdline_user_args()` for your game code to read. Example:
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## Demos
+
+Ship **1–10 input-trace files** under `./demo_outputs/`, one per
+demo, each named `*.json`. The evaluator launches a fresh game per trace,
+replays your trace as synthetic mouse and keyboard input at 1280×720, and
+records the screen. Only the first 10 traces by filename are evaluated;
+recordings longer than 20 s are sampled from a random 20 s window.
+
+### Scenarios
+
+Normal play should start from the title screen and demonstrate the task's
+core gameplay loop.
+Demo playback must be deterministic. For demos that need a specific state
+(a specific level, combat state, upgrade screen, result state, or late-game
+setup), define named scenarios your game loads when launched with:
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+When `--scenario <id>` is present the game must skip menus, set up the named
+state deterministically (seed any RNG), and begin accepting input immediately.
+
+### Trace file format
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` — optional; omit for a normal game launch from the title screen.
+- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+  viewport. Supported types:
+  - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+    use these for drag interactions: emit `mouse_down` at the start point,
+    one or more `mouse_move` events along the way, and `mouse_up` at the end.
+    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+    succession.
+  - `mouse_move`: `{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+  - `wait`: `{frame, type}` — anchor frame, no input.
+
+Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+---
+
+# 中文版提示词
+
+# 潜行：暗影信使（Stealth: Shadow Courier）
+
+在 `./` 用 HTML 4 开发 **Shadow Courier**，一款小巧的**俯视视角潜行渗透游戏**。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+这里的幻想是成为一名孤身信使，靠的不是打斗而是读懂现场——记住巡逻节奏、在层层叠叠的视野锥之间穿针引线，并挑准那个恰到好处的时机溜过一道门或掐掉灯光。有意思的张力在于：每一个目标都会改变玩家的暴露程度——去拿钥匙就意味着穿过一条亮着灯的走廊，去偷文件就意味着在守卫最森严的房间里逗留，而抵达出口又意味着重走一遍巡逻已经变了位的地面。压力来自玩家所能看见的东西（视野锥弧、阴影池、被锁的路线）与他们为了推进而必须冒的风险之间的落差。一步算错，整个计划就崩塌成刺耳的警铃和逐渐收紧的包围网。
+
+## 玩家体验流程
+
+玩家进入一个昏暗、氛围十足的标题画面，它确立了这场秘密行动的调性——游戏名、一道影影绰绰的设施剪影，以及一个开始的入口。
+
+一段简短的任务简报交代了赌注：档案室里存放着一份密封文件，守卫在走廊上巡逻，而信使必须潜入、偷走它，再不被发现地脱身。
+
+操控从一张俯视视角的设施地图开始。信使在房间和走廊之间平顺移动，贴着墙壁和掩体物件走。守卫沿可见的巡逻路线行走，视野锥像探照灯一样在他们前方扫过。玩家读时机、等一个空档，然后溜过去——或者另寻一条绕行的路。
+
+再往深处，一道锁着的门挡住了直通路径。玩家去找一把钥匙或凭证，把它拾起，并看到 HUD 确认已持有。一个电灯开关或配电箱提供另一种力量：拉下它会让一整片区域陷入黑暗，缩小守卫的感知范围，并打开此前完全暴露的阴影路线。
+
+文件就在最危险的那个房间里。偷到它会更新任务状态，并把目标切换为撤离。玩家原路返回或另找一条通往出口的路线，此时他们已经知道巡逻时机已变或警戒等级已升。
+
+被发现会触发升级——先是警告状态，若信使继续逗留则被抓获。带着文件抵达出口会呈现一个经过设计的成功画面；被抓获则呈现失败画面。无论哪种情况，重试和返回标题的操作都让玩家留在循环之中，无需重启应用。
+
+## 资产
+
+2D 资产以只读方式挂载在：
+
+- `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+  `LICENSE.txt`。
+
+浏览资产库并挑选合适的资产包。
+把需要的文件复制到你项目的 `assets/` 目录下。
+
+## 项目结构
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+  scripts/  scenes/  assets/
+```
+
+构建必须能通过以下命令干净启动：
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+HTML 命令行参数的参考文档在 `/workspace/tools/html_command_line.md`。
+**像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+`--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+`html --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+UI / battlefield / result 画面长什么样。
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+`--out` / `--frames` / `--scene`；其余参数会留在
+`OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## 演示
+
+在 `./demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+
+### 场景（Scenarios）
+
+常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+（为任何随机数发生器设定种子），并立即开始接受输入。
+
+### 轨迹文件格式
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+- `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+  支持的类型：
+  - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+    用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+    `mouse_move` 事件，在终点发出 `mouse_up`。
+    一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+  - `mouse_move`：`{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+    `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+
+回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。

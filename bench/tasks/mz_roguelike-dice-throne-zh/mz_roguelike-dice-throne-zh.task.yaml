@@ -1,0 +1,103 @@
+id: mz_roguelike-dice-throne-zh
+title: roguelike dice throne (中文)
+family: roguelike
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 骰子王座（Dice Throne）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Dice Throne**——一款带重掷机制、并且装备
+    会改造骰面的骰子 Roguelike。这不是原型，而是一个**完整、可发布的微型游戏**——
+    其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    一位战士以骰子作为战斗系统，在地牢中一路厮杀。每个回合玩家掷出一组骰子，然后
+    选择保留哪些、重掷哪些（最多两次重掷）。骰面对应能力：剑造成伤害，盾进行格挡，
+    心恢复生命，骷髅触发特殊攻击。妙处在于：地牢中找到的装备会实际改造骰面——一把
+    烈焰之剑会把一个剑面替换成造成双倍伤害的火剑面，附魔护甲会给一颗骰子加上一个
+    盾面。敌人同样掷出可见的骰子，形成一场双方都能看到即将发生什么的透明较量。
+    把骰面凑成一套互有协同的骰组，就是每一轮之内的元进展。
+
+    ## 玩家体验流程
+
+    标题画面展示翻滚的骰子和发光的骰面图标。开始一轮时，玩家获得 5 颗标准骰子
+    （每颗的骰面为剑、剑、盾、心、骷髅、空白）。
+
+    战斗中，玩家一次掷出所有骰子，配有令人满足的翻滚动画。结果朝上落定。玩家选择
+    要保留的骰子（它们会锁定在原位），并重掷其余的——每回合最多两次重掷。定案之后，
+    骰面开始生效：剑对敌人造成伤害，盾减少受到的伤害，心恢复生命，骷髅触发一个特殊
+    能力。随后敌人掷出自己那批可见的骰子，并以同样方式结算。
+
+    遭遇战之间，战利品画面提供能改造骰面的装备——替换、升级或增加骰面。一张地图展示
+    带有战斗、精英、商店和休息节点的分支路径。商店出售骰面改造和新骰子。这一轮在
+    一位持有强力定制骰子的 Boss 处终结。死亡时展示抵达的层数、最佳一掷和收集到的装备。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  - V4
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_roguelike-dice-throne

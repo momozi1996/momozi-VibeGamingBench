@@ -1,0 +1,58 @@
+# Open-World Airship Trader
+
+Build a **2D open-world airship trading game** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The player pilots an airship through a sky filled with floating islands, each
+with its own economy and goods to trade. The fantasy is freedom above the clouds:
+charting routes between distant ports, buying low and selling high, upgrading
+your vessel with better engines and cargo holds, and fending off sky pirates who
+lurk along trade lanes. Tension comes from fuel management, pirate ambushes, and
+volatile market prices that shift as you trade.
+
+## What the Player Experiences
+
+1. **Title Screen** — A styled opening with the game name over a parallax sky
+   backdrop with drifting clouds and distant islands. A play button begins the
+   journey.
+2. **The Sky Map** — The player flies their airship freely across a large open
+   sky. Multiple floating islands are visible, each with a distinct silhouette
+   and colour palette. Clouds drift in parallax layers.
+3. **Docking** — Approaching an island triggers a docking prompt. Once docked,
+   the player enters a trade menu showing local goods, prices, and their cargo
+   hold contents.
+4. **Trading** — Each island produces certain goods cheaply and demands others at
+   premium prices. The player buys cargo, flies to another island, and sells for
+   profit. Prices fluctuate over time.
+5. **Upgrades** — Profits fund ship upgrades: faster engines, larger cargo hold,
+   better fuel efficiency, and hull armour. Upgrades are visible on the ship
+   sprite.
+6. **Sky Pirates** — Along certain routes, pirate ships appear and chase the
+   player. The player can outrun them, fight with a mounted cannon, or pay a
+   toll. Combat is real-time with simple projectile shooting.
+7. **Fuel & Risk** — The airship consumes fuel while flying. Running out means
+   drifting helplessly. Fuel can be bought at islands or found in floating
+   crates.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

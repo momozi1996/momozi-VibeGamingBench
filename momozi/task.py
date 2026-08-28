@@ -26,6 +26,9 @@ class Task:
     family: str
     difficulty: str
     engine: str
+    language: str = ""
+    base_task_id: str = ""
+    provenance: dict = field(default_factory=dict)
     rounds: list = field(default_factory=list)
     static: list = field(default_factory=list)
     behavior: dict = field(default_factory=dict)
@@ -35,23 +38,37 @@ class Task:
 
     @classmethod
     def load(cls, path: Path) -> "Task":
-        raw = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
-        assert "rounds" in raw and raw["rounds"], "task 必须有 rounds[]"
+        path = Path(path)
+        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if not isinstance(raw, dict):
+            raise ValueError(f"{path}: task YAML must contain a mapping")
+        if not raw.get("rounds"):
+            raise ValueError(f"{path}: task must contain non-empty rounds[]")
+        if not raw.get("id"):
+            raise ValueError(f"{path}: task id is required")
         rounds = [RoundSpec(name=r["name"], spec=r["spec"].strip())
                   for r in raw["rounds"]]
-        return cls(
+        task = cls(
             id=raw["id"],
             title=raw.get("title", raw["id"]),
             family=raw.get("family", "unspecified"),
             difficulty=raw.get("difficulty", "medium"),
             engine=raw.get("engine", "three.js"),
+            language=raw.get("language", "") or "",
+            base_task_id=raw.get("base_task_id", raw["id"]) or raw["id"],
+            provenance=raw.get("provenance", {}) or {},
             rounds=rounds,
             static=raw.get("static", []) or [],
             behavior=raw.get("behavior", {}) or {},
             rubric=raw.get("rubric", []) or [],
             reference_dir=raw.get("reference_dir", "") or "",
-            path=Path(path),
+            path=path,
         )
+        if task.difficulty not in {"low", "medium", "high"}:
+            raise ValueError(f"{path}: unsupported difficulty {task.difficulty!r}")
+        if task.language and task.language not in {"en", "zh"}:
+            raise ValueError(f"{path}: unsupported language {task.language!r}")
+        return task
 
     def artifact_requirements(self) -> dict:
         """从 static 检查项推导必需产物路径角色。"""

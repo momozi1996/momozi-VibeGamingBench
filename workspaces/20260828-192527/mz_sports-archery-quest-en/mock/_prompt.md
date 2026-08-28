@@ -1,0 +1,59 @@
+# Sports Archery Quest
+
+Build a **Sports Archery Quest** game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The player is an archer on a quest through fantasy lands, using skill-based aiming
+to hunt monsters, hit distant targets, and defeat bosses with precision shots.
+The fantasy is the perfect shot: accounting for wind and distance, drawing the
+bow to full power, and watching the arrow arc across the screen to strike a
+weak point. Tension comes from limited arrows, wind that shifts mid-draw, and
+monsters that close distance while the player aims. Upgrades improve the bow's
+power, arrow types, and the player's draw speed.
+
+## What the Player Experiences
+
+1. **Title Screen** — A forest clearing with an arrow embedded in a target, the
+   game name in runic-styled font, and a play button shaped like an arrowhead.
+2. **World Map** — A node-based map showing locations: forest, canyon, ruins,
+   dragon's peak. Each location has multiple stages. Completing stages unlocks
+   the next area.
+3. **Aiming Mechanics** — The player draws the bow by holding a button (power
+   meter fills), aims with directional input, and releases to fire. Arrow
+   trajectory follows a physics arc affected by gravity and wind. A wind
+   indicator shows current direction and strength.
+4. **Target Stages** — Some stages are pure marksmanship: hit bullseyes at
+   increasing distances, shoot moving targets, or thread arrows through narrow
+   gaps. Score is based on accuracy and speed.
+5. **Monster Hunting** — Monsters approach from the right side. The player must
+   hit weak points (glowing spots) to deal maximum damage. Different monsters
+   have different weak point locations and movement patterns.
+6. **Boss Targets** — Each area ends with a boss: a giant creature with multiple
+   weak points that must be hit in sequence. Bosses have attack phases where the
+   player must dodge (move vertically) while finding shot windows.
+7. **Bow Upgrades** — Earned gold buys upgrades: longer range, faster draw,
+   elemental arrows (fire for extra damage, ice to slow, lightning to chain).
+   A shop screen shows available upgrades with clear stat comparisons.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

@@ -1,0 +1,118 @@
+{
+  "score_formula": "BUILD * (0.15*((M1+M2+M3)/3) + 0.35*((D1+D2+D3+D4)/4) + 0.15*((V1+V2+V3)/3) + 0.35*((A1+A2+A3+A4)/4))",
+  "max_demos": 10,
+  "max_demo_seconds": 20,
+  "build_check": {
+    "id": "BUILD",
+    "cmd": "momozi HTML static BUILD gate",
+    "description": "index.html and game_logic.js exist, a canvas/WebGL renderer is present, and no disallowed heavy runtime asset references are used."
+  },
+  "categories": [
+    {
+      "name": "Core Mechanics",
+      "items": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "name": "Content Depth",
+      "items": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "name": "Functional Visuals",
+      "items": [
+        "V1",
+        "V2",
+        "V3"
+      ]
+    },
+    {
+      "name": "Presentation & Art",
+      "items": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "M1",
+      "agg": "max",
+      "description": "Build a readable 3D topology with a core server, relay nodes, routes, normal traffic, and multiple attack packet types moving along paths. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "M2",
+      "agg": "max",
+      "description": "Let the player click packets or nodes to intercept, quarantine, reroute, or detonate threats using cooldown-limited defensive tools. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "M3",
+      "agg": "max",
+      "description": "Visualize a Kalman-filter-inspired prediction layer that estimates future packet paths and updates uncertainty as observations arrive. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences to be observable in one playable flow."
+    },
+    {
+      "id": "D1",
+      "agg": "max",
+      "description": "Run discrete waves with decoys, split packets, armored payloads, compromised nodes, and a final coordinated boss attack. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D2",
+      "agg": "max",
+      "description": "Add node upgrades, firewall placement, resource income, combo scoring, server health, and meaningful tradeoffs between active and passive defense. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D3",
+      "agg": "max",
+      "description": "Pair every intercept, miss, prediction update, and node failure with distinct 8-bit synthesized audio and visible feedback. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "D4",
+      "agg": "max",
+      "description": "Later waves expand topology complexity and unlock specialized defenses while enemy behaviors adapt to overused strategies. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes the player's decisions."
+    },
+    {
+      "id": "V1",
+      "agg": "mean",
+      "description": "The HUD clearly communicates current objective, critical resources, selected target or mode, progress, and danger states in stable regions. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "V2",
+      "agg": "mean",
+      "description": "Every important player action has immediate, distinguishable feedback for valid input, invalid input, success, damage or failure, and state change. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "V3",
+      "agg": "mean",
+      "description": "The full loop is connected: styled title and start flow, playable core systems, progression or escalation, final success/failure state, and retry or return navigation all work without reloading the page. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from the game state at 1280x720."
+    },
+    {
+      "id": "A1",
+      "agg": "mean",
+      "description": "The project has a coherent authored art direction: A high-contrast cyber operations space with luminous topology lines, volumetric packet trails, green code rain, red threat pulses, and pixel-audio visualizers. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A2",
+      "agg": "mean",
+      "description": "The 3D environment has deliberate composition, lighting, material contrast, depth cues, and themed landmarks rather than an empty floor with scattered objects. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A3",
+      "agg": "mean",
+      "description": "Primary interactive actors, machines, targets, hazards, and UI symbols have readable silhouettes and visibly different functional states. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A4",
+      "agg": "mean",
+      "description": "Movement, impacts, transitions, alerts, completion moments, and interface changes use smooth multi-frame animation, particles, camera treatment, or audio-reactive motion. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    }
+  ]
+}

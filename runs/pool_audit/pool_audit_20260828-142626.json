@@ -1,0 +1,32 @@
+[
+  {
+    "task": "mz_cardgame-autobattler",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-gwent-war",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-inscription-dark",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-poker-roguelike",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-spire-descent",
+    "family": "cardgame",
+    "ok": true,
+    "build_gate_ok": true
+  }
+]

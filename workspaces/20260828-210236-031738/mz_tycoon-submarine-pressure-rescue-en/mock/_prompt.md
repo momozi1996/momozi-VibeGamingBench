@@ -1,0 +1,64 @@
+# Submarine Pressure Rescue
+
+Build **Submarine Pressure Rescue**, a compact **submarine damage-control and
+rescue simulation** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype.
+It is a **complete, shippable micro-game** that could sit on an itch.io page or
+Steam as a polished vertical slice.
+
+## Core Vision
+
+The player commands a battered rescue sub sinking toward crush depth. Water
+pours through breached compartments, pressure climbs, oxygen bleeds out, and
+the power grid can only feed so many systems at once. Every order is a tradeoff:
+seal a bulkhead to slow flooding but trap a crewmate, reroute power to pumps
+but lose sonar, send the engineer to patch a hull breach while the med bay goes
+unattended. The fantasy is desperate, competent leadership under impossible
+constraints — keeping a dying vessel alive long enough to reach the rescue
+beacon and bring survivors home.
+
+The tone is tense industrial survival: dark hull cross-sections, warning lights,
+blue sonar sweeps, valve icons, crew markers, and clear alarm feedback.
+
+## What the Player Experiences
+
+The player opens to a styled submarine rescue title screen with hull silhouette
+and emergency signal. A mission briefing introduces the objective, crew roster,
+and initial damage state.
+
+Once the mission begins, the player sees the sub's compartment layout with
+water levels, pressure gauges, oxygen, and power routing. Early damage is
+manageable — a single leak, one crew member to assign. The player learns the
+rhythm: identify the threat, assign crew, watch the repair progress, check
+the sonar for distance to the beacon.
+
+As the mission continues, failures cascade. A second compartment breaches while
+the first is still being pumped. Power drops and the player must choose which
+systems stay online. Oxygen falls in sealed sections. Crew members get trapped
+or injured. The sonar shows the beacon getting closer, but new hazards appear
+on the route.
+
+In the final stretch, everything is failing simultaneously. The player makes
+rapid imperfect calls — sacrifice a compartment to save the rest, burn the last
+power reserve on pumps, hope the hull holds. Reaching the beacon and
+stabilizing the vessel shows rescue success. Hull collapse, oxygen depletion,
+or failed evacuation shows defeat. Both outcomes are styled and navigable.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

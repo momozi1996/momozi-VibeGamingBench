@@ -1,0 +1,65 @@
+# Iron Vanguard
+
+Build **Iron Vanguard**, a 2D top-down grid-based tactical tank defense game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It is a **complete,
+shippable micro-game** that could sit on an itch.io page or Steam as a polished
+vertical slice.
+
+## Core Vision
+
+A lone armored tank holds the line against relentless waves of automated
+warmachines bearing down on a critical command core. The tension lives in
+positioning and restraint: movement is grid-locked, only one shell can exist on
+screen at a time, and every shot must count because the enemy never stops
+advancing. The player is always choosing between pushing forward to intercept a
+flanking column and falling back to guard the core from a breakthrough. Terrain
+shapes every engagement — brick barricades offer temporary cover until they
+crumble, steel walls funnel traffic into kill zones, and mud patches punish
+careless repositioning. The risk is always the same: one shell slips past, one
+enemy reaches the core, and the defense collapses instantly. The tone is gritty
+dieselpunk — rust-iron plating, neon hazard lines, deep shadows, and the
+percussive flash of shell impacts.
+
+## What the Player Experiences
+
+A dark industrial title screen sets the mood before the player enters a tactical
+map showing available defense zones. Each zone is a distinct battlefield with its
+own layout and enemy composition, inviting the player to choose where to make
+their stand.
+
+Combat drops the player's tank onto a grid battlefield adjacent to the glowing
+command core. The field is a maze of destructible brick walls, impenetrable steel
+barriers, and treacherous mud patches. Enemies pour from spawn points at the top
+of the screen in waves, each wave more aggressive than the last. Some enemies
+rush the core directly, others hunt the player, and specialized carriers glow
+with salvageable cargo.
+
+The player steers with grid-locked directional inputs and fires a single shell at
+a time — no spray-and-pray, just deliberate aim. Destroying a carrier drops
+battlefield salvage: armor repairs, temporary fortifications around the core, or
+an EMP pulse that freezes everything on screen. Taking hits degrades the tank's
+hull layer by layer; lose all armor and a life is spent.
+
+Victory comes when the last enemy in the wave queue is destroyed, rewarding the
+player with accuracy metrics and unlocking the next zone. Defeat is instant if
+the core takes a single hit, or gradual if lives run out. Either way the player
+returns to the map to regroup and try again.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

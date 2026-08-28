@@ -1,0 +1,126 @@
+id: mz_summer-racing-sports-individual-sports-en
+title: Individual Sports (English)
+family: racing
+difficulty: high
+engine: html
+language: en
+base_task_id: mz_summer-racing-sports-individual-sports
+provenance:
+  kind: adapted_summerengine_template
+  source_name: Summer Engine templates
+  source_index_url: https://www.summerengine.com/templates
+  source_url: https://www.summerengine.com/templates/racing-sports/individual-sports/individual-sports
+  source_template_id: individual-sports
+  source_category: racing-sports
+  source_dimension: 3D
+  source_perspective: third-person
+  source_html_sha256: f7a8aa7181bc3cacc064bf61aa6f58ee317f7fc17a7e14dc15c121488b0a28d8
+rounds:
+- name: R1
+  spec: |-
+    # Individual Sports
+
+    Build a complete, playable **3D racing and sports game** as a polished
+    browser vertical slice, presented from a **third person** viewpoint.
+
+    ## Core Vision
+
+    Create an original game whose connected play loop centers on Sport-specific mechanic system, Athlete stat and archetype system, Training and development system, and Competition calendar and ranking system. The systems
+    must affect one another through shared state instead of appearing as isolated
+    buttons, menus, or visual demonstrations.
+
+    ## Required Playable Systems
+
+    1. **Primary mechanic A - Sport-specific mechanic system**: make it directly controllable or
+       strategically actionable, with deterministic state changes, readable feedback,
+       and observable success and failure consequences.
+    2. **Primary mechanic B - Athlete stat and archetype system**: connect it to the first mechanic so
+       player decisions alter timing, position, resources, risk, or available options.
+    3. **Primary mechanic C - Training and development system**: implement its full input-to-outcome
+       loop, including invalid actions, edge conditions, and recovery or reset behavior.
+    4. **Primary mechanic D - Competition calendar and ranking system**: make it materially change strategy,
+       progression, or replay outcomes rather than serving as a label or cosmetic state.
+    5. **Supporting systems**: implement at least four of these mechanic signatures
+       and connect them to the core loop: Sport-specific core mechanic system; Athlete stat and archetype framework; AI opponent with inspired and skill variation; Training and attribute development; Competition calendar and ranking points; Tournament bracket generation; Career mode with age and peak form arc; Injury and recovery system.
+    6. **Playable breadth and outcome**: Include a complete event with practice or setup, at least three competitors or challenge tiers, rule-valid scoring, escalating pressure, final standings, and replay.
+
+    ## Progression and State
+
+    Use a short three-stage arc. Introduce the core interaction clearly, combine it
+    with supporting systems under greater pressure, then finish with a scenario that
+    tests mastery. Important rules, resources, objectives, selection state, progress,
+    danger, and outcome must be visible in stable HUD regions and represented in
+    `game_logic.js`.
+
+    ## Art Direction
+
+    Strong speed and trajectory cues, readable competitors, clear field markings, dynamic cameras, and replay-worthy finish, collision, and scoring moments.
+
+    ## HTML Submission Format
+
+    Deliver a self-contained browser game in two files:
+
+    - `index.html` - the complete playable presentation. Use Three.js and WebGL for the playable presentation.
+    - `game_logic.js` - the deterministic state and rules layer, exporting
+      `createGame(opts)` and `advance(game, input, dt)`.
+
+    The page must open without a build step or local server and render within three
+    seconds on a normal laptop. Use procedural geometry, generated textures, shaders,
+    particles, synthesized audio, and CSS. Do not fetch external images, models,
+    video, or audio at runtime. Three.js may be loaded from its official CDN when
+    used; pin any permitted library to a specific version.
+
+    Support keyboard and pointer input, with gamepad or touch added where appropriate.
+    Keep the complete play area and HUD readable at 1280x720. Include a styled start
+    flow, concise in-game guidance, pause and restart controls, a complete outcome
+    loop, and visible feedback for every important action.
+
+    `index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
+    160 KB and `game_logic.js` under 320 lines.
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, progression, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent authored art direction, functional composition, effects, and motion polish.

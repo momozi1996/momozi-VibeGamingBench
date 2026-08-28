@@ -1,0 +1,90 @@
+id: mz_platformer-wall-dancer-zh
+title: platformer wall dancer (中文)
+family: platformer
+difficulty: low
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 壁舞者（Wall Dancer）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Wall Dancer**，一款带贴墙攀爬与冲刺机制的精确操作平台跳跃游戏。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    一名灵巧的攀登者一屏一屏地向上穿越水晶洞窟，贴附墙面、用一次定向冲刺弹射出去，并穿过要求像素级精确时机的尖刺走廊。游戏围绕两个动词构建：贴附与冲刺。贴附在墙上让玩家缓慢下滑，同时扫视房间寻找下一处安全表面。冲刺消耗单次充能，充能会在着地或抓墙时重置，由此形成一种"投入—恢复—再投入"的节奏，让每个房间都像一道靠肌肉记忆解开的小谜题。五个章节陆续引入新的危险物——气流、崩塌的墙、移动的尖刺、重力翻转和限时门——每一样都在不改变核心双动词语汇的前提下叠加复杂度。
+
+    ## 玩家体验流程
+
+    标题画面呈现游戏名和一个章节选择选项（通关前锁定）。按下开始把玩家投入第 1 章第 1 房。
+
+    每个房间正好占满一屏。玩家角色接触即贴附到墙上，缓慢向下滑动。贴附时按跳跃会从墙面弹开。在空中按冲刺会让角色朝瞄准的方向高速射出，并消耗掉冲刺充能。落到地面或抓住另一面墙会恢复充能。尖刺、陷坑和移动危险物会立刻致死，玩家会在房间入口重生，没有加载画面。
+
+    清掉一个房间后，摄像机滚动到下一个。每个章节包含 8-12 个房间，以一个综合了本章全部危险物的最终房间收尾。完成一个章节会返回枢纽，并解锁下一章。每个章节的死亡计数器和最佳时间记录鼓励玩家为求精通而反复重玩。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  - V4
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_platformer-wall-dancer

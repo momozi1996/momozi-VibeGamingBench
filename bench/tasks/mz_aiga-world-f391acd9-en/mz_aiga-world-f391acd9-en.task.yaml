@@ -1,0 +1,127 @@
+id: mz_aiga-world-f391acd9-en
+title: Ember's Bubbly Adventure (English)
+family: adventure
+difficulty: medium
+engine: html
+language: en
+base_task_id: mz_aiga-world-f391acd9
+provenance:
+  kind: adapted_aiga_shared_world
+  source_name: AIGA Shared Worlds
+  source_index_url: https://www.aiga.io/zh/shared-worlds?langCode=zh%2Cen
+  source_url: https://www.aiga.io/shared-worlds/embers-bubbly-adventure/f391acd9-4b44-441b-a0f0-e9ebb803a241
+  source_api_url: https://www.aiga.io/api/public-worlds/f391acd9-4b44-441b-a0f0-e9ebb803a241
+  source_world_id: f391acd9-4b44-441b-a0f0-e9ebb803a241
+  source_title: Ember's Bubbly Adventure
+  source_language: en
+  source_genre: fantasy
+  source_mode: interactive-story
+  source_api_sha256: 6d192aa254c6405cd7aa655500e1f4a2103584b7cf7c6b4ddf0dded2b6ed9c9f
+  source_sitemap_sha256: 5248fa9baefbf6758a81a684a4fd3bfc2f5b07d24248b2bf9cf65c9e7184372c
+  adaptation_language: en
+rounds:
+- name: R1
+  spec: |-
+    # Ember's Bubbly Adventure
+
+    Build a complete, playable **3D adventure and exploration game** as
+    a polished browser vertical slice from a **third person** viewpoint.
+
+    ## Core Vision
+
+    A gentle dragon who sneezes bubbles instead of fire explores a bright village, solves puzzles, helps neighbors, and discovers the value of an unusual gift.
+
+    ## World Parameters
+
+    Treat this as an original adaptation of a **fantasy** shared world with **small** scope and a **lighthearted** tone. Do not reproduce commercial characters, names, lore, logos, or protected visual designs.
+
+    ## Required Playable Systems
+
+    1. **System 1** - Explore at least three connected story locations from Ember's Bubbly Adventure with direct movement, inspectable landmarks, and unlockable routes.
+    2. **System 2** - Solve multiple spatial, sequence, or inventory puzzles whose state is represented in the rules layer.
+    3. **System 3** - Talk with distinct characters and make choices that alter trust, available help, and later scene objectives.
+    4. **System 4** - Collect or create meaningful objects that change navigation, puzzle solutions, or character outcomes.
+    5. **System 5** - Persist discovered facts, relationships, changed locations, and completed favors so later scenes acknowledge earlier actions.
+    6. **System 6** - Finish a playable final scene that combines exploration, puzzle, and relationship decisions into visibly different outcomes.
+
+    ## Progression and Persistent State
+
+    Use a short three-stage arc. Introduce the central interaction, combine it with
+    world pressure and meaningful choices, then finish with a mastery scenario.
+    Important rules, objectives, resources, relationships, selection state, danger,
+    progress, and outcome must be visible in stable HUD regions and represented in
+    `game_logic.js`. Systems must share state instead of appearing as disconnected
+    buttons, menus, or visual demonstrations.
+
+    ## Art Direction
+
+    Memorable landmarks, layered routes, environmental storytelling, useful lighting guidance, and distinct interaction states.
+
+    ## HTML Submission Format
+
+    Deliver a self-contained browser game in two files:
+
+    - `index.html` - the complete playable presentation. Use Three.js and WebGL for the playable presentation.
+    - `game_logic.js` - the deterministic state and rules layer, exporting
+      `createGame(opts)` and `advance(game, input, dt)`.
+
+    The page must open without a build step or local server and render within three
+    seconds on a normal laptop. Use procedural geometry, generated textures, shaders,
+    particles, synthesized audio, and CSS. Do not fetch external images, models,
+    video, or audio at runtime. Three.js may be loaded from its official CDN when
+    used; pin any permitted library to a specific version.
+
+    Support keyboard and pointer input, with touch or gamepad added where appropriate.
+    Keep the complete play area and HUD readable at 1280x720. Include a styled start
+    flow, concise in-game guidance, pause and restart controls, a complete outcome
+    loop, and visible feedback for every important action.
+
+    `index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
+    160 KB and `game_logic.js` under 320 lines.
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, persistence, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent authored art direction, functional composition, effects, and motion polish.

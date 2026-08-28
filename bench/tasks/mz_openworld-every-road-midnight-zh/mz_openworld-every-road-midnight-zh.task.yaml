@@ -1,0 +1,106 @@
+id: mz_openworld-every-road-midnight-zh
+title: 每条路都在午夜前回返 (中文)
+family: openworld
+difficulty: high
+engine: html
+language: zh
+base_task_id: mz_openworld-every-road-midnight
+provenance:
+  kind: adapted_article_prompt
+  source_name: AIGA AI RPG prompts
+  source_url: https://www.aiga.io/zh/blog/ai-rpg-prompts-playable-campaigns
+  source_item: 08
+rounds:
+- name: R1
+  spec: |-
+    # 每条路都在午夜前回返
+
+    制作一个完整可玩的 **3D 开放世界冒险游戏**，交付为经过打磨的浏览器纵向切片。
+
+    ## 核心构想
+
+    一款超现实公路循环探索游戏。无论选择哪条路线，玩家都会在午夜前回到同一家汽车旅馆；地标会逐渐腐化，而记忆会跨循环保留。玩家必须绘制矛盾并打破空间拓扑。
+
+    ## 必须实现的可玩系统
+
+    1. **系统 1** - 驾驶并步行探索相连公路网，包含至少四个独特地标、分支路口和可进入建筑。
+    2. **系统 2** - 呈现清晰的白昼至午夜循环；道路连接会变化，但选定证据、地图标注和玩家知识会保留。
+    3. **系统 3** - 允许玩家放置地图标记，并比较路程、路牌、阴影和地标状态，以找出不可能的连接。
+    4. **系统 4** - 加入不断变化的搭车者、电台广播、天气和路边危险，在后续循环中揭示不同线索。
+    5. **系统 5** - 追踪车况、燃料、疲劳和扭曲度；午夜临近时，控制与景观会随之改变。
+    6. **系统 6** - 提供多种打破拓扑的方案，要求玩家在最终午夜重置前执行已学会的路线序列。
+
+    ## 成长与推进
+
+    每验证一个空间矛盾都会解锁新地图工具与记忆锚点，使更多状态跨循环保留并暴露更深路线。
+
+    ## 美术方向
+
+    梦境般的夜间公路美学，包含湿润柏油、钠灯、模拟仪表辉光、不可能折叠地平线和逐步升级的空间扭曲。
+
+    ## HTML 提交格式
+
+    用两个文件交付一个可独立运行的 3D 浏览器游戏：
+
+    - `index.html` - 使用 Three.js 完成全部可玩呈现。
+    - `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
+      `advance(game, input, dt)`。
+
+    页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
+    几何体、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、视频或音频。
+    Three.js 可以从官方 CDN 加载；若本题明确要求其他库，也可以使用固定版本的 CDN。
+
+    必须支持键盘和鼠标。可按题目需要加入触摸或设备传感器控制，但必须提供桌面端替代
+    方案。主游戏在 1280x720 下应清晰可读。需要有经过设计的标题画面、简短的游戏内引导、
+    暂停或重新开始控制、完整的胜负或完成闭环，以及每项关键操作的明确反馈。最终结果应当
+    是打磨过的纵向切片，而不是被动场景或彼此割裂的技术演示。
+
+    `index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
+    160 KB 以内，`game_logic.js` 控制在 320 行以内。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, progression, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent 3D art direction, authored environments, effects, and motion polish.

@@ -1,0 +1,102 @@
+id: mz_idle-ant-empire-zh
+title: idle ant empire (中文)
+family: idle
+difficulty: low
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 放置蚂蚁帝国（Idle Ant Empire）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**放置蚂蚁帝国**游戏。
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    玩家从一只蚁后开始建立一个蚂蚁殖民地，把工蚁分派到各项任务上，解锁新的蚂蚁
+    类型，并通过转生重置实现指数级增长。游戏的幻想核心是看着一个微小的帝国扩张到
+    荒谬的规模：从捡食面包屑到收割整座花园，从寥寥几只工蚁到数以百万计。放置循环
+    持续运转——即使玩家不点击，蚂蚁也在采集资源。紧张感来自资源分配决策，以及
+    威胁殖民地存亡的季节性挑战。
+
+    ## 玩家体验流程
+
+    1. **标题画面** —— 一幅地下隧道的剖面图，蚂蚁在其中行进，游戏名采用土褐色
+       字体，还有一个做成叶片样式的开始按钮。
+    2. **殖民地视图** —— 一个侧视视角的蚂蚁殖民地，可以看到各个巢室：育婴室、
+       食物仓库、蚁后寝宫，以及连接它们的隧道。蚂蚁会明显地在巢室之间搬运资源。
+    3. **工蚁分派** —— 玩家把蚂蚁分配到各个岗位：采集蚁（收集食物）、建造蚁
+       （挖掘新巢室）、兵蚁（防御）和护理蚁（孵卵）。用滑块或按钮来控制分配比例。
+       产出速率会实时更新。
+    4. **资源生产** —— 食物会根据采集蚁数量自动累积。玩家可以点击手动提升采集
+       效率。资源用于修建新巢室、孵化蚂蚁和购买升级。
+    5. **蚂蚁类型** —— 可解锁的蚂蚁类型带有特殊能力：切叶蚁（食物加成）、火蚁
+       （防御）、飞蚁（探索）和巨型蚁（10 倍产出）。每种类型都有独特的精灵图。
+    6. **转生系统** —— 当殖民地规模达到某个阈值时，玩家可以转生：重置殖民地，
+       但获得永久倍率（蚁后繁殖力、采集速度、防御强度）。每次转生都会让下一轮
+       变得更快。
+    7. **季节性挑战** —— 周期性事件会威胁殖民地：暴雨淹没隧道（需要建造蚁）、
+       捕食者来袭（需要兵蚁）、冬季食物减少（需要存粮）。挺过挑战可获得额外资源。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_idle-ant-empire

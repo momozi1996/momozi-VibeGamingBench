@@ -1,0 +1,48 @@
+# Crowns of Twelve Ashes
+
+Build a complete, playable **3D open-world adventure game** as a polished browser vertical slice.
+
+## Core Vision
+
+A compact fantasy campaign across twelve fractured realms represented on one explorable strategic map. The player gathers crown fragments through diplomacy, field battles, and risky alliances while ash storms slowly erase unprotected territory.
+
+## Required Playable Systems
+
+1. **System 1** - Traverse a world map containing twelve recognizable realms or realm nodes, each with a settlement, ruler, local conflict, and travel hazard.
+2. **System 2** - Resolve negotiations through reputation, promises, tribute, evidence, and faction relationships rather than a single dialogue choice.
+3. **System 3** - Fight real-time tactical encounters with movement, attacks, dodging, companion commands, and clear victory or retreat conditions.
+4. **System 4** - Collect crown fragments with distinct powers and costs that alter travel, diplomacy, combat, or ash resistance.
+5. **System 5** - Simulate an advancing ash front that changes routes, destroys resources, and pressures the order in which realms are visited.
+6. **System 6** - Conclude with an assembly or conquest sequence whose playable structure and ending depend on surviving realms and alliances.
+
+## Progression
+
+Fragments, companions, and realm treaties create a flexible build, while permanent realm losses ensure campaign decisions cannot all be reversed.
+
+## Art Direction
+
+A stylized dark-fantasy atlas brought to life in 3D, with twelve strong regional palettes, ash-filled skies, heraldic UI, and magical crown effects.
+
+## HTML Submission Format
+
+Deliver a self-contained 3D browser game in two files:
+
+- `index.html` - the complete playable presentation, rendered with Three.js.
+- `game_logic.js` - the deterministic state and rules layer, exporting
+  `createGame(opts)` and `advance(game, input, dt)`.
+
+The page must open without a build step or local server and render within three
+seconds on a normal laptop. Use procedural geometry, shaders, particles, generated
+audio, and CSS; do not fetch external images, models, video, or audio at runtime.
+Three.js may be loaded from its official CDN. Any additional library explicitly
+required by this task may also be loaded from a pinned CDN URL.
+
+Support keyboard controls and the pointer. Touch or device-sensor controls may be
+added where appropriate, but must have a desktop fallback. Keep the main game
+readable at 1280x720. Include a styled title screen, short in-game guidance, pause
+or restart controls, a complete win/loss or completion loop, and visible feedback
+for every important action. This must feel like a polished vertical slice rather
+than a passive scene or disconnected technical demo.
+
+`index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
+160 KB and `game_logic.js` under 320 lines.

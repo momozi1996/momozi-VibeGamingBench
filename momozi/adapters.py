@@ -11,6 +11,7 @@ profile (profiles.yaml) 示例：
 
 from __future__ import annotations
 
+import os
 import shutil
 import subprocess
 import time
@@ -51,11 +52,19 @@ class CliAdapter(BaseAdapter):
     """把任意 CLI agent 套成统一接口：prompt 写成 _prompt.md，argv 里的 $PROMPT 由
     agent 自己读文件（profiles.yaml 用 '$PROMPT_FILE' 占位）。"""
 
-    def __init__(self, argv: list, write_args: list = None, timeout: int = 1800, label="cli"):
+    def __init__(
+        self,
+        argv: list,
+        write_args: list = None,
+        timeout: int = 1800,
+        label: str = "cli",
+        env: dict | None = None,
+    ):
         self.argv = argv
         self.write_args = write_args or []
         self.timeout = timeout
         self.name = label
+        self.env = env or {}
 
     def generate(self, workspace: Path, prompt: str, round_idx: int) -> dict:
         prompt_file = workspace / "_prompt.md"
@@ -66,10 +75,12 @@ class CliAdapter(BaseAdapter):
                        .replace("$PROMPT", prompt)
                        .replace("$WORKDIR", str(workspace)))
         argv = [subst(a) for a in self.argv] + [subst(a) for a in self.write_args]
+        env = os.environ.copy()
+        env.update({str(key): subst(str(value)) for key, value in self.env.items()})
         t0 = time.time()
         try:
             proc = subprocess.run(
-                argv, cwd=workspace, capture_output=True, text=True,
+                argv, cwd=workspace, env=env, capture_output=True, text=True,
                 timeout=self.timeout,
             )
             return {
@@ -86,18 +97,29 @@ class CliAdapter(BaseAdapter):
             return {"ok": False, "stderr": f"adapter cli not found: {e}", "agent": self.name}
 
 
-def build_adapter(name: str, profiles: dict, reference_dir: Optional[Path] = None) -> BaseAdapter:
+def build_adapter(
+    name: str,
+    profiles: dict,
+    reference_dir: Optional[Path] = None,
+    allow_writes: bool = True,
+) -> BaseAdapter:
     if name == "mock":
         return MockAdapter(reference_dir)
     profile = profiles.get(name)
     if not profile:
         raise SystemExit(f"unknown adapter profile: {name}")
     timeout = int(profile.get("timeout", 1800))
+    argv = list(profile["argv"])
+    if not allow_writes:
+        for index, value in enumerate(argv[:-1]):
+            if value == "--sandbox":
+                argv[index + 1] = "read-only"
     return CliAdapter(
-        argv=profile["argv"],
-        write_args=profile.get("write_args", []),
+        argv=argv,
+        write_args=profile.get("write_args", []) if allow_writes else [],
         timeout=timeout,
         label=name,
+        env=profile.get("env", {}),
     )
 
 

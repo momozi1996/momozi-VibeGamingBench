@@ -1,0 +1,23 @@
+{
+  "completeness": [
+    "M1",
+    "M2",
+    "M3"
+  ],
+  "richness": [
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "player_exp": [
+    "V1",
+    "V2"
+  ],
+  "visual": [
+    "A1",
+    "A2",
+    "A3",
+    "A4"
+  ]
+}

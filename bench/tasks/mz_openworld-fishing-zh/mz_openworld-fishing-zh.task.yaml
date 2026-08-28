@@ -1,0 +1,101 @@
+id: mz_openworld-fishing-zh
+title: openworld fishing (中文)
+family: openworld
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 开放世界钓鱼（Open-World Fishing）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**2D 开放世界钓鱼游戏**。
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    玩家在一个宁静的开放世界中探索，其间点缀着湖泊、河流和海岸，抛出鱼线钓起
+    各种鱼类。这里的幻想是耐心得到回报：读懂水面、掌握抛竿时机、与咬钩的鱼周旋，
+    最终把一条稀有渔获记入图鉴。张力来自收线小游戏——拉得太猛线会断，太松鱼会跑。
+    天气和时间会改变上钩的鱼种，促使玩家在新的条件下重访熟悉的钓点。
+
+    ## 玩家体验流程
+
+    1. **标题画面** —— 一个有设计感的开场，包含游戏名称、一个开始按钮和一片
+       宁静的水面背景。不要出现 HTML 引擎 的裸灰色。
+    2. **世界** —— 玩家在开放的地貌中自由行走，其中有几处视觉上截然不同的水域——
+       一片平静的湖泊、一条带水流效果的湍急河流，以及一段深海岸线。每处水域的
+       外观和感觉都不同，栖息的鱼类也各不相同。
+    3. **抛竿** —— 玩家蓄力一条抛竿力量条，松开后甩出鱼线。距离取决于时机。鱼线
+       落水时带有水花效果。
+    4. **咬钩与收线** —— 浮标漂在水面上。鱼咬钩时，玩家通过一次限时按键把它钩住，
+       然后通过收线和放线来控制线的张力。一条张力条显示受力程度——张力过大鱼线
+       就会断。
+    5. **鱼类多样性** —— 多种截然不同的鱼种，外观、体型和栖息地各异。钓上一条鱼
+       会显示它的名称、尺寸和风味文本。稀有鱼类有独特的视觉亮点。
+    6. **钓鱼图鉴** —— 一本图鉴记录已钓到的鱼种，未钓到的以剪影显示，并附带一个
+       完成度百分比。
+    7. **天气与时间** —— 天气变化会影响出现哪些鱼。昼夜循环改变光照和水的颜色，
+       有些鱼种只在特定条件下才会咬钩。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_openworld-fishing

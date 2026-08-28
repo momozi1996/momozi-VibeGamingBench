@@ -1,0 +1,56 @@
+# Space Station
+
+Build **Space Station**, a 2D space station management simulation as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The fantasy is commanding a remote space station, balancing crew morale, system
+maintenance, and resource management while random events — from meteor showers
+to pirate raids — threaten to unravel everything. The interesting tension is
+crew assignment: each crew member has skills and fatigue, and every system needs
+someone manning it. Assigning the engineer to weapons during a pirate attack
+means nobody is fixing the leaking oxygen recycler. Power generation limits how
+many systems can run simultaneously, forcing hard choices about what to keep
+online. The station grows module by module, but each new module is another system
+that can break, another mouth to feed, another vulnerability.
+
+## What the Player Experiences
+
+The player opens to a starfield title screen with the station silhouette, then
+enters the station overview. The view shows a cross-section of connected modules:
+bridge, life support, power core, crew quarters, cargo bay, and docking port.
+Each module has status indicators for power, integrity, and staffing. Crew
+portraits line the bottom with skill icons and fatigue bars.
+
+The player assigns crew to modules by dragging portraits, manages power
+distribution through a allocation panel, and responds to events via choice
+dialogs. Random events fire periodically: supply ships offer trades, distress
+signals present rescue-or-ignore dilemmas, system malfunctions require immediate
+crew response, and pirate attacks demand weapons be manned and shields powered.
+Between event cycles the player can build new modules using accumulated
+resources, research upgrades, or rest crew. The game spans 30+ cycles with
+escalating event severity. A game-over triggers if life support fails or all
+crew are incapacitated. Victory requires surviving a set number of cycles with
+the station intact.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Same pattern as `bench/references/tg1/game_logic.js`.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

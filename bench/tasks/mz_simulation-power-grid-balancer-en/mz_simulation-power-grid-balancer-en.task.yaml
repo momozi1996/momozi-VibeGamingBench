@@ -1,0 +1,109 @@
+id: mz_simulation-power-grid-balancer-en
+title: Power Grid Balancer (English)
+family: simulation
+difficulty: high
+engine: html
+language: en
+base_task_id: mz_simulation-power-grid-balancer
+provenance:
+  kind: adapted_user_prompt
+  source_name: benchmark author expansion prompts
+  source_item: user-02
+rounds:
+- name: R1
+  spec: |-
+    # Power Grid Balancer
+
+    Build a complete, playable **3D simulation game** as a polished browser vertical slice.
+
+    ## Core Vision
+
+    A real-time 3D city power-dispatch simulation. The player switches buildings between consumption, storage, and vehicle-to-grid modes while renewable output and demand fluctuate, trying to prevent cascading overloads without blacking out essential services.
+
+    ## Required Playable Systems
+
+    1. **System 1** - Render a low-poly city with animated wind turbines, solar fields, substations, charging hubs, storage buildings, and visible transmission links.
+    2. **System 2** - Let players click buildings to switch operating modes and drag or select substations to reroute capacity between grid zones.
+    3. **System 3** - Simulate changing generation, demand, storage charge, line capacity, frequency stability, and overload propagation in real time.
+    4. **System 4** - Animate directional energy flow and transition overloaded buildings from normal blue states to flashing red warnings before failure.
+    5. **System 5** - Provide multiple scenarios involving calm weather, evening peaks, renewable collapse, heat waves, and emergency service priorities.
+    6. **System 6** - Score reliability, renewable usage, cost, unmet demand, and recovery time, with clear success and cascading-blackout loss states.
+
+    ## Progression
+
+    Campaign scenarios unlock batteries, demand-response tools, stronger lines, and forecasting aids that introduce new strategic options rather than flat upgrades.
+
+    ## Art Direction
+
+    A crisp low-poly infrastructure diorama with varied green spaces, warm city windows, cyan energy streams, and unambiguous amber/red fault states.
+
+    ## HTML Submission Format
+
+    Deliver a self-contained 3D browser game in two files:
+
+    - `index.html` - the complete playable presentation, rendered with Three.js.
+    - `game_logic.js` - the deterministic state and rules layer, exporting
+      `createGame(opts)` and `advance(game, input, dt)`.
+
+    The page must open without a build step or local server and render within three
+    seconds on a normal laptop. Use procedural geometry, shaders, particles, generated
+    audio, and CSS; do not fetch external images, models, video, or audio at runtime.
+    Three.js may be loaded from its official CDN. Any additional library explicitly
+    required by this task may also be loaded from a pinned CDN URL.
+
+    Support keyboard controls and the pointer. Touch or device-sensor controls may be
+    added where appropriate, but must have a desktop fallback. Keep the main game
+    readable at 1280x720. Include a styled title screen, short in-game guidance, pause
+    or restart controls, a complete win/loss or completion loop, and visible feedback
+    for every important action. This must feel like a polished vertical slice rather
+    than a passive scene or disconnected technical demo.
+
+    `index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
+    160 KB and `game_logic.js` under 320 lines.
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested systems are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content variety, escalation, progression, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and a complete playable loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent 3D art direction, authored environments, effects, and motion polish.

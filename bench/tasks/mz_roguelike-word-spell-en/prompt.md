@@ -1,0 +1,56 @@
+# Word Spell
+
+Build **Word Spell**, a word-forming spell-casting roguelike with letter tiles
+and encounters as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It is
+a **complete, shippable micro-game** that could sit on an itch.io page or Steam
+as a polished vertical slice.
+
+## Core Vision
+
+A wizard battles through a dungeon by casting spells formed from letter tiles.
+Each turn the player has a hand of letter tiles and must form a word — longer
+words deal more damage, and specific letter combinations trigger elemental
+effects (words containing "fire" deal burn damage, "ice" freezes, "heal"
+restores health). Between encounters the player collects new letter tiles,
+upgrades existing ones (a golden "E" scores double), and removes weak letters
+from their pool. Enemies have visible health and telegraph attacks with a
+countdown. The tension is vocabulary under pressure: finding the longest,
+most synergistic word from a random hand before the enemy strikes.
+
+## What the Player Experiences
+
+A title screen shows letter tiles arranged into a spell effect. Starting a run
+gives the player a starting pool of 20 common letter tiles.
+
+In combat, 7 tiles are drawn from the pool. The player drags tiles onto a
+spelling bar to form a word, then casts it. Valid words deal damage proportional
+to length (3 letters = weak, 7 letters = devastating). Special letter combos
+trigger bonus effects shown as elemental icons. Invalid words fizzle and waste
+the turn. After casting, the enemy attacks (damage shown in advance as a
+countdown number).
+
+Between encounters, a reward screen offers new tiles (including rare consonants
+and vowels with bonus effects), tile upgrades, or tile removal. A map shows
+branching paths with combat nodes, rest nodes (heal), and shop nodes (buy/sell
+tiles). The run ends at a boss with high health requiring multiple strong words.
+Death shows a score based on floor reached and longest word cast.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

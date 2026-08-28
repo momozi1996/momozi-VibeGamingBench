@@ -1,0 +1,102 @@
+id: mz_shooter-mech-sortie-zh
+title: shooter mech sortie (中文)
+family: shooter
+difficulty: medium
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 机甲出击（Mech Sortie）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Mech Sortie**，一款俯视视角的机甲射击游戏。
+    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+    纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    这里的幻想是驾驶一台重武装步行机甲穿越敌方领地，并在任务之间定制它的武器挂点
+    以应对前方的威胁。有趣的张力来自配装规划：机甲的挂点槽位有限（手臂、肩部、
+    背部），而每件武器都有重量、弹药和射程上的取舍。导弹巢在远距离上具有压制力，
+    却让机甲在近身时不堪一击；双联速射炮能撕碎近处目标但会过热。任务会从被摧毁的
+    敌人身上产出残骸物资，用于资助新武器与底盘升级，形成一个令人满足的循环——
+    部署、摧毁、回收残骸、定制、再部署。
+
+    ## 玩家体验流程
+
+    玩家进入游戏时看到一个机库画面，展示他们的机甲及标注好的各个挂点。可用武器
+    列在军械库面板中；把一件武器拖到某个挂点即可装备，同时显示重量与能量约束。
+    从战役地图上选择一个任务后，机甲便被部署进一张俯视视角的战场。
+
+    机甲用 WASD 移动（比步兵更慢，且带惯性），躯干可通过鼠标瞄准独立旋转，并用
+    鼠标按键与数字键发射已装备的武器。任务带有目标：歼灭所有敌人、防守某一据点、
+    护送车队，或清除某个目标。敌人种类包括步兵、轻型载具、敌对机甲和炮塔工事。
+    摧毁敌人会掉落残骸箱，接触即可拾取。任务完成后会展示一份任务报告，含获得的
+    残骸物资、受到的伤害以及命中率数据。战役横跨 8 个以上任务，难度逐步升级，并
+    以一场最终 Boss 机甲遭遇战收尾。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  - V4
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+language: zh
+base_task_id: mz_shooter-mech-sortie

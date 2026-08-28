@@ -1,0 +1,63 @@
+# Racing Rocket Trials
+
+Build a Racing Rocket Trials as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+A physics-based motorcycle obstacle course where precision throttle control and
+body lean are everything. The rider navigates increasingly absurd ramps, loops,
+seesaws, and explosive barrels across 20+ hand-crafted levels. Crashing is
+spectacular — the rider ragdolls on impact, tumbling across the course in a
+darkly comic display. The challenge is surgical: feathering the throttle to
+climb a near-vertical wall, leaning back to clear a gap, or threading between
+swinging hazards. Checkpoints are generous but the clock is merciless — medals
+reward speed and flawless runs.
+
+## What the Player Experiences
+
+1. **Title Screen** — A grungy industrial backdrop with the game name in
+   stencil-style bold font, a motorcycle silhouette mid-wheelie, and
+   Play/Level Select buttons. No plain HTML grey.
+2. **Level Select** — A grid of 20+ levels organized into 4 difficulty tiers
+   (Easy/Medium/Hard/Extreme). Each shows medal status, best time, and a small
+   preview. Levels unlock sequentially within each tier.
+3. **Motorcycle Physics** — The bike has realistic 2D physics: two wheels with
+   suspension, a rider body that leans. Throttle (right key) accelerates the
+   rear wheel; brake (left key) slows it. Up/down keys lean the rider
+   forward/backward, shifting the centre of gravity.
+4. **Obstacle Variety** — Levels feature ramps, loops, seesaws, swinging
+   pendulums, explosive barrels, crumbling platforms, moving platforms, and
+   steep inclines. Each obstacle type has distinct visual design and physics
+   interaction.
+5. **Ragdoll Crash** — When the rider's body hits an obstacle or the ground at
+   a bad angle, they ragdoll off the bike. The crash plays out with physics-
+   driven limb movement. A "Fault" counter increments and the player respawns
+   at the last checkpoint.
+6. **Checkpoints** — Flags or markers placed throughout each level. Reaching
+   one saves progress. The timer continues running. Fewer faults and faster
+   times earn better medals.
+7. **Medal and Star System** — Each level awards Gold/Silver/Bronze based on
+   completion time. A "Flawless" star is awarded for zero-fault completions.
+   Total medals and stars unlock later difficulty tiers.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

@@ -1,0 +1,118 @@
+{
+  "score_formula": "BUILD * (0.15*((M1+M2+M3)/3) + 0.35*((D1+D2+D3+D4)/4) + 0.15*((V1+V2+V3)/3) + 0.35*((A1+A2+A3+A4)/4))",
+  "max_demos": 10,
+  "max_demo_seconds": 20,
+  "build_check": {
+    "id": "BUILD",
+    "cmd": "momozi HTML static BUILD gate",
+    "description": "index.html and game_logic.js exist, a canvas/WebGL renderer is present, and no disallowed heavy runtime asset references are used."
+  },
+  "categories": [
+    {
+      "name": "Core Mechanics",
+      "items": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "name": "Content Depth",
+      "items": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "name": "Functional Visuals",
+      "items": [
+        "V1",
+        "V2",
+        "V3"
+      ]
+    },
+    {
+      "name": "Presentation & Art",
+      "items": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "M1",
+      "agg": "max",
+      "description": "Explore at least three connected districts or territories from Eternal Ascendant, each with distinct opportunities, hazards, and ownership state. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences in one playable flow."
+    },
+    {
+      "id": "M2",
+      "agg": "max",
+      "description": "Complete jobs through negotiation, trade, tactical conflict, or service to earn reputation with transparent gain and loss rules. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences in one playable flow."
+    },
+    {
+      "id": "M3",
+      "agg": "max",
+      "description": "Manage at least three factions whose trust, hostility, alliances, and control change after persistent player choices. Score 0 if the system is absent, decorative, or cannot be completed through player input. Score 1 requires the full interaction and its success/failure consequences in one playable flow."
+    },
+    {
+      "id": "D1",
+      "agg": "max",
+      "description": "Balance health, resources, influence, and attention while territory events continue to evolve without waiting for the player. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes player decisions."
+    },
+    {
+      "id": "D2",
+      "agg": "max",
+      "description": "Persist reputation, faction relations, owned or protected locations, depleted resources, and unresolved consequences across the whole run. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes player decisions."
+    },
+    {
+      "id": "D3",
+      "agg": "max",
+      "description": "Reach a playable influence milestone that combines territory, faction, resource, and reputation systems, then support continued play or a scored conclusion. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes player decisions."
+    },
+    {
+      "id": "D4",
+      "agg": "max",
+      "description": "A three-stage progression teaches the core interaction, combines systems under pressure, and ends with a mastery scenario plus working replay. Score 0 if this content is missing or differs only through labels or color swaps. Score 1 requires functionally distinct content that changes player decisions."
+    },
+    {
+      "id": "V1",
+      "agg": "mean",
+      "description": "The HUD clearly communicates current objective, critical resources, selected target or mode, relationships, progress, and danger in stable regions. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from live game state at 1280x720."
+    },
+    {
+      "id": "V2",
+      "agg": "mean",
+      "description": "Every important action has immediate and distinguishable feedback for valid input, invalid input, success, damage or failure, and persistent state change. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from live game state at 1280x720."
+    },
+    {
+      "id": "V3",
+      "agg": "mean",
+      "description": "The full loop is connected: styled start flow, playable systems, escalation, final success/failure state, and retry navigation work without page reload. Score 0 if essential information or feedback is missing, unreadable, overlapping, or disconnected from live game state at 1280x720."
+    },
+    {
+      "id": "A1",
+      "agg": "mean",
+      "description": "The project has a coherent authored art direction: A scan-friendly tactical field, distinct roles, visible ranges and ownership, restrained effects, and information hierarchy for repeated decisions. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A2",
+      "agg": "mean",
+      "description": "The 3D third-person composition uses deliberate lighting, contrast, depth or layering, and themed landmarks instead of an empty default scene. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A3",
+      "agg": "mean",
+      "description": "Interactive actors, targets, hazards, tools, locations, and UI symbols have readable silhouettes and visibly different functional states. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    },
+    {
+      "id": "A4",
+      "agg": "mean",
+      "description": "Movement, impacts, transitions, alerts, completion moments, and interface changes use smooth multi-frame animation, particles, camera treatment, or synchronized audio feedback. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+    }
+  ]
+}

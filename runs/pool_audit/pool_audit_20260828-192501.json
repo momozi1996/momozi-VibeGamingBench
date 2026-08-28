@@ -1,0 +1,162 @@
+[
+  {
+    "task": "mz_cardgame-autobattler-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-autobattler-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-gwent-war-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-gwent-war-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-inscription-dark-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-inscription-dark-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-poker-roguelike-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-poker-roguelike-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-spire-descent-en",
+    "family": "cardgame",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_cardgame-spire-descent-zh",
+    "family": "cardgame",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-dollhouse-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-dollhouse-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-floor-13-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-floor-13-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-lighthouse-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-lighthouse-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-signal-lost-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-signal-lost-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-tape-archive-en",
+    "family": "horror",
+    "language": "en",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_horror-tape-archive-zh",
+    "family": "horror",
+    "language": "zh",
+    "source_kind": "existing_pool",
+    "ok": true,
+    "build_gate_ok": true
+  }
+]

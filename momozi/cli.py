@@ -1,9 +1,6 @@
 """momozi CLI: run (评测一个任务) / leaderboard (生成榜单)。"""
 from __future__ import annotations
 import argparse
-import json
-import sys
-from pathlib import Path
 
 from .run import run_task
 
@@ -20,9 +17,10 @@ def _cli():
     r.add_argument("--judge-agent", default=None)
     r.add_argument("--skip-judge", action="store_true")
 
-    s = sub.add_parser("leaderboard", help="从 runs/ 生成 leaderboard.json")
+    s = sub.add_parser("leaderboard", help="从 auto-v1 结果生成排行榜")
     s.add_argument("--results-dir", default="runs")
     s.add_argument("--out", default="leaderboard.json")
+    s.add_argument("--markdown-out", default="LEADERBOARD.md")
 
     args = p.parse_args()
     if args.cmd == "run":
@@ -30,8 +28,7 @@ def _cli():
                  rounds_filter=args.rounds.split(",") if args.rounds else None,
                  skip_judge=args.skip_judge, judge_agent=args.judge_agent)
     elif args.cmd == "leaderboard":
-        from .leaderboard import build_leaderboard
-        data = build_leaderboard(args.results_dir)
-        Path(args.out).write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"wrote {args.out} ({len(data)} runs)")
+        from .leaderboard import write_leaderboard
+        data = write_leaderboard(args.results_dir, args.out, args.markdown_out)
+        print(f"wrote {args.out} ({data['n_runs']} runs)")
     return 0

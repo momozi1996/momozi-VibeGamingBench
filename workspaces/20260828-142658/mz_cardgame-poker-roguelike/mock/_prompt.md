@@ -1,0 +1,287 @@
+# Cardgame Poker Roguelike
+
+Build a Cardgame Poker Roguelike as self-contained HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+A roguelike scoring game built on poker hand evaluation. The player is dealt
+cards and must form poker hands (pairs, straights, flushes) to score points
+against escalating blind targets. The twist: collectible Joker cards modify
+scoring rules in wild ways — one might triple the value of all hearts, another
+might make every pair count as a full house. Between rounds, a shop sells new
+Jokers, card enhancements, and consumable items. The fantasy is discovering
+absurd scoring combos that turn a humble pair of twos into a million-point
+hand. Fail to meet the blind and the run ends.
+
+## What the Player Experiences
+
+1. **Title Screen** — A casino-noir aesthetic with the game name in gold
+   embossed lettering on green felt, animated card shuffling in the background,
+   and New Run / Stats buttons. No plain HTML grey.
+2. **The Hand** — The player is dealt 8 cards from a standard deck. They select
+   up to 5 cards to form a poker hand and submit it for scoring. Remaining
+   cards can be discarded and redrawn (limited discards per round).
+3. **Scoring** — Each hand type has a base chip value and multiplier (e.g.,
+   Pair = 10 chips x2, Flush = 35 chips x4). Jokers and enhancements modify
+   these values. The score animates with each modifier applied sequentially,
+   building dramatic tension.
+4. **Blinds** — Each round has a target score (the blind). Small Blind, Big
+   Blind, and Boss Blind escalate. The player has multiple hands per round to
+   meet the target. Failing to reach the blind ends the run.
+5. **Joker Cards** — Up to 5 Joker slots. Each Joker has a unique rule-bending
+   effect with illustrated art and a description. Jokers are purchased from
+   the shop or earned from Boss Blinds. Synergies between Jokers create
+   exponential scoring potential.
+6. **Shop** — Between rounds, spend earned money on new Jokers, card
+   enhancements (foil, holographic, polychrome — each with scoring bonuses),
+   vouchers (permanent upgrades), or booster packs (new playing cards).
+7. **Boss Blinds** — Special blinds with debuff conditions (e.g., "all clubs
+   are face-down", "no discards this round", "first hand played is
+   debuffed"). The player must adapt their strategy to the boss condition.
+
+## Assets
+
+2D assets are mounted read-only at:
+
+- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+  subdir's `LICENSE.txt`.
+
+Browse the library and choose packs.
+Copy what you need into your project's `assets/` folder.
+
+## Project layout
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ← your input traces (1–10 files)
+  scripts/  scenes/  assets/
+```
+
+The build must launch cleanly with:
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+A reference for HTML CLI flags is at `/workspace/tools/html_command_line.md`.
+ —
+anything after `--` is forwarded to the project as user args and silently
+ignored by the engine. Correct shape:
+`html --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+result screens look like.
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+`OS.get_cmdline_user_args()` for your game code to read. Example:
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## Demos
+
+Ship **1–10 input-trace files** under `./demo_outputs/`, one per
+demo, each named `*.json`. The evaluator launches a fresh game per trace,
+replays your trace as synthetic mouse and keyboard input at 1280×720, and
+records the screen. Only the first 10 traces by filename are evaluated;
+recordings longer than 20 s are sampled from a random 20 s window.
+
+### Scenarios
+
+Normal play should start from the title screen and demonstrate the task's
+core gameplay loop.
+Demo playback must be deterministic. For demos that need a specific state
+(a specific level, combat state, upgrade screen, result state, or late-game
+setup), define named scenarios your game loads when launched with:
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+When `--scenario <id>` is present the game must skip menus, set up the named
+state deterministically (seed any RNG), and begin accepting input immediately.
+
+### Trace file format
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` — optional; omit for a normal game launch from the title screen.
+- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+  viewport. Supported types:
+  - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+    use these for drag interactions: emit `mouse_down` at the start point,
+    one or more `mouse_move` events along the way, and `mouse_up` at the end.
+    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+    succession.
+  - `mouse_move`: `{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+  - `wait`: `{frame, type}` — anchor frame, no input.
+
+Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+---
+
+# 中文版提示词
+
+# 扑克 Roguelike（Cardgame Poker Roguelike）
+
+在 `./` 用 HTML 4 开发一个扑克 Roguelike 卡牌游戏。
+这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+一款建立在扑克牌型判定之上的 Roguelike 计分游戏。玩家被发到牌，必须组成牌型
+（对子、顺子、同花）来得分，以达成不断攀升的底注目标。妙处在于：可收集的小丑牌
+会以极其疯狂的方式改写计分规则——有的会让所有红桃的数值变成三倍，有的会让每一个
+对子都算作葫芦。轮次之间，商店出售新的小丑牌、卡牌强化和消耗品。这份幻想在于：
+发现荒诞离奇的计分组合，把区区一对 2 变成百万分的一手牌。达不到底注，这一轮就
+结束了。
+
+## 玩家体验流程
+
+1. **标题画面** —— 赌场黑色电影风格，游戏名以烫金浮雕字体呈现在绿色台面呢上，
+   背景中有洗牌动画，以及新的一轮 / 统计按钮。演好默认纯灰。
+2. **手牌** —— 玩家从一副标准牌组中拿到 8 张牌。他们最多选出 5 张组成一个扑克
+   牌型并提交计分。剩下的牌可以弃掉并重抽（每轮弃牌次数有限）。
+3. **计分** —— 每种牌型都有基础筹码值和倍率（例如：对子 = 10 筹码 x2，同花 =
+   35 筹码 x4）。小丑牌和强化会修改这些数值。分数会随着各个修正项依次生效而
+   逐步累加显示，营造出戏剧性的张力。
+4. **底注** —— 每一轮都有一个目标分数（底注）。小盲注、大盲注和 Boss 盲注依次
+   攀升。玩家每轮有多手牌来达成目标。达不到底注，这一轮就结束。
+5. **小丑牌** —— 最多 5 个小丑牌槽位。每张小丑牌都有独特的破坏规则效果，配有
+   插画和说明文字。小丑牌可从商店购买，或从 Boss 盲注中获得。小丑牌之间的协同
+   会造就指数级的计分潜力。
+6. **商店** —— 轮次之间，把赚到的钱花在新的小丑牌、卡牌强化（箔面、全息、多彩
+   ——各自带有计分加成）、券票（永久升级）或补充包（新的扑克牌）上。
+7. **Boss 盲注** —— 带有减益条件的特殊底注（例如："所有梅花均为背面朝下"、
+   "本轮不能弃牌"、"打出的第一手牌被减益"）。玩家必须针对该 Boss 条件调整策略。
+
+## 资产
+
+2D 资产以只读方式挂载在：
+
+- `/workspace/assets/library/` —— Kenney CC0 资产包（精灵图、图块、UI、字体）。
+- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录下的
+  `LICENSE.txt`。
+
+浏览资产库并挑选合适的资产包。
+把需要的文件复制到你项目的 `assets/` 目录下。
+
+## 项目结构
+
+```
+./
+  project.html
+  Main.tscn
+  demo_outputs/    ←← 你的输入轨迹（1–10 个文件）
+  scripts/  scenes/  assets/
+```
+
+构建必须能通过以下命令干净启动：
+
+```
+html --headless --path /workspace/game --quit-after 5
+```
+
+HTML 命令行参数的参考文档在 `/workspace/tools/html_command_line.md`。
+**像 `--headless` 和 `--quit-after N` 这类引擎参数必须写在 `--` 之前** ——
+`--` 之后的一切都会作为用户参数转发给项目，引擎本身会静默忽略。正确写法：
+`html --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的
+UI / battlefield / result 画面长什么样。
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/frame.png --frames 60
+```
+
+要给特定场景截图，在 `--` 之后追加 `--scenario <id>`。该工具只消费
+`--out` / `--frames` / `--scene`；其余参数会留在
+`OS.get_cmdline_user_args()` 里供你的游戏代码读取。示例：
+
+```
+/workspace/tools/screenshot.sh --path /workspace/game \
+      -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+```
+
+## 演示
+
+在 `./demo_outputs/` 下提交 **1–10 个输入轨迹文件**，每个演示一份，
+命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，在 1280×720
+分辨率下把你的轨迹作为合成的鼠标与键盘输入回放，并录制屏幕。只有按文件名排序的
+前 10 条轨迹会被评测；超过 20 秒的录像会从随机的 20 秒窗口中采样。
+
+### 场景（Scenarios）
+
+常规玩法应当从标题画面开始，并演示该任务的核心游戏循环。
+演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、
+升级界面、结算状态或后期配置），请定义具名场景，让你的游戏在以下方式启动时加载它们：
+
+```
+html --path /workspace/game -- --scenario <id>
+```
+
+当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态
+（为任何随机数发生器设定种子），并立即开始接受输入。
+
+### 轨迹文件格式
+
+```json
+{
+  "scenario": "title_flow",
+  "duration_frames": 360,
+  "events": [
+    {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+    {"frame": 90,  "type": "key_press",   "keycode": "1"},
+    {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+    {"frame": 300, "type": "wait"}
+  ]
+}
+```
+
+- `scenario` —— 可选；从标题画面常规启动游戏时省略此字段。
+- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 秒）**。
+- `events` —— 按时间排序的输入。坐标是 1280×720 视口内的像素值。
+  支持的类型：
+  - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+  - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` ——
+    用它们实现拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个
+    `mouse_move` 事件，在终点发出 `mouse_up`。
+    一次 `mouse_click` 等价于在同一点上紧邻连续地发出 `mouse_down` + `mouse_up`。
+  - `mouse_move`：`{frame, type, x, y}`
+  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— 可用键码：
+    `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、
+    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。
+
+回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同的结果。

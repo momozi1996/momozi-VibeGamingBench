@@ -1,0 +1,94 @@
+id: mz_tycoon-pirate-port-zh
+title: tycoon pirate port (中文)
+family: tycoon
+difficulty: low
+engine: html
+provenance:
+  kind: existing_pool
+rounds:
+- name: R1
+  spec: |-
+    # 海盗港（Pirate Port）
+
+    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发 **Pirate Port**，一款**海盗巢穴管理经营**游戏。这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为纵向切片放到 itch.io 页面或 Steam 上。
+
+    ## 核心构想
+
+    玩家在一座热带岛屿上营建一处隐秘的海盗港，用酒馆和码头吸引船队，派他们出海掠夺战利品，并在恶名太盛时抵御皇家海军。经济在三种货币之间循环：掠夺得来的金币资助建筑，声望吸引更好的船队，恶名则招来海军的注意。张力在于最赚钱的行动同时也让恶名涨得最快，迫使玩家在进攻性与防御准备之间求平衡。整体基调是加勒比式的冒险豪情：棕榈树、摇摇晃晃的码头、朗姆酒桶和炮火硝烟。
+
+    ## 玩家体验流程
+
+    玩家从标题画面开始经营一座新的港口。视图展示一座沿海岛屿，附带用于建造的网格。玩家建造码头来停泊船只、酒馆来吸引海盗船队、仓库来存放战利品，以及防御设施（城墙、火炮、瞭望塔）来击退海军的进袭。
+
+    海盗船队会依据港口的声望前来。每支船队都有船型、战斗强度和维持成本。玩家从一张贸易航线地图上选定目标，派出船队去掠夺——目标越富庶，产出的金币越多，但恶名也涨得越高。掠夺过程自动推演，并给出一份结果摘要。
+
+    金币资助扩张：更好的码头能吸引更大的船，升级过的酒馆让船队保持愉快，而一座船坞则允许修理和升级船只。船队士气取决于酒馆品质、掠夺成果和报酬。
+
+    当恶名达到阈值时，海军会来进攻。海军进袭是塔防式的遭遇战，港口的火炮和城墙必须顶住来袭的战舰。挺过一次进袭会让恶名略微下降；失败则意味着损失建筑和船队。
+
+    游戏会记录金币、舰队规模和已完成的掠夺次数。当港口陷落或达成某个繁荣里程碑时，一个经过美术处理的结算画面会展示港口统计数据。
+
+    ## 提交格式（HTML）
+
+    交付物 **两个文件**：
+
+    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
+      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
+    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
+      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
+
+    约束：
+    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
+    - 键盘输入 `WASD + 空格 + Enter + ESC`。
+    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
+    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+rubric:
+- id: completeness
+  weight: 0.3
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  - M4
+  - M5
+- id: richness
+  weight: 0.25
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  - D5
+- id: player_exp
+  weight: 0.25
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+- id: visual
+  weight: 0.2
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  - A5
+language: zh
+base_task_id: mz_tycoon-pirate-port
