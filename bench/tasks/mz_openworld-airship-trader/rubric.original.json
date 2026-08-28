@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [

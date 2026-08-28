@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player draws flight paths for aircraft by clicking and dragging waypoints, and planes follow the drawn paths toward their assigned runways. Score 0 if no path-drawing mechanic exists. Score 0.5 at most if paths can be drawn but planes do not follow them. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player draws flight paths for aircraft by clicking and dragging waypoints, and planes follow the drawn paths toward their assigned runways. Score 0 if no path-drawing mechanic exists. Score 0.5 at most if paths can be drawn but planes do not follow them. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Proximity warnings flash when two aircraft get too close, and actual collisions result in failure with visible crash effects. Score 0 if no collision detection exists. Score 0.5 at most if warnings appear but collisions have no consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Proximity warnings flash when two aircraft get too close, and actual collisions result in failure with visible crash effects. Score 0 if no collision detection exists. Score 0.5 at most if warnings appear but collisions have no consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Aircraft enter from screen edges at different speeds with callsigns and destination indicators, requiring the player to manage multiple simultaneous routes. Score 0 if only one plane appears at a time. Score 0.5 at most if multiple planes exist but have no destination assignments. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Aircraft enter from screen edges at different speeds with callsigns and destination indicators, requiring the player to manage multiple simultaneous routes. Score 0 if only one plane appears at a time. Score 0.5 at most if multiple planes exist but have no destination assignments. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Successfully landing planes on their correct runway earns points, while planes leaving the screen without landing or crashing loses lives. Score 0 if no scoring or failure system exists. Score 0.5 at most if points are earned but there is no failure condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Successfully landing planes on their correct runway earns points, while planes leaving the screen without landing or crashing loses lives. Score 0 if no scoring or failure system exists. Score 0.5 at most if points are earned but there is no failure condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "Weather events (fog, storms, crosswinds) dynamically affect gameplay by closing runways, creating no-fly zones, or altering plane behavior. Score 0 if no weather system exists. Score 0.5 at most if weather is mentioned but has no gameplay effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Weather events (fog, storms, crosswinds) dynamically affect gameplay by closing runways, creating no-fly zones, or altering plane behavior. Score 0 if no weather system exists. Score 0.5 at most if weather is mentioned but has no gameplay effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -136,7 +136,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "HUD and UI panels use styled themed widgets with radar-screen aesthetics, aviation fonts, or control-panel styling rather than raw Godot defaults. Score 0 if all UI is default Label/Button. Score 0.5 at most if some panels are styled but others remain raw defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI panels use styled themed widgets with radar-screen aesthetics, aviation fonts, or control-panel styling rather than raw HTML 引擎 defaults. Score 0 if all UI is default Label/Button. Score 0.5 at most if some panels are styled but others remain raw defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     }
   ]
 }

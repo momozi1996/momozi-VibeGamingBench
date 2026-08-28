@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -47,17 +47,17 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Players alternate playing one card per turn from hand into one of three rows (melee, ranged, siege). Each card has a strength value that adds to the row's total. The side with higher total strength at round's end wins. Cards are placed by clicking/dragging into the appropriate row. Score 0 if there are no rows, if cards have no strength values, or if placement is not interactive. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Players alternate playing one card per turn from hand into one of three rows (melee, ranged, siege). Each card has a strength value that adds to the row's total. The side with higher total strength at round's end wins. Cards are placed by clicking/dragging into the appropriate row. Score 0 if there are no rows, if cards have no strength values, or if placement is not interactive. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "The player can pass at any time instead of playing a card, locking in their current strength. Once both players pass, the round ends. Matches are best-of-3 rounds. A round tracker shows current standing (wins per side). The bluffing tension of when to pass is the core strategic decision. Score 0 if passing is not possible, if rounds do not end on mutual pass, or if there is no best-of-3 structure. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player can pass at any time instead of playing a card, locking in their current strength. Once both players pass, the round ends. Matches are best-of-3 rounds. A round tracker shows current standing (wins per side). The bluffing tension of when to pass is the core strategic decision. Score 0 if passing is not possible, if rounds do not end on mutual pass, or if there is no best-of-3 structure. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Cards have special abilities beyond raw strength: Spy (played on opponent's side, draws 2 cards), Medic (resurrects from discard), Weather (reduces a row to 1 strength each), Commander's Horn (doubles a row's strength), Decoy (returns a played card to hand). At least 5 ability types exist with distinct visual effects. Score 0 if cards have no abilities, if fewer than 5 types exist, or if abilities have no visual effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Cards have special abilities beyond raw strength: Spy (played on opponent's side, draws 2 cards), Medic (resurrects from discard), Weather (reduces a row to 1 strength each), Commander's Horn (doubles a row's strength), Decoy (returns a played card to hand). At least 5 ability types exist with distinct visual effects. Score 0 if cards have no abilities, if fewer than 5 types exist, or if abilities have no visual effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -97,7 +97,7 @@
     {
       "id": "A1",
       "agg": "max",
-      "description": "A title screen is present and styled: it shows the game name in a custom or themed font, has at minimum a play button that is interactive and transitions to the game, and uses a non-default background (medieval war table, faction banners, or battlefield) — not plain Godot grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "A title screen is present and styled: it shows the game name in a custom or themed font, has at minimum a play button that is interactive and transitions to the game, and uses a non-default background (medieval war table, faction banners, or battlefield) — not plain plain grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",

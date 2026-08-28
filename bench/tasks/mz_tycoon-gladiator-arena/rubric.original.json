@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player recruits gladiators from a market by spending gold. Each gladiator has combat stats (strength, speed, defense), a weapon preference, and a crowd appeal rating. Recruited gladiators join the roster. Score 0 if gladiators cannot be recruited, if they have no stats, or if recruitment is free. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player recruits gladiators from a market by spending gold. Each gladiator has combat stats (strength, speed, defense), a weapon preference, and a crowd appeal rating. Recruited gladiators join the roster. Score 0 if gladiators cannot be recruited, if they have no stats, or if recruitment is free. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Gladiators are trained between fights by assigning training regimens. Training improves stats over time but costs gold. Different regimens improve different stats. Score 0 if training does not exist, if it has no stat effect, or if it is free. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Gladiators are trained between fights by assigning training regimens. Training improves stats over time but costs gold. Different regimens improve different stats. Score 0 if training does not exist, if it has no stat effect, or if it is free. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Fight nights are scheduled and the player picks matchups. Fights play out automatically based on gladiator stats. The crowd reacts to dramatic moments. Winners earn prize gold; losers may be injured or killed. Score 0 if fights cannot be scheduled, if combat has no resolution, or if there are no consequences. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Fight nights are scheduled and the player picks matchups. Fights play out automatically based on gladiator stats. The crowd reacts to dramatic moments. Winners earn prize gold; losers may be injured or killed. Score 0 if fights cannot be scheduled, if combat has no resolution, or if there are no consequences. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "A gold economy drives the arena: revenue from ticket sales and sponsors, expenses from recruitment, training, upkeep, and medical bills. A gold counter is permanently visible. Score 0 if there is no gold system or if income and expenses are absent. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A gold economy drives the arena: revenue from ticket sales and sponsors, expenses from recruitment, training, upkeep, and medical bills. A gold counter is permanently visible. Score 0 if there is no gold system or if income and expenses are absent. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The full loop connects: title -> new season -> recruit/train/schedule -> fight night -> results -> next week. The game tracks arena prestige and season wins. A season end shows final results. Score 0 if any transition is missing or if there is no season structure. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The full loop connects: title -> new season -> recruit/train/schedule -> fight night -> results -> next week. The game tracks arena prestige and season wins. A season end shows final results. Score 0 if any transition is missing or if there is no season structure. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -116,7 +116,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: arena, gladiators, crowd, training grounds, and UI belong to a consistent Roman-fantasy visual language with sand-and-steel grandeur. Score 0 if the screen mixes incompatible styles or reads as plain default Godot grey. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Overall art coherence: arena, gladiators, crowd, training grounds, and UI belong to a consistent Roman-fantasy visual language with sand-and-steel grandeur. Score 0 if the screen mixes incompatible styles or reads as plain default plain grey. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",
@@ -131,7 +131,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "HUD and UI use styled themed widgets with Roman chrome: gladiator cards have scroll/tablet styling, gold displays have coin motifs, and menus have stone-and-iron backgrounds. Score 0 if UI elements are unstyled Godot defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI use styled themed widgets with Roman chrome: gladiator cards have scroll/tablet styling, gold displays have coin motifs, and menus have stone-and-iron backgrounds. Score 0 if UI elements are unstyled HTML 引擎 defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A5",

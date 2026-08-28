@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -48,22 +48,22 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "A railway network is visible with multiple stations, track sections, at least two switchable junctions or sidings, and moving train pieces constrained to the tracks. Trains advance along rails over time, not teleporting between nodes. Score 0.5 at most if trains exist but are static, not on tracks, or the map is a single straight line with no branching. Score 0 if no track network or moving trains are present. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A railway network is visible with multiple stations, track sections, at least two switchable junctions or sidings, and moving train pieces constrained to the tracks. Trains advance along rails over time, not teleporting between nodes. Score 0.5 at most if trains exist but are static, not on tracks, or the map is a single straight line with no branching. Score 0 if no track network or moving trains are present. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Clicking or otherwise operating a switch visibly changes the route: switch blades, route arrows, or highlighted track segments update, and a train subsequently follows the changed path rather than its previous one. Score 0.5 at most if switch controls exist but do not affect train movement. Score 0 if no switch interaction is present or switches are purely cosmetic. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Clicking or otherwise operating a switch visibly changes the route: switch blades, route arrows, or highlighted track segments update, and a train subsequently follows the changed path rather than its previous one. Score 0.5 at most if switch controls exist but do not affect train movement. Score 0 if no switch interaction is present or switches are purely cosmetic. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Signal controls have red/green or stop/go states that visibly halt and release at least one train before a section or station. A train approaching a red signal stops and waits; toggling the signal to green releases it. Score 0.5 at most if signals exist but trains ignore them or signals are only decorative/static. Score 0 if no signal interaction is present. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Signal controls have red/green or stop/go states that visibly halt and release at least one train before a section or station. A train approaching a red signal stops and waits; toggling the signal to green releases it. Score 0.5 at most if signals exist but trains ignore them or signals are only decorative/static. Score 0 if no signal interaction is present. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "The game prevents or warns about conflicts between trains through blocked sections, collision warnings, occupancy lights, or an incident state. Two trains cannot silently overlap on the same section without consequence or feedback. Score 0.5 at most if only labels or text warnings appear with no gameplay consequence. Score 0 if multiple trains can overlap with no warning or consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The game prevents or warns about conflicts between trains through blocked sections, collision warnings, occupancy lights, or an incident state. Two trains cannot silently overlap on the same section without consequence or feedback. Score 0.5 at most if only labels or text warnings appear with no gameplay consequence. Score 0 if multiple trains can overlap with no warning or consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",

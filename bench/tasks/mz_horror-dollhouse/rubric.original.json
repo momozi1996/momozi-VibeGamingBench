@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -91,7 +91,7 @@
     {
       "id": "A1",
       "agg": "max",
-      "description": "A title screen is present and styled: it shows the game name in a childlike or unsettling font, has at minimum a play button that is interactive and transitions to the game, and uses a non-default background (split dollhouse/real house view or creepy miniature scene) — not plain Godot grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional."
+      "description": "A title screen is present and styled: it shows the game name in a childlike or unsettling font, has at minimum a play button that is interactive and transitions to the game, and uses a non-default background (split dollhouse/real house view or creepy miniature scene) — not plain plain grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional."
     },
     {
       "id": "A2",
@@ -101,7 +101,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "Environment, character, and UI art quality: both house scales use detailed illustrated surfaces; the dollhouse looks convincingly miniature; real house rooms have atmospheric detail; UI elements use styled, themed widgets — not raw unstyled Godot defaults. Score 0 if rooms are uniform colour fills, if the dollhouse is indistinguishable from the real house, or if primary UI elements are obviously unstyled default widgets."
+      "description": "Environment, character, and UI art quality: both house scales use detailed illustrated surfaces; the dollhouse looks convincingly miniature; real house rooms have atmospheric detail; UI elements use styled, themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if rooms are uniform colour fills, if the dollhouse is indistinguishable from the real house, or if primary UI elements are obviously unstyled default widgets."
     },
     {
       "id": "A4",

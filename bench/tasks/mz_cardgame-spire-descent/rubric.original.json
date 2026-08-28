@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -47,17 +47,17 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Turn-based card combat: the player draws cards each turn, has limited energy to spend, and plays attack cards to deal damage or skill cards to gain block. Cards are dragged or clicked to play them. Energy cost is shown on each card and deducted on play. The turn ends when the player clicks an end-turn button. Score 0 if combat is not turn-based, if there is no energy system, or if cards cannot be played interactively. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Turn-based card combat: the player draws cards each turn, has limited energy to spend, and plays attack cards to deal damage or skill cards to gain block. Cards are dragged or clicked to play them. Energy cost is shown on each card and deducted on play. The turn ends when the player clicks an end-turn button. Score 0 if combat is not turn-based, if there is no energy system, or if cards cannot be played interactively. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Enemies display their intent before the player's turn: an icon or text shows whether they will attack (with damage number), buff themselves, or debuff the player. The player uses this information to decide whether to attack or defend. Block absorbs incoming damage and resets each turn. Score 0 if enemy intent is hidden, if there is no block mechanic, or if the player cannot react to enemy plans. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Enemies display their intent before the player's turn: an icon or text shows whether they will attack (with damage number), buff themselves, or debuff the player. The player uses this information to decide whether to attack or defend. Block absorbs incoming damage and resets each turn. Score 0 if enemy intent is hidden, if there is no block mechanic, or if the player cannot react to enemy plans. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "After combat, the player chooses 1 of 3 offered cards to add to their deck (or skips). Cards have rarities (Common/Uncommon/Rare) with distinct visual borders or colours. A branching map shows the path through the act with different node types (combat, elite, shop, rest, event). The player chooses their route. Score 0 if there is no card reward, if there is no map, or if the path is linear with no choice. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "After combat, the player chooses 1 of 3 offered cards to add to their deck (or skips). Cards have rarities (Common/Uncommon/Rare) with distinct visual borders or colours. A branching map shows the path through the act with different node types (combat, elite, shop, rest, event). The player chooses their route. Score 0 if there is no card reward, if there is no map, or if the path is linear with no choice. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -97,7 +97,7 @@
     {
       "id": "A1",
       "agg": "max",
-      "description": "A title screen is present and styled: it shows the game name in a custom or themed font, has at minimum a play button that is interactive and transitions to class select, and uses a non-default background (dark tower, fantasy landscape, or card artwork) — not plain Godot grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "A title screen is present and styled: it shows the game name in a custom or themed font, has at minimum a play button that is interactive and transitions to class select, and uses a non-default background (dark tower, fantasy landscape, or card artwork) — not plain plain grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",

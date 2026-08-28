@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -52,27 +52,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "A market phase lets the player buy and sell goods at a town with visible prices, current money, cargo hold contents, and remaining capacity. Buying deducts money and adds cargo; selling adds money and removes cargo. Score 0 if no buying/selling exists or if transactions have no effect on state. Score 0.5 at most if prices are shown but transactions do not visibly change money or cargo. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A market phase lets the player buy and sell goods at a town with visible prices, current money, cargo hold contents, and remaining capacity. Buying deducts money and adds cargo; selling adds money and removes cargo. Score 0 if no buying/selling exists or if transactions have no effect on state. Score 0.5 at most if prices are shown but transactions do not visibly change money or cargo. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Route planning lets the player choose a destination and path with visible differences in cost, distance, hazard level, or expected profit. The choice commits the caravan to travel and determines what events may occur. Score 0 if travel is a single automatic button with no route choice. Score 0.5 at most if multiple routes are listed but all have identical consequences. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Route planning lets the player choose a destination and path with visible differences in cost, distance, hazard level, or expected profit. The choice commits the caravan to travel and determines what events may occur. Score 0 if travel is a single automatic button with no route choice. Score 0.5 at most if multiple routes are listed but all have identical consequences. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Travel events such as bandits, storms, tolls, spoilage, shortcuts, or merchant encounters occur during transit and visibly alter cargo, money, time, or risk. The player sees the event and its consequence before arriving. Score 0 if no events occur during travel. Score 0.5 at most if events appear as text only with no observable state change. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Travel events such as bandits, storms, tolls, spoilage, shortcuts, or merchant encounters occur during transit and visibly alter cargo, money, time, or risk. The player sees the event and its consequence before arriving. Score 0 if no events occur during travel. Score 0.5 at most if events appear as text only with no observable state change. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "An upgrade system lets the player spend money on improvements — extra carts, guards, cold storage, scouts, permits, or better animals — that change future travel capacity, hazard mitigation, or market access. Upgrades persist across trips. Score 0 if no upgrades exist. Score 0.5 at most if upgrades are purchasable but their effect on gameplay is not observable. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "An upgrade system lets the player spend money on improvements — extra carts, guards, cold storage, scouts, permits, or better animals — that change future travel capacity, hazard mitigation, or market access. Upgrades persist across trips. Score 0 if no upgrades exist. Score 0.5 at most if upgrades are purchasable but their effect on gameplay is not observable. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The full loop connects without restarting: title -> town market -> route choice -> travel/events -> arrival/sale -> next turn, cycling until a profit goal triggers success or debt triggers failure. Both end states are reachable and navigable. Score 0 if any transition is broken or the loop cannot complete. Score 0.5 at most if the loop runs but has no win/loss condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The full loop connects without restarting: title -> town market -> route choice -> travel/events -> arrival/sale -> next turn, cycling until a profit goal triggers success or debt triggers failure. Both end states are reachable and navigable. Score 0 if any transition is broken or the loop cannot complete. Score 0.5 at most if the loop runs but has no win/loss condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -137,7 +137,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "HUD and UI panels use styled widgets — framed panels, icon-backed readouts, themed buttons, or parchment/merchant styling — not raw unstyled Godot defaults. Numeric text uses a custom or styled font. Score 0 if primary UI elements are obviously unstyled default Godot widgets. Score 0.5 at most if some panels are styled but others remain default. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI panels use styled widgets — framed panels, icon-backed readouts, themed buttons, or parchment/merchant styling — not raw unstyled HTML 引擎 defaults. Numeric text uses a custom or styled font. Score 0 if primary UI elements are obviously unstyled default default widgets. Score 0.5 at most if some panels are styled but others remain default. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A5",

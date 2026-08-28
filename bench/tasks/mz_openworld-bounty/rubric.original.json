@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -49,22 +49,22 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The quest board is interactive: it displays at least three bounty cards each showing a target portrait, difficulty rating, and gold reward. Clicking a bounty adds it to the active quest slot with visible feedback (highlight, panel slide, or checkmark). Score 0 if there is no quest board, if fewer than 3 bounties exist, if cards lack portraits/rewards, or if clicking does nothing. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The quest board is interactive: it displays at least three bounty cards each showing a target portrait, difficulty rating, and gold reward. Clicking a bounty adds it to the active quest slot with visible feedback (highlight, panel slide, or checkmark). Score 0 if there is no quest board, if fewer than 3 bounties exist, if cards lack portraits/rewards, or if clicking does nothing. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Combat is functional: the player has at least two distinct attack options (e.g., melee strike and ranged shot), each triggers a visible animation (weapon swing, projectile travel), deals damage shown via health bar depletion or floating number, and the target fights back with its own attacks. Reducing the target's HP to zero completes the bounty. Score 0 if there is only one attack, if attacks produce no animation, if there is no health bar, or if the target never retaliates. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Combat is functional: the player has at least two distinct attack options (e.g., melee strike and ranged shot), each triggers a visible animation (weapon swing, projectile travel), deals damage shown via health bar depletion or floating number, and the target fights back with its own attacks. Reducing the target's HP to zero completes the bounty. Score 0 if there is only one attack, if attacks produce no animation, if there is no health bar, or if the target never retaliates. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "The reward loop closes: returning to the quest giver or tavern after defeating a target triggers a payout sequence where gold is added to the player's purse with a visible counter update, a 'Bounty Complete' banner or popup appears, and the bounty card is marked done or removed from the board. Score 0 if there is no reward, if gold does not increase visibly, or if completing a bounty produces no feedback. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The reward loop closes: returning to the quest giver or tavern after defeating a target triggers a payout sequence where gold is added to the player's purse with a visible counter update, a 'Bounty Complete' banner or popup appears, and the bounty card is marked done or removed from the board. Score 0 if there is no reward, if gold does not increase visibly, or if completing a bounty produces no feedback. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Target tracking works: once a bounty is active, a compass arrow or minimap marker points toward the target's location and updates as the player moves. The player can follow the marker and locate the target without wandering blindly. Score 0 if there is no navigation aid, if the marker is purely decorative and does not update, or if the target is invisible or indistinguishable from the environment. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Target tracking works: once a bounty is active, a compass arrow or minimap marker points toward the target's location and updates as the player moves. The player can follow the marker and locate the target without wandering blindly. Score 0 if there is no navigation aid, if the marker is purely decorative and does not update, or if the target is invisible or indistinguishable from the environment. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -109,7 +109,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "The game has a coherent art direction: title screen, town, wilderness regions, combat, quest board, and HUD share a consistent visual style and palette evoking a gritty western-fantasy tone. Screenshots read as an authored vertical slice. Score 0 if the game relies on raw ColorRect shapes, default Godot grey controls, mismatched asset packs, or bright placeholder colors with no unifying theme. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "The game has a coherent art direction: title screen, town, wilderness regions, combat, quest board, and HUD share a consistent visual style and palette evoking a gritty western-fantasy tone. Screenshots read as an authored vertical slice. Score 0 if the game relies on raw ColorRect shapes, default plain grey controls, mismatched asset packs, or bright placeholder colors with no unifying theme. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",

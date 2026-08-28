@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player character runs and jumps with tight, responsive controls. Movement is frame-precise with no input lag. The character can change direction mid-air. Score 0 if movement is sluggish, unresponsive, or absent. Score 0.5 at most if movement exists but feels floaty or imprecise. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player character runs and jumps with tight, responsive controls. Movement is frame-precise with no input lag. The character can change direction mid-air. Score 0 if movement is sluggish, unresponsive, or absent. Score 0.5 at most if movement exists but feels floaty or imprecise. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Hazards (spinning saw blades, spikes, retracting obstacles) kill the player instantly on contact. Respawn is near-instantaneous with no loading screen or menu — death and retry form a seamless sub-second loop. Score 0 if hazards do not kill or respawn requires menu interaction. Score 0.5 at most if death exists but respawn takes more than a second or breaks flow. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Hazards (spinning saw blades, spikes, retracting obstacles) kill the player instantly on contact. Respawn is near-instantaneous with no loading screen or menu — death and retry form a seamless sub-second loop. Score 0 if hazards do not kill or respawn requires menu interaction. Score 0.5 at most if death exists but respawn takes more than a second or breaks flow. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "A replay ghost of the best successful run plays back as a translucent afterimage when re-entering a cleared level. The ghost follows the exact path and timing of the recorded run. Score 0 if no ghost replay system exists. Score 0.5 at most if a ghost appears but does not accurately replay the previous run or is not visually distinct from the player. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A replay ghost of the best successful run plays back as a translucent afterimage when re-entering a cleared level. The ghost follows the exact path and timing of the recorded run. Score 0 if no ghost replay system exists. Score 0.5 at most if a ghost appears but does not accurately replay the previous run or is not visually distinct from the player. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Each level is a single screen with a clear start point and goal. Reaching the goal completes the level and records completion time. The level-select grid shows completion status. Score 0 if levels have no clear goal or completion state. Score 0.5 at most if goals exist but completion is not tracked or levels are not individually selectable. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Each level is a single screen with a clear start point and goal. Reaching the goal completes the level and records completion time. The level-select grid shows completion status. Score 0 if levels have no clear goal or completion state. Score 0.5 at most if goals exist but completion is not tracked or levels are not individually selectable. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "A global death counter persists across the entire game and is visible on the level-select screen. Per-level completion times are tracked and displayed. Score 0 if no tracking exists. Score 0.5 at most if only one metric is tracked or display is hidden. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A global death counter persists across the entire game and is visible on the level-select screen. Per-level completion times are tracked and displayed. Score 0 if no tracking exists. Score 0.5 at most if only one metric is tracked or display is hidden. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: level select grid, death counter, timer, completion screens use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: level select grid, death counter, timer, completion screens use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

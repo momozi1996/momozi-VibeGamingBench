@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -49,22 +49,22 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The irreducible tactical loop is playable: the player can select a friendly unit, see a limited legal movement range highlighted on the grid, choose a legal destination, and watch the unit move to the chosen cell. Illegal clicks outside the range are rejected without corrupting state. Selecting a different unit or clicking the same unit again cancels the current selection. Score 0 if selecting and moving a unit is missing, scripted-only, or not controlled by player input. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The irreducible tactical loop is playable: the player can select a friendly unit, see a limited legal movement range highlighted on the grid, choose a legal destination, and watch the unit move to the chosen cell. Illegal clicks outside the range are rejected without corrupting state. Selecting a different unit or clicking the same unit again cancels the current selection. Score 0 if selecting and moving a unit is missing, scripted-only, or not controlled by player input. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Turn structure is complete and cyclical: after the player acts, an End Turn control advances to an enemy phase; enemies autonomously choose meaningful moves toward player units and attack when in range; control then returns to the player with action availability reset. Score 1 only if the full player turn -> enemy turn -> player turn cycle is visible and repeatable. Score 0 if enemies do not act, turns never switch back, or the game is effectively real-time. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Turn structure is complete and cyclical: after the player acts, an End Turn control advances to an enemy phase; enemies autonomously choose meaningful moves toward player units and attack when in range; control then returns to the player with action availability reset. Score 1 only if the full player turn -> enemy turn -> player turn cycle is visible and repeatable. Score 0 if enemies do not act, turns never switch back, or the game is effectively real-time. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Combat resolves through game state, not decoration: attacks require adjacency or a clearly indicated attack range, reduce persistent HP, can kill units, and remove dead units from blocking and targeting. Already-dead units cannot act or be targeted in subsequent turns. Score 1 only if HP loss, death, removal, and post-death state consistency are all observable. Score 0 if attacks are only visual effects, HP is absent, or units continue to function after death. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Combat resolves through game state, not decoration: attacks require adjacency or a clearly indicated attack range, reduce persistent HP, can kill units, and remove dead units from blocking and targeting. Already-dead units cannot act or be targeted in subsequent turns. Score 1 only if HP loss, death, removal, and post-death state consistency are all observable. Score 0 if attacks are only visual effects, HP is absent, or units continue to function after death. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "The match has enforceable win and loss conditions connected to the battle: eliminating all enemies produces victory, losing all player units produces defeat, gameplay halts on the result, and retry or return navigation works without relaunching. Score 1 only if both victory and defeat are reachable. Score 0 if the battle has no terminal state or result screens are static labels unrelated to game state. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The match has enforceable win and loss conditions connected to the battle: eliminating all enemies produces victory, losing all player units produces defeat, gameplay halts on the result, and retry or return navigation works without relaunching. Score 1 only if both victory and defeat are reachable. Score 0 if the battle has no terminal state or result screens are static labels unrelated to game state. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -109,7 +109,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "The game has a coherent dark-fantasy art direction: terrain, units, UI, effects, and backgrounds share one consistent visual language with a deliberate limited palette and high contrast. Score 1 only if the presentation looks like an authored vertical slice rather than a prototype. Score 0 if visible gameplay relies on raw ColorRect shapes, default Godot widgets, mismatched asset packs, or bright off-brief placeholder colors."
+      "description": "The game has a coherent dark-fantasy art direction: terrain, units, UI, effects, and backgrounds share one consistent visual language with a deliberate limited palette and high contrast. Score 1 only if the presentation looks like an authored vertical slice rather than a prototype. Score 0 if visible gameplay relies on raw ColorRect shapes, default default widgets, mismatched asset packs, or bright off-brief placeholder colors."
     },
     {
       "id": "A2",
@@ -119,7 +119,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "UI presentation is custom and themed: title screen, briefing, HUD panels, End Turn button, result screens, HP bars, and labels use styled panels, borders, fonts, icons, or frames that match the dark-fantasy tone. Score 1 only if no primary UI element reads as an unstyled default Label or Button. Score 0 if the UI is mostly default Godot controls or plain floating text. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "UI presentation is custom and themed: title screen, briefing, HUD panels, End Turn button, result screens, HP bars, and labels use styled panels, borders, fonts, icons, or frames that match the dark-fantasy tone. Score 1 only if no primary UI element reads as an unstyled default Label or Button. Score 0 if the UI is mostly default HTML 引擎 controls or plain floating text. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

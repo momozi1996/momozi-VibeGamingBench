@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "A slot machine grid (at least 3x5) spins each turn and lands symbols in random positions. Symbols activate and generate coins based on their effects and adjacency to other symbols. The spin is visually animated. Score 0 if no slot spin mechanic exists. Score 0.5 at most if symbols land but do not interact or generate coins. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A slot machine grid (at least 3x5) spins each turn and lands symbols in random positions. Symbols activate and generate coins based on their effects and adjacency to other symbols. The spin is visually animated. Score 0 if no slot spin mechanic exists. Score 0.5 at most if symbols land but do not interact or generate coins. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Symbols interact with adjacent symbols — specific combinations multiply value, trigger effects, or transform neighbors. At least 3 distinct interaction types exist (multiply, destroy, transform). Score 0 if symbols are independent with no interactions. Score 0.5 at most if only one interaction type exists. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Symbols interact with adjacent symbols — specific combinations multiply value, trigger effects, or transform neighbors. At least 3 distinct interaction types exist (multiply, destroy, transform). Score 0 if symbols are independent with no interactions. Score 0.5 at most if only one interaction type exists. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Between spins, a shop offers new symbols to add to the reel pool and an option to remove existing symbols for a fee. The player curates their symbol pool strategically. Score 0 if no symbol management exists. Score 0.5 at most if symbols can be added but not removed. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Between spins, a shop offers new symbols to add to the reel pool and an option to remove existing symbols for a fee. The player curates their symbol pool strategically. Score 0 if no symbol management exists. Score 0.5 at most if symbols can be added but not removed. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Rent is due every few spins (e.g., every 5) and escalates each cycle. If the player cannot pay rent, the run ends. The rent amount and deadline are always visible. Score 0 if no rent or loss condition exists. Score 0.5 at most if rent exists but never increases or has no deadline pressure. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Rent is due every few spins (e.g., every 5) and escalates each cycle. If the player cannot pay rent, the run ends. The rent amount and deadline are always visible. Score 0 if no rent or loss condition exists. Score 0.5 at most if rent exists but never increases or has no deadline pressure. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "A coin counter tallies earnings per spin with visible per-symbol payouts. The total coin balance persists between spins and is spent on rent and shop purchases. Score 0 if no economy exists. Score 0.5 at most if coins are earned but cannot be spent meaningfully. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A coin counter tallies earnings per spin with visible per-symbol payouts. The total coin balance persists between spins and is spent on rent and shop purchases. Score 0 if no economy exists. Score 0.5 at most if coins are earned but cannot be spent meaningfully. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: coin display, rent indicator, shop interface, payout breakdown, and game-over screen use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: coin display, rent indicator, shop interface, payout breakdown, and game-over screen use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player can transform between three distinct forms (cube, sphere, triangle or equivalent) using button presses. Each form has visibly different physics: one is heavy/grippy, one is bouncy/elastic, one is light/floaty. Transformation is instant and works mid-air. Score 0 if fewer than 3 forms exist or transformation is not possible. Score 0.5 at most if forms exist but physics feel identical between them. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player can transform between three distinct forms (cube, sphere, triangle or equivalent) using button presses. Each form has visibly different physics: one is heavy/grippy, one is bouncy/elastic, one is light/floaty. Transformation is instant and works mid-air. Score 0 if fewer than 3 forms exist or transformation is not possible. Score 0.5 at most if forms exist but physics feel identical between them. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "The heavy form activates pressure plates and breaks fragile floors. These interactions are exclusive to this form — other forms cannot trigger them. Score 0 if no form-specific interactions exist. Score 0.5 at most if interactions exist but any form can trigger them. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The heavy form activates pressure plates and breaks fragile floors. These interactions are exclusive to this form — other forms cannot trigger them. Score 0 if no form-specific interactions exist. Score 0.5 at most if interactions exist but any form can trigger them. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "The bouncy form ricochets off walls and surfaces, gaining height with each bounce. This form reaches elevated areas that other forms cannot access through normal jumping. Score 0 if no bounce mechanic exists. Score 0.5 at most if bouncing exists but does not provide meaningful traversal advantage. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The bouncy form ricochets off walls and surfaces, gaining height with each bounce. This form reaches elevated areas that other forms cannot access through normal jumping. Score 0 if no bounce mechanic exists. Score 0.5 at most if bouncing exists but does not provide meaningful traversal advantage. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "The gliding form floats across wide horizontal gaps that other forms cannot cross. Gliding has limited duration or gradual descent, requiring timing. Score 0 if no glide mechanic exists. Score 0.5 at most if gliding exists but gaps are crossable by any form. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The gliding form floats across wide horizontal gaps that other forms cannot cross. Gliding has limited duration or gradual descent, requiring timing. Score 0 if no glide mechanic exists. Score 0.5 at most if gliding exists but gaps are crossable by any form. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "Puzzles require chaining transformations mid-air — launching as one form, switching to another mid-arc, and landing as a third. At least one level demonstrably requires a mid-air form switch to complete. Score 0 if all puzzles can be solved with a single form. Score 0.5 at most if mid-air switching is possible but never required. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Puzzles require chaining transformations mid-air — launching as one form, switching to another mid-arc, and landing as a third. At least one level demonstrably requires a mid-air form switch to complete. Score 0 if all puzzles can be solved with a single form. Score 0.5 at most if mid-air switching is possible but never required. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: form indicator, world select, level complete screen, and star display use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: form indicator, world select, level complete screen, and star display use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

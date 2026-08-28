@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -48,17 +48,17 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player activates a time-travel device (portal, watch, machine) to jump between at least three eras. The transition plays a visible effect (warp tunnel, clock hands spinning, screen dissolve). The destination era loads with the player at the corresponding map coordinates, not a fixed spawn point. Score 0 if era switching is instant with no transition effect, if the player respawns at a fixed location instead of corresponding coordinates, or if travel is one-way. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player activates a time-travel device (portal, watch, machine) to jump between at least three eras. The transition plays a visible effect (warp tunnel, clock hands spinning, screen dissolve). The destination era loads with the player at the corresponding map coordinates, not a fixed spawn point. Score 0 if era switching is instant with no transition effect, if the player respawns at a fixed location instead of corresponding coordinates, or if travel is one-way. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Actions in an earlier era alter later eras in visible, gameplay-meaningful ways. At least three distinct causal chains exist (e.g., plant a seed in Ancient that becomes a tree blocking a path in Industrial; destroy a dam in Industrial that floods a route in Future; befriend an NPC in Ancient whose descendants leave a treasure in Industrial). The changes must affect traversal or quest availability, not just cosmetics. Score 0 if actions in past eras never affect future eras, if effects are purely cosmetic, or if there are fewer than 3 distinct causal chains. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Actions in an earlier era alter later eras in visible, gameplay-meaningful ways. At least three distinct causal chains exist (e.g., plant a seed in Ancient that becomes a tree blocking a path in Industrial; destroy a dam in Industrial that floods a route in Future; befriend an NPC in Ancient whose descendants leave a treasure in Industrial). The changes must affect traversal or quest availability, not just cosmetics. Score 0 if actions in past eras never affect future eras, if effects are purely cosmetic, or if there are fewer than 3 distinct causal chains. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "The game detects and responds to paradoxical actions. Attempting to destroy a key object that the player's future self depends on triggers a visible paradox warning (flashing geometry, reversed controls, alarm effects) and blocks or penalizes the action until resolved. Score 0 if there is no paradox detection, if paradoxes are silently ignored, or if paradox resolution produces no visible feedback. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The game detects and responds to paradoxical actions. Attempting to destroy a key object that the player's future self depends on triggers a visible paradox warning (flashing geometry, reversed controls, alarm effects) and blocks or penalizes the action until resolved. Score 0 if there is no paradox detection, if paradoxes are silently ignored, or if paradox resolution produces no visible feedback. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -103,17 +103,17 @@
     {
       "id": "A1",
       "agg": "max",
-      "description": "A title screen is present and styled: it shows the game name in a custom or themed font, has at minimum a 'Begin Journey' or 'Play' button that is interactive (clicking it transitions to the game world), and uses a non-default background (overlapping era landscapes, clock imagery, or temporal aurora) -- not plain Godot grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "A title screen is present and styled: it shows the game name in a custom or themed font, has at minimum a 'Begin Journey' or 'Play' button that is interactive (clicking it transitions to the game world), and uses a non-default background (overlapping era landscapes, clock imagery, or temporal aurora) -- not plain plain grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",
       "agg": "mean",
-      "description": "Overall art-style coherence: every visible element -- terrain tiles, NPC sprites, time device, UI panels, buttons -- belongs to a single consistent visual language. Each era has a distinct palette and mood that clearly communicates which time period the player is in, while maintaining stylistic unity across all three. Score 0 if the screen mixes incompatible styles, or if elements are obviously unthemed placeholder shapes (solid-colour rectangles, default Godot primitives). Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Overall art-style coherence: every visible element -- terrain tiles, NPC sprites, time device, UI panels, buttons -- belongs to a single consistent visual language. Each era has a distinct palette and mood that clearly communicates which time period the player is in, while maintaining stylistic unity across all three. Score 0 if the screen mixes incompatible styles, or if elements are obviously unthemed placeholder shapes (solid-colour rectangles, default HTML 引擎 primitives). Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A3",
       "agg": "mean",
-      "description": "Environment, character, and UI art quality: each era uses textured or illustrated tiles with visible surface detail that reads clearly at 1280x720; the player character and NPCs are recognisable sprites (not plain coloured rectangles); the time-travel device has a distinct sprite; HUD and inventory panels use styled, themed widgets -- not raw unstyled Godot defaults. Score 0 if any era is a uniform colour fill, if the player is a solid-colour primitive, or if primary UI elements are obviously unstyled default widgets. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Environment, character, and UI art quality: each era uses textured or illustrated tiles with visible surface detail that reads clearly at 1280x720; the player character and NPCs are recognisable sprites (not plain coloured rectangles); the time-travel device has a distinct sprite; HUD and inventory panels use styled, themed widgets -- not raw unstyled HTML 引擎 defaults. Score 0 if any era is a uniform colour fill, if the player is a solid-colour primitive, or if primary UI elements are obviously unstyled default widgets. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

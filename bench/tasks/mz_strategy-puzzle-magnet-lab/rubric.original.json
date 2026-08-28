@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors."
   },
   "categories": [
@@ -45,22 +45,22 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player or energy core moves one tile at a time on a visible grid, respecting walls and blocked cells. Score 0 if movement is unconstrained, free-floating, or ignores obstacles. Score 0.5 at most if only labels or static indicators show movement without actual tile-by-tile traversal on a readable grid. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player or energy core moves one tile at a time on a visible grid, respecting walls and blocked cells. Score 0 if movement is unconstrained, free-floating, or ignores obstacles. Score 0.5 at most if only labels or static indicators show movement without actual tile-by-tile traversal on a readable grid. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Same-polarity repulsion pushes magnetic objects away and opposite-polarity attraction pulls them toward the player or source. Score 0 if magnetism is cosmetic or objects only move by direct pushing. Score 0.5 at most if polarity labels exist but objects do not visibly move differently based on pole alignment. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Same-polarity repulsion pushes magnetic objects away and opposite-polarity attraction pulls them toward the player or source. Score 0 if magnetism is cosmetic or objects only move by direct pushing. Score 0.5 at most if polarity labels exist but objects do not visibly move differently based on pole alignment. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "The player can flip polarity or activate a magnetic state change, and this visibly alters how nearby objects respond on the next interaction. Score 0 if there is no player-controlled polarity toggle. Score 0.5 at most if a toggle button exists but produces no observable change in object behavior. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player can flip polarity or activate a magnetic state change, and this visibly alters how nearby objects respond on the next interaction. Score 0 if there is no player-controlled polarity toggle. Score 0.5 at most if a toggle button exists but produces no observable change in object behavior. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Switches, pressure plates, or gates react when the correct magnetic object reaches them, visibly opening paths or changing the level layout. Score 0 if the only goal is walking to an exit with no interactive puzzle elements. Score 0.5 at most if gate/switch graphics exist but never change state in response to object placement. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Switches, pressure plates, or gates react when the correct magnetic object reaches them, visibly opening paths or changing the level layout. Score 0 if the only goal is walking to an exit with no interactive puzzle elements. Score 0.5 at most if gate/switch graphics exist but never change state in response to object placement. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",

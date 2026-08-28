@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -49,22 +49,22 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The deployment loop is playable: DP accumulates over time, unit cards display costs, the player can drag or select a unit and place it on a legal tile to create a defender, successful placement subtracts DP, and illegal placement or insufficient DP fails without placing the unit. Score 1 only if all parts work through player input in one demonstrated flow. Score 0 if units can be placed for free, anywhere, or only through scripted spawning. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The deployment loop is playable: DP accumulates over time, unit cards display costs, the player can drag or select a unit and place it on a legal tile to create a defender, successful placement subtracts DP, and illegal placement or insufficient DP fails without placing the unit. Score 1 only if all parts work through player input in one demonstrated flow. Score 0 if units can be placed for free, anywhere, or only through scripted spawning. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Enemies follow authored paths from spawn to base endpoint, defenders engage enemies within range reducing HP on both sides, and units at zero HP are removed from the field. Enemies that reach the endpoint reduce base life. Score 1 only if pathing, combat with HP loss, unit death/removal, and leak penalty all function together. Score 0 if enemies wander randomly, ignore defenders, have no HP, or combat is only decorative. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Enemies follow authored paths from spawn to base endpoint, defenders engage enemies within range reducing HP on both sides, and units at zero HP are removed from the field. Enemies that reach the endpoint reduce base life. Score 1 only if pathing, combat with HP loss, unit death/removal, and leak penalty all function together. Score 0 if enemies wander randomly, ignore defenders, have no HP, or combat is only decorative. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Enemies arrive in multiple discrete waves with pacing changes between them, later waves increase pressure through quantity, type, speed, or HP, and the wave system ends in victory only after the final wave is cleared. Score 1 only if at least two distinct waves and a final-wave victory condition are observable. Score 0 if all enemies spawn at once, waves are label-only with no gameplay difference, or victory is unrelated to clearing waves. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Enemies arrive in multiple discrete waves with pacing changes between them, later waves increase pressure through quantity, type, speed, or HP, and the wave system ends in victory only after the final wave is cleared. Score 1 only if at least two distinct waves and a final-wave victory condition are observable. Score 0 if all enemies spawn at once, waves are label-only with no gameplay difference, or victory is unrelated to clearing waves. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Campaign flow is complete: base life reaching zero triggers defeat, clearing a stage marks progress and unlocks the next, save/load can restore completed-stage state, and retry/back navigation works without relaunching. Score 1 only if victory, defeat, stage progression, and load behavior are all demonstrated or clearly reachable. Score 0 if the game has no loss condition, no persistent progress, or disconnected menus. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Campaign flow is complete: base life reaching zero triggers defeat, clearing a stage marks progress and unlocks the next, save/load can restore completed-stage state, and retry/back navigation works without relaunching. Score 1 only if victory, defeat, stage progression, and load behavior are all demonstrated or clearly reachable. Score 0 if the game has no loss condition, no persistent progress, or disconnected menus. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -109,7 +109,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "The game has a coherent art direction: title, stage select, battlefield, units, enemies, effects, and UI share a consistent visual style and palette. Screenshots read as an authored vertical slice. Score 0 if the game relies on raw ColorRect shapes, default Godot grey controls, mismatched asset packs, or bright placeholder colors with no unifying theme."
+      "description": "The game has a coherent art direction: title, stage select, battlefield, units, enemies, effects, and UI share a consistent visual style and palette. Screenshots read as an authored vertical slice. Score 0 if the game relies on raw ColorRect shapes, default plain grey controls, mismatched asset packs, or bright placeholder colors with no unifying theme."
     },
     {
       "id": "A2",

@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "A 30-second countdown timer governs each loop. When it expires, time rewinds and the player restarts at the spawn point. The timer is visible and counts down during gameplay. Score 0 if no time loop mechanic exists. Score 0.5 at most if a timer exists but does not trigger a rewind/restart. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A 30-second countdown timer governs each loop. When it expires, time rewinds and the player restarts at the spawn point. The timer is visible and counts down during gameplay. Score 0 if no time loop mechanic exists. Score 0.5 at most if a timer exists but does not trigger a rewind/restart. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "After a loop ends, a ghost of the previous loop replays simultaneously during the next loop. The ghost physically interacts with the world — pressing buttons, holding doors, blocking lasers. Multiple ghosts (up to 4) can be layered from successive loops. Score 0 if no ghost replay exists. Score 0.5 at most if ghosts replay but do not physically interact with the world. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "After a loop ends, a ghost of the previous loop replays simultaneously during the next loop. The ghost physically interacts with the world — pressing buttons, holding doors, blocking lasers. Multiple ghosts (up to 4) can be layered from successive loops. Score 0 if no ghost replay exists. Score 0.5 at most if ghosts replay but do not physically interact with the world. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Switches, pressure plates, and doors require sustained activation — a ghost standing on a plate keeps it pressed for the duration of its replay. The player must coordinate timing across loops so ghosts hold switches at the right moments. Score 0 if no sustained-activation elements exist. Score 0.5 at most if switches exist but do not require ghost cooperation. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Switches, pressure plates, and doors require sustained activation — a ghost standing on a plate keeps it pressed for the duration of its replay. The player must coordinate timing across loops so ghosts hold switches at the right moments. Score 0 if no sustained-activation elements exist. Score 0.5 at most if switches exist but do not require ghost cooperation. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Reaching the exit crystal with all required conditions met (switches held, paths cleared) completes the level. The exit is only accessible when ghost cooperation enables it. Score 0 if no exit condition exists or exit is always accessible. Score 0.5 at most if an exit exists but ghost cooperation is never required. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Reaching the exit crystal with all required conditions met (switches held, paths cleared) completes the level. The exit is only accessible when ghost cooperation enables it. Score 0 if no exit condition exists or exit is always accessible. Score 0.5 at most if an exit exists but ghost cooperation is never required. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "A reset button clears all recorded ghosts to start a level fresh. A timeline bar shows all active ghosts and their current positions within the 30-second window. Score 0 if no reset or timeline visualization exists. Score 0.5 at most if reset exists but no timeline visualization shows ghost positions. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A reset button clears all recorded ghosts to start a level fresh. A timeline bar shows all active ghosts and their current positions within the 30-second window. Score 0 if no reset or timeline visualization exists. Score 0.5 at most if reset exists but no timeline visualization shows ghost positions. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: countdown timer, timeline bar, chapter select, and completion screens use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: countdown timer, timeline bar, chapter select, and completion screens use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

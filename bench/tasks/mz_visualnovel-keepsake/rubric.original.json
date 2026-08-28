@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -115,7 +115,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall visual style is coherent and authored across title, room, keepsakes, and endings: a consistent quiet, melancholy art direction with a deliberate muted palette, gentle typography, and framing. The game should look like a published narrative game, not a debug screen of text and buttons. Strong submissions rely on real illustrated or pixel-art treatment; a scene built mainly from ColorRects, circles, silhouettes, and flat primitive shapes should be judged low even if the colors are coherent. Score 0 if the screen is dominated by default Godot widgets, untextured rectangles, or placeholder text."
+      "description": "Overall visual style is coherent and authored across title, room, keepsakes, and endings: a consistent quiet, melancholy art direction with a deliberate muted palette, gentle typography, and framing. The game should look like a published narrative game, not a debug screen of text and buttons. Strong submissions rely on real illustrated or pixel-art treatment; a scene built mainly from ColorRects, circles, silhouettes, and flat primitive shapes should be judged low even if the colors are coherent. Score 0 if the screen is dominated by default default widgets, untextured rectangles, or placeholder text."
     },
     {
       "id": "A2",
@@ -125,7 +125,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "The narration box, the collected-fragments journal/board, the keepsake selection UI, choice menus, title, and ending screens use styled, themed UI — illustrated frames, soft panels, custom or styled fonts fitting the tender memorial mood — rather than raw default Godot Label/Button/Panel defaults or plain flat boxes. UI polish should make the game feel like an intimate memory interface, not just readable text containers. Score 0 if primary UI is obviously unstyled default widgets."
+      "description": "The narration box, the collected-fragments journal/board, the keepsake selection UI, choice menus, title, and ending screens use styled, themed UI — illustrated frames, soft panels, custom or styled fonts fitting the tender memorial mood — rather than raw default HTML 引擎 Label/Button/Panel defaults or plain flat boxes. UI polish should make the game feel like an intimate memory interface, not just readable text containers. Score 0 if primary UI is obviously unstyled default widgets."
     },
     {
       "id": "A4",

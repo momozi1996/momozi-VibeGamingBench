@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors."
   },
   "categories": [
@@ -47,22 +47,22 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player moves one tile at a time on a grid with arrow keys, and pushing into a crate moves it one tile in the same direction. Crates stop at walls and cannot push other crates (or optionally can chain-push). Movement is turn-based: nothing moves until the player acts. Score 0 if movement is not grid-based or crates cannot be pushed. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player moves one tile at a time on a grid with arrow keys, and pushing into a crate moves it one tile in the same direction. Crates stop at walls and cannot push other crates (or optionally can chain-push). Movement is turn-based: nothing moves until the player acts. Score 0 if movement is not grid-based or crates cannot be pushed. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Enemies move simultaneously when the player moves: each enemy takes one step toward the player or follows a patrol pattern on every player turn. Enemies block tiles and contact with an enemy causes damage or death. Score 0 if enemies are static, move in real-time, or do not respond to player turns. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Enemies move simultaneously when the player moves: each enemy takes one step toward the player or follows a patrol pattern on every player turn. Enemies block tiles and contact with an enemy causes damage or death. Score 0 if enemies are static, move in real-time, or do not respond to player turns. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Pressure plates and locked doors form the core puzzle: pushing crates onto plates opens corresponding doors. Color-coded keys unlock matching locked doors. Both mechanics gate progression through the room. Score 0 if no puzzle elements beyond basic movement exist. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Pressure plates and locked doors form the core puzzle: pushing crates onto plates opens corresponding doors. Color-coded keys unlock matching locked doors. Both mechanics gate progression through the room. Score 0 if no puzzle elements beyond basic movement exist. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "The room has an exit staircase: reaching it completes the floor and generates the next procedural room. Death from enemy contact offers undo or retry. An undo system allows rewinding individual turns. Score 0 if there is no exit, no floor progression, or no undo/retry. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The room has an exit staircase: reaching it completes the floor and generates the next procedural room. Death from enemy contact offers undo or retry. An undo system allows rewinding individual turns. Score 0 if there is no exit, no floor progression, or no undo/retry. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",

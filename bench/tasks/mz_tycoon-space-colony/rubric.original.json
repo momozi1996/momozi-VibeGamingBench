@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player builds modules on a grid surface by spending materials. Modules connect to adjacent ones. Three resource types (oxygen, food, power) are tracked with visible meters. Any resource reaching zero causes colonist deaths. Score 0 if there is no building mechanic, if resources are not tracked, or if depletion has no consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player builds modules on a grid surface by spending materials. Modules connect to adjacent ones. Three resource types (oxygen, food, power) are tracked with visible meters. Any resource reaching zero causes colonist deaths. Score 0 if there is no building mechanic, if resources are not tracked, or if depletion has no consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Colonists are assigned to jobs (miner, farmer, engineer, researcher) and perform their role automatically. Job assignment is player-controlled. Idle colonists consume resources without producing. Score 0 if colonists have no jobs, if assignment is impossible, or if all colonists are identical. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Colonists are assigned to jobs (miner, farmer, engineer, researcher) and perform their role automatically. Job assignment is player-controlled. Idle colonists consume resources without producing. Score 0 if colonists have no jobs, if assignment is impossible, or if all colonists are identical. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Materials are mined from the asteroid by assigned miners. Materials are spent on building new modules. A material counter is visible and changes with mining and building. Score 0 if materials are infinite, if mining does not exist, or if building is free. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Materials are mined from the asteroid by assigned miners. Materials are spent on building new modules. A material counter is visible and changes with mining and building. Score 0 if materials are infinite, if mining does not exist, or if building is free. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Meteor events strike randomly, damaging or destroying modules. The player must maintain redundancy or repair damaged modules. Damage is visible on affected modules. Score 0 if no threats exist or if modules are indestructible. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Meteor events strike randomly, damaging or destroying modules. The player must maintain redundancy or repair damaged modules. Damage is visible on affected modules. Score 0 if no threats exist or if modules are indestructible. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The full loop connects: title -> new colony -> build/assign/manage -> time advances -> threats arrive -> colony thrives or dies -> result screen. The game ends when all colonists die or a population milestone is reached. Score 0 if any transition is missing or if there is no end condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The full loop connects: title -> new colony -> build/assign/manage -> time advances -> threats arrive -> colony thrives or dies -> result screen. The game ends when all colonists die or a population milestone is reached. Score 0 if any transition is missing or if there is no end condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -116,7 +116,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: asteroid surface, modules, colonists, UI, and effects belong to a consistent sci-fi frontier visual language with space-industrial tones. Score 0 if the screen mixes incompatible styles or reads as plain default Godot grey. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Overall art coherence: asteroid surface, modules, colonists, UI, and effects belong to a consistent sci-fi frontier visual language with space-industrial tones. Score 0 if the screen mixes incompatible styles or reads as plain default plain grey. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",
@@ -131,7 +131,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "HUD and UI use styled themed widgets with sci-fi chrome: resource meters have holographic styling, build menu has tech-panel frames, and alerts have warning-light aesthetics. Score 0 if UI elements are unstyled Godot defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI use styled themed widgets with sci-fi chrome: resource meters have holographic styling, build menu has tech-panel frames, and alerts have warning-light aesthetics. Score 0 if UI elements are unstyled HTML 引擎 defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A5",

@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "Headless launch exits 0 without fatal errors; this 0/1 gate multiplies the rest."
   },
   "categories": [
@@ -116,7 +116,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: robots, arena, workshop, UI, menus, results, and effects share a retro-futuristic factory visual language. 0 if styles clash, read as default Godot grey, or rely on mixed placeholders/programmatic shapes."
+      "description": "Overall art coherence: robots, arena, workshop, UI, menus, results, and effects share a retro-futuristic factory visual language. 0 if styles clash, read as default plain grey, or rely on mixed placeholders/programmatic shapes."
     },
     {
       "id": "A2",
@@ -131,7 +131,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "HUD and UI use styled industrial widgets: framed rule slots, icon condition/action selectors, status panels, menus, and result screens. 0 if UI is unstyled Godot defaults, rectangle/text UI, or programmatic chrome."
+      "description": "HUD and UI use styled industrial widgets: framed rule slots, icon condition/action selectors, status panels, menus, and result screens. 0 if UI is unstyled HTML 引擎 defaults, rectangle/text UI, or programmatic chrome."
     },
     {
       "id": "A5",

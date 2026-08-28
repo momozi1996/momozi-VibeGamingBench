@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -50,27 +50,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The irreducible farming loop is playable through player input: the player can move to field tiles, till empty ground, plant seeds from inventory, water planted tiles, sleep to advance the day, and see crops progress only after the day transition. Score 1 only if the same loop connects tile state, inventory, stamina/day progression, and player actions. Score 0 if farming is scripted, crops mature instantly without sleeping, or tile actions do not change persistent game state. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The irreducible farming loop is playable through player input: the player can move to field tiles, till empty ground, plant seeds from inventory, water planted tiles, sleep to advance the day, and see crops progress only after the day transition. Score 1 only if the same loop connects tile state, inventory, stamina/day progression, and player actions. Score 0 if farming is scripted, crops mature instantly without sleeping, or tile actions do not change persistent game state. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "The economy loop is closed: mature crops can be harvested into a finite inventory, sold through a shipping bin or shop for gold, and gold can be spent to buy seeds or supplies that return to inventory and feed back into farming. Score 1 only if sell and buy both visibly change gold and inventory. Score 0 if there is no shop/sell action, no persistent gold counter, or money/items are only decorative labels. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The economy loop is closed: mature crops can be harvested into a finite inventory, sold through a shipping bin or shop for gold, and gold can be spent to buy seeds or supplies that return to inventory and feed back into farming. Score 1 only if sell and buy both visibly change gold and inventory. Score 0 if there is no shop/sell action, no persistent gold counter, or money/items are only decorative labels. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Daily resource management is enforceable: meaningful actions such as tilling, watering, harvesting, fishing, or shopping consume stamina; stamina does not passively refill during the day; zero stamina blocks or limits further actions with feedback; sleeping restores stamina and advances the day. Score 1 only if limits affect actual player choices. Score 0 if actions are unlimited, stamina is missing, or stamina exists but has no gameplay consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Daily resource management is enforceable: meaningful actions such as tilling, watering, harvesting, fishing, or shopping consume stamina; stamina does not passively refill during the day; zero stamina blocks or limits further actions with feedback; sleeping restores stamina and advances the day. Score 1 only if limits affect actual player choices. Score 0 if actions are unlimited, stamina is missing, or stamina exists but has no gameplay consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Save/load and day boundaries work correctly: sleeping commits the morning state for the next day, Continue restores day/gold/inventory/tile state after relaunch, and quitting mid-day without sleeping does not overwrite the last saved morning. Score 1 only if post-sleep persistence and mid-day non-save behavior are both demonstrated or clearly reachable. Score 0 if Continue always starts a default farm or every action autosaves immediately regardless of sleep. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Save/load and day boundaries work correctly: sleeping commits the morning state for the next day, Continue restores day/gold/inventory/tile state after relaunch, and quitting mid-day without sleeping does not overwrite the last saved morning. Score 1 only if post-sleep persistence and mid-day non-save behavior are both demonstrated or clearly reachable. Score 0 if Continue always starts a default farm or every action autosaves immediately regardless of sleep. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The full flow is connected without restarting the executable: title screen -> New Farm / Continue -> farm gameplay -> sleep -> next day, with transitions between farm, farmhouse, shop, and waterside reachable by player movement or UI. Score 0 if any transition is missing, broken, or requires relaunching the application. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The full flow is connected without restarting the executable: title screen -> New Farm / Continue -> farm gameplay -> sleep -> next day, with transitions between farm, farmhouse, shop, and waterside reachable by player movement or UI. Score 0 if any transition is missing, broken, or requires relaunching the application. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -115,7 +115,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "The game has a publishable cozy pastoral art direction: title, farm, shop, waterside, crops, character, UI, and day-end screens share a warm, coherent visual language. Score 1 only if screenshots read as an authored vertical slice. Score 0 if visible gameplay relies on raw ColorRect shapes, default Godot controls, mismatched asset packs, or off-brief placeholder colors."
+      "description": "The game has a publishable cozy pastoral art direction: title, farm, shop, waterside, crops, character, UI, and day-end screens share a warm, coherent visual language. Score 1 only if screenshots read as an authored vertical slice. Score 0 if visible gameplay relies on raw ColorRect shapes, default HTML 引擎 controls, mismatched asset packs, or off-brief placeholder colors."
     },
     {
       "id": "A2",

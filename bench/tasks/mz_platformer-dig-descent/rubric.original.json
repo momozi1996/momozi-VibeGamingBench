@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player character falls continuously downward. Pressing fire shoots a projectile beneath the character, destroying soft blocks and providing upward recoil that slows the fall. The recoil is visible and affects trajectory. Score 0 if no downward shooting or recoil exists. Score 0.5 at most if shooting exists but provides no movement effect or recoil is imperceptible. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player character falls continuously downward. Pressing fire shoots a projectile beneath the character, destroying soft blocks and providing upward recoil that slows the fall. The recoil is visible and affects trajectory. Score 0 if no downward shooting or recoil exists. Score 0.5 at most if shooting exists but provides no movement effect or recoil is imperceptible. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "A combo system tracks consecutive enemy/block kills without landing. The combo counter is visible and multiplies gem value. Landing on a platform resets the combo. Score 0 if no combo system exists. Score 0.5 at most if a counter exists but has no effect on scoring or resets incorrectly. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A combo system tracks consecutive enemy/block kills without landing. The combo counter is visible and multiplies gem value. Landing on a platform resets the combo. Score 0 if no combo system exists. Score 0.5 at most if a counter exists but has no effect on scoring or resets incorrectly. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "The player has a health system — touching enemies, spikes, or the top of the screen costs health. Reaching zero health ends the run with a game-over screen. Score 0 if the player is invincible or death has no consequence. Score 0.5 at most if health exists but damage sources are absent or game-over is not implemented. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player has a health system — touching enemies, spikes, or the top of the screen costs health. Reaching zero health ends the run with a game-over screen. Score 0 if the player is invincible or death has no consequence. Score 0.5 at most if health exists but damage sources are absent or game-over is not implemented. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "The descent is procedurally generated — each run produces a different arrangement of platforms, enemies, and hazards. No two runs are identical in layout. Score 0 if levels are static and hand-crafted with no variation. Score 0.5 at most if some randomness exists but the overall structure is always the same. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The descent is procedurally generated — each run produces a different arrangement of platforms, enemies, and hazards. No two runs are identical in layout. Score 0 if levels are static and hand-crafted with no variation. Score 0.5 at most if some randomness exists but the overall structure is always the same. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "Shop platforms appear periodically during descent offering purchasable upgrades (weapon spread, fire rate, health, shield) for collected gems. At least 3 distinct upgrade options are available. Score 0 if no shop or upgrade system exists. Score 0.5 at most if a shop appears but offers fewer than 3 options or purchases have no observable effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Shop platforms appear periodically during descent offering purchasable upgrades (weapon spread, fire rate, health, shield) for collected gems. At least 3 distinct upgrade options are available. Score 0 if no shop or upgrade system exists. Score 0.5 at most if a shop appears but offers fewer than 3 options or purchases have no observable effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: health display, gem counter, combo indicator, shop interface, and game-over screen use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: health display, gem counter, combo indicator, shop interface, and game-over screen use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors."
   },
   "categories": [
@@ -47,22 +47,22 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Logic gates can be placed on a board from a toolbox: the player drags AND, OR, NOT, or XOR gates onto grid positions. Gates have clearly marked input and output pins. Placed gates can be removed or repositioned. Score 0 if gates cannot be placed or do not have functional inputs/outputs. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Logic gates can be placed on a board from a toolbox: the player drags AND, OR, NOT, or XOR gates onto grid positions. Gates have clearly marked input and output pins. Placed gates can be removed or repositioned. Score 0 if gates cannot be placed or do not have functional inputs/outputs. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Wires connect gate outputs to gate inputs: the player draws wires between pins to create signal paths. Signals propagate through the circuit when tested — inputs produce outputs according to correct boolean logic (AND requires both high, OR requires either high, NOT inverts, XOR requires exactly one high). Score 0 if wires cannot be drawn or logic evaluation is incorrect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Wires connect gate outputs to gate inputs: the player draws wires between pins to create signal paths. Signals propagate through the circuit when tested — inputs produce outputs according to correct boolean logic (AND requires both high, OR requires either high, NOT inverts, XOR requires exactly one high). Score 0 if wires cannot be drawn or logic evaluation is incorrect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "A test/run button evaluates the circuit: signals flow visibly from input terminals through gates and wires to output terminals. Output values are compared against the required solution. Correct outputs light up green; incorrect ones show red with the expected value. Score 0 if there is no way to test the circuit or no visual signal flow. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A test/run button evaluates the circuit: signals flow visibly from input terminals through gates and wires to output terminals. Output values are compared against the required solution. Correct outputs light up green; incorrect ones show red with the expected value. Score 0 if there is no way to test the circuit or no visual signal flow. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "The puzzle is solved when all output terminals produce the correct signal for all input combinations (truth table is satisfied). Level completion advances to the next puzzle. A clear button resets the board for reattempting. Score 0 if there is no completion check or truth table validation. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The puzzle is solved when all output terminals produce the correct signal for all input combinations (truth table is satisfied). Level completion advances to the next puzzle. A clear button resets the board for reattempting. Score 0 if there is no completion check or truth table validation. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",

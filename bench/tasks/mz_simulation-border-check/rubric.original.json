@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Travelers present documents that the player can drag, inspect, and compare against a rulebook on the desk workspace. Score 0 if no document inspection exists. Score 0.5 at most if documents appear but cannot be manipulated or compared. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Travelers present documents that the player can drag, inspect, and compare against a rulebook on the desk workspace. Score 0 if no document inspection exists. Score 0.5 at most if documents appear but cannot be manipulated or compared. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "The player stamps documents APPROVE or DENY, and incorrect decisions result in citations that reduce end-of-day pay. Score 0 if there is no approval/denial mechanic or no consequence for errors. Score 0.5 at most if stamps exist but errors have no financial impact. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player stamps documents APPROVE or DENY, and incorrect decisions result in citations that reduce end-of-day pay. Score 0 if there is no approval/denial mechanic or no consequence for errors. Score 0.5 at most if stamps exist but errors have no financial impact. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Each day has a time limit and pay is per-person processed, creating speed-vs-accuracy tension. Score 0 if there is no time pressure or pay-per-person system. Score 0.5 at most if a timer exists but has no effect on earnings. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Each day has a time limit and pay is per-person processed, creating speed-vs-accuracy tension. Score 0 if there is no time pressure or pay-per-person system. Score 0.5 at most if a timer exists but has no effect on earnings. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "End-of-day shows earnings vs family expenses (rent, heat, food, medicine), and the player must allocate limited funds to keep the family alive. Score 0 if no family/expense system exists. Score 0.5 at most if expenses are shown but have no consequence on gameplay. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "End-of-day shows earnings vs family expenses (rent, heat, food, medicine), and the player must allocate limited funds to keep the family alive. Score 0 if no family/expense system exists. Score 0.5 at most if expenses are shown but have no consequence on gameplay. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "Moral choice events present dilemmas (bribes, helping refugees, reporting corruption) that affect story progression and have visible consequences. Score 0 if no moral choices exist. Score 0.5 at most if choices appear but have no visible consequence on the narrative. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Moral choice events present dilemmas (bribes, helping refugees, reporting corruption) that affect story progression and have visible consequences. Score 0 if no moral choices exist. Score 0.5 at most if choices appear but have no visible consequence on the narrative. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -136,7 +136,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "UI panels use styled themed widgets with bureaucratic framing, typewriter fonts, or period-appropriate styling rather than raw Godot defaults. Score 0 if all UI is default Label/Button. Score 0.5 at most if some panels are styled but others remain raw defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "UI panels use styled themed widgets with bureaucratic framing, typewriter fonts, or period-appropriate styling rather than raw HTML 引擎 defaults. Score 0 if all UI is default Label/Button. Score 0.5 at most if some panels are styled but others remain raw defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     }
   ]
 }

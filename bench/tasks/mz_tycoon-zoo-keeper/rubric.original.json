@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player builds enclosures on a grid by fencing areas and assigning biome types. Animals are placed in enclosures. Enclosure biome must match animal habitat requirements or the animal becomes stressed. Score 0 if there is no enclosure building, if biomes do not exist, or if habitat matching has no effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player builds enclosures on a grid by fencing areas and assigning biome types. Animals are placed in enclosures. Enclosure biome must match animal habitat requirements or the animal becomes stressed. Score 0 if there is no enclosure building, if biomes do not exist, or if habitat matching has no effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Visitors enter through a gate, walk paths, view enclosures, and spend money on admission and amenities. Visitor count and happiness are tracked. More visitors means more revenue. Score 0 if visitors do not appear, if they generate no revenue, or if happiness is not tracked. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Visitors enter through a gate, walk paths, view enclosures, and spend money on admission and amenities. Visitor count and happiness are tracked. More visitors means more revenue. Score 0 if visitors do not appear, if they generate no revenue, or if happiness is not tracked. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "A money economy drives the zoo: admission and amenity sales generate income, animal purchases and staff salaries are expenses. A money counter is permanently visible. Score 0 if there is no money system or if everything is free. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A money economy drives the zoo: admission and amenity sales generate income, animal purchases and staff salaries are expenses. A money counter is permanently visible. Score 0 if there is no money system or if everything is free. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Animal welfare is tracked per animal with a visible mood indicator. Welfare depends on enclosure size, biome match, and companion animals. Stressed animals are less attractive to visitors. Score 0 if animal welfare does not exist or if it has no gameplay effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Animal welfare is tracked per animal with a visible mood indicator. Welfare depends on enclosure size, biome match, and companion animals. Stressed animals are less attractive to visitors. Score 0 if animal welfare does not exist or if it has no gameplay effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The full loop connects: title -> new zoo -> build/manage/observe -> time advances (seasons) -> zoo thrives or fails -> result screen. The game shows seasonal summaries with visitor and financial stats. Score 0 if any transition is missing or if there is no time progression. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The full loop connects: title -> new zoo -> build/manage/observe -> time advances (seasons) -> zoo thrives or fails -> result screen. The game shows seasonal summaries with visitor and financial stats. Score 0 if any transition is missing or if there is no time progression. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -116,7 +116,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: enclosures, animals, paths, visitors, amenities, and UI belong to a consistent bright, educational zoo visual language with lush natural tones. Score 0 if the screen mixes incompatible styles or reads as plain default Godot grey. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Overall art coherence: enclosures, animals, paths, visitors, amenities, and UI belong to a consistent bright, educational zoo visual language with lush natural tones. Score 0 if the screen mixes incompatible styles or reads as plain default plain grey. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",
@@ -131,7 +131,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "HUD and UI use styled themed widgets with nature-park chrome: animal cards have illustrated frames, welfare indicators have themed icons, and menus have natural-material backgrounds. Score 0 if UI elements are unstyled Godot defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI use styled themed widgets with nature-park chrome: animal cards have illustrated frames, welfare indicators have themed icons, and menus have natural-material backgrounds. Score 0 if UI elements are unstyled HTML 引擎 defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A5",

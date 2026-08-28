@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The plane moves with physics-based momentum: thrust accelerates, gravity pulls down, and turning has inertia. The player must manage energy state (speed vs altitude). Score 0 if movement is instant or grid-based with no physics. Score 0.5 at most if the plane moves but has no gravity or momentum effects. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The plane moves with physics-based momentum: thrust accelerates, gravity pulls down, and turning has inertia. The player must manage energy state (speed vs altitude). Score 0 if movement is instant or grid-based with no physics. Score 0.5 at most if the plane moves but has no gravity or momentum effects. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "The plane fires weapons in its facing direction, with projectiles that travel ballistically and destroy enemies on hit with visible feedback. Score 0 if the plane cannot fire or hits have no effect. Score 0.5 at most if firing works but projectiles are invisible or hits have no feedback. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The plane fires weapons in its facing direction, with projectiles that travel ballistically and destroy enemies on hit with visible feedback. Score 0 if the plane cannot fire or hits have no effect. Score 0.5 at most if firing works but projectiles are invisible or hits have no feedback. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Score milestones unlock new plane parts that can be equipped in a hangar screen, visibly changing the plane's appearance and performance. Score 0 if no unlock or customization system exists. Score 0.5 at most if unlocks exist but produce no visible change to the plane. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Score milestones unlock new plane parts that can be equipped in a hangar screen, visibly changing the plane's appearance and performance. Score 0 if no unlock or customization system exists. Score 0.5 at most if unlocks exist but produce no visible change to the plane. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "A hangar or loadout screen allows equipping different parts (engine, wings, weapons) onto the plane with visible stat changes and weight/energy constraints. Score 0 if no customization screen exists. Score 0.5 at most if parts can be selected but have no visible stat or appearance effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A hangar or loadout screen allows equipping different parts (engine, wings, weapons) onto the plane with visible stat changes and weight/energy constraints. Score 0 if no customization screen exists. Score 0.5 at most if parts can be selected but have no visible stat or appearance effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The plane has a health or damage system with visible damage states, and destruction triggers a crash animation and sortie failure. Score 0 if the plane is invincible or destruction has no consequence. Score 0.5 at most if health exists but damage has no visual indication. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The plane has a health or damage system with visible damage states, and destruction triggers a crash animation and sortie failure. Score 0 if the plane is invincible or destruction has no consequence. Score 0.5 at most if health exists but damage has no visual indication. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -136,7 +136,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "HUD and UI panels use styled themed widgets with aviation instruments, framed panels, or custom fonts rather than raw Godot defaults. Score 0 if all UI is default Label/Button. Score 0.5 at most if some panels are styled but others remain raw defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI panels use styled themed widgets with aviation instruments, framed panels, or custom fonts rather than raw HTML 引擎 defaults. Score 0 if all UI is default Label/Button. Score 0.5 at most if some panels are styled but others remain raw defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     }
   ]
 }

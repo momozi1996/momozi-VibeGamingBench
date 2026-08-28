@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -52,27 +52,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Platform movement is tight and expressive: the knight moves left/right with controlled acceleration, jumps with a smooth gravity arc supporting variable height or early-release control, flips to face movement direction, and lands reliably on platforms without jittering through walls or floors. Score 0 if movement is grid-snapped, floaty, lacks gravity, or uses pass-through placeholder collision. Score 0.5 at most if movement exists but the stage is empty or debug-like with no real platforming geometry. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Platform movement is tight and expressive: the knight moves left/right with controlled acceleration, jumps with a smooth gravity arc supporting variable height or early-release control, flips to face movement direction, and lands reliably on platforms without jittering through walls or floors. Score 0 if movement is grid-snapped, floaty, lacks gravity, or uses pass-through placeholder collision. Score 0.5 at most if movement exists but the stage is empty or debug-like with no real platforming geometry. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Advanced traversal mechanics gate progression: wall-cling, wall-jump, and dash each have distinct input, timing, cooldown or limits, and level geometry that requires them to advance. Score 0 if abilities are absent or purely cosmetic. Score 0.5 at most if abilities exist but are never required by any level geometry or hazard. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Advanced traversal mechanics gate progression: wall-cling, wall-jump, and dash each have distinct input, timing, cooldown or limits, and level geometry that requires them to advance. Score 0 if abilities are absent or purely cosmetic. Score 0.5 at most if abilities exist but are never required by any level geometry or hazard. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Melee combat is a stateful system: nail slash has a frontal hitbox and recovery, enemies take visible damage and can damage the player, invincibility frames prevent repeated hits, kills award geo and soul, and dead enemies are removed from collision. Score 0 if combat is only an animation or enemies are inert. Score 0.5 at most if only labels or score increments indicate damage with no observable HP or removal. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Melee combat is a stateful system: nail slash has a frontal hitbox and recovery, enemies take visible damage and can damage the player, invincibility frames prevent repeated hits, kills award geo and soul, and dead enemies are removed from collision. Score 0 if combat is only an animation or enemies are inert. Score 0.5 at most if only labels or score increments indicate damage with no observable HP or removal. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Soul, healing, health, and death form a survival loop: mask health decreases on damage, soul meter fills from combat, holding focus consumes soul to heal one mask during a vulnerable window, zero health triggers defeat with geo penalty. Score 0 if health or soul are missing or healing is free/instant. Score 0.5 at most if health exists but healing has no cost or death has no consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Soul, healing, health, and death form a survival loop: mask health decreases on damage, soul meter fills from combat, holding focus consumes soul to heal one mask during a vulnerable window, zero health triggers defeat with geo penalty. Score 0 if health or soul are missing or healing is free/instant. Score 0.5 at most if health exists but healing has no cost or death has no consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "Stage resolution and persistence are connected: the player starts from a checkpoint, reaches an endpoint to clear a stage, unlocks the next stage in save data, returns to the kingdom map, and load/continue restores progress. Score 0 if stages are disconnected scenes or progress never saves. Score 0.5 at most if stages exist but completion has no persistent effect on the map. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Stage resolution and persistence are connected: the player starts from a checkpoint, reaches an endpoint to clear a stage, unlocks the next stage in save data, returns to the kingdom map, and load/continue restores progress. Score 0 if stages are disconnected scenes or progress never saves. Score 0.5 at most if stages exist but completion has no persistent effect on the map. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -122,7 +122,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "The game has a coherent melancholic underground art direction: title, map, rooms, knight, enemies, boss, HUD, and effects share cold blue or deep purple tones, high-contrast silhouettes, and a ruined-kingdom mood. Score 0 if visible gameplay relies on ColorRect primitives, default Godot UI, or bright off-brief placeholder colors. Score 0.5 at most if art direction is attempted but inconsistent across screens."
+      "description": "The game has a coherent melancholic underground art direction: title, map, rooms, knight, enemies, boss, HUD, and effects share cold blue or deep purple tones, high-contrast silhouettes, and a ruined-kingdom mood. Score 0 if visible gameplay relies on ColorRect primitives, default HTML 引擎 UI, or bright off-brief placeholder colors. Score 0.5 at most if art direction is attempted but inconsistent across screens."
     },
     {
       "id": "A2",
@@ -142,7 +142,7 @@
     {
       "id": "A5",
       "agg": "mean",
-      "description": "UI chrome and atmospheric polish: title logo, map nodes, mask icons, soul meter, geo counter, boss HP, result panels, room transitions, particles, glow, and fog use themed frames, icons, or illustrated elements rather than naked Godot widgets. Score 0 if UI is mostly unstyled default labels and the game lacks atmospheric effects. Score 0.5 at most if only one screen is polished while others remain raw defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "UI chrome and atmospheric polish: title logo, map nodes, mask icons, soul meter, geo counter, boss HP, result panels, room transitions, particles, glow, and fog use themed frames, icons, or illustrated elements rather than naked default widgets. Score 0 if UI is mostly unstyled default labels and the game lacks atmospheric effects. Score 0.5 at most if only one screen is polished while others remain raw defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     }
   ]
 }

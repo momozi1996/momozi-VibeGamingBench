@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Rooms have interactive hotspots that reveal objects, clues, or hidden compartments when clicked. Examining hotspots sometimes adds items to an inventory bar. At least four hotspots per room exist. Score 0 if there are no interactive hotspots, if clicking does nothing, or if no inventory exists. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Rooms have interactive hotspots that reveal objects, clues, or hidden compartments when clicked. Examining hotspots sometimes adds items to an inventory bar. At least four hotspots per room exist. Score 0 if there are no interactive hotspots, if clicking does nothing, or if no inventory exists. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Items can be combined with each other or used on hotspots to solve puzzles (key on lock, cipher on coded message, tool on mechanism). Using the correct item advances the puzzle sequence. Score 0 if items cannot be used, if combinations do not exist, or if puzzles have no item interaction. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Items can be combined with each other or used on hotspots to solve puzzles (key on lock, cipher on coded message, tool on mechanism). Using the correct item advances the puzzle sequence. Score 0 if items cannot be used, if combinations do not exist, or if puzzles have no item interaction. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Puzzles gate progress: solving one reveals the next. Each room has a sequence of at least three puzzles that must be solved in order to escape. Puzzle types include pattern matching, code entry, or logic deduction. Score 0 if there are no puzzles, if puzzles do not gate progress, or if fewer than two puzzles exist per room. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Puzzles gate progress: solving one reveals the next. Each room has a sequence of at least three puzzles that must be solved in order to escape. Puzzle types include pattern matching, code entry, or logic deduction. Score 0 if there are no puzzles, if puzzles do not gate progress, or if fewer than two puzzles exist per room. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Narrative choices appear between puzzle segments that affect the story branch. Different choices lead to different rooms or endings. The player's choices are tracked. Score 0 if there are no narrative choices, if choices have no effect, or if the story is completely linear. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Narrative choices appear between puzzle segments that affect the story branch. Different choices lead to different rooms or endings. The player's choices are tracked. Score 0 if there are no narrative choices, if choices have no effect, or if the story is completely linear. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The full loop connects: title -> room entry -> explore/puzzle/choose -> escape or fail -> result screen showing ending reached. Multiple endings exist (true ending and incomplete endings). Score 0 if any transition is missing or if only one ending exists. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The full loop connects: title -> room entry -> explore/puzzle/choose -> escape or fail -> result screen showing ending reached. Multiple endings exist (true ending and incomplete endings). Score 0 if any transition is missing or if only one ending exists. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -121,7 +121,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: rooms, items, puzzles, UI, and effects belong to a consistent atmospheric-suspense visual language with dim, moody tones. Score 0 if the screen mixes incompatible styles or reads as plain default Godot grey. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Overall art coherence: rooms, items, puzzles, UI, and effects belong to a consistent atmospheric-suspense visual language with dim, moody tones. Score 0 if the screen mixes incompatible styles or reads as plain default plain grey. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",
@@ -136,7 +136,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "UI uses styled suspense chrome: inventory bar has themed frames, puzzle interfaces have room-appropriate styling, narrative choices have dramatic presentation, and transitions use atmospheric effects. Score 0 if UI elements are unstyled Godot defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "UI uses styled suspense chrome: inventory bar has themed frames, puzzle interfaces have room-appropriate styling, narrative choices have dramatic presentation, and transitions use atmospheric effects. Score 0 if UI elements are unstyled HTML 引擎 defaults. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     }
   ]
 }

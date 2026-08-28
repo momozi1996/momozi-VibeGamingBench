@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player character accelerates over time while grounded, building speed continuously. Momentum is preserved through jumps and wall-jumps. Hard collisions or landings reduce speed. The physics feel weighty and momentum-driven. Score 0 if movement is instant-velocity with no acceleration. Score 0.5 at most if acceleration exists but momentum is not preserved through jumps. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player character accelerates over time while grounded, building speed continuously. Momentum is preserved through jumps and wall-jumps. Hard collisions or landings reduce speed. The physics feel weighty and momentum-driven. Score 0 if movement is instant-velocity with no acceleration. Score 0.5 at most if acceleration exists but momentum is not preserved through jumps. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Wall-jumping is present and preserves horizontal momentum — jumping off a wall while moving fast launches the player further than a standing wall-jump. The mechanic rewards speed maintenance. Score 0 if no wall-jump exists. Score 0.5 at most if wall-jump exists but does not interact with momentum. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Wall-jumping is present and preserves horizontal momentum — jumping off a wall while moving fast launches the player further than a standing wall-jump. The mechanic rewards speed maintenance. Score 0 if no wall-jump exists. Score 0.5 at most if wall-jump exists but does not interact with momentum. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Gold pieces are collectible throughout levels. A key item must be collected to unlock the exit door. The exit door only opens when the key is held. Score 0 if no collectibles or key-gate mechanic exists. Score 0.5 at most if collectibles exist but the exit has no gate condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Gold pieces are collectible throughout levels. A key item must be collected to unlock the exit door. The exit door only opens when the key is held. Score 0 if no collectibles or key-gate mechanic exists. Score 0.5 at most if collectibles exist but the exit has no gate condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "A countdown timer per level creates urgency. Failing the timer or falling into a void restarts the level instantly. The timer is visible and ticking during gameplay. Score 0 if no timer or time pressure exists. Score 0.5 at most if a timer displays but has no consequence when it expires. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A countdown timer per level creates urgency. Failing the timer or falling into a void restarts the level instantly. The timer is visible and ticking during gameplay. Score 0 if no timer or time pressure exists. Score 0.5 at most if a timer displays but has no consequence when it expires. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "Level completion awards a rating based on time remaining and gold collected. The rating (stars, grade, or score) is displayed on the level-complete screen and on the level-select grid. Score 0 if no rating system exists. Score 0.5 at most if completion is binary with no performance grading. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Level completion awards a rating based on time remaining and gold collected. The rating (stars, grade, or score) is displayed on the level-complete screen and on the level-select grid. Score 0 if no rating system exists. Score 0.5 at most if completion is binary with no performance grading. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: timer, gold counter, level select grid, rating display, and completion screens use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: timer, gold counter, level select grid, rating display, and completion screens use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

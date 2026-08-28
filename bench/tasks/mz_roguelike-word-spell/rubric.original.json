@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "In combat, the player has a hand of 7 letter tiles drawn from their pool. Tiles can be dragged onto a spelling bar to form a word. Submitting a valid word deals damage proportional to word length. Invalid words fizzle and waste the turn. Score 0 if no word-forming mechanic exists. Score 0.5 at most if letters exist but word validity is not checked or length does not affect damage. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "In combat, the player has a hand of 7 letter tiles drawn from their pool. Tiles can be dragged onto a spelling bar to form a word. Submitting a valid word deals damage proportional to word length. Invalid words fizzle and waste the turn. Score 0 if no word-forming mechanic exists. Score 0.5 at most if letters exist but word validity is not checked or length does not affect damage. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Special letter combinations trigger elemental bonus effects — specific substrings within words activate fire, ice, heal, or other effects shown as visual icons. At least 3 distinct elemental triggers exist. Score 0 if no bonus effects exist. Score 0.5 at most if bonuses exist but fewer than 3 types are present. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Special letter combinations trigger elemental bonus effects — specific substrings within words activate fire, ice, heal, or other effects shown as visual icons. At least 3 distinct elemental triggers exist. Score 0 if no bonus effects exist. Score 0.5 at most if bonuses exist but fewer than 3 types are present. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Enemies have visible health and telegraph their next attack with a countdown number showing damage. The player must deal enough damage before the countdown reaches zero. Score 0 if enemies have no visible health or attack telegraph. Score 0.5 at most if health is shown but attacks are not telegraphed. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Enemies have visible health and telegraph their next attack with a countdown number showing damage. The player must deal enough damage before the countdown reaches zero. Score 0 if enemies have no visible health or attack telegraph. Score 0.5 at most if health is shown but attacks are not telegraphed. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Between encounters, the player can add new letter tiles to their pool, upgrade existing tiles (adding bonus effects), or remove weak tiles. These choices shape future combat capability. Score 0 if no tile management exists between encounters. Score 0.5 at most if management exists but offers only one option type. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Between encounters, the player can add new letter tiles to their pool, upgrade existing tiles (adding bonus effects), or remove weak tiles. These choices shape future combat capability. Score 0 if no tile management exists between encounters. Score 0.5 at most if management exists but offers only one option type. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "A map shows branching paths with combat nodes, rest nodes (heal), and shop nodes (buy/sell tiles). The player chooses their route through the dungeon. Score 0 if no map or path choice exists. Score 0.5 at most if a map exists but paths do not branch. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A map shows branching paths with combat nodes, rest nodes (heal), and shop nodes (buy/sell tiles). The player chooses their route through the dungeon. Score 0 if no map or path choice exists. Score 0.5 at most if a map exists but paths do not branch. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: spelling bar, health displays, map interface, shop screens, and result displays use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: spelling bar, health displays, map interface, shop screens, and result displays use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

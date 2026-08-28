@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player selects between at least three excavation tools (brush, trowel, pickaxe) and uses them to remove material from a dig site. Each tool removes layers at a different speed or precision. The active tool is indicated on screen and switching is immediate. Score 0 if there are fewer than 3 tools, if tools cannot be switched, or if all tools behave identically. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player selects between at least three excavation tools (brush, trowel, pickaxe) and uses them to remove material from a dig site. Each tool removes layers at a different speed or precision. The active tool is indicated on screen and switching is immediate. Score 0 if there are fewer than 3 tools, if tools cannot be switched, or if all tools behave identically. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Dig sites have visible layers that peel away as the player excavates -- colour, texture, or opacity changes as depth increases. Artefacts are hidden at specific depths and emerge gradually (partial reveal before full extraction). Score 0 if layers are invisible, if depth has no visual representation, or if artefacts appear instantly without gradual uncovering. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Dig sites have visible layers that peel away as the player excavates -- colour, texture, or opacity changes as depth increases. Artefacts are hidden at specific depths and emerge gradually (partial reveal before full extraction). Score 0 if layers are invisible, if depth has no visual representation, or if artefacts appear instantly without gradual uncovering. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Symbol puzzles gate access to sealed chambers: the player manipulates elements (matching symbols, rotating rings, or tracing patterns) and a correct solution triggers a visible unlock -- a door slides open, a passage is revealed, or a seal breaks. Score 0 if there are no puzzles, if puzzles have no interactive solution mechanic, or if solving produces no visible result. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Symbol puzzles gate access to sealed chambers: the player manipulates elements (matching symbols, rotating rings, or tracing patterns) and a correct solution triggers a visible unlock -- a door slides open, a passage is revealed, or a seal breaks. Score 0 if there are no puzzles, if puzzles have no interactive solution mechanic, or if solving produces no visible result. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Environmental hazards threaten the player at dig sites: at least two distinct hazard types (sandstorms, collapsing floors, oxygen depletion, avalanches) that reduce health or force retreat. A health or safety gauge is visible and depletes on hazard contact. Score 0 if there are no hazards, if hazards have no gameplay effect, or if there is no health/safety system. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Environmental hazards threaten the player at dig sites: at least two distinct hazard types (sandstorms, collapsing floors, oxygen depletion, avalanches) that reduce health or force retreat. A health or safety gauge is visible and depletes on hazard contact. Score 0 if there are no hazards, if hazards have no gameplay effect, or if there is no health/safety system. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The full loop is connected without restarting the executable: title -> explore world -> excavate at site -> discover artefact -> return to museum -> earn research -> unlock new content. Every transition is reachable through in-game UI. Score 0 if any transition in the chain is missing or broken. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The full loop is connected without restarting the executable: title -> explore world -> excavate at site -> discover artefact -> return to museum -> earn research -> unlock new content. Every transition is reachable through in-game UI. Score 0 if any transition in the chain is missing or broken. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -121,12 +121,12 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: the player, dig sites, artefacts, tools, museum, and UI belong to a consistent visual language with an earthy, ancient palette. Each biome reads as a coherent themed environment rather than mismatched parts or default Godot grey. Score 0 if the screen mixes incompatible styles, relies on unthemed placeholder rectangles, or looks like a blank default scene. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Overall art coherence: the player, dig sites, artefacts, tools, museum, and UI belong to a consistent visual language with an earthy, ancient palette. Each biome reads as a coherent themed environment rather than mismatched parts or default plain grey. Score 0 if the screen mixes incompatible styles, relies on unthemed placeholder rectangles, or looks like a blank default scene. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A2",
       "agg": "mean",
-      "description": "Character and object sprite quality: the player avatar, artefacts, tools, and puzzle elements are real sprite art (illustrated, pixel-art, or hand-drawn), not solid-color rectangles or default Godot primitives. Different artefact types and tool types are visually distinct. Score 0 if the avatar or artefacts are plain ColorRect/default shapes or indistinguishable colored blobs. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Character and object sprite quality: the player avatar, artefacts, tools, and puzzle elements are real sprite art (illustrated, pixel-art, or hand-drawn), not solid-color rectangles or default HTML 引擎 primitives. Different artefact types and tool types are visually distinct. Score 0 if the avatar or artefacts are plain ColorRect/default shapes or indistinguishable colored blobs. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A3",
@@ -136,7 +136,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "Animation and atmosphere: layer removal, artefact reveal, puzzle piece movement, chamber door opening, hazard effects, and museum arrangement each play as smooth multi-frame tweens or sprite animations -- no element snaps to its new state in a single frame. Scene transitions use a brief fade or slide rather than an instant cut. The world carries ambient life (drifting sand, swaying vines, bubbling water, falling snow). HUD and UI use styled themed widgets, not raw unstyled Godot defaults. Score 0 if all motion snaps with no easing/effects, or if nothing on screen ever animates during play. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "Animation and atmosphere: layer removal, artefact reveal, puzzle piece movement, chamber door opening, hazard effects, and museum arrangement each play as smooth multi-frame tweens or sprite animations -- no element snaps to its new state in a single frame. Scene transitions use a brief fade or slide rather than an instant cut. The world carries ambient life (drifting sand, swaying vines, bubbling water, falling snow). HUD and UI use styled themed widgets, not raw unstyled HTML 引擎 defaults. Score 0 if all motion snaps with no easing/effects, or if nothing on screen ever animates during play. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     }
   ]
 }

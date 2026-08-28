@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player tank moves in grid-aligned steps via directional input (arrow keys or WASD), visually rotates to face the movement direction, and fires a linear projectile in the facing direction with spacebar. Only one player shell may exist on screen at a time; firing while a shell is active is rejected. Score 0.5 at most if movement works but is free-form rather than grid-locked, or if multiple shells can exist simultaneously. Score 0 if the tank cannot move or shoot under player control. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player tank moves in grid-aligned steps via directional input (arrow keys or WASD), visually rotates to face the movement direction, and fires a linear projectile in the facing direction with spacebar. Only one player shell may exist on screen at a time; firing while a shell is active is rejected. Score 0.5 at most if movement works but is free-form rather than grid-locked, or if multiple shells can exist simultaneously. Score 0 if the tank cannot move or shoot under player control. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Enemies spawn from designated screen-edge zones in discrete waves, autonomously pathfind toward the command core or the player, navigate around walls, and fire shells when aligned. Score 0.5 at most if enemies appear but move randomly or walk through walls. Score 0 if enemies are static, spawn all at once without wave structure, or never attack. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Enemies spawn from designated screen-edge zones in discrete waves, autonomously pathfind toward the command core or the player, navigate around walls, and fire shells when aligned. Score 0.5 at most if enemies appear but move randomly or walk through walls. Score 0 if enemies are static, spawn all at once without wave structure, or never attack. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Collision and destruction systems work: player shells destroy enemy tanks and destructible barricades, enemy shells damage the player and can destroy the command core, steel walls block all shells without taking damage, and destroyed entities are removed from the game state. Score 0.5 at most if only some collision pairs work correctly. Score 0 if shells pass through entities or destruction has no game-state effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Collision and destruction systems work: player shells destroy enemy tanks and destructible barricades, enemy shells damage the player and can destroy the command core, steel walls block all shells without taking damage, and destroyed entities are removed from the game state. Score 0.5 at most if only some collision pairs work correctly. Score 0 if shells pass through entities or destruction has no game-state effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Victory and defeat conditions are enforced: destroying all enemies in a zone triggers victory, the command core being hit triggers instant defeat, and running out of lives triggers defeat. Both outcomes produce a result screen or transition back to the map. Score 0.5 at most if only one terminal state works. Score 0 if the game has no win/lose condition or results require relaunching. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Victory and defeat conditions are enforced: destroying all enemies in a zone triggers victory, the command core being hit triggers instant defeat, and running out of lives triggers defeat. Both outcomes produce a result screen or transition back to the map. Score 0.5 at most if only one terminal state works. Score 0 if the game has no win/lose condition or results require relaunching. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "The full game loop is connected: title screen -> tactical map zone selection -> combat -> result -> return to map, with zone unlock progress persisted so the player can advance through multiple zones across sessions. Score 0 if any transition is missing, if there is no zone selection, or if progress resets on relaunch. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The full game loop is connected: title screen -> tactical map zone selection -> combat -> result -> return to map, with zone unlock progress persisted so the player can advance through multiple zones across sessions. Score 0 if any transition is missing, if there is no zone selection, or if progress resets on relaunch. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -121,7 +121,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: battlefield tiles, tanks, explosions, UI panels, and menus share a coherent gritty dieselpunk palette of rust-iron, deep shadows, and neon hazard accents. Screenshots read as an authored vertical slice with deliberate colour and mood. Score 0 if visible gameplay relies on raw ColorRect shapes, default Godot widgets, mismatched asset packs, or bright generic placeholder colours."
+      "description": "Overall art coherence: battlefield tiles, tanks, explosions, UI panels, and menus share a coherent gritty dieselpunk palette of rust-iron, deep shadows, and neon hazard accents. Screenshots read as an authored vertical slice with deliberate colour and mood. Score 0 if visible gameplay relies on raw ColorRect shapes, default default widgets, mismatched asset packs, or bright generic placeholder colours."
     },
     {
       "id": "A2",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "UI presentation is custom and themed: title screen, tactical map, combat HUD, armor/life indicators, victory/defeat panels, and accuracy stats use styled panels, military-industrial fonts, borders, icons, or frames matching the dieselpunk tone. Score 0 if the UI is mostly naked Godot controls, unstyled default Label/Button/ColorRect, or plain floating text."
+      "description": "UI presentation is custom and themed: title screen, tactical map, combat HUD, armor/life indicators, victory/defeat panels, and accuracy stats use styled panels, military-industrial fonts, borders, icons, or frames matching the dieselpunk tone. Score 0 if the UI is mostly naked HTML 引擎 controls, unstyled default Label/Button/ColorRect, or plain floating text."
     },
     {
       "id": "A4",

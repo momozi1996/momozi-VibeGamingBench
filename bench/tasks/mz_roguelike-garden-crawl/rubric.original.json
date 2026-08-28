@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Each floor is a grid-based encounter where the player plants seeds on soil tiles. Seeds grow over turns (sprout -> mature -> active) and provide effects when mature. Planting costs energy. Score 0 if no planting mechanic exists. Score 0.5 at most if seeds can be placed but do not grow or cost no resource. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Each floor is a grid-based encounter where the player plants seeds on soil tiles. Seeds grow over turns (sprout -> mature -> active) and provide effects when mature. Planting costs energy. Score 0 if no planting mechanic exists. Score 0.5 at most if seeds can be placed but do not grow or cost no resource. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Mature plants provide distinct effects: attack plants damage adjacent enemies, healing plants restore gardener health, wall plants block enemy paths, and energy plants generate resources. At least 4 plant effect types exist. Score 0 if plants have no effect. Score 0.5 at most if fewer than 3 effect types exist. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Mature plants provide distinct effects: attack plants damage adjacent enemies, healing plants restore gardener health, wall plants block enemy paths, and energy plants generate resources. At least 4 plant effect types exist. Score 0 if plants have no effect. Score 0.5 at most if fewer than 3 effect types exist. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Enemies approach the gardener from the opposite side of the grid. If they reach the gardener, they deal damage. The player must use plants strategically to defeat or block enemies before they arrive. Score 0 if no enemies or threat exists. Score 0.5 at most if enemies exist but plants cannot affect them. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Enemies approach the gardener from the opposite side of the grid. If they reach the gardener, they deal damage. The player must use plants strategically to defeat or block enemies before they arrive. Score 0 if no enemies or threat exists. Score 0.5 at most if enemies exist but plants cannot affect them. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "The player carries a seed deck and draws seeds each turn. Between floors, new seeds can be drafted and unwanted seeds composted (removed). Deck management shapes strategy. Score 0 if no deck or seed management exists. Score 0.5 at most if seeds exist but cannot be added or removed between floors. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player carries a seed deck and draws seeds each turn. Between floors, new seeds can be drafted and unwanted seeds composted (removed). Deck management shapes strategy. Score 0 if no deck or seed management exists. Score 0.5 at most if seeds exist but cannot be added or removed between floors. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "Seasons rotate every few floors (spring, summer, autumn, winter), changing which plants thrive. Spring boosts growth speed, summer strengthens attacks, autumn yields bonus resources, winter slows growth. The current season is visible. Score 0 if no season mechanic exists. Score 0.5 at most if seasons change visually but have no gameplay effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Seasons rotate every few floors (spring, summer, autumn, winter), changing which plants thrive. Spring boosts growth speed, summer strengthens attacks, autumn yields bonus resources, winter slows growth. The current season is visible. Score 0 if no season mechanic exists. Score 0.5 at most if seasons change visually but have no gameplay effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: energy bar, health display, seed hand, draft screen, season indicator, and greenhouse use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: energy bar, health display, seed hand, draft screen, season indicator, and greenhouse use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

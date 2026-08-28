@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "Headless launch exits 0 without fatal errors; this 0/1 gate multiplies the rest."
   },
   "categories": [
@@ -116,7 +116,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: board, pieces, terrain, UI, and effects belong to a consistent medieval-fantasy visual language with glowing runes and stone textures. 0 if the screen mixes incompatible styles or reads as plain default Godot grey. Programmatic shapes/solid fills/untextured geometry cap at 0.5."
+      "description": "Overall art coherence: board, pieces, terrain, UI, and effects belong to a consistent medieval-fantasy visual language with glowing runes and stone textures. 0 if the screen mixes incompatible styles or reads as plain default plain grey. Programmatic shapes/solid fills/untextured geometry cap at 0.5."
     },
     {
       "id": "A2",
@@ -131,7 +131,7 @@
     {
       "id": "A4",
       "agg": "mean",
-      "description": "HUD and UI use styled themed widgets with fantasy chrome: ability buttons have illustrated frames, cooldown displays are themed, and menus have authored backgrounds. 0 if UI elements are unstyled Godot defaults. Programmatic shapes/solid fills/untextured geometry cap at 0.5."
+      "description": "HUD and UI use styled themed widgets with fantasy chrome: ability buttons have illustrated frames, cooldown displays are themed, and menus have authored backgrounds. 0 if UI elements are unstyled HTML 引擎 defaults. Programmatic shapes/solid fills/untextured geometry cap at 0.5."
     },
     {
       "id": "A5",

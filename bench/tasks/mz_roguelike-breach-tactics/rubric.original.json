@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,27 +51,27 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Combat takes place on a small grid (8x8 or similar). The player controls a squad of mechs, moving each and using one ability per turn. Movement and abilities are grid-based with clear range indicators. Score 0 if no grid-based combat exists. Score 0.5 at most if a grid exists but movement or abilities are not grid-constrained. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Combat takes place on a small grid (8x8 or similar). The player controls a squad of mechs, moving each and using one ability per turn. Movement and abilities are grid-based with clear range indicators. Score 0 if no grid-based combat exists. Score 0.5 at most if a grid exists but movement or abilities are not grid-constrained. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Every enemy telegraphs its next action before the player's turn — attack direction, movement target, or spawn location are shown as visible indicators on the grid. The player uses this information to plan counter-moves. Score 0 if enemy intents are hidden. Score 0.5 at most if some intents are shown but not all enemies telegraph. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Every enemy telegraphs its next action before the player's turn — attack direction, movement target, or spawn location are shown as visible indicators on the grid. The player uses this information to plan counter-moves. Score 0 if enemy intents are hidden. Score 0.5 at most if some intents are shown but not all enemies telegraph. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Buildings occupy grid tiles and must be protected. A structural integrity bar decreases when buildings are destroyed. Losing all integrity fails the mission. The player must balance offense against building protection. Score 0 if no building protection objective exists. Score 0.5 at most if buildings exist but their destruction has no consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Buildings occupy grid tiles and must be protected. A structural integrity bar decreases when buildings are destroyed. Losing all integrity fails the mission. The player must balance offense against building protection. Score 0 if no building protection objective exists. Score 0.5 at most if buildings exist but their destruction has no consequence. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Mech abilities include displacement effects (push, pull) that can redirect enemies into each other, off the grid, or away from buildings. Positioning and displacement are core tactical tools. Score 0 if no displacement abilities exist. Score 0.5 at most if push/pull exists but is rarely useful tactically. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Mech abilities include displacement effects (push, pull) that can redirect enemies into each other, off the grid, or away from buildings. Positioning and displacement are core tactical tools. Score 0 if no displacement abilities exist. Score 0.5 at most if push/pull exists but is rarely useful tactically. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "A timeline-reset mechanic allows the player to undo one full turn a limited number of times per battle. This is a strategic resource for recovering from mistakes. The remaining resets are visible. Score 0 if no undo/reset mechanic exists. Score 0.5 at most if reset exists but is unlimited or has no visible counter. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "A timeline-reset mechanic allows the player to undo one full turn a limited number of times per battle. This is a strategic resource for recovering from mistakes. The remaining resets are visible. Score 0 if no undo/reset mechanic exists. Score 0.5 at most if reset exists but is unlimited or has no visible counter. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
@@ -131,7 +131,7 @@
     {
       "id": "A3",
       "agg": "mean",
-      "description": "HUD and UI chrome: integrity bar, reset counter, ability panels, upgrade screens, and result displays use styled themed widgets — not raw unstyled Godot defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
+      "description": "HUD and UI chrome: integrity bar, reset counter, ability panels, upgrade screens, and result displays use styled themed widgets — not raw unstyled HTML 引擎 defaults. Score 0 if primary UI elements are obviously unstyled. Score 0.5 at most if the game uses programmatic shapes (ColorRect, solid fills, or untextured geometry) instead of real illustrated or pixel-art assets."
     },
     {
       "id": "A4",

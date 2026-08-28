@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors."
   },
   "categories": [
@@ -47,22 +47,22 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "Goo blobs can be dragged from a supply area and attached to existing structure nodes. Elastic bonds form automatically between the placed blob and nearby attachment points, creating a connected structure. Score 0 if blobs cannot be placed or do not form connections. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Goo blobs can be dragged from a supply area and attached to existing structure nodes. Elastic bonds form automatically between the placed blob and nearby attachment points, creating a connected structure. Score 0 if blobs cannot be placed or do not form connections. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Physics simulation is active: the structure sways under gravity, bonds stretch elastically, overloaded bonds can snap, and the structure settles into equilibrium after each placement. Score 0 if the structure is static or blobs snap to fixed positions without physics. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Physics simulation is active: the structure sways under gravity, bonds stretch elastically, overloaded bonds can snap, and the structure settles into equilibrium after each placement. Score 0 if the structure is static or blobs snap to fixed positions without physics. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "The level has a goal pipe or target area: when goo blobs reach or touch the goal, they are collected with visual feedback and the level progresses toward completion. A minimum collection quota defines success. Score 0 if there is no goal or completion condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The level has a goal pipe or target area: when goo blobs reach or touch the goal, they are collected with visual feedback and the level progresses toward completion. A minimum collection quota defines success. Score 0 if there is no goal or completion condition. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Goo supply is limited per level: the player has a finite number of blobs and must build efficiently. Using fewer blobs than required for completion is tracked as a bonus metric. Score 0 if supply is unlimited or the constraint has no gameplay effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Goo supply is limited per level: the player has a finite number of blobs and must build efficiently. Using fewer blobs than required for completion is tracked as a bonus metric. Score 0 if supply is unlimited or the constraint has no gameplay effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",

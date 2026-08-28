@@ -4,7 +4,7 @@
   "max_demo_seconds": 20,
   "build_check": {
     "id": "BUILD",
-    "cmd": "godot --headless --path /workspace/game --quit-after 5",
+    "cmd": "html 引擎 --headless --path /workspace/game --quit-after 5",
     "description": "The project launches with the headless command, exits with code 0, and produces no fatal errors. Returns 0 or 1; the rest of the score is multiplied by this gate."
   },
   "categories": [
@@ -51,32 +51,32 @@
     {
       "id": "M1",
       "agg": "max",
-      "description": "The player character moves responsively with keyboard input (WASD and/or arrow keys) inside a scrolling or bounded arena, with smooth multi-frame movement and collision or clamping that prevents leaving the playable area. Score 0 if the player is static, moves only by mouse clicks, teleports between positions, or can leave the arena bounds. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The player character moves responsively with keyboard input (WASD and/or arrow keys) inside a scrolling or bounded arena, with smooth multi-frame movement and collision or clamping that prevents leaving the playable area. Score 0 if the player is static, moves only by mouse clicks, teleports between positions, or can leave the arena bounds. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M2",
       "agg": "max",
-      "description": "Enemies continuously spawn from outside the visible area or from arena-edge spawners, move toward the player, and appear in groups large enough to create survivor-like pressure. At least two enemy types with different silhouettes and behavior differences are visible. Score 0 if enemies are hand-placed only, do not pursue, spawn on top of the player, or are all identical. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Enemies continuously spawn from outside the visible area or from arena-edge spawners, move toward the player, and appear in groups large enough to create survivor-like pressure. At least two enemy types with different silhouettes and behavior differences are visible. Score 0 if enemies are hand-placed only, do not pursue, spawn on top of the player, or are all identical. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M3",
       "agg": "max",
-      "description": "Weapons fire automatically without requiring the player to click each attack. At least one weapon targets or aims independently while the player moves. Projectiles, pulses, mines, drones, beams, or other attack effects visibly damage enemies and reduce enemy HP. Score 0 if attacks require manual button-mashing, weapon effects are invisible, or enemies do not visibly take damage. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Weapons fire automatically without requiring the player to click each attack. At least one weapon targets or aims independently while the player moves. Projectiles, pulses, mines, drones, beams, or other attack effects visibly damage enemies and reduce enemy HP. Score 0 if attacks require manual button-mashing, weapon effects are invisible, or enemies do not visibly take damage. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M4",
       "agg": "max",
-      "description": "Defeated enemies drop collectible XP gems/shards or equivalent pickups that remain visible in the arena, move toward or are collected by the player, and increase a permanently visible XP/level meter. Score 0 if there are no pickups, XP increases without a visible collectible, or the XP/level state is hidden. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "Defeated enemies drop collectible XP gems/shards or equivalent pickups that remain visible in the arena, move toward or are collected by the player, and increase a permanently visible XP/level meter. Score 0 if there are no pickups, XP increases without a visible collectible, or the XP/level state is hidden. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M5",
       "agg": "max",
-      "description": "When the XP meter fills, gameplay pauses or visibly slows and a styled level-up overlay presents at least three upgrade choices with names, icons, and short effect text. Selecting an upgrade immediately changes gameplay in an observable way (new weapon, more projectiles, stat change) that persists after the overlay closes. Score 0 if leveling is automatic with no choice, fewer than three choices appear, or the selected upgrade has no visible effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "When the XP meter fills, gameplay pauses or visibly slows and a styled level-up overlay presents at least three upgrade choices with names, icons, and short effect text. Selecting an upgrade immediately changes gameplay in an observable way (new weapon, more projectiles, stat change) that persists after the overlay closes. Score 0 if leveling is automatic with no choice, fewer than three choices appear, or the selected upgrade has no visible effect. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "M6",
       "agg": "max",
-      "description": "The core survivor loop is sustained in one replay: player movement, enemy pursuit, auto-attacks, damage, enemy death, XP pickup, level-up choice, upgrade application, and resumed combat all occur without restarting or jumping to a new scenario. Score 0.5 at most if the loop appears only in isolated debug setups or cannot be played continuously. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default Godot widgets."
+      "description": "The core survivor loop is sustained in one replay: player movement, enemy pursuit, auto-attacks, damage, enemy death, XP pickup, level-up choice, upgrade application, and resumed combat all occur without restarting or jumping to a new scenario. Score 0.5 at most if the loop appears only in isolated debug setups or cannot be played continuously. Score 1 requires the mechanic to be presented in a visually authored context with real sprites or illustrated assets. Score 0.5 at most if the mechanic works but is represented entirely by programmatic shapes, solid-color fills, or default default widgets."
     },
     {
       "id": "D1",
