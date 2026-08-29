@@ -1,10 +1,23 @@
-"""momozi-VibeGamingBench
+"""VibeGamingBench — an Agent Benchmark for Vibe Gaming.
 
-Browser game generation benchmark with bilingual tasks and HTML build gates.
-
-v0.4.0 - 982 language-specific tasks (491 concepts x English/Chinese).
+The v0.5 line preserves the bilingual task pool and adds inspectable static and
+dynamic evaluation paths for Agent Harness submissions.
 """
 
 PROJECT_NAME = "momozi-VibeGamingBench"
-__version__ = "0.4.0"
-__all__ = ["adapters", "auto_eval", "judge", "leaderboard", "run", "task", "verifiers"]
+__version__ = "0.5.0"
+__all__ = [
+    "adapters",
+    "auto_eval",
+    "judge",
+    "leaderboard",
+    "multimodal_judge",
+    "protocol",
+    "run",
+    "runtime_smoke",
+    "scoring",
+    "static_eval",
+    "statistics",
+    "task",
+    "verifiers",
+]

@@ -1,0 +1,52 @@
+# Hotline Heist
+
+Build **Hotline Heist**, a top-down fast-action shooter as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The fantasy is bursting through doors into rooms full of armed guards, clearing
+entire floors in seconds with precise aim and brutal efficiency. The interesting
+tension is fragility: both the player and enemies die in one hit, making every
+room entry a lethal puzzle where hesitation means death. Combo scoring rewards
+speed — chaining kills without pause multiplies the score, encouraging reckless
+aggression balanced against the instant-death stakes. Weapon variety scattered
+across floors forces improvisation: a shotgun clears a cluster but alerts the
+next room, while a silenced pistol preserves surprise but demands accuracy.
+
+## What the Player Experiences
+
+The player sees a stylized title screen, selects a floor from the campaign list,
+and spawns outside the building's entrance. The camera shows the full floor plan
+from above — rooms, corridors, doors, and enemy patrol routes are partially
+visible. The player moves with WASD, aims with the mouse, and clicks to attack.
+Doors can be kicked open to stun enemies behind them.
+
+Each floor is a self-contained puzzle of 4-8 rooms connected by doors and
+hallways. Guards patrol set routes; some stand still, others pace. Weapons litter
+the ground — bats, pistols, shotguns, SMGs, thrown knives — each with limited
+ammo or single-use. Clearing all enemies on a floor triggers a score screen
+showing time, combo chain, and weapon variety bonus. Dying restarts the floor
+instantly. The campaign offers 8+ floors with escalating guard density, new enemy
+types (armored, dogs, gunners), and tighter layouts.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

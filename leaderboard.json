@@ -1,8 +1,9 @@
 {
   "benchmark": "momozi-VibeGamingBench",
-  "version": "0.4.0",
-  "evaluation_protocol": "auto-v1",
-  "generated_at": null,
+  "version": "0.5.0",
+  "benchmark_release": null,
+  "evaluation_protocol": "agent-v2",
+  "generated_at": "2026-08-29T06:38:43.797398+00:00",
   "leaderboard": [],
   "n_runs": 0,
   "n_models": 0

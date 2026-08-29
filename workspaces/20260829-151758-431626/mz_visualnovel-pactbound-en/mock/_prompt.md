@@ -1,0 +1,70 @@
+# Pactbound
+
+Build **Pactbound**, a summoner pact-choice visual novel, as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It is a **complete, shippable
+micro-game** that could sit on an itch.io page or Steam as a polished vertical
+slice.
+
+## Core Vision
+
+You are a summoner walking a road lined with spirits and monsters, and each one
+offers the same dangerous bargain: a pact. Bind it and gain its power, but carry
+its price and its loyalties; refuse it and stay clean but weaker; deceive it and
+risk what comes due later. Pactbound is a **choice-driven visual novel** where
+the player meets a procession of would-be familiars and decides which to bind,
+and the **collection of pacts they carry becomes who they are** — shaping which
+factions trust them, which paths open, and how the journey ends.
+
+The fantasy is **defining yourself by the bargains you make**. The heart of the
+loop is **meet, weigh, bind or break** — encountering a spirit with its own
+nature and cost, judging what a pact with it would make of you, and committing
+to a bargain the story remembers. A summoner bound to gentle hearth-spirits
+walks a different road than one who collected demons, and the writing should make
+those allegiances felt. It should play like an atmospheric journey with real
+stakes and genuinely different endings, not a linear tour with a single path.
+
+## What the Player Experiences
+
+1. **An Authored Opening** — From a styled title the player sets out as a
+   summoner and is introduced to the road ahead and the bargain at the heart of
+   the world, presented as illustrated scenes with characters and narration.
+2. **Spirits with Their Own Nature** — Along the way the player meets a variety
+   of would-be familiars — a loyal hearth-spirit, a proud beast, a whispering
+   demon, and others — each with its own voice, temperament, the power it
+   offers, and the price it asks. Encounters feel like meeting distinct
+   characters, not picking from an identical list.
+3. **Bind, Refuse, or Deceive** — At each spirit the player makes a real choice:
+   seal a pact and take on its power and its loyalties, refuse and stay
+   unbound, or strike a false bargain with consequences down the line. The
+   decision is deliberate and clearly registered, and the player can see what
+   they have bound to themselves.
+4. **Pacts That Define You** — The pacts the player carries are **remembered and
+   accumulate into an identity**: which factions and spirits trust or revile the
+   player, which options and dialogue open up, and which later encounters and
+   endings become reachable all depend on the company they keep. A choice made
+   early should visibly shape a scene much later.
+5. **A Journey That Ends Many Ways** — The road resolves in one of several
+   genuinely different endings — crowned among monsters, a champion of the
+   unbound, a betrayer alone, or a peacemaker between worlds — each reachable
+   through the pacts and choices the player made, and shown as an authored,
+   styled conclusion that names what they became. The player can set out again
+   to bind a different fate.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

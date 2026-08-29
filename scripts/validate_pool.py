@@ -4,7 +4,7 @@ This checks task/runner compatibility. It does not claim that a real model has
 implemented each game or that the subjective rubric has been calibrated.
 
 用法: python3 scripts/validate_pool.py --only-mz [--tasks N] [--workers 8]
-输出: bench/POOL_AUDIT.md + runs/pool_audit_<ts>.json
+输出: bench/POOL_AUDIT.md + runs/pool_audit/pool_audit_<ts>.json
 """
 from __future__ import annotations
 

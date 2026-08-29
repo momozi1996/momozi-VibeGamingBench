@@ -6,7 +6,7 @@
   P (Presentation) = rubric judge（claude/codex/adapter）      # 0.25
 
 当前 mz_* 题走 BUILD gate 与四维 rubric。正式自动榜单使用 momozi.auto_eval 的
-auto-v1 协议，额外执行 CONTRACT 门控。
+agent-v2 协议，额外执行 Static + Dynamic 门控；旧 auto-v1 结果仍可读取。
 
 用法:
   python3 -m momozi.run <task.yaml> --agent <profile> [--rounds R1,R2] [--out res.json]

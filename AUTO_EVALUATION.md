@@ -1,182 +1,229 @@
-# 自动评测协议
+# Automatic Evaluation Protocol
 
-## API Key
+This document describes the v0.5 `agent-v2` evaluation path for
+VibeGamingBench. The legacy v0.x runner and `auto-v1` result records remain
+readable for continuity, but new publishable runs should use this protocol.
 
-评分 LLM 默认使用 `deepseek-v4-flash`。在仓库根目录创建 `.env`：
+## 1. Scoring Key
+
+The default code and screenshot judge is `deepseek-v4-flash`. Create `.env` in
+the repository root:
 
 ```env
 DEEPSEEK_API_KEY=sk-your-key
 DEEPSEEK_JUDGE_MODEL=deepseek-v4-flash
 DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_VLM_MODEL=deepseek-v4-flash
+DEEPSEEK_VLM_BASE_URL=https://api.deepseek.com
 ```
 
-`.env` 已加入 `.gitignore`，不要在 `.env.example`、脚本、结果 JSON 或命令行中写真实 key。
-`--judge-model` 与 `--judge-base-url` 可以覆盖 `.env`。
+`DEEPSEEK_API_KEY` is the only secret and is ignored by git. Do not place a
+real key in source files, result JSON, or shell history. `--judge-model`,
+`--judge-base-url`, `--vlm-model`, and `--vlm-base-url` override these values.
 
-## 被测模型接入
+## 2. Agent Harness
 
-使用 `profiles.yaml`：
+The harness must write `index.html` and `game_logic.js` into the supplied
+product directory. See [`AGENT_HARNESS.md`](AGENT_HARNESS.md) for the complete
+contract.
+
+Profile-based execution:
 
 ```bash
 python3 scripts/auto_evaluate.py \
-  --all \
+  --task mz_sports-fishing-tournament-en \
   --agent codex \
-  --model-label model-name \
-  --workers 4
+  --model-label your-model
 ```
 
-使用任意 harness：
+External harness:
 
 ```bash
 python3 scripts/auto_evaluate.py \
   --all \
   --harness-command 'my-harness --prompt {prompt_file} --output {product_dir}' \
-  --model-label model-name \
+  --model-label your-model \
+  --harness-label my-harness \
   --workers 4
 ```
 
-支持的命令占位符：
+Supported placeholders are `{prompt_file}`, `{product_dir}`, `{workspace}`,
+`{task_file}`, and `{task_id}`. The same values are exported as
+`MOMOZI_PROMPT_FILE`, `MOMOZI_PRODUCT_DIR`, `MOMOZI_WORKSPACE`,
+`MOMOZI_TASK_FILE`, and `MOMOZI_TASK_ID`. Commands are executed as argument
+arrays without shell interpolation.
 
-| 占位符 | 内容 |
-|---|---|
-| `{prompt_file}` | 当前单语提示词文件 |
-| `{product_dir}` | 应写入两个交付文件的目录 |
-| `{workspace}` | 当前题目的隔离工作区 |
-| `{task_file}` | 当前 task YAML |
-| `{task_id}` | 当前 task ID |
+## 3. Task Selection
 
-同样的信息会写入 `MOMOZI_PROMPT_FILE`、`MOMOZI_PRODUCT_DIR`、
-`MOMOZI_WORKSPACE`、`MOMOZI_TASK_FILE`、`MOMOZI_TASK_ID` 环境变量。
-
-## 题目选择
+Selection must be explicit:
 
 ```bash
-# 单题
-python3 scripts/auto_evaluate.py --task TASK_ID --agent codex
-
-# 指定语言与难度
-python3 scripts/auto_evaluate.py \
-  --language zh --difficulty high --agent codex --model-label model-name
-
-# 从筛选结果第 101 题开始跑 50 题
-python3 scripts/auto_evaluate.py \
-  --all --offset 100 --limit 50 --agent codex --model-label model-name
-
-# 只打印选择结果，不生成、不调用 judge
-python3 scripts/auto_evaluate.py --all --agent mock --dry-run
+--task TASK_ID
+--all
+--family FAMILY
+--difficulty low|medium|high
+--language en|zh
+--offset N --limit N
 ```
 
-必须显式传 `--all`、`--task` 或至少一个筛选条件。
+Use `--dry-run` to inspect selection without generation or judging. `--resume`
+requires `--run-id` and only reuses results produced with the same model and
+judge configuration.
 
-## 断点续跑
+## 4. Evaluation Pipeline
 
-```bash
-python3 scripts/auto_evaluate.py \
-  --all \
-  --agent codex \
-  --model-label model-name \
-  --run-id model-name-full \
-  --resume
-```
+For each task:
 
-`--resume` 会跳过 `runs/auto/<run-id>/` 中已经存在的每题结果。不要在同一个 run ID
-中更换被测模型、judge 模型或协议参数。
+1. The harness generates an isolated artifact.
+2. `StaticEvaluator` runs the deterministic BUILD gate and Node contract.
+3. The code judge scores the legacy four dimensions when deterministic gates allow it.
+4. Chromium runtime smoke starts a local server, loads the page, observes errors,
+   attempts `ArrowRight`, and captures `boot.png`.
+5. The multimodal judge scores the screenshot on Functional Visual and Presentation.
+6. `momozi.scoring` fuses components and applies diagnostic hard caps.
+7. Results are written with schema v2 and aggregated into the release-aware leaderboard.
 
-## 打分标准
+Dynamic evaluation is intentionally a smoke test. A pass means launch,
+stability, input-probe success when enabled, and screenshot capture; it is not
+full gameplay verification.
 
-DeepSeek 为四个维度给 0-5 分：
+## 5. Scores
 
-| 分数 | 标准 |
-|---:|---|
-| 0 | 缺失、不可用或没有可验证实现 |
-| 1 | 名义存在，但严重损坏或几乎只有表面效果 |
-| 2 | 部分实现，缺少主要需求或系统连接 |
-| 3 | 主要需求已实现，形成可用的核心体验 |
-| 4 | 完成度强，具备有意义的深度、反馈与打磨 |
-| 5 | 证据充分、完成优秀，并实质超过基础要求 |
+Component weights are fixed by scoring version `1.0`:
 
-每个维度必须返回：
+| Component | Weight |
+|---|---:|
+| Static | 0.40 |
+| Dynamic | 0.25 |
+| Visual | 0.20 |
+| Design | 0.15 |
 
-- `score`
-- `reason`
-- `evidence`
-- `missing`
-
-judge 只能使用代码证据，不能根据变量名、标签、注释、TODO 或模型自述推断功能存在。
-
-## 分数计算
+The visual component is the average of Functional Visual and Presentation,
+converted from 0–5 to 0–100. Hard caps are applied to the fused raw score:
 
 ```text
-rubric_score_100 =
-  100 × (
-    completeness / 5 × 0.15 +
-    richness     / 5 × 0.35 +
-    player_exp  / 5 × 0.15 +
-    visual      / 5 × 0.35
-  )
-
-overall_score = BUILD × CONTRACT × rubric_score_100
+BUILD failure       → final ≤ 20
+boot/page-load fail → final ≤ 10
+runtime fatal       → final ≤ 35
 ```
 
-`BUILD` 检查：
+The result keeps both new scores and compatibility fields:
 
-- `index.html` 存在。
-- `game_logic.js` 存在。
-- 页面有 Canvas/WebGL 呈现信号。
-- 页面不使用被禁止的重型运行时外部资源。
+```text
+scores.raw
+scores.final
+scores.overall_score
+scores.rubric_score_100
+scores.legacy_overall_score
+```
 
-`CONTRACT` 检查：
+## 6. Judge Rules
 
-- `game_logic.js` 可被 Node.js 导入。
-- 导出 `createGame(opts)`。
-- 导出 `advance(game, input, dt)`。
-- 初始状态和推进后状态为对象。
+Code and screenshot judges must return strict JSON. Scores are 0–5:
 
-BUILD 为 0 或 CONTRACT 为 0 时跳过付费主观 judge。CONTRACT 部分通过时作为 0-1
-乘数降低总分。
+| Score | Meaning |
+|---:|---|
+| 0 | Missing, unusable, or no verifiable implementation |
+| 1 | Nominal presence but critically broken or superficial |
+| 2 | Partial implementation with major omissions |
+| 3 | Main requirements form a usable core experience |
+| 4 | Strong completion with meaningful depth and polish |
+| 5 | Excellent, thoroughly evidenced implementation |
 
-## 每题结果
+The code judge must provide `score`, `reason`, `evidence`, and `missing` for
+each dimension. It may use only concrete artifact code evidence. The VLM must
+provide numeric `functional_visual`, `presentation`, and `confidence` plus
+concrete visual evidence. Free-form or malformed output is a `JUDGE_FAIL` and
+is not leaderboard eligible.
+
+## 7. Result Schema
+
+Each v0.5 result contains at least:
 
 ```json
 {
-  "evaluation_protocol": "auto-v1",
-  "model_label": "model-name",
-  "task": "task-id",
-  "family": "strategy",
-  "difficulty": "high",
-  "language": "zh",
-  "generation": {},
-  "build_gate": {},
-  "contract": {
-    "pass_rate": 1.0,
-    "results": []
-  },
-  "dimensions": {},
-  "scores": {
-    "completeness": 0.0,
-    "richness": 0.0,
-    "player_exp": 0.0,
-    "visual": 0.0,
-    "rubric_score_100": 0.0,
-    "build_multiplier": 0.0,
-    "contract_multiplier": 0.0,
-    "overall_score": 0.0
-  },
-  "judge": {
-    "provider": "deepseek",
-    "model": "deepseek-v4-flash",
-    "usage": {}
-  }
+  "schema_version": 2,
+  "benchmark_release": "v0.5.0",
+  "evaluation_protocol": "agent-v2",
+  "task_id": "…-en",
+  "base_task_id": "…",
+  "language": "en",
+  "agent": {"name": "…", "model": "…", "harness": "…"},
+  "static": {"build": {}, "contract": {}, "score": 0.0},
+  "dynamic": {"status": "pass", "screenshots": []},
+  "visual": {"functional_visual": {}, "presentation": {}, "score": 0.0},
+  "scores": {"raw": 0.0, "final": 0.0},
+  "primary_failure": null,
+  "failure_details": []
 }
 ```
 
-## 排行榜
+Failure details use structured codes such as
+`STATIC_BUILD_FAIL`, `STATIC_CONTRACT_FAIL`, `D_SERVER_START_FAIL`,
+`D_PAGE_LOAD_FAIL`, `D_RUNTIME_FATAL`, `D_RUNTIME_UNAVAILABLE`, `D_TIMEOUT`,
+`D_INPUT_PROBE_FAIL`, `D_SCREENSHOT_FAIL`, `JUDGE_FAIL`, and `SCHEMA_FAIL`.
 
-自动评测结束后更新：
+## 8. Leaderboard and Statistics
 
-- `leaderboard.json`
-- `LEADERBOARD.md`
-- `runs/auto/<run-id>/leaderboard.json`
+`leaderboard.json` and `LEADERBOARD.md` are generated after each run. Official
+rows require a non-mock, schema-valid, infrastructure-complete run. Mock judge,
+mock runtime, mock visual, and judge infrastructure failures are excluded.
 
-正式榜单只接收有效 `auto-v1` 结果。`--mock-judge` 只用于 CI 和接入调试，结果不会
-进入排行榜。
+The primary metric is family-balanced score. The leaderboard also reports
+micro, concept-balanced, EN, ZH, language gap, static/dynamic/visual/design
+components, runtime pass rate, bootstrap CI, and rank stability.
+
+EN and ZH are paired by `base_task_id`. Bootstrap samples concepts with
+replacement (default 1,000 iterations, seed 1337), and pairwise model deltas
+use the same concept-level pairing.
+
+## 9. Verification and Ablation
+
+Recompute deterministic gates and score arithmetic from a result plus artifact
+archive:
+
+```bash
+python3 -m momozi.verify result.json artifact.tar.gz
+```
+
+Compare static-only and runtime-grounded conditions:
+
+```bash
+python3 scripts/static_dynamic_ablation.py \
+  --results-dir runs/auto/my-run \
+  --json-out reports/ablation.json \
+  --md-out reports/ablation.md
+```
+
+The key diagnostic is:
+
+```text
+static_false_positive_rate
+  = count(static_pass AND runtime_fail) / count(static_pass)
+```
+
+Human calibration is intentionally small and honest:
+
+```bash
+python3 scripts/calibration.py sample --count 50
+python3 scripts/calibration.py analyze reports/calibration_template.csv
+```
+
+No synthetic human scores are generated; the checked-in report remains
+`pending` until ratings are supplied.
+
+## 10. Validation Commands
+
+```bash
+bash scripts/smoke.sh
+python3 -m unittest discover -s tests -v
+python3 scripts/audit_tasks.py
+python3 scripts/generate_task_distribution.py --check
+python3 scripts/validate_pool.py --only-mz --workers 8
+```
+
+The release manifest is regenerated with:
+
+```bash
+python3 scripts/create_release_manifest.py
+```

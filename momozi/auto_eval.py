@@ -19,20 +19,36 @@ from typing import Any
 from . import PROJECT_NAME, __version__
 from .adapters import build_adapter, load_profiles
 from .judge import _artifact_digest, _rubric_text
-from .leaderboard import AUTO_PROTOCOL, DIMENSIONS, write_leaderboard
+from .leaderboard import DIMENSIONS, write_leaderboard
 from .run import PROFILES_PATH, ROOT, _collect_product, _prepare_workspace
-from .run_zhen import build_gate_product
+from .multimodal_judge import MultimodalJudge, mock_visual_judgement
+from .protocol import (
+    AGENT_EVALUATION_PROTOCOL,
+    BENCHMARK_RELEASE,
+    agent_metadata,
+    validate_result_schema,
+)
+from .runtime_smoke import (
+    RuntimeConfig,
+    mock_runtime_result,
+    run_runtime_smoke,
+)
+from .scoring import (
+    design_component_score,
+    dynamic_component_score,
+    fuse_scores,
+    legacy_rubric_score,
+    static_component_score,
+    visual_component_score,
+)
+from .static_eval import StaticEvaluator
+from .statistics import aggregate_results, bootstrap_ci
 from .task import Task
-from .verifiers import BehaviorSuite
 
+AUTO_PROTOCOL = AGENT_EVALUATION_PROTOCOL
 DEFAULT_JUDGE_MODEL = "deepseek-v4-flash"
 DEFAULT_JUDGE_BASE_URL = "https://api.deepseek.com"
-DIMENSION_WEIGHTS = {
-    "completeness": 0.15,
-    "richness": 0.35,
-    "player_exp": 0.15,
-    "visual": 0.35,
-}
+DEFAULT_VLM_MODEL = "deepseek-v4-flash"
 MOCK_HTML = """<!doctype html>
 <html><head><meta charset="utf-8"><title>auto-eval protocol fixture</title></head>
 <body><canvas id="game"></canvas>
@@ -425,46 +441,64 @@ def _generate(
     return work, product_dir, generation
 
 
-def _contract(task: Task, product_dir: Path) -> dict:
-    suite_name = task.behavior.get("script", "beh_html.mjs")
-    suite = BehaviorSuite(
-        product_dir,
-        suite_name,
-        timeout=int(task.behavior.get("timeout", 300)),
-    )
-    results = suite.run()
-    passed = sum(1 for item in results if item.get("ok"))
-    total = len(results)
+def _empty_visual_judgement(reason: str) -> dict:
     return {
-        "pass_rate": round(passed / total, 6) if total else 0.0,
-        "passed": passed,
-        "total": total,
-        "results": results,
+        "functional_visual": {"score": 0.0, "evidence": [reason]},
+        "presentation": {"score": 0.0, "evidence": [reason]},
+        "confidence": 0.0,
     }
 
 
-def _score(task: Task, judgement: dict, build_ok: bool, contract_rate: float) -> dict:
-    weights = dict(DIMENSION_WEIGHTS)
-    dimension_scores = {
-        dimension: float(judgement["dimensions"][dimension]["score"])
-        for dimension in DIMENSIONS
-    }
-    rubric_fraction = sum(
-        dimension_scores[dimension] / 5.0 * weights[dimension]
-        for dimension in DIMENSIONS
+def _score_agent_result(
+    *,
+    judgement: dict,
+    static_eval: dict,
+    runtime: dict,
+    visual: dict,
+    failure_codes: list[str],
+) -> dict:
+    build = static_eval.get("build", {})
+    contract = static_eval.get("contract", {})
+    static_score = static_component_score(
+        build_ok=bool(build.get("ok")),
+        contract_rate=float(contract.get("pass_rate", 0.0)),
+        judgement=judgement,
     )
-    rubric_score = 100.0 * rubric_fraction
-    build_multiplier = 1.0 if build_ok else 0.0
-    contract_multiplier = max(0.0, min(1.0, float(contract_rate)))
-    overall = rubric_score * build_multiplier * contract_multiplier
-    return {
-        **{key: round(value, 4) for key, value in dimension_scores.items()},
-        "weights": weights,
-        "rubric_score_100": round(rubric_score, 4),
-        "build_multiplier": build_multiplier,
-        "contract_multiplier": round(contract_multiplier, 6),
-        "overall_score": round(overall, 4),
-    }
+    dynamic_score = dynamic_component_score(runtime)
+    visual_score = visual_component_score(visual)
+    design_score = design_component_score(judgement)
+    scores = fuse_scores(
+        static_score=static_score,
+        dynamic_score=dynamic_score,
+        visual_score=visual_score,
+        design_score=design_score,
+        failure_codes=failure_codes,
+    )
+    scores["rubric_score_100"] = legacy_rubric_score(judgement)
+    scores["build_multiplier"] = 1.0 if build.get("ok") else 0.0
+    scores["contract_multiplier"] = round(
+        max(0.0, min(1.0, float(contract.get("pass_rate", 0.0)))),
+        6,
+    )
+    scores["legacy_overall_score"] = round(
+        scores["rubric_score_100"]
+        * scores["build_multiplier"]
+        * scores["contract_multiplier"],
+        4,
+    )
+    return scores
+
+
+def _failure_details(
+    static_eval: dict,
+    runtime: dict,
+    evaluation_error: str | None,
+) -> list[dict]:
+    details = list(static_eval.get("failure_details", []))
+    details.extend(runtime.get("failure_details", []))
+    if evaluation_error:
+        details.append({"code": "JUDGE_FAIL", "detail": evaluation_error})
+    return details
 
 
 def evaluate_task(
@@ -479,6 +513,14 @@ def evaluate_task(
     judge: DeepSeekJudge | None,
     mock_judge: bool,
     resume: bool,
+    dynamic_enabled: bool = True,
+    mock_runtime: bool = False,
+    runtime_config: RuntimeConfig | None = None,
+    visual_judge: MultimodalJudge | None = None,
+    mock_visual: bool = False,
+    agent_info: dict | None = None,
+    harness_label: str = "",
+    benchmark_release: str = BENCHMARK_RELEASE,
 ) -> dict:
     task = Task.load(task_path)
     result_path = run_dir / f"{task.id}.json"
@@ -501,8 +543,9 @@ def evaluate_task(
         run_id,
         harness_timeout,
     )
-    build_gate = build_gate_product(product_dir)
-    contract = _contract(task, product_dir)
+    static_eval = StaticEvaluator().evaluate(task, product_dir)
+    build_gate = static_eval["build"]
+    contract = static_eval["contract"]
     evaluation_error = None
     usage = {}
 
@@ -553,22 +596,177 @@ def evaluate_task(
                 "error": evaluation_error,
             }
 
-    scores = _score(task, judgement, build_gate["ok"], contract["pass_rate"])
-    eligible = not mock_judge and evaluation_error is None and model_label != "mock"
+    if not dynamic_enabled:
+        runtime = {
+            "status": "skipped",
+            "server_start": False,
+            "page_load": False,
+            "runtime_stable": False,
+            "fatal_console_errors": 0,
+            "input_probe": {"attempted": False, "success": False},
+            "screenshots": [],
+            "failure_code": None,
+            "failure_details": [],
+            "runtime_config": {"skipped": True},
+        }
+    elif mock_runtime:
+        runtime = mock_runtime_result()
+    else:
+        runtime = run_runtime_smoke(
+            product_dir,
+            run_dir / "evidence" / task.id,
+            runtime_config or RuntimeConfig(),
+        )
+
+    visual_usage = {}
+    visual_meta = {
+        "provider": "none",
+        "model": "",
+        "version": "",
+    }
+    if mock_judge or mock_visual:
+        visual = mock_visual_judgement()
+        visual_meta = {
+            "provider": "mock",
+            "model": "protocol-fixture",
+            "version": "1.0",
+        }
+    else:
+        screenshot_paths = [
+            Path(item["path"])
+            for item in runtime.get("screenshots", [])
+            if item.get("path")
+        ]
+        if visual_judge and screenshot_paths and runtime.get("status") == "pass":
+            try:
+                visual, visual_usage = visual_judge.evaluate(
+                    task,
+                    runtime,
+                    screenshot_paths,
+                )
+                visual_meta = {
+                    "provider": "deepseek",
+                    "model": visual_judge.model,
+                    "version": visual_judge.version,
+                }
+            except Exception as exc:
+                evaluation_error = evaluation_error or str(exc)
+                visual = _empty_visual_judgement(
+                    "No valid multimodal judge response was available."
+                )
+                visual_meta = {
+                    "provider": "deepseek",
+                    "model": visual_judge.model,
+                    "version": visual_judge.version,
+                    "error": str(exc),
+                }
+        elif dynamic_enabled and runtime.get("status") == "pass" and not mock_runtime:
+            evaluation_error = evaluation_error or (
+                "multimodal judge is not configured"
+            )
+            visual = _empty_visual_judgement(
+                "Multimodal judge was not configured."
+            )
+        else:
+            visual = _empty_visual_judgement(
+                "No successful runtime screenshot was available."
+            )
+
+    failure_details = _failure_details(
+        static_eval,
+        runtime,
+        evaluation_error,
+    )
+    failure_codes = [
+        item.get("code")
+        for item in failure_details
+        if item.get("code")
+    ]
+    scores = _score_agent_result(
+        judgement=judgement,
+        static_eval=static_eval,
+        runtime=runtime,
+        visual=visual,
+        failure_codes=failure_codes,
+    )
+    primary_failure = next(
+        (code for code in (
+            "STATIC_BUILD_FAIL",
+            "STATIC_CONTRACT_FAIL",
+            "D_SERVER_START_FAIL",
+            "D_PAGE_LOAD_FAIL",
+            "D_RUNTIME_FATAL",
+            "D_RUNTIME_UNAVAILABLE",
+            "D_TIMEOUT",
+            "D_INPUT_PROBE_FAIL",
+            "D_SCREENSHOT_FAIL",
+            "JUDGE_FAIL",
+            "SCHEMA_FAIL",
+        ) if code in failure_codes),
+        None,
+    )
+    agent_block = agent_info or agent_metadata(
+        name=agent or "harness",
+        model=model_label,
+        harness=harness_label or ("profile" if agent else "external"),
+    )
+    eligible = (
+        not mock_judge
+        and not mock_visual
+        and not mock_runtime
+        and evaluation_error is None
+        and model_label != "mock"
+        and dynamic_enabled
+        and not runtime.get("infrastructure_error")
+    )
     result = {
         "benchmark": PROJECT_NAME,
         "version": __version__,
+        "schema_version": 2,
+        "benchmark_release": benchmark_release,
         "evaluation_protocol": AUTO_PROTOCOL,
         "run_id": run_id,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "model_label": model_label,
-        "agent": model_label,
+        "agent": agent_block,
         "task": task.id,
+        "task_id": task.id,
         "base_task_id": task.base_task_id,
         "family": task.family,
         "difficulty": task.difficulty,
         "language": task.language,
         "generation": generation,
+        "harness": {
+            "name": harness_label or ("profile" if agent else "external"),
+            "command": bool(harness_command),
+            "contract_version": 1,
+        },
+        "static": {
+            **static_eval,
+            "score": scores["static"],
+            "judge": {
+                **judge_meta,
+                "usage": usage,
+            },
+        },
+        "dynamic": {
+            **runtime,
+            "score": scores["dynamic"],
+        },
+        # `runtime` is the schema-facing alias; `dynamic` remains the
+        # benchmark terminology and backwards-compatible access path.
+        "runtime": {
+            **runtime,
+            "score": scores["dynamic"],
+        },
+        "visual": {
+            **visual,
+            "score": scores["visual"],
+            "judge": {
+                **visual_meta,
+                "usage": visual_usage,
+            },
+        },
         "build_gate": build_gate,
         "contract": contract,
         "dimensions": judgement["dimensions"],
@@ -578,9 +776,19 @@ def evaluate_task(
         "judge": {**judge_meta, "usage": usage},
         "leaderboard_eligible": eligible,
         "evaluation_error": evaluation_error,
+        "primary_failure": primary_failure,
+        "failure_details": failure_details,
         "workspace": str(work),
         "product_dir": str(product_dir),
     }
+    try:
+        validate_result_schema(result)
+    except ValueError as exc:
+        result["primary_failure"] = "SCHEMA_FAIL"
+        result["failure_details"].append(
+            {"code": "SCHEMA_FAIL", "detail": str(exc)}
+        )
+        result["leaderboard_eligible"] = False
     run_dir.mkdir(parents=True, exist_ok=True)
     result_path.write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n",
@@ -620,25 +828,37 @@ def discover_tasks(args: argparse.Namespace) -> list[Path]:
     return selected
 
 
-def _summary(run_id: str, model_label: str, results: list[dict]) -> dict:
-    overall = [float(result["scores"]["overall_score"]) for result in results]
+def _summary(
+    run_id: str,
+    model_label: str,
+    results: list[dict],
+    benchmark_release: str = BENCHMARK_RELEASE,
+) -> dict:
+    aggregate = aggregate_results(results)
+    bootstrap = bootstrap_ci(results)
     return {
         "benchmark": PROJECT_NAME,
         "version": __version__,
+        "schema_version": 2,
+        "benchmark_release": benchmark_release,
         "evaluation_protocol": AUTO_PROTOCOL,
         "run_id": run_id,
         "model_label": model_label,
         "tasks": len(results),
         "build_passed": sum(1 for result in results if result["build_gate"]["ok"]),
+        "runtime_passed": sum(
+            1 for result in results
+            if result.get("dynamic", {}).get("status") == "pass"
+        ),
         "contract_mean": round(
             sum(result["contract"]["pass_rate"] for result in results) / len(results),
             6,
         )
         if results
         else 0.0,
-        "overall_score_mean": round(sum(overall) / len(overall), 4)
-        if overall
-        else 0.0,
+        "overall_score_mean": aggregate["micro_score"],
+        "metrics": aggregate,
+        "bootstrap": bootstrap,
         "evaluation_errors": sum(
             1 for result in results if result.get("evaluation_error")
         ),
@@ -675,6 +895,9 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
     parser.add_argument("--model-label", help="name displayed on the leaderboard")
+    parser.add_argument("--model-version", default="")
+    parser.add_argument("--agent-version", default="")
+    parser.add_argument("--harness-label", default="")
     parser.add_argument("--harness-timeout", type=int, default=1800)
     parser.add_argument(
         "--judge-model",
@@ -685,7 +908,39 @@ def build_parser() -> argparse.ArgumentParser:
         default=os.getenv("DEEPSEEK_BASE_URL", DEFAULT_JUDGE_BASE_URL),
     )
     parser.add_argument("--judge-timeout", type=int, default=240)
+    parser.add_argument(
+        "--vlm-model",
+        default=os.getenv("DEEPSEEK_VLM_MODEL", DEFAULT_VLM_MODEL),
+    )
+    parser.add_argument(
+        "--vlm-base-url",
+        default=os.getenv("DEEPSEEK_VLM_BASE_URL", os.getenv("DEEPSEEK_BASE_URL", DEFAULT_JUDGE_BASE_URL)),
+    )
+    parser.add_argument("--vlm-timeout", type=int, default=240)
     parser.add_argument("--mock-judge", action="store_true", help="CI protocol check only")
+    parser.add_argument(
+        "--mock-runtime",
+        action="store_true",
+        help="protocol fixture only; never leaderboard eligible",
+    )
+    parser.add_argument(
+        "--mock-visual",
+        action="store_true",
+        help="protocol fixture only; never leaderboard eligible",
+    )
+    parser.add_argument(
+        "--skip-dynamic",
+        action="store_true",
+        help="static-only ablation path; never leaderboard eligible",
+    )
+    parser.add_argument("--runtime-timeout", type=int, default=10000)
+    parser.add_argument("--stabilization-ms", type=int, default=1000)
+    parser.add_argument(
+        "--no-input-probe",
+        action="store_true",
+        help="disable the generic ArrowRight dynamic probe",
+    )
+    parser.add_argument("--benchmark-release", default=BENCHMARK_RELEASE)
     parser.add_argument("--run-id")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
@@ -748,6 +1003,33 @@ def main(argv: list[str] | None = None) -> int:
         except ValueError as exc:
             parser.error(str(exc))
 
+    visual_judge = None
+    if not (args.mock_judge or args.mock_visual or args.skip_dynamic):
+        api_key = os.getenv("DEEPSEEK_API_KEY", "")
+        try:
+            visual_judge = MultimodalJudge(
+                api_key,
+                model=args.vlm_model,
+                base_url=args.vlm_base_url,
+                timeout=args.vlm_timeout,
+            )
+        except ValueError as exc:
+            parser.error(str(exc))
+
+    runtime_config = RuntimeConfig(
+        navigation_timeout_ms=args.runtime_timeout,
+        stabilization_ms=args.stabilization_ms,
+        input_probe=not args.no_input_probe,
+    )
+    agent_info = agent_metadata(
+        name=args.agent or "external-harness",
+        model=model_label,
+        harness=args.harness_label or (
+            f"profile:{args.agent}" if args.agent else "external-command"
+        ),
+        version=args.agent_version,
+        model_version=args.model_version,
+    )
     kwargs = {
         "run_id": run_id,
         "run_dir": run_dir,
@@ -758,6 +1040,16 @@ def main(argv: list[str] | None = None) -> int:
         "judge": judge,
         "mock_judge": args.mock_judge,
         "resume": args.resume,
+        "dynamic_enabled": not args.skip_dynamic,
+        "mock_runtime": args.mock_runtime,
+        "runtime_config": runtime_config,
+        "visual_judge": visual_judge,
+        "mock_visual": args.mock_visual,
+        "agent_info": agent_info,
+        "harness_label": args.harness_label or (
+            f"profile:{args.agent}" if args.agent else "external-command"
+        ),
+        "benchmark_release": args.benchmark_release,
     }
     results = []
     with futures.ThreadPoolExecutor(max_workers=args.workers) as executor:
@@ -780,7 +1072,7 @@ def main(argv: list[str] | None = None) -> int:
                 f"{result['scores']['overall_score']:.2f}"
             )
 
-    summary = _summary(run_id, model_label, results)
+    summary = _summary(run_id, model_label, results, args.benchmark_release)
     run_dir.mkdir(parents=True, exist_ok=True)
     (run_dir / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n",

@@ -1,0 +1,65 @@
+# Tycoon: Trading Caravan
+
+Build a **route-planning and market trading tycoon** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). This is not a prototype. It is a **complete, shippable
+micro-game** that could sit on an itch.io page or Steam as a polished vertical
+slice.
+
+## Core Vision
+
+The player is a merchant captain steering a small caravan across a network of
+towns that each want different things at different prices. The fantasy is reading
+the map like a puzzle — spotting where silk is cheap and where it is gold, then
+gambling on the road between. Every route is a bet: the short path is safe but
+dull, the mountain pass saves days but invites bandits, and the cargo you chose
+might spoil before you arrive. Growth compounds — better wagons carry more, hired
+guards open dangerous shortcuts, cold crates unlock perishables — but so does
+risk, because a bigger haul means a bigger loss when things go wrong. The
+pressure is that markets shift while you travel, so yesterday's sure profit can
+become tomorrow's dead weight. The tone is parchment-and-ink merchant strategy:
+a world of trade routes, price boards, and calculated gambles.
+
+## What the Player Experiences
+
+The player opens a stylized map dotted with towns connected by roads of varying
+length and danger. A caravan marker sits at the current town, and a ledger shows
+cash, cargo hold, and any active contracts. The first minutes are about scanning
+prices — this town sells spices cheap, the one across the river pays double —
+and loading up the wagon.
+
+Choosing a destination means weighing route options: the safe road costs more in
+feed and tolls, the shortcut through bandit territory risks losing cargo
+entirely. Once committed, the caravan moves and events unfold — a storm delays
+travel, a toll gate demands coin, a merchant on the road offers a side deal. The
+player watches cargo, money, and risk shift in real time.
+
+Arriving at a new town, the player sells at local prices, checks what is scarce
+here, and decides whether to restock or push onward. Earnings fund upgrades —
+extra carts for capacity, scouts who reveal hazards ahead, cold storage that
+opens perishable goods to trade. Each upgrade reshapes which routes and cargoes
+become profitable.
+
+Over time the network opens up: new towns appear, higher-value contracts become
+available, and the caravan grows from a lone wagon into a proper trading
+operation. The arc ends when the player hits a profit milestone and sees a
+success screen, or when debt and failed contracts pile up into bankruptcy. Both
+outcomes are navigable without restarting.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

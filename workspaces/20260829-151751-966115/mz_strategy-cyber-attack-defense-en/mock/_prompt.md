@@ -1,0 +1,48 @@
+# Cyber Attack Defense
+
+Build a complete, playable **3D strategy game** as a polished browser vertical slice.
+
+## Core Vision
+
+A 3D network-defense action strategy game. Red attack packets travel through a topology toward a central server; the player intercepts threats, hardens nodes, and reads a visual prediction model to survive escalating coordinated attacks.
+
+## Required Playable Systems
+
+1. **System 1** - Build a readable 3D topology with a core server, relay nodes, routes, normal traffic, and multiple attack packet types moving along paths.
+2. **System 2** - Let the player click packets or nodes to intercept, quarantine, reroute, or detonate threats using cooldown-limited defensive tools.
+3. **System 3** - Visualize a Kalman-filter-inspired prediction layer that estimates future packet paths and updates uncertainty as observations arrive.
+4. **System 4** - Run discrete waves with decoys, split packets, armored payloads, compromised nodes, and a final coordinated boss attack.
+5. **System 5** - Add node upgrades, firewall placement, resource income, combo scoring, server health, and meaningful tradeoffs between active and passive defense.
+6. **System 6** - Pair every intercept, miss, prediction update, and node failure with distinct 8-bit synthesized audio and visible feedback.
+
+## Progression
+
+Later waves expand topology complexity and unlock specialized defenses while enemy behaviors adapt to overused strategies.
+
+## Art Direction
+
+A high-contrast cyber operations space with luminous topology lines, volumetric packet trails, green code rain, red threat pulses, and pixel-audio visualizers.
+
+## HTML Submission Format
+
+Deliver a self-contained 3D browser game in two files:
+
+- `index.html` - the complete playable presentation, rendered with Three.js.
+- `game_logic.js` - the deterministic state and rules layer, exporting
+  `createGame(opts)` and `advance(game, input, dt)`.
+
+The page must open without a build step or local server and render within three
+seconds on a normal laptop. Use procedural geometry, shaders, particles, generated
+audio, and CSS; do not fetch external images, models, video, or audio at runtime.
+Three.js may be loaded from its official CDN. Any additional library explicitly
+required by this task may also be loaded from a pinned CDN URL.
+
+Support keyboard controls and the pointer. Touch or device-sensor controls may be
+added where appropriate, but must have a desktop fallback. Keep the main game
+readable at 1280x720. Include a styled title screen, short in-game guidance, pause
+or restart controls, a complete win/loss or completion loop, and visible feedback
+for every important action. This must feel like a polished vertical slice rather
+than a passive scene or disconnected technical demo.
+
+`index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
+160 KB and `game_logic.js` under 320 lines.

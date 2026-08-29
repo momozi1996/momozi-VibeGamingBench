@@ -91,18 +91,27 @@ class StaticChecker:
 
 class BehaviorSuite:
     """跑 task 自带的行为套件脚本（每任务 scripts/*.mjs）。"""
-    def __init__(self, workspace: Path, suite_rel: str, timeout: int = 60):
+    def __init__(
+        self,
+        workspace: Path,
+        suite_rel: str,
+        timeout: int = 60,
+        artifact_dir: Path | None = None,
+        script_path: Path | None = None,
+    ):
         self.workspace = workspace
         self.suite_rel = suite_rel
         self.timeout = timeout
+        self.artifact_dir = artifact_dir or workspace
+        self.script_path = script_path
 
     def run(self) -> list:
-        script = self.workspace / self.suite_rel
+        script = self.script_path or (self.workspace / self.suite_rel)
         if not script.exists():
             return [{"id": "suite_exists", "ok": False, "detail": f"missing {self.suite_rel}"}]
         try:
             proc = subprocess.run(
-                ["node", str(script), str(self.workspace)],
+                ["node", str(script), str(self.artifact_dir)],
                 cwd=self.workspace, capture_output=True, text=True, timeout=self.timeout,
             )
             raw = proc.stdout.strip()

@@ -1,0 +1,58 @@
+# Sports Skateboard Park
+
+Build a **Sports Skateboard Park** game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The player skates through parks performing trick combos for high scores, unlocking
+new tricks and building custom parks. The fantasy is flow state: chaining grinds
+into flips into manuals in one unbroken combo, watching the score multiplier
+climb. Tension comes from the landing — mistiming a trick means a bail that
+resets the combo. Career goals push the player to master specific tricks and
+achieve target scores in themed parks.
+
+## What the Player Experiences
+
+1. **Title Screen** — A graffiti-styled title with the game name in spray-paint
+   font over a half-pipe silhouette. A play button shaped like a wheel.
+2. **Park Selection** — Multiple parks with different layouts: a street course
+   (rails, stairs, ledges), a vert ramp (half-pipes, bowls), and a mega park
+   (all elements combined). Each unlocks progressively.
+3. **Skating** — The player moves left/right with momentum physics. Speed builds
+   on downhill, drains on uphill. The skater has smooth rolling animation and
+   responds to terrain.
+4. **Trick System** — Button combinations trigger tricks: flip tricks (tap keys),
+   grind tricks (press near rails), grab tricks (hold in air). Each trick has a
+   name that pops up on screen. Tricks chain into combos with a visible
+   multiplier.
+5. **Score Multiplier** — Linking tricks without touching ground or bailing
+   increases the multiplier. Landing cleanly banks the score; bailing loses the
+   current combo. A combo meter shows current chain length and potential score.
+6. **Career Goals** — Each park has specific challenges: "Score 10,000 in one
+   combo", "Land a kickflip to grind", "Complete a full pipe rotation". Completing
+   goals unlocks new tricks and parks.
+7. **Park Editor** — The player can place ramps, rails, and obstacles to create
+   custom parks. Placed elements snap to a grid. Custom parks are playable
+   immediately.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

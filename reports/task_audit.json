@@ -1,0 +1,81 @@
+{
+  "tasks_root": "bench/tasks",
+  "task_count": 982,
+  "concept_count": 491,
+  "language_counts": {
+    "en": 491,
+    "zh": 491
+  },
+  "pair_count": 491,
+  "bad_pairs": {},
+  "exact_duplicate_groups": {},
+  "normalized_duplicate_groups": {},
+  "provenance_counts": {
+    "adapted_aiga_shared_world": 288,
+    "existing_pool": 280,
+    "adapted_cnblogs_prompt": 40,
+    "adapted_evolink_prompt": 16,
+    "adapted_article_prompt": 24,
+    "adapted_user_prompt": 20,
+    "adapted_summerengine_template": 314
+  },
+  "family_task_counts": {
+    "survival": 44,
+    "openworld": 124,
+    "rpg": 84,
+    "strategy": 122,
+    "simulation": 80,
+    "adventure": 40,
+    "racing": 58,
+    "action": 40,
+    "narrative": 44,
+    "horror": 52,
+    "shooter": 50,
+    "sports": 12,
+    "cardgame": 12,
+    "platformer": 64,
+    "puzzle": 48,
+    "arcade": 6,
+    "idle": 8,
+    "rhythm": 12,
+    "roguelike": 28,
+    "tycoon": 32,
+    "visualnovel": 22
+  },
+  "difficulty_task_counts": {
+    "high": 408,
+    "medium": 428,
+    "low": 146
+  },
+  "family_concept_counts": {
+    "survival": 22,
+    "openworld": 62,
+    "rpg": 42,
+    "strategy": 61,
+    "simulation": 40,
+    "adventure": 20,
+    "racing": 29,
+    "action": 20,
+    "narrative": 22,
+    "horror": 26,
+    "shooter": 25,
+    "sports": 6,
+    "cardgame": 6,
+    "platformer": 32,
+    "puzzle": 24,
+    "arcade": 3,
+    "idle": 4,
+    "rhythm": 6,
+    "roguelike": 14,
+    "tycoon": 16,
+    "visualnovel": 11
+  },
+  "difficulty_concept_counts": {
+    "high": 204,
+    "medium": 214,
+    "low": 73
+  },
+  "rubric_missing": [],
+  "schema_errors": [],
+  "status": "pass"
+}

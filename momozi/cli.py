@@ -17,7 +17,7 @@ def _cli():
     r.add_argument("--judge-agent", default=None)
     r.add_argument("--skip-judge", action="store_true")
 
-    s = sub.add_parser("leaderboard", help="从 auto-v1 结果生成排行榜")
+    s = sub.add_parser("leaderboard", help="从 agent-v2/legacy 结果生成排行榜")
     s.add_argument("--results-dir", default="runs")
     s.add_argument("--out", default="leaderboard.json")
     s.add_argument("--markdown-out", default="LEADERBOARD.md")

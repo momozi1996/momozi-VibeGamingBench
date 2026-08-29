@@ -10,6 +10,10 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }
       - run: pip install -r requirements.txt
+      - name: install Chromium
+        run: python -m playwright install --with-deps chromium
+      - name: unit, schema, and fixture browser tests
+        run: python3 -m unittest discover -s tests -v
       - name: syntax and metadata smoke
         run: bash scripts/smoke.sh
       - name: full 982-task runner/build gate audit

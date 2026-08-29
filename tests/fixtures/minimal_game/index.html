@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VibeGamingBench runtime fixture</title>
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #101820; }
+    canvas { display: block; width: 100vw; height: 100vh; background: #17324d; }
+    #hud { position: fixed; top: 16px; left: 16px; color: #f4f7fb; font: 600 18px system-ui, sans-serif; }
+  </style>
+</head>
+<body>
+  <canvas id="game" width="1280" height="720"></canvas>
+  <div id="hud">Runtime fixture · ArrowRight to move</div>
+  <script type="module">
+    import { createGame, advance } from "./game_logic.js";
+    const canvas = document.querySelector("#game");
+    const ctx = canvas.getContext("2d");
+    const game = createGame({});
+    function frame() {
+      advance(game, {}, 1 / 60);
+      ctx.fillStyle = "#17324d";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#63d6c7";
+      ctx.beginPath();
+      ctx.arc(640 + game.x, 360, 48, 0, Math.PI * 2);
+      ctx.fill();
+      requestAnimationFrame(frame);
+    }
+    frame();
+  </script>
+</body>
+</html>

@@ -1,48 +1,293 @@
-# momozi-VibeGamingBench
+# VibeGamingBench
 
-`momozi-VibeGamingBench` 用于评测 coding agent 从自然语言需求生成完整浏览器游戏的能力。
-当前版本为 **v0.4.0**，包含 **491 个游戏概念、982 道中英文独立题目、21 个游戏类型**。
+**An execution-grounded Agent Benchmark for Vibe Gaming**
 
-每道题要求交付：
+VibeGamingBench evaluates coding agents and agent harnesses that turn a
+single-language natural-language game brief into a complete browser-game
+artifact. The benchmark is intentionally scoped to a reproducible generation
+task plus lightweight execution evidence; it is not a full long-horizon
+gameplay simulator.
 
-- `index.html`：完整的可玩界面和渲染层。
-- `game_logic.js`：导出 `createGame(opts)` 与 `advance(game, input, dt)` 的规则层。
+The current release contains:
 
-## 目录
+- **491 unique game concepts**
+- **982 bilingual evaluation instances** (`491 EN + 491 ZH`)
+- **21 game families**
+- heuristic `low` / `medium` / `high` implementation difficulty
+- Static artifact/contract evaluation
+- Dynamic Chromium runtime smoke and screenshot capture
+- screenshot-grounded VLM visual judging
+- family-balanced, language-aware aggregation with paired bootstrap confidence intervals
+
+## 中文说明
+
+**VibeGamingBench 是面向 Vibe Gaming 的、以执行证据为基础的 Agent Benchmark。**
+
+它评测 coding agent 或 Agent Harness 是否能够把一条单语种游戏需求，生成一个完整的
+浏览器游戏，并验证该产物是否真的能在固定浏览器环境中启动和保持运行。当前版本不是
+完整的长时程 Gameplay Simulator，而是“生成能力 + 轻量执行证据”的可复现评测。
+
+当前题池保持不变：
+
+- **491 个独立游戏概念**
+- **982 道双语评测题**：491 道英文题 + 491 道中文题
+- **21 个游戏类型**
+- `low` / `medium` / `high` 三档**启发式实现难度**
+
+评测采用两条一级路径：
+
+```text
+Agent Harness
+      ↓
+Coding Agent
+      ↓
+浏览器游戏产物
+   ↙          ↘
+静态评测      动态评测
+BUILD/合同    Chromium smoke + 截图
+   ↘          ↙
+        分数融合
+            ↓
+      family-balanced 排行榜
+```
+
+### 静态评测
+
+回答“agent 构建了什么”：
+
+- 检查 `index.html` 和 `game_logic.js` 是否完整。
+- 检查 Canvas/WebGL 和资源策略。
+- 用 Node 行为合同验证 `createGame(opts)` 与 `advance(game, input, dt)`。
+- 用代码证据评估完整度、丰富度、玩家体验和视觉实现。
+
+### 动态评测
+
+回答“生成的游戏运行起来是什么状态”：
+
+- 启动临时本地 HTTP server。
+- 使用固定 Chromium、1280×720、`en-US`、`UTC`、device scale factor 1。
+- 等待页面加载和稳定窗口。
+- 捕获 console/page error。
+- 默认发送一次 `ArrowRight` 通用输入探针。
+- 在稳定状态捕获 `boot.png`。
+
+动态通过只表示页面成功启动、在限定窗口内保持存活、完成探针并生成截图，不等价于
+完整玩法验证。
+
+### Agent Harness 接入
+
+外部 harness 通过 `--harness-command` 接入，必须把以下两个文件写入指定目录：
+
+```text
+{product_dir}/index.html
+{product_dir}/game_logic.js
+```
+
+可用命令占位符：
+
+```text
+{prompt_file}  {product_dir}  {workspace}  {task_file}  {task_id}
+```
+
+同样的信息也会通过以下环境变量提供：
+
+```text
+MOMOZI_PROMPT_FILE
+MOMOZI_PRODUCT_DIR
+MOMOZI_WORKSPACE
+MOMOZI_TASK_FILE
+MOMOZI_TASK_ID
+```
+
+完整合同见 [`AGENT_HARNESS.md`](AGENT_HARNESS.md)。
+
+### 自动评测与密钥
+
+先安装依赖和 Chromium：
+
+```bash
+pip install -r requirements.txt
+python3 -m playwright install chromium
+```
+
+真实 code judge 和 screenshot VLM judge 默认使用 `deepseek-v4-flash`。在仓库根目录创建
+`.env`，只填写：
+
+```env
+DEEPSEEK_API_KEY=你的key
+DEEPSEEK_JUDGE_MODEL=deepseek-v4-flash
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_VLM_MODEL=deepseek-v4-flash
+DEEPSEEK_VLM_BASE_URL=https://api.deepseek.com
+```
+
+真实 key 不要写入代码、题目、结果 JSON 或命令行。`.env` 已被 git 忽略。
+
+单题评测：
+
+```bash
+python3 scripts/auto_evaluate.py \
+  --task mz_sports-fishing-tournament-en \
+  --agent codex \
+  --model-label your-model
+```
+
+外部 harness：
+
+```bash
+python3 scripts/auto_evaluate.py \
+  --all \
+  --harness-command 'your-harness --prompt {prompt_file} --output {product_dir}' \
+  --model-label your-model \
+  --workers 4
+```
+
+`--mock-judge`、`--mock-runtime`、`--mock-visual` 只用于协议和 CI 验证，永远不会进入
+正式排行榜。结果写入 `runs/auto/<run-id>/`，汇总写入 `leaderboard.json` 和
+`LEADERBOARD.md`。
+
+### 评分与排行榜
+
+v0.5 的四个分量及权重为：
+
+| 分量 | 权重 |
+|---|---:|
+| Static | 40% |
+| Dynamic | 25% |
+| Visual | 20% |
+| Design | 15% |
+
+Visual 由 `Functional Visual` 和 `Presentation` 两个 0–5 维度平均得到。最终分数会应用
+诊断性硬上限：
+
+```text
+BUILD 失败       → final ≤ 20
+启动/加载失败    → final ≤ 10
+运行时 fatal     → final ≤ 35
+```
+
+排行榜主指标是 **family-balanced score**，同时报告 micro、concept-balanced、EN、ZH、
+language gap、Static、Dynamic、Visual、Design、runtime pass rate、paired bootstrap
+95% CI 和 rank stability。
+
+英文和中文题通过 `base_task_id` 配对，不会被当成 982 个独立概念。难度标签是工程复杂度
+启发式分类，不是经验校准分数。
+
+### 验证与发布
+
+完整本地冒烟：
+
+```bash
+bash scripts/smoke.sh
+```
+
+题池和全量静态门禁：
+
+```bash
+python3 scripts/split_bilingual_tasks.py
+python3 scripts/generate_task_distribution.py --check
+python3 scripts/audit_tasks.py
+python3 scripts/validate_pool.py --only-mz --workers 8
+```
+
+当前验证结果应为：
+
+```text
+491 concepts
+982 tasks
+EN 491 / ZH 491
+982 / 982 BUILD audit passed
+```
+
+发布元数据见 [`benchmark_releases/v0.5.0.json`](benchmark_releases/v0.5.0.json)，其中记录
+题池 hash、代码 tag、评测协议和 runtime/judge/scoring 版本。公共 split 已提交，hidden
+split 只生成到私有路径；由于开发 checkout 仍包含完整题池，当前 hidden split 不是实际的
+保密边界。
+
+当前明确不包含：完整 gameplay DSL、long-horizon play、GameFix、GameOpt、GameEvolve、
+IRT/Rasch 难度建模、online leaderboard，以及已完成的人类校准研究。人工 calibration
+报告在真实标注提供前保持 `pending`，不会生成伪造分数。
+
+## Evaluation Model
+
+```text
+Agent Harness
+      ↓
+Coding Agent
+      ↓
+Game Artifact
+   ↙          ↘
+STATIC       DYNAMIC
+contract     browser runtime smoke
+checks       + screenshot
+   ↘          ↙
+       Score Fusion
+            ↓
+  Family-balanced Leaderboard
+```
+
+Static evaluation answers **what the agent built**. Dynamic evaluation answers
+**whether the artifact launches and remains alive in a fixed browser smoke
+environment**. Runtime smoke includes page load, fatal error capture, one
+generic input probe, and a stable `boot.png`; it does not claim complete
+gameplay correctness.
+
+## Repository Layout
 
 ```text
 momozi-VibeGamingBench/
-├── momozi/                         # runner、自动评测、judge、verify、leaderboard
-├── bench/
-│   ├── tasks/                      # 982 道语言独立题
-│   ├── tests/beh_html.mjs          # 通用两文件逻辑合同
-│   ├── POOL_AUDIT.md               # runner/build gate 全量兼容性报告
-│   └── TASK_DISTRIBUTION.md        # 设计组成、类型与难度分布
-├── scripts/
-│   ├── auto_evaluate.py            # 自动生成、检查、评分和出榜
-│   ├── split_bilingual_tasks.py    # 中英文任务对一致性检查
-│   ├── generate_task_distribution.py
-│   └── validate_pool.py
-├── .env.example                    # DeepSeek judge 配置模板
-├── profiles.yaml                   # coding agent CLI 适配
-├── AUTO_EVALUATION.md              # 自动评测协议与接入说明
-└── DESIGN.md
+├── momozi/
+│   ├── auto_eval.py             # Agent Harness execution and result writer
+│   ├── static_eval.py           # BUILD + contract evidence
+│   ├── runtime_smoke.py         # Chromium smoke runner
+│   ├── screenshot.py             # deterministic screenshot metadata
+│   ├── multimodal_judge.py       # strict JSON VLM judge
+│   ├── scoring.py                # v0.5 component weights and hard caps
+│   ├── statistics.py             # paired bootstrap and rank stability
+│   ├── leaderboard.py            # release-aware balanced leaderboard
+│   └── verify.py                 # deterministic archive verification
+├── bench/tasks/                  # 491 concepts × EN/ZH = 982 tasks
+├── bench/tests/                  # public deterministic behavior suites
+├── benchmark_releases/           # release and split manifests
+├── scripts/                      # audits, calibration, ablation, validation
+├── tests/                        # unit and runtime fixture tests
+├── AGENT_HARNESS.md              # external harness contract
+├── AUTO_EVALUATION.md            # CLI and result protocol
+└── DESIGN.md                     # benchmark design and scope
 ```
 
-## 环境
+Each language-specific task directory contains exactly:
+
+```text
+<task-id>.task.yaml
+prompt.md
+rubric.original.json
+rubric.mapping.json
+```
+
+The required generated artifact is:
+
+```text
+product/
+├── index.html
+└── game_logic.js
+```
+
+`index.html` provides the rendered browser experience. `game_logic.js` exports
+`createGame(opts)` and `advance(game, input, dt)` and must remain independent of
+DOM/rendering code.
+
+## Environment
 
 ```bash
 python3 --version   # 3.11+
 node --version      # 20+
 pip install -r requirements.txt
+python3 -m playwright install chromium
 ```
 
-真实生成需要安装 `profiles.yaml` 中对应的 agent CLI。`mock` 仅用于验证 runner、合同和
-计分链路，不代表题目已经被真实模型完成。
-
-## 自动评测
-
-先在仓库根目录创建 `.env`，API key 填在 `DEEPSEEK_API_KEY`：
+For real scoring, copy `.env.example` to `.env` and put the scoring key in the
+repository root:
 
 ```bash
 cp .env.example .env
@@ -52,106 +297,152 @@ cp .env.example .env
 DEEPSEEK_API_KEY=sk-your-key
 DEEPSEEK_JUDGE_MODEL=deepseek-v4-flash
 DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_VLM_MODEL=deepseek-v4-flash
+DEEPSEEK_VLM_BASE_URL=https://api.deepseek.com
 ```
 
-使用现有 agent profile 评测全部题目：
+`DEEPSEEK_API_KEY` is the only secret. `.env` is ignored by git and must never
+be committed.
 
-```bash
-python3 scripts/auto_evaluate.py \
-  --all \
-  --agent codex \
-  --model-label your-model-name \
-  --workers 4
-```
+## Automatic Evaluation
 
-接任意外部 harness：
-
-```bash
-python3 scripts/auto_evaluate.py \
-  --all \
-  --harness-command 'your-harness --prompt {prompt_file} --output {product_dir}' \
-  --model-label your-model-name \
-  --workers 4
-```
-
-harness 也可读取 `MOMOZI_PROMPT_FILE`、`MOMOZI_PRODUCT_DIR`、`MOMOZI_WORKSPACE`、
-`MOMOZI_TASK_FILE` 和 `MOMOZI_TASK_ID` 环境变量。命令以参数数组执行，不经过 shell。
-
-先跑一题检查接入：
+Evaluate one task with a configured profile:
 
 ```bash
 python3 scripts/auto_evaluate.py \
   --task mz_sports-fishing-tournament-en \
   --agent codex \
-  --model-label your-model-name
+  --model-label your-model
 ```
 
-输出位于：
-
-```text
-runs/auto/<run-id>/<task-id>.json
-runs/auto/<run-id>/summary.json
-leaderboard.json
-LEADERBOARD.md
-```
-
-断点续跑：
+Evaluate the full pool only when explicitly intended:
 
 ```bash
 python3 scripts/auto_evaluate.py \
   --all \
   --agent codex \
-  --model-label your-model-name \
-  --run-id my-run \
-  --resume
+  --model-label your-model \
+  --workers 4
 ```
 
-完整参数和评分 JSON 协议见 [`AUTO_EVALUATION.md`](AUTO_EVALUATION.md)。
-
-## 计分
-
-四个 LLM 盲评维度均为 0-5：
-
-| 维度 | 权重 | 关注点 |
-|---|---:|---|
-| `completeness` | 0.15 | 核心机制是否存在、可操作且互相连接 |
-| `richness` | 0.35 | 内容变化、升级、资源、风险和策略深度 |
-| `player_exp` | 0.15 | 状态可读、输入反馈、失败恢复和完整闭环 |
-| `visual` | 0.35 | 构图、美术一致性、动效、镜头和完成度 |
-
-```text
-rubric_score_100 = 100 × Σ(dimension_score / 5 × dimension_weight)
-overall_score = BUILD × CONTRACT × rubric_score_100
-```
-
-`BUILD` 为 0 或 1。`CONTRACT` 是通用逻辑合同通过率，范围 0-1。排行榜按
-`overall_score` 降序展示，并同时展示四维均分、BUILD 通过率和 CONTRACT 均值。
-
-## 双语题池
-
-每个概念拆成两个独立样本：
-
-- `*-en`：只提供英文提示词。
-- `*-zh`：只提供中文提示词。
-
-两种语言共享 `base_task_id`、游戏类型、难度和 rubric 结构，但拥有独立 task ID、
-运行目录与榜单记录。完整统计见
-[`bench/TASK_DISTRIBUTION.md`](bench/TASK_DISTRIBUTION.md)。
-
-## 验证
+Use any external harness with the contract in
+[`AGENT_HARNESS.md`](AGENT_HARNESS.md):
 
 ```bash
-# 快速语法、题池生成器、runner 和自动评测协议检查
-bash scripts/smoke.sh
-
-# 491 对中英文任务与统计报告
-python3 scripts/split_bilingual_tasks.py
-python3 scripts/generate_task_distribution.py --check
-
-# 982 题 runner/build gate 兼容性门禁
-python3 scripts/validate_pool.py --only-mz --workers 16
+python3 scripts/auto_evaluate.py \
+  --all \
+  --harness-command 'your-harness --prompt {prompt_file} --output {product_dir}' \
+  --model-label your-model \
+  --workers 4
 ```
 
-## 授权
+Protocol fixtures are available for CI and integration checks:
 
-BSD-2-Clause，见 `LICENSE`。
+```bash
+python3 scripts/auto_evaluate.py \
+  --task mz_sports-fishing-tournament-en \
+  --agent mock \
+  --mock-judge \
+  --mock-runtime \
+  --mock-visual \
+  --run-id smoke
+```
+
+Mock results are explicitly excluded from the official leaderboard.
+
+Results are written under `runs/auto/<run-id>/`; the aggregate outputs are
+`leaderboard.json` and `LEADERBOARD.md`. The v0.5 result schema is
+`schema_version: 2` with `evaluation_protocol: agent-v2`. Legacy v0.x runners
+and `auto-v1` result records remain readable for continuity.
+
+## Scoring
+
+The v0.5 release fuses four 0–100 components:
+
+| Component | Weight | Evidence |
+|---|---:|---|
+| Static | 40% | BUILD gate, contract pass rate, code judge |
+| Dynamic | 25% | Chromium load, stability, input probe, runtime status |
+| Visual | 20% | Functional Visual + Presentation screenshot judge |
+| Design | 15% | richness and authored visual evidence |
+
+The final score is the weighted raw score subject to diagnostic hard caps:
+
+```text
+BUILD failure       → final ≤ 20
+boot/page-load fail → final ≤ 10
+runtime fatal       → final ≤ 35
+```
+
+Raw components and the applied cap are retained in every result. The VLM never
+overrides deterministic runtime facts, and malformed judge output is a judge
+infrastructure failure rather than a publishable score.
+
+The official leaderboard sorts by **family-balanced score**, while also
+reporting micro, concept-balanced, EN, ZH, language gap, static, dynamic,
+visual, design, runtime pass rate, bootstrap CI, and rank stability.
+
+## Dataset and Statistics
+
+The bilingual split is deliberate:
+
+- `*-en` contains only the English prompt.
+- `*-zh` contains only the Chinese prompt.
+- Both variants share `base_task_id`, family, difficulty, and rubric structure.
+
+For inference, EN and ZH are paired by `base_task_id`; they are not treated as
+independent game concepts. Aggregation provides:
+
+```text
+micro score
+concept-balanced score
+family-balanced score
+EN, ZH, language_gap
+paired 95% bootstrap confidence intervals
+rank distribution and P(rank=1)
+```
+
+The generated composition report is
+[`bench/TASK_DISTRIBUTION.md`](bench/TASK_DISTRIBUTION.md).
+
+## Validation
+
+Run the complete local smoke suite:
+
+```bash
+bash scripts/smoke.sh
+```
+
+Run the bilingual and distribution gates:
+
+```bash
+python3 scripts/split_bilingual_tasks.py
+python3 scripts/generate_task_distribution.py --check
+python3 scripts/audit_tasks.py
+```
+
+Run the 982-task mock runner/BUILD compatibility audit:
+
+```bash
+python3 scripts/validate_pool.py --only-mz --workers 8
+```
+
+The CI job runs unit/schema tests, the Chromium fixture, syntax and metadata
+checks, and the full mock BUILD audit. It does not run every task in a browser
+on every commit.
+
+## Release Scope
+
+The paper-ready minimal release is `v0.5.0`, described by
+[`benchmark_releases/v0.5.0.json`](benchmark_releases/v0.5.0.json). The public
+concept split is recorded in
+[`benchmark_releases/v0.5.0-split.public.json`](benchmark_releases/v0.5.0-split.public.json);
+the hidden manifest is generated to a private path and is not committed.
+
+Current boundaries are explicit: difficulty is heuristic, calibration remains
+pending until human ratings are supplied, the checkout still contains the full
+task pool, and there is no online leaderboard or full gameplay DSL.
+
+## License
+
+BSD-2-Clause. See [`LICENSE`](LICENSE).

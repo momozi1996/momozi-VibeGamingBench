@@ -11,6 +11,8 @@ from pathlib import Path
 
 from momozi.run import ROOT
 from momozi.run_zhen import _weighted_judge_score, build_gate_product
+from momozi.scoring import fuse_scores
+from momozi.protocol import AGENT_EVALUATION_PROTOCOL, result_schema_errors
 from momozi.task import Task
 from momozi.verifiers import StaticChecker, BehaviorSuite
 
@@ -61,7 +63,7 @@ def _resolve_task(claim: dict) -> Task:
         path = Path(claim["task_path"])
         if path.exists():
             return Task.load(path)
-    task_id = claim.get("task")
+    task_id = claim.get("task_id") or claim.get("task")
     if not task_id:
         raise ValueError("result JSON does not identify a task")
     path = ROOT / "bench" / "tasks" / task_id / f"{task_id}.task.yaml"
@@ -85,7 +87,41 @@ def main(argv=None):
     candidate = tmp / "product"
     if not candidate.exists():
         candidate = tmp if (tmp / "game_logic.js").exists() else tmp
-    if claim.get("evaluation_protocol") == "auto-v1":
+    if claim.get("evaluation_protocol") == AGENT_EVALUATION_PROTOCOL:
+        gate = build_gate_product(candidate)
+        scores = claim.get("scores", {})
+        failure_codes = [
+            item.get("code")
+            for item in claim.get("failure_details", [])
+            if item.get("code")
+        ]
+        recomputed_scores = fuse_scores(
+            static_score=float(scores.get("static", claim.get("static", {}).get("score", 0.0))),
+            dynamic_score=float(scores.get("dynamic", claim.get("dynamic", {}).get("score", 0.0))),
+            visual_score=float(scores.get("visual", claim.get("visual", {}).get("score", 0.0))),
+            design_score=float(scores.get("design", 0.0)),
+            failure_codes=failure_codes,
+        )
+        claimed_total = scores.get("final", scores.get("overall_score"))
+        recomputed = recomputed_scores["final"]
+        schema_errors = result_schema_errors(claim)
+        match = (
+            claimed_total is not None
+            and abs(float(claimed_total) - recomputed) <= 0.01
+            and not schema_errors
+        )
+        payload = {
+            "claimed_total": claimed_total,
+            "recomputed_total": recomputed,
+            "verified": match,
+            "build_gate": gate,
+            "schema_errors": schema_errors,
+            "note": (
+                "Verified schema, score arithmetic, and deterministic static gates; "
+                "recorded browser/VLM observations are not replayed."
+            ),
+        }
+    elif claim.get("evaluation_protocol") == "auto-v1":
         gate = build_gate_product(candidate)
         result = _run_verification(task, candidate)
         claimed_scores = claim.get("scores", {})

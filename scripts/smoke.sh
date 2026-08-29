@@ -25,7 +25,7 @@ import sys
 
 result = json.load(open(sys.argv[1], encoding="utf-8"))
 assert result["benchmark"] == "momozi-VibeGamingBench", result
-assert result["version"] == "0.4.0", result
+assert result["version"] == "0.5.0", result
 assert result["build_gate"]["ok"] is True, result
 print("mock runner/build gate OK")
 PY
@@ -37,6 +37,8 @@ python3 scripts/auto_evaluate.py \
   --task mz_sports-fishing-tournament-en \
   --agent mock \
   --mock-judge \
+  --mock-runtime \
+  --mock-visual \
   --run-id smoke \
   --output-root "$auto_tmp/runs" \
   --leaderboard-out "$auto_tmp/leaderboard.json" \
@@ -50,10 +52,16 @@ root = Path(sys.argv[1])
 result = json.loads(
     (root / "runs" / "smoke" / "mz_sports-fishing-tournament-en.json").read_text()
 )
-assert result["evaluation_protocol"] == "auto-v1", result
+assert result["evaluation_protocol"] == "agent-v2", result
+assert result["schema_version"] == 2, result
+assert result["benchmark_release"] == "v0.5.0", result
 assert result["build_gate"]["ok"] is True, result
 assert result["contract"]["pass_rate"] == 1.0, result
-assert result["scores"]["overall_score"] == 60.0, result
+assert result["scores"]["final"] == 78.0, result
+assert result["static"]["score"] == 80.0, result
+assert result["dynamic"]["score"] == 100.0, result
+assert result["runtime"]["status"] == "pass", result
+assert result["visual"]["score"] == 60.0, result
 assert result["leaderboard_eligible"] is False, result
 leaderboard = json.loads((root / "leaderboard.json").read_text())
 assert leaderboard["leaderboard"] == [], leaderboard
@@ -62,4 +70,7 @@ PY
 rm -rf "$auto_tmp"
 
 echo "== imports =="
-python3 -c "import momozi.auto_eval, momozi.run, momozi.judge, momozi.leaderboard, momozi.verify; print('python imports ok')"
+python3 -c "import momozi.auto_eval, momozi.run, momozi.judge, momozi.leaderboard, momozi.verify, momozi.runtime_smoke, momozi.statistics; print('python imports ok')"
+
+echo "== unit and fixture tests =="
+python3 -m unittest discover -s tests -v

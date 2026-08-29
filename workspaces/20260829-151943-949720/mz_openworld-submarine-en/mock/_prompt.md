@@ -1,0 +1,58 @@
+# Open-World Submarine
+
+Build an **Open-World Submarine** game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+The player pilots a submarine through a vast deep ocean, using sonar to navigate
+the darkness and discover sunken wrecks, underwater caves, and strange creatures.
+The fantasy is the thrill of the abyss: descending into crushing depths where
+light fades and pressure mounts, finding treasures no one else has reached.
+Tension comes from oxygen management, hull pressure limits, and the unknown
+shapes that appear on sonar. Salvaged treasures fund upgrades that let the
+submarine dive deeper.
+
+## What the Player Experiences
+
+1. **Title Screen** — A dark oceanic title with the game name in glowing
+   bioluminescent lettering, bubbles rising, and a play button.
+2. **The Ocean** — The player pilots the submarine freely in a large 2D ocean
+   cross-section. Depth increases downward with visible pressure zones marked by
+   colour shifts from light blue to deep navy to black.
+3. **Sonar** — Visibility is limited. The player pings sonar to reveal terrain,
+   wrecks, and creatures in a radius. Sonar pulses are visible as expanding
+   rings. Passive sonar shows moving contacts as blips.
+4. **Exploration** — Sunken ships, underwater caves, and coral formations dot the
+   ocean. The player docks with wrecks to salvage cargo, enters caves to find
+   rare minerals, and photographs creatures for research bounties.
+5. **Oxygen** — A constantly depleting oxygen meter forces the player to surface
+   periodically or find air pockets in caves. Running out causes a blackout and
+   forced ascent with cargo loss.
+6. **Depth Pressure** — Descending past the submarine's rated depth causes hull
+   stress. A hull integrity meter drops; if it reaches zero, the sub implodes.
+   Upgrades increase depth rating.
+7. **Upgrades** — Salvage funds better hull plating (deeper dives), larger oxygen
+   tanks, improved sonar range, cargo hold expansion, and a headlight for
+   visibility without sonar.
+
+## HTML Submission Format
+
+You must deliver **two files**:
+
+- `index.html` — one self-contained page, uses `three.js` from CDN
+  (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
+  opens by double-clicking in any modern browser. **No build step, no `npm install`,
+  no Python server.** It must render within 3 seconds on a normal laptop.
+- `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
+  imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
+
+Constraints:
+- All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
+- Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
+- `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
+- Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
+
+Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
+CLI invocation, no download, no runtime dependency.

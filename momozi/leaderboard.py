@@ -1,15 +1,20 @@
-"""Aggregate automatic evaluation results into the public leaderboard."""
+"""Aggregate Agent Benchmark results into a release-aware leaderboard."""
 from __future__ import annotations
 
 import json
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 from . import PROJECT_NAME, __version__
+from .protocol import AGENT_EVALUATION_PROTOCOL, BENCHMARK_RELEASE
+from .statistics import aggregate_results, bootstrap_ci, rank_stability
 
-AUTO_PROTOCOL = "auto-v1"
+
+AUTO_PROTOCOL = AGENT_EVALUATION_PROTOCOL
 DIMENSIONS = ("completeness", "richness", "player_exp", "visual")
+SUPPORTED_PROTOCOLS = {AUTO_PROTOCOL, "auto-v1"}
 
 
 def _load_runs(results_dir: str | Path) -> list[dict]:
@@ -21,8 +26,8 @@ def _load_runs(results_dir: str | Path) -> list[dict]:
             continue
         if (
             isinstance(data, dict)
-            and data.get("evaluation_protocol") == AUTO_PROTOCOL
-            and data.get("task")
+            and data.get("evaluation_protocol") in SUPPORTED_PROTOCOLS
+            and (data.get("task_id") or data.get("task"))
             and isinstance(data.get("scores"), dict)
             and data.get("leaderboard_eligible", True)
         ):
@@ -30,105 +35,155 @@ def _load_runs(results_dir: str | Path) -> list[dict]:
     return rows
 
 
-def _mean(values: list[float]) -> float | None:
-    return sum(values) / len(values) if values else None
+def _model_label(row: dict) -> str:
+    agent = row.get("agent")
+    if isinstance(agent, dict):
+        agent = agent.get("model")
+    return str(row.get("model_label") or agent or "unknown")
+
+
+def _score_mean(rows: list[dict], key: str) -> float:
+    values = [
+        float(row.get("scores", {}).get(key, 0.0))
+        for row in rows
+        if row.get("scores", {}).get(key) is not None
+    ]
+    return round(sum(values) / len(values), 4) if values else 0.0
+
+
+def _contract_mean(rows: list[dict]) -> float:
+    values = [
+        float(row.get("contract", {}).get("pass_rate", 0.0))
+        for row in rows
+    ]
+    return round(sum(values) / len(values), 4) if values else 0.0
+
+
+def _fmt(value: Any) -> str:
+    return "—" if value is None else f"{float(value):.2f}"
 
 
 def build_leaderboard(results_dir: str | Path = "runs") -> dict:
     rows = _load_runs(results_dir)
-    by_model: dict[str, list[dict]] = defaultdict(list)
+    by_release_model: dict[tuple[str, str], list[dict]] = defaultdict(list)
     for row in rows:
-        label = row.get("model_label") or row.get("agent") or "unknown"
-        by_model[str(label)].append(row)
+        release = str(row.get("benchmark_release") or "legacy-v0.4.0")
+        by_release_model[(release, _model_label(row))].append(row)
 
     leaderboard = []
-    for model_label, model_rows in by_model.items():
-        overall = [
-            float(row["scores"]["overall_score"])
-            for row in model_rows
-            if row["scores"].get("overall_score") is not None
-        ]
-        rubric = [
-            float(row["scores"]["rubric_score_100"])
-            for row in model_rows
-            if row["scores"].get("rubric_score_100") is not None
-        ]
-        dimension_means = {}
-        for dimension in DIMENSIONS:
-            values = [
-                float(row["scores"][dimension])
-                for row in model_rows
-                if row["scores"].get(dimension) is not None
-            ]
-            dimension_means[dimension] = round(_mean(values) or 0.0, 4)
-
-        build_values = [
-            1.0 if row.get("build_gate", {}).get("ok") else 0.0
-            for row in model_rows
-        ]
-        contract_values = [
-            float(row.get("contract", {}).get("pass_rate", 0.0))
-            for row in model_rows
-        ]
+    grouped_for_rank: dict[str, dict[str, list[dict]]] = defaultdict(dict)
+    for (release, model_label), model_rows in by_release_model.items():
+        metrics = aggregate_results(model_rows)
+        bootstrap = bootstrap_ci(model_rows)
+        grouped_for_rank[release][model_label] = model_rows
         leaderboard.append(
             {
                 "model": model_label,
-                "overall_score": round(_mean(overall) or 0.0, 4),
-                "rubric_score_100": round(_mean(rubric) or 0.0, 4),
-                "completeness": dimension_means["completeness"],
-                "richness": dimension_means["richness"],
-                "player_exp": dimension_means["player_exp"],
-                "visual": dimension_means["visual"],
-                "build_pass_rate": round(_mean(build_values) or 0.0, 4),
-                "contract_pass_rate": round(_mean(contract_values) or 0.0, 4),
-                "tasks": len({row["task"] for row in model_rows}),
+                "release": release,
+                "benchmark_release": release,
+                "family_balanced_score": metrics["family_balanced_score"],
+                "concept_balanced_score": metrics["concept_balanced_score"],
+                "micro_score": metrics["micro_score"],
+                "overall_score": metrics["micro_score"],
+                "en_score": metrics["en_score"],
+                "zh_score": metrics["zh_score"],
+                "language_gap": metrics["language_gap"],
+                "family_scores": metrics["family_scores"],
+                "static_score": _score_mean(model_rows, "static"),
+                "dynamic_score": _score_mean(model_rows, "dynamic"),
+                "visual_score": _score_mean(model_rows, "visual"),
+                "design_score": _score_mean(model_rows, "design"),
+                "build_pass_rate": round(
+                    sum(
+                        1.0 if row.get("build_gate", {}).get("ok") else 0.0
+                        for row in model_rows
+                    )
+                    / len(model_rows),
+                    4,
+                )
+                if model_rows
+                else 0.0,
+                "runtime_pass_rate": round(
+                    sum(
+                        1.0
+                        if row.get("dynamic", {}).get("status") == "pass"
+                        else 0.0
+                        for row in model_rows
+                    )
+                    / len(model_rows),
+                    4,
+                )
+                if model_rows
+                else 0.0,
+                "contract_pass_rate": _contract_mean(model_rows),
+                "tasks": metrics["n_instances"],
+                "concepts": metrics["n_concepts"],
                 "runs": len(model_rows),
+                "bootstrap_ci95": bootstrap["ci95"],
             }
         )
+
+    for release, model_groups in grouped_for_rank.items():
+        stability = rank_stability(model_groups)
+        for row in leaderboard:
+            if row["release"] == release:
+                row["rank_stability"] = stability.get(row["model"], {})
+
     leaderboard.sort(
         key=lambda row: (
-            row["overall_score"],
-            row["rubric_score_100"],
-            row["contract_pass_rate"],
+            row["family_balanced_score"],
+            row["concept_balanced_score"],
+            row["micro_score"],
+            row["model"],
         ),
         reverse=True,
     )
     return {
         "benchmark": PROJECT_NAME,
         "version": __version__,
+        "benchmark_release": (
+            BENCHMARK_RELEASE
+            if any(row["release"] == BENCHMARK_RELEASE for row in leaderboard)
+            else None
+        ),
         "evaluation_protocol": AUTO_PROTOCOL,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "leaderboard": leaderboard,
         "n_runs": len(rows),
-        "n_models": len(leaderboard),
+        "n_models": len({(row["release"], row["model"]) for row in leaderboard}),
     }
 
 
-def to_markdown(data: dict) -> str:
+def to_markdown(data: dict[str, Any]) -> str:
     rows = data.get("leaderboard", [])
     title = f"# {PROJECT_NAME} Leaderboard"
     if not rows:
         return (
             f"{title}\n\n"
-            "当前没有可发布的 `auto-v1` 自动评测结果。mock judge 结果不会进入正式榜单。\n"
+            "当前没有可发布的 Agent Benchmark 结果。"
+            "mock judge/runtime 结果不会进入正式榜单。\n"
         )
 
     lines = [
         title,
         "",
-        "总分按 `BUILD × CONTRACT × 四维加权分` 计算，满分 100。",
+        "VibeGamingBench 是面向 Coding Agent / Agent Harness 的 Agent Benchmark。",
+        "Static 与 Dynamic 独立评测，主指标为 family-balanced score；micro score 仅作兼容参考。",
         "",
-        "| 排名 | 模型 | 总分 | 完整度 | 丰富度 | 玩家体验 | 视觉 | BUILD | CONTRACT | 题数 |",
-        "|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+        "| 排名 | 模型 | Release | Family-balanced | Concept-balanced | Micro | EN | ZH | Gap | Static | Dynamic | Visual | Design | Runtime | 题目 |",
+        "|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for rank, row in enumerate(rows, 1):
         model = str(row["model"]).replace("|", "\\|")
         lines.append(
-            f"| {rank} | `{model}` | **{row['overall_score']:.2f}** | "
-            f"{row['completeness']:.2f} | {row['richness']:.2f} | "
-            f"{row['player_exp']:.2f} | {row['visual']:.2f} | "
-            f"{row['build_pass_rate'] * 100:.1f}% | "
-            f"{row['contract_pass_rate'] * 100:.1f}% | {row['tasks']} |"
+            f"| {rank} | `{model}` | `{row['release']}` | "
+            f"**{row['family_balanced_score']:.2f}** | "
+            f"{row['concept_balanced_score']:.2f} | {row['micro_score']:.2f} | "
+            f"{_fmt(row['en_score'])} | {_fmt(row['zh_score'])} | "
+            f"{_fmt(row['language_gap'])} | {row['static_score']:.2f} | "
+            f"{row['dynamic_score']:.2f} | {row['visual_score']:.2f} | "
+            f"{row['design_score']:.2f} | {row['runtime_pass_rate'] * 100:.1f}% | "
+            f"{row['tasks']} |"
         )
     return "\n".join(lines) + "\n"
 

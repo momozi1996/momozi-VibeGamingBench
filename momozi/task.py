@@ -33,6 +33,7 @@ class Task:
     static: list = field(default_factory=list)
     behavior: dict = field(default_factory=dict)
     rubric: list = field(default_factory=list)
+    evaluation: dict = field(default_factory=dict)
     reference_dir: str = ""
     path: Path = None
 
@@ -61,6 +62,7 @@ class Task:
             static=raw.get("static", []) or [],
             behavior=raw.get("behavior", {}) or {},
             rubric=raw.get("rubric", []) or [],
+            evaluation=raw.get("evaluation", {}) or {},
             reference_dir=raw.get("reference_dir", "") or "",
             path=path,
         )
