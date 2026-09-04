@@ -10,8 +10,8 @@ class TaskAuditTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1] / "bench" / "tasks"
         data = audit_tasks(root)
         self.assertEqual(data["status"], "pass")
-        self.assertEqual(data["concept_count"], 491)
-        self.assertEqual(data["task_count"], 982)
+        self.assertEqual(data["concept_count"], 711)
+        self.assertEqual(data["task_count"], 1422)
 
 
 if __name__ == "__main__":

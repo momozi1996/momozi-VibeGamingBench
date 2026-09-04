@@ -25,7 +25,7 @@ import sys
 
 result = json.load(open(sys.argv[1], encoding="utf-8"))
 assert result["benchmark"] == "momozi-VibeGamingBench", result
-assert result["version"] == "0.5.0", result
+assert result["version"] == "0.7.0", result
 assert result["build_gate"]["ok"] is True, result
 print("mock runner/build gate OK")
 PY
@@ -54,7 +54,7 @@ result = json.loads(
 )
 assert result["evaluation_protocol"] == "agent-v2", result
 assert result["schema_version"] == 2, result
-assert result["benchmark_release"] == "v0.5.0", result
+assert result["benchmark_release"] == "v0.7.0", result
 assert result["build_gate"]["ok"] is True, result
 assert result["contract"]["pass_rate"] == 1.0, result
 assert result["scores"]["final"] == 78.0, result

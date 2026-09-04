@@ -1,0 +1,264 @@
+{
+  "benchmark_release": "v0.7.0",
+  "judge": "temporary-self-smoke",
+  "leaderboard_eligible": false,
+  "tasks": [
+    "mz_feishu-structured-001-en",
+    "mz_feishu-structured-002-en",
+    "mz_feishu-structured-003-en",
+    "mz_feishu-structured-004-en",
+    "mz_feishu-structured-005-en"
+  ],
+  "results": [
+    {
+      "task_id": "mz_feishu-structured-001-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-001-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:01.775671+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-001-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:02.444956+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-001-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:03.163059+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "task_id": "mz_feishu-structured-002-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-002-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:04.193469+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-002-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:04.866935+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-002-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:05.608363+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "task_id": "mz_feishu-structured-003-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-003-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:06.669315+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-003-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:07.334947+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-003-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:08.301160+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "task_id": "mz_feishu-structured-004-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-004-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:09.933782+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-004-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:10.603466+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-004-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:11.396138+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "task_id": "mz_feishu-structured-005-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-005-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:12.324676+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-005-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:12.996456+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0-final3/mz_feishu-structured-005-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:36:13.712497+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    }
+  ]
+}

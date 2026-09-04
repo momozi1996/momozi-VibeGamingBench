@@ -17,6 +17,7 @@ from pathlib import Path
 import yaml
 
 from task_metadata import classify_difficulty
+from prompt_contract import clean_yaml, render_contract
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -43,53 +44,8 @@ FAMILY_LABELS = {
     },
 }
 
-COMMON_EN = """\
-## HTML Submission Format
-
-Deliver a self-contained 3D browser game in two files:
-
-- `index.html` - the complete playable presentation, rendered with Three.js.
-- `game_logic.js` - the deterministic state and rules layer, exporting
-  `createGame(opts)` and `advance(game, input, dt)`.
-
-The page must open without a build step or local server and render within three
-seconds on a normal laptop. Use procedural geometry, shaders, particles, generated
-audio, and CSS; do not fetch external images, models, video, or audio at runtime.
-Three.js may be loaded from its official CDN. Any additional library explicitly
-required by this task may also be loaded from a pinned CDN URL.
-
-Support keyboard controls and the pointer. Touch or device-sensor controls may be
-added where appropriate, but must have a desktop fallback. Keep the main game
-readable at 1280x720. Include a styled title screen, short in-game guidance, pause
-or restart controls, a complete win/loss or completion loop, and visible feedback
-for every important action. This must feel like a polished vertical slice rather
-than a passive scene or disconnected technical demo.
-
-`index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
-160 KB and `game_logic.js` under 320 lines.
-"""
-
-COMMON_ZH = """\
-## HTML 提交格式
-
-用两个文件交付一个可独立运行的 3D 浏览器游戏：
-
-- `index.html` - 使用 Three.js 完成全部可玩呈现。
-- `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
-  `advance(game, input, dt)`。
-
-页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
-几何体、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、视频或音频。
-Three.js 可以从官方 CDN 加载；若本题明确要求其他库，也可以使用固定版本的 CDN。
-
-必须支持键盘和鼠标。可按题目需要加入触摸或设备传感器控制，但必须提供桌面端替代
-方案。主游戏在 1280x720 下应清晰可读。需要有经过设计的标题画面、简短的游戏内引导、
-暂停或重新开始控制、完整的胜负或完成闭环，以及每项关键操作的明确反馈。最终结果应当
-是打磨过的纵向切片，而不是被动场景或彼此割裂的技术演示。
-
-`index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
-160 KB 以内，`game_logic.js` 控制在 320 行以内。
-"""
+COMMON_EN = render_contract("en", "both", "3D")
+COMMON_ZH = render_contract("zh", "both", "3D")
 
 RUBRIC_MAPPING = {
     "completeness": ["M1", "M2", "M3"],
@@ -741,7 +697,7 @@ def _prompt(item: dict, language: str) -> str:
             f"## Required Playable Systems\n\n{numbered}\n\n"
             f"## Progression\n\n{item['progression_en']}\n\n"
             f"## Art Direction\n\n{item['art_en']}\n\n"
-            f"{COMMON_EN}"
+            f"{render_contract('en', item['family'], '3D')}"
         ).strip()
 
     numbered = "\n".join(f"{index}. **系统 {index}** - {text}" for index, text in enumerate(features, 1))
@@ -753,7 +709,7 @@ def _prompt(item: dict, language: str) -> str:
         f"## 必须实现的可玩系统\n\n{numbered}\n\n"
         f"## 成长与推进\n\n{_translate_progression(item)}\n\n"
         f"## 美术方向\n\n{_translate_art(item)}\n\n"
-        f"{COMMON_ZH}"
+        f"{render_contract('zh', item['family'], '3D')}"
     ).strip()
 
 
@@ -854,6 +810,12 @@ def _requirement(item: dict, req_id: str, description: str, category: str) -> di
             " Score 0 if the presentation is dominated by default controls, unlit "
             "primitives, inconsistent materials, or abrupt unanimated state changes."
         )
+        if req_id == "A1":
+            suffix += (
+                " Full credit may be earned with runtime-authored procedural textures, "
+                "layered materials, deliberate multi-light rigs, particles, synthesized "
+                "audio, or post-processing; external asset files are not required."
+            )
         agg = "mean"
     return {"id": req_id, "agg": agg, "description": description + suffix}
 
@@ -952,6 +914,16 @@ def _task_yaml(item: dict, language: str, prompt: str) -> dict:
             {"kind": "required_file", "role": "logic", "path": "game_logic.js", "weight": 1.0},
         ],
         "behavior": {"script": "beh_html.mjs", "timeout": 300},
+        "evaluation": {
+            "input_scheme": (
+                "pointer-first"
+                if item["family"] in {"puzzle", "strategy", "tycoon", "cardgame", "idle"}
+                else "keyboard-first"
+                if item["family"] in {"racing", "platformer", "shooter", "rhythm", "action", "arcade"}
+                else "both"
+            ),
+            "start_keys": ["Enter", "Space"],
+        },
         "rubric": [
             {
                 "id": "completeness",
@@ -988,14 +960,17 @@ def _task_yaml(item: dict, language: str, prompt: str) -> dict:
 def _render_files(item: dict, language: str) -> dict[str, str]:
     prompt = _prompt(item, language)
     task_id = f"{item['slug']}-{language}"
-    return {
-        f"{task_id}.task.yaml": yaml.dump(
+    task_yaml = clean_yaml(
+        yaml.dump(
             _task_yaml(item, language, prompt),
             Dumper=LiteralDumper,
             allow_unicode=True,
             sort_keys=False,
             width=1000,
-        ),
+        )
+    )
+    return {
+        f"{task_id}.task.yaml": task_yaml,
         "prompt.md": prompt + "\n",
         "rubric.mapping.json": json.dumps(RUBRIC_MAPPING, ensure_ascii=False, indent=2) + "\n",
         "rubric.original.json": json.dumps(_rubric(item), ensure_ascii=False, indent=2) + "\n",

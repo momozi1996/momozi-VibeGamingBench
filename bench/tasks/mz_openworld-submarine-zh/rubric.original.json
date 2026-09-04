@@ -91,7 +91,7 @@
     {
       "id": "A1",
       "agg": "max",
-      "description": "The title screen uses a deep-ocean or bioluminescent composition with an interactive play button and visible transition to the dive. Score 0 if it is a generic title over simple shapes."
+      "description": "The title screen uses a deep-ocean or bioluminescent composition with an interactive play button and visible transition to the dive. Score 0 if it is a generic title over simple shapes. Full credit may be earned with runtime-authored procedural textures, layered materials, deliberate multi-light rigs, particles, synthesized audio, or post-processing; external asset files are not required."
     },
     {
       "id": "A2",

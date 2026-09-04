@@ -10,8 +10,8 @@ gameplay simulator.
 
 The current release contains:
 
-- **491 unique game concepts**
-- **982 bilingual evaluation instances** (`491 EN + 491 ZH`)
+- **711 unique game concepts**
+- **1,422 bilingual evaluation instances** (`711 EN + 711 ZH`)
 - **21 game families**
 - heuristic `low` / `medium` / `high` implementation difficulty
 - Static artifact/contract evaluation
@@ -27,10 +27,10 @@ The current release contains:
 浏览器游戏，并验证该产物是否真的能在固定浏览器环境中启动和保持运行。当前版本不是
 完整的长时程 Gameplay Simulator，而是“生成能力 + 轻量执行证据”的可复现评测。
 
-当前题池保持不变：
+当前题池包含原有题池以及 Feishu Prompt Catalog 扩展：
 
-- **491 个独立游戏概念**
-- **982 道双语评测题**：491 道英文题 + 491 道中文题
+- **711 个独立游戏概念**
+- **1,422 道双语评测题**：711 道英文题 + 711 道中文题
 - **21 个游戏类型**
 - `low` / `medium` / `high` 三档**启发式实现难度**
 
@@ -68,8 +68,8 @@ BUILD/合同    Chromium smoke + 截图
 - 使用固定 Chromium、1280×720、`en-US`、`UTC`、device scale factor 1。
 - 等待页面加载和稳定窗口。
 - 捕获 console/page error。
-- 默认发送一次 `ArrowRight` 通用输入探针。
-- 在稳定状态捕获 `boot.png`。
+- 按题目 family 自动选择 pointer-first、keyboard-first 或 mixed 探针。
+- 捕获 `boot.png`、`gameplay_start.png` 和 `gameplay_mid.png`。
 
 动态通过只表示页面成功启动、在限定窗口内保持存活、完成探针并生成截图，不等价于
 完整玩法验证。
@@ -110,8 +110,22 @@ pip install -r requirements.txt
 python3 -m playwright install chromium
 ```
 
-真实 code judge 和 screenshot VLM judge 默认使用 `deepseek-v4-flash`。在仓库根目录创建
-`.env`，只填写：
+真实 code judge 和 screenshot VLM judge 使用 OpenAI-compatible Chat Completions。
+推荐把 screenshot judge 接到支持图片输入和严格 JSON 输出的 Doubao/Ark 部署；
+DeepSeek 兼容配置仍保留。仓库根目录创建 `.env`：
+
+```env
+MOMOZI_JUDGE_API_KEY=你的key
+MOMOZI_JUDGE_PROVIDER=ark
+MOMOZI_JUDGE_MODEL=你的Ark部署模型ID
+MOMOZI_JUDGE_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
+MOMOZI_VLM_API_KEY=你的key
+MOMOZI_VLM_PROVIDER=ark
+MOMOZI_VLM_MODEL=你的Ark视觉部署模型ID
+MOMOZI_VLM_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
+```
+
+也可以继续使用旧变量名：
 
 ```env
 DEEPSEEK_API_KEY=你的key
@@ -148,7 +162,7 @@ python3 scripts/auto_evaluate.py \
 
 ### 评分与排行榜
 
-v0.5 的四个分量及权重为：
+v0.6 的四个分量及权重为：
 
 | 分量 | 权重 |
 |---|---:|
@@ -170,7 +184,7 @@ BUILD 失败       → final ≤ 20
 language gap、Static、Dynamic、Visual、Design、runtime pass rate、paired bootstrap
 95% CI 和 rank stability。
 
-英文和中文题通过 `base_task_id` 配对，不会被当成 982 个独立概念。难度标签是工程复杂度
+英文和中文题通过 `base_task_id` 配对，不会被当成 1,422 个独立概念。难度标签是工程复杂度
 启发式分类，不是经验校准分数。
 
 ### 验证与发布
@@ -193,13 +207,13 @@ python3 scripts/validate_pool.py --only-mz --workers 8
 当前验证结果应为：
 
 ```text
-491 concepts
-982 tasks
-EN 491 / ZH 491
-982 / 982 BUILD audit passed
+711 concepts
+1,422 tasks
+EN 711 / ZH 711
+1,422 / 1,422 BUILD audit passed
 ```
 
-发布元数据见 [`benchmark_releases/v0.5.0.json`](benchmark_releases/v0.5.0.json)，其中记录
+发布元数据见 [`benchmark_releases/v0.7.0.json`](benchmark_releases/v0.7.0.json)，其中记录
 题池 hash、代码 tag、评测协议和 runtime/judge/scoring 版本。公共 split 已提交，hidden
 split 只生成到私有路径；由于开发 checkout 仍包含完整题池，当前 hidden split 不是实际的
 保密边界。
@@ -228,9 +242,9 @@ checks       + screenshot
 
 Static evaluation answers **what the agent built**. Dynamic evaluation answers
 **whether the artifact launches and remains alive in a fixed browser smoke
-environment**. Runtime smoke includes page load, fatal error capture, one
-generic input probe, and a stable `boot.png`; it does not claim complete
-gameplay correctness.
+environment**. Runtime smoke includes page load, fatal error capture, a
+family-aware start/input probe, and stable `boot.png`, `gameplay_start.png`,
+and `gameplay_mid.png` evidence; it does not claim complete gameplay correctness.
 
 ## Repository Layout
 
@@ -242,11 +256,11 @@ momozi-VibeGamingBench/
 │   ├── runtime_smoke.py         # Chromium smoke runner
 │   ├── screenshot.py             # deterministic screenshot metadata
 │   ├── multimodal_judge.py       # strict JSON VLM judge
-│   ├── scoring.py                # v0.5 component weights and hard caps
+│   ├── scoring.py                # versioned component weights and hard caps
 │   ├── statistics.py             # paired bootstrap and rank stability
 │   ├── leaderboard.py            # release-aware balanced leaderboard
 │   └── verify.py                 # deterministic archive verification
-├── bench/tasks/                  # 491 concepts × EN/ZH = 982 tasks
+├── bench/tasks/                  # 711 concepts × EN/ZH = 1,422 tasks
 ├── bench/tests/                  # public deterministic behavior suites
 ├── benchmark_releases/           # release and split manifests
 ├── scripts/                      # audits, calibration, ablation, validation
@@ -294,15 +308,18 @@ cp .env.example .env
 ```
 
 ```env
-DEEPSEEK_API_KEY=sk-your-key
-DEEPSEEK_JUDGE_MODEL=deepseek-v4-flash
-DEEPSEEK_BASE_URL=https://api.deepseek.com
-DEEPSEEK_VLM_MODEL=deepseek-v4-flash
-DEEPSEEK_VLM_BASE_URL=https://api.deepseek.com
+MOMOZI_JUDGE_API_KEY=your-key
+MOMOZI_JUDGE_PROVIDER=ark
+MOMOZI_JUDGE_MODEL=your-endpoint-model-id
+MOMOZI_JUDGE_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
+MOMOZI_VLM_API_KEY=your-key
+MOMOZI_VLM_PROVIDER=ark
+MOMOZI_VLM_MODEL=your-vision-endpoint-model-id
+MOMOZI_VLM_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
 ```
 
-`DEEPSEEK_API_KEY` is the only secret. `.env` is ignored by git and must never
-be committed.
+The key variables are secrets. `.env` is ignored by git and must never be
+committed. Legacy `DEEPSEEK_*` variables remain accepted.
 
 ## Automatic Evaluation
 
@@ -351,13 +368,13 @@ python3 scripts/auto_evaluate.py \
 Mock results are explicitly excluded from the official leaderboard.
 
 Results are written under `runs/auto/<run-id>/`; the aggregate outputs are
-`leaderboard.json` and `LEADERBOARD.md`. The v0.5 result schema is
+`leaderboard.json` and `LEADERBOARD.md`. The v0.6 result schema is
 `schema_version: 2` with `evaluation_protocol: agent-v2`. Legacy v0.x runners
 and `auto-v1` result records remain readable for continuity.
 
 ## Scoring
 
-The v0.5 release fuses four 0–100 components:
+The v0.6 release fuses four 0–100 components:
 
 | Component | Weight | Evidence |
 |---|---:|---|
@@ -421,7 +438,7 @@ python3 scripts/generate_task_distribution.py --check
 python3 scripts/audit_tasks.py
 ```
 
-Run the 982-task mock runner/BUILD compatibility audit:
+Run the 1,422-task mock runner/BUILD compatibility audit:
 
 ```bash
 python3 scripts/validate_pool.py --only-mz --workers 8
@@ -433,10 +450,10 @@ on every commit.
 
 ## Release Scope
 
-The paper-ready minimal release is `v0.5.0`, described by
-[`benchmark_releases/v0.5.0.json`](benchmark_releases/v0.5.0.json). The public
+The paper-ready release is `v0.7.0`, described by
+[`benchmark_releases/v0.7.0.json`](benchmark_releases/v0.7.0.json). The public
 concept split is recorded in
-[`benchmark_releases/v0.5.0-split.public.json`](benchmark_releases/v0.5.0-split.public.json);
+[`benchmark_releases/v0.7.0-split.public.json`](benchmark_releases/v0.7.0-split.public.json);
 the hidden manifest is generated to a private path and is not committed.
 
 Current boundaries are explicit: difficulty is heuristic, calibration remains

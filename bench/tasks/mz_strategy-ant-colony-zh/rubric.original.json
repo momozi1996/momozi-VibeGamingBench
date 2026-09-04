@@ -116,7 +116,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "The game has cohesive underground-colony art direction across gameplay, HUD, menus, and results. Primitive/draw_text-heavy or mismatched placeholder art scores 0."
+      "description": "The game has cohesive underground-colony art direction across gameplay, HUD, menus, and results. Primitive/draw_text-heavy or mismatched placeholder art scores 0. Full credit may be earned with runtime-authored procedural textures, layered materials, deliberate multi-light rigs, particles, synthesized audio, or post-processing; external asset files are not required."
     },
     {
       "id": "A2",

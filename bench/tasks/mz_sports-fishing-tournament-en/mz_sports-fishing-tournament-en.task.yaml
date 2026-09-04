@@ -1,70 +1,20 @@
 id: mz_sports-fishing-tournament-en
 title: sports fishing tournament (English)
 family: sports
-difficulty: low
+difficulty: medium
 engine: html
 provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # Sports Fishing Tournament
-
-    Build a **Sports Fishing Tournament** game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
-    This is not a prototype. It is a **complete, shippable micro-game** that could
-    sit on an itch.io page or Steam as a polished vertical slice.
-
-    ## Core Vision
-
-    The player competes in fishing tournaments across multiple lakes, selecting gear,
-    reading weather conditions, and catching species to win brackets. The fantasy is
-    competitive angling: knowing which lure works in which conditions, finding the
-    secret spot where trophy fish hide, and landing the big one under tournament
-    pressure. Tension comes from the clock — tournaments are timed, and every cast
-    is a gamble between safe catches and risky trophy attempts.
-
-    ## What the Player Experiences
-
-    1. **Title Screen** — A lakeside scene at dawn with the game name in rustic
-       lettering and a play button styled as a tackle box latch.
-    2. **Tournament Bracket** — The player sees the current tournament bracket with
-       opponents, target species, and prize money. Advancing requires catching more
-       total weight than opponents.
-    3. **Lake Selection** — Multiple lakes with different characteristics: a shallow
-       pond (easy, small fish), a deep reservoir (medium, varied species), and a
-       mountain stream (hard, rare trophy fish). Each has a distinct visual style.
-    4. **Gear Selection** — Before fishing, the player chooses rod, line, and lure
-       from a tackle shop. Different gear suits different conditions and species.
-       Better gear costs tournament winnings.
-    5. **Weather System** — Weather changes during tournaments: sunny, overcast,
-       rainy. Weather affects fish activity — overcast brings fish to surface, rain
-       activates bottom feeders, sun makes fish hide in shade.
-    6. **Fishing Mechanics** — The player casts, waits for a bite, then plays a
-       reel mini-game with tension management. Bigger fish fight harder. A catch
-       screen shows species, weight, and tournament ranking update.
-    7. **Species Collection** — A logbook tracks all caught species with records for
-       largest catch. Rare species appear only in specific lakes under specific
-       conditions. Completing the logbook unlocks bonus tournaments.
-
-    ## HTML Submission Format
-
-    You must deliver **two files**:
-
-    - `index.html` — one self-contained page, uses `three.js` from CDN
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      opens by double-clicking in any modern browser. **No build step, no `npm install`,
-      no Python server.** It must render within 3 seconds on a normal laptop.
-    - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
-      imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
-
-    Constraints:
-    - All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
-    - Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
-    - `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
-    - Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
-
-    Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
-    CLI invocation, no download, no runtime dependency.
+  spec: "# Sports Fishing Tournament\n\nBuild a **Sports Fishing Tournament** game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).\nThis is not a prototype. It is a **complete, shippable micro-game** that could\nsit on an itch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nThe player competes in fishing tournaments across multiple lakes, selecting gear,\nreading weather conditions, and catching species to win brackets. The fantasy is\ncompetitive angling: knowing which lure works in which conditions, finding the\nsecret spot where trophy fish hide, and landing the big one under tournament\npressure. Tension comes from the clock — tournaments are timed, and every cast\nis a gamble between safe catches and risky trophy attempts.\n\n## What the Player Experiences\n\n1. **Title Screen** — A lakeside scene at dawn with the game name in rustic\n   lettering and a play button styled as a tackle box latch.\n2. **Tournament Bracket**\
+    \ — The player sees the current tournament bracket with\n   opponents, target species, and prize money. Advancing requires catching more\n   total weight than opponents.\n3. **Lake Selection** — Multiple lakes with different characteristics: a shallow\n   pond (easy, small fish), a deep reservoir (medium, varied species), and a\n   mountain stream (hard, rare trophy fish). Each has a distinct visual style.\n4. **Gear Selection** — Before fishing, the player chooses rod, line, and lure\n   from a tackle shop. Different gear suits different conditions and species.\n   Better gear costs tournament winnings.\n5. **Weather System** — Weather changes during tournaments: sunny, overcast,\n   rainy. Weather affects fish activity — overcast brings fish to surface, rain\n   activates bottom feeders, sun makes fish hide in shade.\n6. **Fishing Mechanics** — The player casts, waits for a bite, then plays a\n   reel mini-game with tension management. Bigger fish fight harder. A catch\n   screen shows\
+    \ species, weight, and tournament ranking update.\n7. **Species Collection** — A logbook tracks all caught species with records for\n   largest catch. Rare species appear only in specific lakes under specific\n   conditions. Completing the logbook unlocks bonus tournaments.\n\n## Vibe Gaming Quality Bar\n\nThe gameplay, logic, and acceptance anchors above take priority over this\npresentation contract. Do not rewrite or remove the core mechanics above; use\nthese rules to turn the same brief into a playable Vibe Gaming vertical slice.\n\n- **Play first, polish second:** establish start, core input, state changes,\n  success/failure, and replay before adding visual polish or effects.\n- **Choose the smallest sufficient stack**:\n  - `HTML5 Canvas 2D + Vanilla JS` for 2D rule-driven games;\n  - `DOM + CSS + Vanilla JS` for card, dialogue, menu, and information-heavy games;\n  - `pure SVG + CSS animation + Vanilla JS` for icons, diagrams, and geometric motion;\n  - `PhaserJS` for continuous\
+    \ collision, cameras, particles, or arcade physics;\n  - `Three.js + WebGL` for 3D or spatial camera experiences;\n  - native `WebGPU` only when large-scale GPU parallelism or a custom GPU pipeline is genuinely required;\n  - Canvas, DOM, CSS, and SVG may be mixed when each layer has a clear responsibility.\n    Do not add complexity for technology spectacle.\n- **Keep rules independent:** `game_logic.js` is the single source of truth and\n  exposes `createGame(opts)` and `advance(game, input, dt)`. Rendering reads state;\n  it must not maintain a second hidden rules system.\n- **Make every frame explainable:** inputs map to explicit actions, actions\n  produce observable state changes, and invalid input, edge cases, resource\n  depletion, damage, victory, and failure are visible.\n- **Vibe is not decoration:** use at least two feedback channels (animation,\n  motion, scale, particles, audio, HUD, or camera) for important actions without\n  obscuring the goal or reducing readability.\n\
+    - **Mobile first:** pointer targets are at least 44×44 CSS px, touch and mouse\n  both work, hover is never required, and 390×844, 360×800, 430×932, and\n  1280×800 have no horizontal scrolling or overlapping controls.\n- **Determinism and tests:** seed random content; verify the core rule, outcome\n  conditions, restart/restoration, input boundaries, and at least one error state.\n  Do not treat a screenshot or visible label as proof of functionality.\n- **Originality and compliance:** use original names, characters, graphics,\n  audio, and levels, or explicitly licensed assets. Do not copy trademarks,\n  characters, text, artwork, music, level data, or source code.\n\nFinish by reporting actual file paths, launch and test commands/results, key\nscreenshots, known limitations, stack tradeoffs, and original-asset provenance.\n\n## HTML Submission Format\n\nDeliver a self-contained browser game in two files:\n\n- `index.html` - the complete playable presentation. Use HTML Canvas 2D or\
+    \ Three.js/WebGL for the playable presentation.\n- `game_logic.js` - the deterministic state and rules layer. Use a classic script\n  and expose `createGame(opts)` and `advance(game, input, dt)`; an optional\n  `render(gameState, renderCtx)` hook may be exposed.\n\nThe page must open without a build step or local server and render within three\nseconds on a normal laptop. Assets must be generated at runtime with no network\nrequests: procedural geometry, Canvas2D-drawn textures encoded as `data:` URIs,\noffscreen-canvas particle sprites, Web Audio API synthesized sound, shaders,\npost-processing, and CSS are all allowed and encouraged. Do not embed or fetch\nexternal image, model, video, or audio files at runtime. Three.js may be loaded\nfrom its pinned official CDN; if post-processing is used, pin the matching\n`examples/jsm/postprocessing/*` modules to the same Three.js version.\n\nInteraction scheme (both): Support both keyboard and pointer controls: use keyboard for movement or actions\
+    \ and the pointer for spatial selection, menus, or targeting.\nKeep the complete play area and HUD readable at 1280x720. Include a clear start\nflow, concise in-game guidance, pause and restart controls, a complete win/loss\nor scored outcome loop, and visible feedback for every important action.\n\n`index.html` must not use `fetch()` or `XMLHttpRequest` for external URLs; only\nthe pinned Three.js CDN above is allowed. Keep `index.html` at or below 400 KB.\nThe `game_logic.js` line count is advisory and is not a BUILD-gate failure.\n\n### Logic and rendering scaffold\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // The loop calls advance; render(game, { THREE, scene, ... }) is optional.\n</script>\n```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function\
+    \ render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` must be pure and must not access DOM or Three.js objects. The optional\n`render()` hook is called by the main loop and may map state to scenes, materials,\nparticles, and post-processing."
 static:
 - kind: required_file
   role: entry
@@ -107,5 +57,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: both
+  start_keys:
+  - Enter
+  - Space
 language: en
 base_task_id: mz_sports-fishing-tournament

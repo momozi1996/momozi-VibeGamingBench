@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Single player simulation MMORPG</title>
+  <style>
+    :root { color-scheme: dark; --accent: #f472b6; --bg: #07111f; --panel: rgba(9, 20, 35, .9); }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: #eef6ff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    body { display: grid; place-items: center; overflow: hidden; }
+    .shell { position: relative; width: min(100vw, 1100px); height: min(100vh, 760px); min-height: 520px; overflow: hidden; background: #0b1728; }
+    canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+    .hud { position: absolute; inset: 16px 16px auto; display: flex; justify-content: space-between; gap: 12px; pointer-events: none; }
+    .panel { border: 1px solid rgba(170, 210, 255, .18); background: var(--panel); box-shadow: 0 12px 35px rgba(0,0,0,.25); border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(10px); }
+    .eyebrow { color: var(--accent); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+    .title { margin-top: 3px; font-size: clamp(17px, 3vw, 24px); font-weight: 800; }
+    .stats { display: flex; gap: 16px; font-size: 13px; text-align: right; }
+    .stats strong { display: block; color: #fff; font-size: 18px; }
+    .controls { position: absolute; inset: auto 16px 16px; display: flex; justify-content: space-between; align-items: end; gap: 12px; }
+    .hint { max-width: 58ch; font-size: 13px; line-height: 1.35; color: #c1d2e9; }
+    button { min-width: 48px; min-height: 44px; border: 1px solid rgba(255,255,255,.22); border-radius: 10px; color: #fff; background: rgba(15,31,52,.94); padding: 10px 14px; font: inherit; cursor: pointer; }
+    button.primary { background: var(--accent); color: #06101d; border-color: transparent; font-weight: 800; }
+    button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .overlay { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(180deg, rgba(3,10,20,.18), rgba(3,10,20,.72)); }
+    .overlay[hidden] { display: none; }
+    .card { width: min(440px, calc(100vw - 36px)); padding: 24px; border: 1px solid rgba(255,255,255,.18); border-radius: 16px; background: rgba(5,15,28,.93); box-shadow: 0 22px 70px rgba(0,0,0,.45); }
+    .card h1 { margin: 0 0 8px; font-size: clamp(25px, 7vw, 42px); }
+    .card p { color: #c1d2e9; line-height: 1.5; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    @media (max-width: 640px) {
+      .shell { width: 100vw; height: 100vh; min-height: 0; }
+      .hud { inset: 12px 12px auto; }
+      .controls { inset: auto 12px 12px; }
+      .hint { max-width: 46vw; font-size: 12px; }
+      .stats { gap: 8px; font-size: 12px; }
+      .stats strong { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" data-family="rpg" data-task="mz_feishu-structured-005-en">
+    <canvas id="game" aria-label="Playable benchmark smoke game"></canvas>
+    <section class="hud" aria-live="polite">
+      <div class="panel"><div class="eyebrow">rpg</div><div class="title">Single player simulation MMORPG</div></div>
+      <div class="panel stats">
+        <div><span>Score</span><strong id="score">0</strong></div>
+        <div><span>Goal</span><strong id="goal">20</strong></div>
+        <div><span>State</span><strong id="state">TITLE</strong></div>
+      </div>
+    </section>
+    <section class="controls">
+      <div class="panel hint" id="hint">Press Start, then use arrows/WASD or click the arena. Complete five actions to finish the smoke scenario.</div>
+      <div class="actions">
+        <button id="pauseButton" type="button">Pause</button>
+        <button id="restartButton" type="button">Restart</button>
+      </div>
+    </section>
+    <section class="overlay" id="overlay">
+      <div class="card">
+        <div class="eyebrow">VibeGamingBench self smoke</div>
+        <h1>Single player simulation MMORPG</h1>
+        <p>A deterministic original micro-game used only to validate the benchmark artifact contract, browser runtime, screenshots, and score fusion.</p>
+        <div class="actions"><button class="primary" id="startButton" type="button">Start game</button></div>
+      </div>
+    </section>
+  </main>
+  <script src="./game_logic.js"></script>
+  <script>
+    (() => {
+      const canvas = document.querySelector('#game');
+      const ctx = canvas.getContext('2d');
+      const overlay = document.querySelector('#overlay');
+      const scoreNode = document.querySelector('#score');
+      const stateNode = document.querySelector('#state');
+      const hintNode = document.querySelector('#hint');
+      const game = window.GameLogic.createGame({ seed: 20260904 });
+      let last = performance.now();
+      let pointer = { x: .5, y: .5 };
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(canvas.clientWidth * dpr);
+        canvas.height = Math.floor(canvas.clientHeight * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function inputFor(action) {
+        return { action, pointer };
+      }
+      function apply(action) {
+        window.GameLogic.advance(game, inputFor(action), 1 / 60);
+      }
+      function draw(now) {
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        const gradient = ctx.createLinearGradient(0, 0, w, h);
+        gradient.addColorStop(0, '#09182a'); gradient.addColorStop(1, '#102d44');
+        ctx.fillStyle = gradient; ctx.fillRect(0, 0, w, h);
+        ctx.globalAlpha = .22; ctx.strokeStyle = '#f472b6';
+        for (let x = 0; x < w; x += 48) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+        for (let y = 0; y < h; y += 48) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+        const t = now / 1000;
+        ctx.globalAlpha = 1;
+        if ('open-map' === 'pixel-rpg') {
+          const tile = Math.max(24, Math.floor(Math.min(w, h) / 18));
+          ctx.fillStyle = '#1e293b';
+          for (let y = 0; y < h; y += tile) for (let x = 0; x < w; x += tile) {
+            ctx.fillStyle = ((x / tile + y / tile) % 2) ? '#26354b' : '#1f3042';
+            ctx.fillRect(x + 1, y + 1, tile - 2, tile - 2);
+          }
+          ctx.fillStyle = '#eab308'; ctx.fillRect(w * .23, h * .38, 34, 34);
+          ctx.fillStyle = '#ef4444'; ctx.fillRect(w * .67, h * .33, 42, 42);
+          ctx.fillStyle = '#22c55e'; ctx.fillRect(w * .49, h * .64, 30, 30);
+          ctx.strokeStyle = '#f472b6'; ctx.lineWidth = 4; ctx.strokeRect(w * .18, h * .24, w * .64, h * .52);
+        } else if ('open-map' === 'action-arena') {
+          const gx = w * (.5 + Math.sin(t * 1.3) * .22);
+          const gy = h * (.54 + Math.cos(t * 1.1) * .16);
+          ctx.strokeStyle = 'rgba(248,113,113,.34)'; ctx.lineWidth = 2;
+          for (let r = 90; r < Math.min(w, h); r += 48) { ctx.beginPath(); ctx.arc(w*.5, h*.52, r, 0, Math.PI*2); ctx.stroke(); }
+          ctx.fillStyle = '#f472b6'; ctx.shadowColor = '#f472b6'; ctx.shadowBlur = 24;
+          ctx.beginPath(); ctx.arc(gx, gy, 22 + game.score, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+          for (let i = 0; i < 7; i++) { const a = t * .4 + i; const ex = w*.5 + Math.cos(a)*Math.min(w,h)*.3; const ey = h*.52 + Math.sin(a)*Math.min(w,h)*.23; ctx.fillStyle = i%2 ? '#fb7185' : '#f97316'; ctx.beginPath(); ctx.arc(ex,ey,10,0,Math.PI*2); ctx.fill(); }
+        } else if ('open-map' === 'jrpg-dialogue') {
+          ctx.fillStyle = '#3b255e'; ctx.fillRect(0, h*.12, w, h*.68);
+          ctx.fillStyle = '#6941a5'; ctx.fillRect(w*.06, h*.2, w*.28, h*.44);
+          ctx.fillStyle = '#2563eb'; ctx.fillRect(w*.66, h*.2, w*.28, h*.44);
+          ctx.fillStyle = '#f8fafc'; ctx.font = '700 18px system-ui'; ctx.fillText('旅人', w*.12, h*.26); ctx.fillText('守门人', w*.71, h*.26);
+          ctx.fillStyle = '#f9a8d4'; ctx.beginPath(); ctx.arc(w*.2,h*.43,38,0,Math.PI*2); ctx.fill();
+          ctx.fillStyle = '#93c5fd'; ctx.beginPath(); ctx.arc(w*.8,h*.43,38,0,Math.PI*2); ctx.fill();
+          ctx.fillStyle = 'rgba(12,18,35,.94)'; ctx.fillRect(w*.1,h*.72,w*.8,90);
+          ctx.strokeStyle = '#f472b6'; ctx.strokeRect(w*.1,h*.72,w*.8,90);
+          ctx.fillStyle = '#f8fafc'; ctx.font = '16px system-ui'; ctx.fillText(game.score % 2 ? '选择：继续前进' : '选择：询问线索', w*.14, h*.78);
+        } else if ('open-map' === 'tactical-grid') {
+          ctx.fillStyle = '#0f3b46'; ctx.fillRect(w*.12,h*.16,w*.76,h*.62);
+          ctx.strokeStyle = 'rgba(125,211,252,.34)'; ctx.lineWidth = 1;
+          for (let x = w*.12; x <= w*.88; x += w*.095) { ctx.beginPath();ctx.moveTo(x,h*.16);ctx.lineTo(x,h*.78);ctx.stroke(); }
+          for (let y = h*.16; y <= h*.78; y += h*.103) { ctx.beginPath();ctx.moveTo(w*.12,y);ctx.lineTo(w*.88,y);ctx.stroke(); }
+          ctx.fillStyle = '#fbbf24'; ctx.fillRect(w*.29,h*.42,34,34); ctx.fillStyle = '#f87171'; ctx.fillRect(w*.68,h*.32,34,34); ctx.fillStyle = '#34d399'; ctx.fillRect(w*.58,h*.62,34,34);
+          ctx.fillStyle = '#e2e8f0'; ctx.font = '600 15px system-ui'; ctx.fillText('TACTICAL PHASE', w*.14, h*.11);
+        } else {
+          ctx.fillStyle = '#173d36'; ctx.fillRect(0, h*.16, w, h*.68);
+          ctx.fillStyle = '#245d47'; for (let i=0;i<16;i++) { const x=(i*97)%w, y=h*.2+((i*53)%Math.max(1,h*.56)); ctx.beginPath();ctx.arc(x,y,18+(i%3)*5,0,Math.PI*2);ctx.fill(); }
+          ctx.fillStyle = '#38bdf8'; ctx.beginPath();ctx.arc(w*.5,h*.52,24,0,Math.PI*2);ctx.fill();
+          ctx.fillStyle = '#f59e0b'; for(let i=0;i<5;i++){const x=w*(.18+i*.16),y=h*(.34+(i%2)*.19);ctx.fillRect(x,y,18,18);}
+          ctx.strokeStyle = '#f472b6'; ctx.lineWidth = 3; ctx.strokeRect(w*.08,h*.24,w*.84,h*.48);
+          ctx.fillStyle = '#d1fae5'; ctx.font = '700 16px system-ui'; ctx.fillText('OPEN MAP · NPC ROUTES · DAY 02', w*.12, h*.9);
+        }
+        ctx.fillStyle = '#f7fbff';
+        ctx.beginPath(); ctx.arc(w * pointer.x, h * pointer.y, 9, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#f7fbff'; ctx.globalAlpha = .7;
+        ctx.beginPath(); ctx.arc(w * pointer.x, h * pointer.y, 18, 0, Math.PI * 2); ctx.stroke();
+        ctx.globalAlpha = 1;
+        scoreNode.textContent = String(game.score);
+        stateNode.textContent = String(game.phase).toUpperCase();
+        overlay.hidden = game.phase !== 'title' && game.phase !== 'win' && game.phase !== 'lose';
+        if (game.phase === 'win') hintNode.textContent = 'Smoke scenario complete. Restart to replay the deterministic loop.';
+        else if (game.phase === 'lose') hintNode.textContent = 'Scenario ended. Restart to run it again.';
+        requestAnimationFrame(draw);
+      }
+      function tick(now) {
+        const dt = Math.min(.1, (now - last) / 1000); last = now;
+        if (game.phase === 'playing') window.GameLogic.advance(game, { pointer }, dt);
+        requestAnimationFrame(tick);
+      }
+      window.addEventListener('resize', resize);
+      window.addEventListener('keydown', (event) => {
+        if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d'].includes(event.key)) {
+          event.preventDefault(); apply(event.key);
+        }
+        if (event.key === 'Enter') apply('start');
+        if (event.key === 'Escape') apply('pause');
+      });
+      canvas.addEventListener('pointermove', (event) => {
+        const rect = canvas.getBoundingClientRect();
+        pointer = { x: Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)), y: Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height)) };
+      });
+      canvas.addEventListener('pointerdown', () => apply('pointer'));
+      document.querySelector('#startButton').addEventListener('click', () => apply('start'));
+      document.querySelector('#pauseButton').addEventListener('click', () => apply('pause'));
+      document.querySelector('#restartButton').addEventListener('click', () => apply('restart'));
+      resize(); requestAnimationFrame(draw); requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>

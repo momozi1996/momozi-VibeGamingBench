@@ -1,0 +1,100 @@
+# Cardgame Gwent War
+
+Build a Cardgame Gwent War as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
+This is not a prototype. It is a **complete, shippable micro-game** that could
+sit on an itch.io page or Steam as a polished vertical slice.
+
+## Core Vision
+
+A row-based card battle game where bluffing is as important as card strength.
+Each player places unit cards into one of three combat rows (melee, ranged,
+siege), and the side with the higher total strength at round's end wins. But
+matches are best-of-three — winning a round early by dumping your hand leaves
+you empty for the next. The core tension is knowing when to push and when to
+pass, baiting the opponent into overcommitting. Multiple faction decks with
+unique abilities and a campaign of escalating AI opponents provide depth. The
+fantasy is the poker-face moment of passing with a slim lead, daring the
+opponent to waste cards chasing it.
+
+## What the Player Experiences
+
+1. **Title Screen** — A medieval war-table aesthetic with the game name in
+   iron-forged lettering, faction banners flanking the sides, and Campaign /
+   Quick Match / Deck Builder buttons. No plain HTML grey.
+2. **Deck Builder** — At least 3 factions (Northern Realms, Monsters, Elves)
+   each with 15+ unique cards. The player builds a deck of exactly 25 cards
+   from their chosen faction plus neutral cards. Each card shows art, strength
+   value, row placement, and any special ability.
+3. **The Board** — Three rows per side (melee/ranged/siege) displayed
+   horizontally. Cards are played from hand into their designated row. Total
+   strength per row and overall total are shown. The opponent's rows mirror
+   above.
+4. **Turn Structure** — Players alternate playing one card or passing. Once
+   both pass, the round ends. The side with higher total strength wins the
+   round. Best of 3 rounds wins the match. A round tracker shows current
+   standing.
+5. **Bluffing and Passing** — The player can pass at any time, locking in their
+   current strength. The opponent must then decide whether to keep playing
+   cards (wasting resources for future rounds) or also pass. This creates
+   rich mind-game dynamics.
+6. **Special Abilities** — Cards have abilities: Spy (played on opponent's side
+   but draws 2 cards), Medic (resurrects a card from discard), Weather (reduces
+   all cards in a row to 1 strength), Commander's Horn (doubles a row's
+   strength), Decoy (returns a played card to hand). Each ability has a
+   distinct visual effect.
+7. **Campaign** — A series of AI opponents with increasing difficulty and
+   unique deck strategies. Winning matches earns new cards for the player's
+   collection. A world map shows progression through the campaign.
+
+## HTML Submission Format
+
+Deliver a self-contained browser game in two files:
+
+- `index.html` - the complete playable presentation. Use HTML Canvas 2D or Three.js/WebGL for the playable presentation.
+- `game_logic.js` - the deterministic state and rules layer. Use a classic script
+  and expose `createGame(opts)` and `advance(game, input, dt)`; an optional
+  `render(gameState, renderCtx)` hook may be exposed.
+
+The page must open without a build step or local server and render within three
+seconds on a normal laptop. Assets must be generated at runtime with no network
+requests: procedural geometry, Canvas2D-drawn textures encoded as `data:` URIs,
+offscreen-canvas particle sprites, Web Audio API synthesized sound, shaders,
+post-processing, and CSS are all allowed and encouraged. Do not embed or fetch
+external image, model, video, or audio files at runtime. Three.js may be loaded
+from its pinned official CDN; if post-processing is used, pin the matching
+`examples/jsm/postprocessing/*` modules to the same Three.js version.
+
+Interaction scheme (pointer-first): Use click, hover, drag, or selection as the primary controls; add keyboard shortcuts only where they are natural.
+Keep the complete play area and HUD readable at 1280x720. Include a clear start
+flow, concise in-game guidance, pause and restart controls, a complete win/loss
+or scored outcome loop, and visible feedback for every important action.
+
+`index.html` must not use `fetch()` or `XMLHttpRequest` for external URLs; only
+the pinned Three.js CDN above is allowed. Keep `index.html` at or below 400 KB.
+The `game_logic.js` line count is advisory and is not a BUILD-gate failure.
+
+### Logic and rendering scaffold
+
+```html
+<script src="./game_logic.js"></script>
+<script>
+  const { createGame, advance, render } = window.GameLogic;
+  const game = createGame({});
+  // The loop calls advance; render(game, { THREE, scene, ... }) is optional.
+</script>
+```
+
+```javascript
+(function (root) {
+  function createGame(opts) { return { phase: "title", score: 0 }; }
+  function advance(game, input, dt) { return game; }
+  function render(gameState, renderCtx) { /* optional visual hook */ }
+  const api = { createGame, advance, render };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  else root.GameLogic = api;
+}(typeof window !== "undefined" ? window : globalThis));
+```
+
+`advance()` must be pure and must not access DOM or Three.js objects. The optional
+`render()` hook is called by the main loop and may map state to scenes, materials,
+particles, and post-processing.

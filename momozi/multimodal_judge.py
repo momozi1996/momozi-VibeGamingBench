@@ -4,17 +4,30 @@ from __future__ import annotations
 import base64
 import json
 import mimetypes
+import os
 import re
+import statistics
 import time
 import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
 
+from .judge_errors import JudgeFailure
 
-MULTIMODAL_JUDGE_VERSION = "1.0"
-DEFAULT_VLM_MODEL = "deepseek-v4-flash"
-DEFAULT_VLM_BASE_URL = "https://api.deepseek.com"
+
+MULTIMODAL_JUDGE_VERSION = "1.1"
+DEFAULT_VLM_MODEL = os.getenv(
+    "MOMOZI_VLM_MODEL",
+    os.getenv("ARK_VLM_MODEL", os.getenv("DOUBAO_VLM_MODEL", os.getenv("DEEPSEEK_VLM_MODEL", "deepseek-v4-flash"))),
+)
+DEFAULT_VLM_BASE_URL = os.getenv(
+    "MOMOZI_VLM_BASE_URL",
+    os.getenv(
+        "ARK_VLM_BASE_URL",
+        os.getenv("DOUBAO_VLM_BASE_URL", os.getenv("DEEPSEEK_VLM_BASE_URL", "https://api.deepseek.com")),
+    ),
+)
 
 SYSTEM_PROMPT = """You are the screenshot-grounded visual judge for an Agent
 Benchmark for Vibe Gaming. Use runtime facts as authoritative. Judge only what is
@@ -135,16 +148,21 @@ class MultimodalJudge:
         base_url: str = DEFAULT_VLM_BASE_URL,
         timeout: int = 240,
         retries: int = 2,
+        samples: int = 3,
+        provider: str = "openai-compatible",
     ):
         if not api_key:
             raise ValueError(
-                "DEEPSEEK_API_KEY is empty. Put it in the repository root .env file."
+                "VLM judge API key is empty. Set MOMOZI_VLM_API_KEY, "
+                "ARK_API_KEY, or DEEPSEEK_API_KEY in the repository root .env file."
             )
         self.api_key = api_key
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.retries = retries
+        self.samples = max(1, int(samples))
+        self.provider = provider
 
     @property
     def endpoint(self) -> str:
@@ -182,42 +200,121 @@ class MultimodalJudge:
             "temperature": 0,
             "max_tokens": 2048,
         }
-        last_error: Exception | None = None
-        for attempt in range(self.retries + 1):
-            request = urllib.request.Request(
-                self.endpoint,
-                data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
-                headers={
-                    "Authorization": f"Bearer {self.api_key}",
-                    "Content-Type": "application/json",
-                },
-                method="POST",
-            )
-            try:
-                with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                    raw = json.loads(response.read().decode("utf-8"))
-                content_text = raw["choices"][0]["message"]["content"]
-                if not isinstance(content_text, str):
-                    raise ValueError("visual judge response content is not text")
-                return (
-                    validate_visual_judgement(_json_object(content_text)),
-                    raw.get("usage", {}),
+        judgements = []
+        usages = []
+        failures = []
+        for sample_index in range(self.samples):
+            last_error: Exception | None = None
+            raw_content = ""
+            raw_response = ""
+            for attempt in range(self.retries + 1):
+                request = urllib.request.Request(
+                    self.endpoint,
+                    data=json.dumps(body, ensure_ascii=False).encode("utf-8"),
+                    headers={
+                        "Authorization": f"Bearer {self.api_key}",
+                        "Content-Type": "application/json",
+                    },
+                    method="POST",
                 )
-            except urllib.error.HTTPError as exc:
-                detail = exc.read().decode("utf-8", errors="replace")[:1000]
-                last_error = RuntimeError(
-                    f"visual judge HTTP {exc.code}: {detail}"
-                )
-                if exc.code != 429 and not 500 <= exc.code < 600:
+                try:
+                    with urllib.request.urlopen(
+                        request, timeout=self.timeout
+                    ) as response:
+                        raw_response = response.read().decode(
+                            "utf-8", errors="replace"
+                        )
+                        raw = json.loads(raw_response)
+                    content_text = raw["choices"][0]["message"]["content"]
+                    if not isinstance(content_text, str):
+                        raise ValueError("visual judge response content is not text")
+                    raw_content = content_text
+                    judgements.append(
+                        validate_visual_judgement(_json_object(content_text))
+                    )
+                    usages.append(raw.get("usage", {}))
                     break
-            except (
-                urllib.error.URLError,
-                TimeoutError,
-                json.JSONDecodeError,
-                KeyError,
-                ValueError,
-            ) as exc:
-                last_error = exc
-            if attempt < self.retries:
-                time.sleep(min(4, 2**attempt))
-        raise RuntimeError(f"multimodal judge failed after retries: {last_error}")
+                except urllib.error.HTTPError as exc:
+                    detail = exc.read().decode("utf-8", errors="replace")
+                    last_error = RuntimeError(
+                        f"visual judge HTTP {exc.code}: {detail}"
+                    )
+                    failures.append(
+                        {
+                            "code": "JUDGE_FAIL",
+                            "detail": (
+                                f"sample={sample_index} attempt={attempt + 1} "
+                                f"HTTP {exc.code}: {detail}"
+                            ),
+                        }
+                    )
+                    if exc.code != 429 and not 500 <= exc.code < 600:
+                        break
+                except (
+                    urllib.error.URLError,
+                    TimeoutError,
+                    json.JSONDecodeError,
+                    KeyError,
+                    ValueError,
+                ) as exc:
+                    last_error = exc
+                    failures.append(
+                        {
+                            "code": "JUDGE_FAIL",
+                            "detail": (
+                                f"sample={sample_index} attempt={attempt + 1}: {exc}"
+                                + (
+                                    f" raw_response={raw_content or raw_response}"
+                                    if (raw_content or raw_response)
+                                    else ""
+                                )
+                            ),
+                        }
+                    )
+                if attempt < self.retries:
+                    time.sleep(min(4, 2**attempt))
+            else:
+                failures.append(
+                    {
+                        "code": "JUDGE_FAIL",
+                        "detail": (
+                            f"sample={sample_index} exhausted retries: {last_error}"
+                        ),
+                    }
+                )
+        if not judgements:
+            raise JudgeFailure(
+                "all multimodal judge samples failed",
+                details=failures,
+            )
+        functional_scores = [item["functional_visual"]["score"] for item in judgements]
+        presentation_scores = [item["presentation"]["score"] for item in judgements]
+        functional_evidence = []
+        presentation_evidence = []
+        for item in judgements:
+            for value in item["functional_visual"]["evidence"]:
+                if value not in functional_evidence:
+                    functional_evidence.append(value)
+            for value in item["presentation"]["evidence"]:
+                if value not in presentation_evidence:
+                    presentation_evidence.append(value)
+        judgement = {
+            "functional_visual": {
+                "score": round(statistics.median(functional_scores), 4),
+                "evidence": functional_evidence[:10],
+            },
+            "presentation": {
+                "score": round(statistics.median(presentation_scores), 4),
+                "evidence": presentation_evidence[:10],
+            },
+            "confidence": round(
+                statistics.median(item["confidence"] for item in judgements),
+                4,
+            ),
+        }
+        return judgement, {
+            "samples_requested": self.samples,
+            "samples_succeeded": len(judgements),
+            "sample_failures": failures,
+            "by_sample": usages,
+        }

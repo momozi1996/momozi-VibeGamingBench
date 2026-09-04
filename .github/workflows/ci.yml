@@ -16,7 +16,7 @@ jobs:
         run: python3 -m unittest discover -s tests -v
       - name: syntax and metadata smoke
         run: bash scripts/smoke.sh
-      - name: full 982-task runner/build gate audit
+      - name: full 1422-task runner/build gate audit
         run: python3 scripts/validate_pool.py --only-mz --workers 8
       - name: generated files remain current
         run: git diff --exit-code -- bench/POOL_AUDIT.md bench/TASK_DISTRIBUTION.md

@@ -2,10 +2,10 @@
 
 Status: **pass**
 
-- Tasks: **982**
-- Concepts: **491**
-- Language counts: `{'en': 491, 'zh': 491}`
-- Complete EN/ZH pairs: **491**
+- Tasks: **1422**
+- Concepts: **711**
+- Language counts: `{'en': 711, 'zh': 711}`
+- Complete EN/ZH pairs: **711**
 - Exact duplicate groups: **0**
 - Normalized duplicate groups: **0**
 - Missing rubric: **0**
@@ -15,35 +15,35 @@ Status: **pass**
 
 | Family | Concepts |
 |---|---:|
-| `action` | 20 |
-| `adventure` | 20 |
-| `arcade` | 3 |
-| `cardgame` | 6 |
-| `horror` | 26 |
-| `idle` | 4 |
-| `narrative` | 22 |
-| `openworld` | 62 |
-| `platformer` | 32 |
-| `puzzle` | 24 |
-| `racing` | 29 |
-| `rhythm` | 6 |
-| `roguelike` | 14 |
-| `rpg` | 42 |
-| `shooter` | 25 |
-| `simulation` | 40 |
-| `sports` | 6 |
-| `strategy` | 61 |
-| `survival` | 22 |
-| `tycoon` | 16 |
+| `action` | 44 |
+| `adventure` | 26 |
+| `arcade` | 4 |
+| `cardgame` | 10 |
+| `horror` | 37 |
+| `idle` | 13 |
+| `narrative` | 43 |
+| `openworld` | 70 |
+| `platformer` | 46 |
+| `puzzle` | 44 |
+| `racing` | 34 |
+| `rhythm` | 13 |
+| `roguelike` | 20 |
+| `rpg` | 52 |
+| `shooter` | 46 |
+| `simulation` | 59 |
+| `sports` | 14 |
+| `strategy` | 79 |
+| `survival` | 26 |
+| `tycoon` | 20 |
 | `visualnovel` | 11 |
 
 ## Difficulty (Concepts)
 
 | Difficulty | Concepts |
 |---|---:|
-| `high` | 204 |
-| `low` | 73 |
-| `medium` | 214 |
+| `high` | 304 |
+| `low` | 52 |
+| `medium` | 355 |
 
 ## Provenance
 
@@ -53,6 +53,7 @@ Status: **pass**
 | `adapted_article_prompt` | 24 |
 | `adapted_cnblogs_prompt` | 40 |
 | `adapted_evolink_prompt` | 16 |
+| `adapted_feishu_game_prompt` | 440 |
 | `adapted_summerengine_template` | 314 |
 | `adapted_user_prompt` | 20 |
 | `existing_pool` | 280 |

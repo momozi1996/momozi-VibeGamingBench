@@ -17,6 +17,10 @@ class StaticEvaluator:
     version = STATIC_EVALUATOR_VERSION
 
     def evaluate(self, task, product_dir: Path) -> dict:
+        # BehaviorSuite uses its workspace as the subprocess cwd. Resolve the
+        # artifact first so a caller passing a relative path does not make the
+        # suite look for ``product_dir/product_dir/game_logic.js``.
+        product_dir = Path(product_dir).resolve()
         build = build_gate_product(product_dir)
         suite_name = task.behavior.get("script", "beh_html.mjs")
         local_suite = product_dir / suite_name

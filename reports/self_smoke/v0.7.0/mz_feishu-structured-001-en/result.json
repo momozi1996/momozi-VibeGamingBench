@@ -1,0 +1,399 @@
+{
+  "benchmark": "momozi-VibeGamingBench",
+  "version": "0.7.0",
+  "schema_version": 2,
+  "benchmark_release": "v0.7.0",
+  "evaluation_protocol": "agent-v2",
+  "run_id": "v0.7.0",
+  "timestamp": "2026-09-04T12:22:41.127078+00:00",
+  "model_label": "temporary-self-smoke",
+  "agent": {
+    "name": "temporary-self-smoke",
+    "version": "1.0",
+    "model": "self",
+    "model_version": "local-deterministic",
+    "harness": "scripts/self_smoke_harness.py"
+  },
+  "task": "mz_feishu-structured-001-en",
+  "task_id": "mz_feishu-structured-001-en",
+  "base_task_id": "mz_feishu-structured-001",
+  "family": "rpg",
+  "difficulty": "medium",
+  "language": "en",
+  "generation": {
+    "mode": "self-smoke-harness",
+    "ok": true,
+    "stdout": "{\"ok\": true, \"product_dir\": \"/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en/product\", \"family\": \"rpg\"}\n",
+    "stderr": "",
+    "returncode": 0
+  },
+  "harness": {
+    "name": "self-smoke-harness",
+    "command": true,
+    "contract_version": 1
+  },
+  "static": {
+    "version": "1.0",
+    "status": "pass",
+    "build": {
+      "ok": true,
+      "checks": {
+        "index_html_present": true,
+        "game_logic_present": true,
+        "canvas_or_webgl": true,
+        "no_external_heavy_refs": true
+      },
+      "reasons": [],
+      "detail": "HTML static gates pass"
+    },
+    "contract": {
+      "pass_rate": 1.0,
+      "passed": 4,
+      "total": 4,
+      "results": [
+        {
+          "id": "exports_create_game",
+          "ok": true,
+          "detail": "createGame export"
+        },
+        {
+          "id": "exports_advance",
+          "ok": true,
+          "detail": "advance export"
+        },
+        {
+          "id": "state_is_object",
+          "ok": true,
+          "detail": "initial state"
+        },
+        {
+          "id": "advance_returns_state",
+          "ok": true,
+          "detail": "next state"
+        }
+      ]
+    },
+    "failure_details": [],
+    "score": 82.5,
+    "judge": {
+      "provider": "temporary-self-smoke",
+      "model": "self"
+    }
+  },
+  "dynamic": {
+    "status": "pass",
+    "server_start": true,
+    "page_load": true,
+    "runtime_stable": true,
+    "page_load_ms": 67,
+    "fatal_console_errors": 0,
+    "console_errors": [],
+    "page_errors": [],
+    "input_probe": {
+      "attempted": true,
+      "success": true
+    },
+    "screenshots": [
+      {
+        "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en/evidence/boot.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:22:39.550346+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      },
+      {
+        "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en/evidence/gameplay_start.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:22:40.265053+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      },
+      {
+        "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en/evidence/gameplay_mid.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:22:40.985118+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      }
+    ],
+    "browser": {
+      "name": "chromium",
+      "version": "145.0.7632.6"
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "runtime_config": {
+      "locale": "en-US",
+      "timezone": "UTC",
+      "device_scale_factor": 1.0,
+      "stabilization_ms": 250,
+      "input_probe": true,
+      "auto_start": true,
+      "input_scheme": "both",
+      "start_keys": [
+        "Enter",
+        "Space"
+      ],
+      "gameplay_actions": 4,
+      "network_policy": "local-plus-pinned-threejs-cdn",
+      "allowed_hosts": [
+        "unpkg.com",
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com"
+      ]
+    },
+    "failure_code": null,
+    "failure_details": [],
+    "infrastructure_error": false,
+    "version": "1.1",
+    "score": 100.0
+  },
+  "runtime": {
+    "status": "pass",
+    "server_start": true,
+    "page_load": true,
+    "runtime_stable": true,
+    "page_load_ms": 67,
+    "fatal_console_errors": 0,
+    "console_errors": [],
+    "page_errors": [],
+    "input_probe": {
+      "attempted": true,
+      "success": true
+    },
+    "screenshots": [
+      {
+        "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en/evidence/boot.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:22:39.550346+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      },
+      {
+        "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en/evidence/gameplay_start.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:22:40.265053+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      },
+      {
+        "path": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en/evidence/gameplay_mid.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:22:40.985118+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      }
+    ],
+    "browser": {
+      "name": "chromium",
+      "version": "145.0.7632.6"
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "runtime_config": {
+      "locale": "en-US",
+      "timezone": "UTC",
+      "device_scale_factor": 1.0,
+      "stabilization_ms": 250,
+      "input_probe": true,
+      "auto_start": true,
+      "input_scheme": "both",
+      "start_keys": [
+        "Enter",
+        "Space"
+      ],
+      "gameplay_actions": 4,
+      "network_policy": "local-plus-pinned-threejs-cdn",
+      "allowed_hosts": [
+        "unpkg.com",
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com"
+      ]
+    },
+    "failure_code": null,
+    "failure_details": [],
+    "infrastructure_error": false,
+    "version": "1.1",
+    "score": 100.0
+  },
+  "visual": {
+    "functional_visual": {
+      "score": 3.5,
+      "evidence": [
+        "runtime screenshots captured by Chromium",
+        "temporary self-smoke judge"
+      ]
+    },
+    "presentation": {
+      "score": 5.0,
+      "evidence": [
+        "HTML/CSS/Canvas presentation signals",
+        "temporary self-smoke judge"
+      ]
+    },
+    "confidence": 0.25,
+    "score": 85.0,
+    "judge": {
+      "provider": "temporary-self-smoke",
+      "model": "self",
+      "version": "1.0"
+    }
+  },
+  "build_gate": {
+    "ok": true,
+    "checks": {
+      "index_html_present": true,
+      "game_logic_present": true,
+      "canvas_or_webgl": true,
+      "no_external_heavy_refs": true
+    },
+    "reasons": [],
+    "detail": "HTML static gates pass"
+  },
+  "contract": {
+    "pass_rate": 1.0,
+    "passed": 4,
+    "total": 4,
+    "results": [
+      {
+        "id": "exports_create_game",
+        "ok": true,
+        "detail": "createGame export"
+      },
+      {
+        "id": "exports_advance",
+        "ok": true,
+        "detail": "advance export"
+      },
+      {
+        "id": "state_is_object",
+        "ok": true,
+        "detail": "initial state"
+      },
+      {
+        "id": "advance_returns_state",
+        "ok": true,
+        "detail": "next state"
+      }
+    ]
+  },
+  "dimensions": {
+    "completeness": {
+      "score": 3.0,
+      "reason": "Temporary deterministic self-smoke score based on artifact signals; not a human or external model quality judgment.",
+      "evidence": [
+        "task family=rpg",
+        "html_bytes=8543",
+        "logic_bytes=1571",
+        "runtime_status=pass"
+      ],
+      "missing": []
+    },
+    "richness": {
+      "score": 4.0,
+      "reason": "Temporary deterministic self-smoke score based on artifact signals; not a human or external model quality judgment.",
+      "evidence": [
+        "task family=rpg",
+        "html_bytes=8543",
+        "logic_bytes=1571",
+        "runtime_status=pass"
+      ],
+      "missing": []
+    },
+    "player_exp": {
+      "score": 3.5,
+      "reason": "Temporary deterministic self-smoke score based on artifact signals; not a human or external model quality judgment.",
+      "evidence": [
+        "task family=rpg",
+        "html_bytes=8543",
+        "logic_bytes=1571",
+        "runtime_status=pass"
+      ],
+      "missing": []
+    },
+    "visual": {
+      "score": 5.0,
+      "reason": "Temporary deterministic self-smoke score based on artifact signals; not a human or external model quality judgment.",
+      "evidence": [
+        "task family=rpg",
+        "html_bytes=8543",
+        "logic_bytes=1571",
+        "runtime_status=pass"
+      ],
+      "missing": []
+    }
+  },
+  "fatal_issues": [],
+  "confidence": 0.25,
+  "scores": {
+    "static": 82.5,
+    "dynamic": 100.0,
+    "visual": 85.0,
+    "design": 88.0,
+    "weights": {
+      "static": 0.4,
+      "dynamic": 0.25,
+      "visual": 0.2,
+      "design": 0.15
+    },
+    "raw": 88.2,
+    "final": 88.2,
+    "overall_score": 88.2,
+    "hard_cap": null,
+    "scoring_version": "1.1",
+    "rubric_score_100": 82.5,
+    "build_multiplier": 1.0,
+    "contract_multiplier": 1.0,
+    "legacy_overall_score": 82.5
+  },
+  "judge": {
+    "provider": "temporary-self-smoke",
+    "model": "self"
+  },
+  "leaderboard_eligible": false,
+  "evaluation_error": null,
+  "primary_failure": null,
+  "failure_details": [],
+  "workspace": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en",
+  "product_dir": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/reports/self_smoke/v0.7.0/mz_feishu-structured-001-en/product"
+}

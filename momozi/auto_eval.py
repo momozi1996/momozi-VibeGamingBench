@@ -3,10 +3,12 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures as futures
+import dataclasses
 import json
 import os
 import re
 import shlex
+import statistics
 import subprocess
 import sys
 import time
@@ -19,6 +21,7 @@ from typing import Any
 from . import PROJECT_NAME, __version__
 from .adapters import build_adapter, load_profiles
 from .judge import _artifact_digest, _rubric_text
+from .judge_errors import JudgeFailure
 from .leaderboard import DIMENSIONS, write_leaderboard
 from .run import PROFILES_PATH, ROOT, _collect_product, _prepare_workspace
 from .multimodal_judge import MultimodalJudge, mock_visual_judgement
@@ -46,9 +49,32 @@ from .statistics import aggregate_results, bootstrap_ci
 from .task import Task
 
 AUTO_PROTOCOL = AGENT_EVALUATION_PROTOCOL
-DEFAULT_JUDGE_MODEL = "deepseek-v4-flash"
-DEFAULT_JUDGE_BASE_URL = "https://api.deepseek.com"
-DEFAULT_VLM_MODEL = "deepseek-v4-flash"
+# Keep the legacy environment names working while allowing an official
+# OpenAI-compatible vision endpoint such as Volcano Engine Ark/Doubao.
+DEFAULT_JUDGE_MODEL = os.getenv(
+    "MOMOZI_JUDGE_MODEL",
+    os.getenv(
+        "ARK_JUDGE_MODEL",
+        os.getenv(
+            "DOUBAO_MODEL",
+            os.getenv("DEEPSEEK_JUDGE_MODEL", "deepseek-v4-flash"),
+        ),
+    ),
+)
+DEFAULT_JUDGE_BASE_URL = os.getenv(
+    "MOMOZI_JUDGE_BASE_URL",
+    os.getenv(
+        "ARK_BASE_URL",
+        os.getenv(
+            "DOUBAO_BASE_URL",
+            os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
+        ),
+    ),
+)
+DEFAULT_VLM_MODEL = os.getenv(
+    "MOMOZI_VLM_MODEL",
+    os.getenv("DEEPSEEK_VLM_MODEL", DEFAULT_JUDGE_MODEL),
+)
 MOCK_HTML = """<!doctype html>
 <html><head><meta charset="utf-8"><title>auto-eval protocol fixture</title></head>
 <body><canvas id="game"></canvas>
@@ -127,6 +153,17 @@ Evidence rules:
   "fatal_issues": [],
   "confidence": 0.0
 }}"""
+
+
+def _input_scheme_for_family(family: str) -> str:
+    """Pick a conservative generic probe for the task's native interaction."""
+    if family in {"puzzle", "strategy", "tycoon", "cardgame", "idle"}:
+        return "pointer"
+    if family in {"racing", "platformer", "shooter", "rhythm", "action", "arcade"}:
+        return "keyboard"
+    if family in {"openworld", "rpg", "simulation", "survival", "adventure"}:
+        return "both"
+    return "both"
 
 
 def load_dotenv(path: Path) -> None:
@@ -223,7 +260,59 @@ def validate_judgement(payload: dict) -> dict:
     }
 
 
+def _aggregate_judgements(judgements: list[dict]) -> dict:
+    """Use a robust median score and merge concrete evidence across samples."""
+    if not judgements:
+        raise ValueError("cannot aggregate an empty judgement list")
+    dimensions = {}
+    for dimension in DIMENSIONS:
+        items = [judgement["dimensions"][dimension] for judgement in judgements]
+        scores = [float(item["score"]) for item in items]
+        evidence = []
+        missing = []
+        for item in items:
+            for value in item.get("evidence", []):
+                if value not in evidence:
+                    evidence.append(value)
+            for value in item.get("missing", []):
+                if value not in missing:
+                    missing.append(value)
+        dimensions[dimension] = {
+            "score": round(statistics.median(scores), 4),
+            "reason": max(
+                (item.get("reason", "").strip() for item in items),
+                key=len,
+            ),
+            "evidence": evidence[:8] or ["No concrete evidence returned."],
+            "missing": missing[:8],
+        }
+    fatal_issues = []
+    for judgement in judgements:
+        for issue in judgement.get("fatal_issues", []):
+            if issue not in fatal_issues:
+                fatal_issues.append(issue)
+    return {
+        "dimensions": dimensions,
+        "fatal_issues": fatal_issues,
+        "confidence": round(
+            statistics.median(
+                float(judgement.get("confidence", 0.0))
+                for judgement in judgements
+            ),
+            4,
+        ),
+    }
+
+
 class DeepSeekJudge:
+    """OpenAI-compatible structured code judge.
+
+    The historical class name is retained so existing callers keep working.
+    Set ``base_url`` to an Ark/Doubao endpoint and ``model`` to the endpoint's
+    deployed model ID to use a vision-capable official judge alongside the
+    screenshot judge.
+    """
+
     def __init__(
         self,
         api_key: str,
@@ -231,16 +320,21 @@ class DeepSeekJudge:
         base_url: str = DEFAULT_JUDGE_BASE_URL,
         timeout: int = 240,
         retries: int = 3,
+        samples: int = 3,
+        provider: str = "openai-compatible",
     ):
         if not api_key:
             raise ValueError(
-                "DEEPSEEK_API_KEY is empty. Put it in the repository root .env file."
+                "Judge API key is empty. Set MOMOZI_JUDGE_API_KEY, "
+                "ARK_API_KEY, or DEEPSEEK_API_KEY in the repository root .env file."
             )
         self.api_key = api_key
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.retries = retries
+        self.samples = max(1, int(samples))
+        self.provider = provider
 
     @property
     def endpoint(self) -> str:
@@ -248,7 +342,12 @@ class DeepSeekJudge:
             return self.base_url
         return f"{self.base_url}/chat/completions"
 
-    def evaluate(self, task: Task, product_dir: Path) -> tuple[dict, dict]:
+    def _evaluate_once(
+        self,
+        task: Task,
+        product_dir: Path,
+        sample_index: int,
+    ) -> tuple[dict, dict]:
         spec = "\n\n".join(
             f"## {round_spec.name}\n{round_spec.spec}" for round_spec in task.rounds
         )
@@ -277,17 +376,31 @@ class DeepSeekJudge:
             method="POST",
         )
         last_error: Exception | None = None
+        details: list[dict[str, Any]] = []
+        raw_content = ""
+        raw_response = ""
         for attempt in range(self.retries + 1):
             try:
                 with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                    raw = json.loads(response.read().decode("utf-8"))
+                    raw_response = response.read().decode("utf-8", errors="replace")
+                    raw = json.loads(raw_response)
                 content = raw["choices"][0]["message"]["content"]
                 if not isinstance(content, str):
                     raise ValueError("judge response content is not text")
+                raw_content = content
                 return validate_judgement(_json_object(content)), raw.get("usage", {})
             except urllib.error.HTTPError as exc:
-                detail = exc.read().decode("utf-8", errors="replace")[:1000]
+                detail = exc.read().decode("utf-8", errors="replace")
                 last_error = RuntimeError(f"DeepSeek HTTP {exc.code}: {detail}")
+                details.append(
+                    {
+                        "code": "JUDGE_FAIL",
+                        "detail": (
+                            f"sample={sample_index} attempt={attempt + 1} "
+                            f"HTTP {exc.code}: {detail}"
+                        ),
+                    }
+                )
                 if exc.code != 429 and not 500 <= exc.code < 600:
                     break
             except (
@@ -298,9 +411,56 @@ class DeepSeekJudge:
                 ValueError,
             ) as exc:
                 last_error = exc
+                details.append(
+                    {
+                        "code": "JUDGE_FAIL",
+                        "detail": (
+                            f"sample={sample_index} attempt={attempt + 1}: {exc}"
+                            + (
+                                f" raw_response={raw_content or raw_response}"
+                                if (raw_content or raw_response)
+                                else ""
+                            )
+                        ),
+                    }
+                )
             if attempt < self.retries:
                 time.sleep(min(8, 2**attempt))
-        raise RuntimeError(f"DeepSeek judge failed after retries: {last_error}")
+        raise JudgeFailure(
+            f"structured code judge failed after retries: {last_error}",
+            details=details,
+        )
+
+    def evaluate(self, task: Task, product_dir: Path) -> tuple[dict, dict]:
+        judgements = []
+        usages = []
+        failures = []
+        for sample_index in range(self.samples):
+            try:
+                judgement, usage = self._evaluate_once(
+                    task, product_dir, sample_index
+                )
+                judgements.append(judgement)
+                usages.append(usage)
+            except JudgeFailure as exc:
+                failures.extend(exc.details)
+        if not judgements:
+            raise JudgeFailure(
+                "all structured code judge samples failed",
+                details=failures,
+            )
+        usage = {
+            "samples_requested": self.samples,
+            "samples_succeeded": len(judgements),
+            "sample_failures": failures,
+            "by_sample": usages,
+        }
+        return _aggregate_judgements(judgements), usage
+
+
+# New name for integrations; the legacy class remains the public compatibility
+# surface used by existing runners.
+OpenAICompatibleJudge = DeepSeekJudge
 
 
 def mock_judgement() -> dict:
@@ -547,6 +707,7 @@ def evaluate_task(
     build_gate = static_eval["build"]
     contract = static_eval["contract"]
     evaluation_error = None
+    evaluation_failure_details: list[dict[str, Any]] = []
     usage = {}
 
     if mock_judge:
@@ -567,16 +728,22 @@ def evaluate_task(
             "confidence": 1.0,
         }
         judge_meta = {
-            "provider": "deepseek",
+            "provider": judge.provider if judge else "openai-compatible",
             "model": judge.model if judge else DEFAULT_JUDGE_MODEL,
             "skipped": True,
         }
     else:
         try:
             judgement, usage = judge.evaluate(task, product_dir) if judge else ({}, {})
-            judge_meta = {"provider": "deepseek", "model": judge.model if judge else ""}
+            judge_meta = {
+                "provider": judge.provider if judge else "openai-compatible",
+                "model": judge.model if judge else "",
+            }
         except Exception as exc:
             evaluation_error = str(exc)
+            evaluation_failure_details.extend(
+                getattr(exc, "details", []) or []
+            )
             judgement = {
                 "dimensions": {
                     dimension: {
@@ -591,7 +758,7 @@ def evaluate_task(
                 "confidence": 0.0,
             }
             judge_meta = {
-                "provider": "deepseek",
+                "provider": judge.provider if judge else "openai-compatible",
                 "model": judge.model if judge else "",
                 "error": evaluation_error,
             }
@@ -612,10 +779,21 @@ def evaluate_task(
     elif mock_runtime:
         runtime = mock_runtime_result()
     else:
+        effective_runtime_config = dataclasses.replace(
+            runtime_config or RuntimeConfig(),
+            input_scheme=str(
+                (task.evaluation or {}).get("input_scheme")
+                or _input_scheme_for_family(task.family)
+            ),
+            start_keys=tuple(
+                (task.evaluation or {}).get("start_keys")
+                or ("Enter", "Space")
+            ),
+        )
         runtime = run_runtime_smoke(
             product_dir,
             run_dir / "evidence" / task.id,
-            runtime_config or RuntimeConfig(),
+            effective_runtime_config,
         )
 
     visual_usage = {}
@@ -645,17 +823,20 @@ def evaluate_task(
                     screenshot_paths,
                 )
                 visual_meta = {
-                    "provider": "deepseek",
+                    "provider": visual_judge.provider,
                     "model": visual_judge.model,
                     "version": visual_judge.version,
                 }
             except Exception as exc:
                 evaluation_error = evaluation_error or str(exc)
+                evaluation_failure_details.extend(
+                    getattr(exc, "details", []) or []
+                )
                 visual = _empty_visual_judgement(
                     "No valid multimodal judge response was available."
                 )
                 visual_meta = {
-                    "provider": "deepseek",
+                    "provider": visual_judge.provider,
                     "model": visual_judge.model,
                     "version": visual_judge.version,
                     "error": str(exc),
@@ -677,6 +858,7 @@ def evaluate_task(
         runtime,
         evaluation_error,
     )
+    failure_details.extend(evaluation_failure_details)
     failure_codes = [
         item.get("code")
         for item in failure_details
@@ -901,22 +1083,53 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--harness-timeout", type=int, default=1800)
     parser.add_argument(
         "--judge-model",
-        default=os.getenv("DEEPSEEK_JUDGE_MODEL", DEFAULT_JUDGE_MODEL),
+        default=os.getenv(
+            "MOMOZI_JUDGE_MODEL",
+            os.getenv(
+                "ARK_JUDGE_MODEL",
+                os.getenv("DOUBAO_MODEL", os.getenv("DEEPSEEK_JUDGE_MODEL", DEFAULT_JUDGE_MODEL)),
+            ),
+        ),
     )
     parser.add_argument(
         "--judge-base-url",
-        default=os.getenv("DEEPSEEK_BASE_URL", DEFAULT_JUDGE_BASE_URL),
+        default=os.getenv(
+            "MOMOZI_JUDGE_BASE_URL",
+            os.getenv(
+                "ARK_BASE_URL",
+                os.getenv("DOUBAO_BASE_URL", os.getenv("DEEPSEEK_BASE_URL", DEFAULT_JUDGE_BASE_URL)),
+            ),
+        ),
     )
     parser.add_argument("--judge-timeout", type=int, default=240)
+    parser.add_argument("--judge-samples", type=int, default=3)
+    parser.add_argument("--judge-provider", default=os.getenv("MOMOZI_JUDGE_PROVIDER", "openai-compatible"))
     parser.add_argument(
         "--vlm-model",
-        default=os.getenv("DEEPSEEK_VLM_MODEL", DEFAULT_VLM_MODEL),
+        default=os.getenv(
+            "MOMOZI_VLM_MODEL",
+            os.getenv(
+                "ARK_VLM_MODEL",
+                os.getenv("DOUBAO_VLM_MODEL", os.getenv("DEEPSEEK_VLM_MODEL", DEFAULT_VLM_MODEL)),
+            ),
+        ),
     )
     parser.add_argument(
         "--vlm-base-url",
-        default=os.getenv("DEEPSEEK_VLM_BASE_URL", os.getenv("DEEPSEEK_BASE_URL", DEFAULT_JUDGE_BASE_URL)),
+        default=os.getenv(
+            "MOMOZI_VLM_BASE_URL",
+            os.getenv(
+                "ARK_VLM_BASE_URL",
+                os.getenv(
+                    "DOUBAO_VLM_BASE_URL",
+                    os.getenv("DEEPSEEK_VLM_BASE_URL", os.getenv("DEEPSEEK_BASE_URL", DEFAULT_JUDGE_BASE_URL)),
+                ),
+            ),
+        ),
     )
     parser.add_argument("--vlm-timeout", type=int, default=240)
+    parser.add_argument("--vlm-samples", type=int, default=3)
+    parser.add_argument("--vlm-provider", default=os.getenv("MOMOZI_VLM_PROVIDER", "openai-compatible"))
     parser.add_argument("--mock-judge", action="store_true", help="CI protocol check only")
     parser.add_argument(
         "--mock-runtime",
@@ -938,7 +1151,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--no-input-probe",
         action="store_true",
-        help="disable the generic ArrowRight dynamic probe",
+        help="disable the family-aware start and gameplay input probe",
     )
     parser.add_argument("--benchmark-release", default=BENCHMARK_RELEASE)
     parser.add_argument("--run-id")
@@ -968,6 +1181,8 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--resume requires --run-id")
     if args.workers < 1:
         parser.error("--workers must be at least 1")
+    if args.judge_samples < 1 or args.vlm_samples < 1:
+        parser.error("--judge-samples and --vlm-samples must be at least 1")
     if args.offset < 0:
         parser.error("--offset must be non-negative")
     if args.limit is not None and args.limit < 1:
@@ -992,26 +1207,41 @@ def main(argv: list[str] | None = None) -> int:
     run_dir = args.output_root / _safe_label(run_id)
     judge = None
     if not args.mock_judge:
-        api_key = os.getenv("DEEPSEEK_API_KEY", "")
+        api_key = (
+            os.getenv("MOMOZI_JUDGE_API_KEY")
+            or os.getenv("ARK_API_KEY")
+            or os.getenv("DOUBAO_API_KEY")
+            or os.getenv("DEEPSEEK_API_KEY", "")
+        )
         try:
             judge = DeepSeekJudge(
                 api_key,
                 model=args.judge_model,
                 base_url=args.judge_base_url,
                 timeout=args.judge_timeout,
+                samples=args.judge_samples,
+                provider=args.judge_provider,
             )
         except ValueError as exc:
             parser.error(str(exc))
 
     visual_judge = None
     if not (args.mock_judge or args.mock_visual or args.skip_dynamic):
-        api_key = os.getenv("DEEPSEEK_API_KEY", "")
+        api_key = (
+            os.getenv("MOMOZI_VLM_API_KEY")
+            or os.getenv("MOMOZI_JUDGE_API_KEY")
+            or os.getenv("ARK_API_KEY")
+            or os.getenv("DOUBAO_API_KEY")
+            or os.getenv("DEEPSEEK_API_KEY", "")
+        )
         try:
             visual_judge = MultimodalJudge(
                 api_key,
                 model=args.vlm_model,
                 base_url=args.vlm_base_url,
                 timeout=args.vlm_timeout,
+                samples=args.vlm_samples,
+                provider=args.vlm_provider,
             )
         except ValueError as exc:
             parser.error(str(exc))
@@ -1021,14 +1251,20 @@ def main(argv: list[str] | None = None) -> int:
         stabilization_ms=args.stabilization_ms,
         input_probe=not args.no_input_probe,
     )
+    profile = (
+        load_profiles(PROFILES_PATH).get(args.agent, {})
+        if args.agent
+        else {}
+    )
     agent_info = agent_metadata(
         name=args.agent or "external-harness",
         model=model_label,
         harness=args.harness_label or (
             f"profile:{args.agent}" if args.agent else "external-command"
         ),
-        version=args.agent_version,
-        model_version=args.model_version,
+        version=args.agent_version or str(profile.get("agent_version", "")),
+        model_version=args.model_version
+        or str(profile.get("model_version", profile.get("model", ""))),
     )
     kwargs = {
         "run_id": run_id,

@@ -7,52 +7,10 @@ provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # 开放世界飞艇商人（Open-World Airship Trader）
-
-    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**2D 开放世界飞艇贸易游戏**。
-    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
-    纵向切片放到 itch.io 页面或 Steam 上。
-
-    ## 核心构想
-
-    玩家驾驶一艘飞艇穿行于漂满浮空岛的天空，每座岛都有自己的经济体系和可供
-    贸易的货物。这里的幻想是云端之上的自由：在遥远港口之间开辟航线，低买高卖，
-    用更好的引擎和货舱升级自己的船，并击退潜伏在贸易航道上的天空海盗。张力来自
-    燃料管理、海盗突袭，以及随你贸易而不断波动的市场价格。
-
-    ## 玩家体验流程
-
-    1. **标题画面** —— 一个有设计感的开场，游戏名称叠在带视差滚动的天空背景上，
-       云朵飘动，远处可见岛屿。一个开始按钮启程。
-    2. **天空地图** —— 玩家驾驶飞艇在一片广阔开放的天空中自由飞行。视野中可见
-       多座浮空岛，每座都有独特的轮廓与配色。云层以视差层次飘动。
-    3. **停靠** —— 接近岛屿时触发停靠提示。停靠后，玩家进入贸易菜单，其中显示
-       当地货物、价格以及自己货舱中的物品。
-    4. **贸易** —— 每座岛都会廉价产出某些货物，同时高价求购另一些货物。玩家买入
-       货物，飞往另一座岛，卖出获利。价格随时间波动。
-    5. **升级** —— 利润用于升级飞艇：更快的引擎、更大的货舱、更好的燃料效率以及
-       船体装甲。升级会体现在飞艇精灵图上。
-    6. **天空海盗** —— 在某些航线上会出现海盗船追击玩家。玩家可以甩掉他们、用
-       船载火炮迎战，或者交过路费。战斗为实时进行，采用简单的抛射物射击。
-    7. **燃料与风险** —— 飞艇在飞行时消耗燃料。燃料耗尽意味着只能无助地随风漂流。
-       燃料可以在岛上购买，也可以从漂浮的木箱中找到。
-
-    ## 提交格式（HTML）
-
-    交付物 **两个文件**：
-
-    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
-    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
-      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
-
-    约束：
-    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
-    - 键盘输入 `WASD + 空格 + Enter + ESC`。
-    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
-    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+  spec: "# 开放世界飞艇商人（Open-World Airship Trader）\n\n用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**2D 开放世界飞艇贸易游戏**。\n这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为\n纵向切片放到 itch.io 页面或 Steam 上。\n\n## 核心构想\n\n玩家驾驶一艘飞艇穿行于漂满浮空岛的天空，每座岛都有自己的经济体系和可供\n贸易的货物。这里的幻想是云端之上的自由：在遥远港口之间开辟航线，低买高卖，\n用更好的引擎和货舱升级自己的船，并击退潜伏在贸易航道上的天空海盗。张力来自\n燃料管理、海盗突袭，以及随你贸易而不断波动的市场价格。\n\n## 玩家体验流程\n\n1. **标题画面** —— 一个有设计感的开场，游戏名称叠在带视差滚动的天空背景上，\n   云朵飘动，远处可见岛屿。一个开始按钮启程。\n2. **天空地图** —— 玩家驾驶飞艇在一片广阔开放的天空中自由飞行。视野中可见\n   多座浮空岛，每座都有独特的轮廓与配色。云层以视差层次飘动。\n3. **停靠** —— 接近岛屿时触发停靠提示。停靠后，玩家进入贸易菜单，其中显示\n   当地货物、价格以及自己货舱中的物品。\n4. **贸易** —— 每座岛都会廉价产出某些货物，同时高价求购另一些货物。玩家买入\n   货物，飞往另一座岛，卖出获利。价格随时间波动。\n5. **升级** —— 利润用于升级飞艇：更快的引擎、更大的货舱、更好的燃料效率以及\n   船体装甲。升级会体现在飞艇精灵图上。\n6. **天空海盗** —— 在某些航线上会出现海盗船追击玩家。玩家可以甩掉他们、用\n   船载火炮迎战，或者交过路费。战斗为实时进行，采用简单的抛射物射击。\n7. **燃料与风险** —— 飞艇在飞行时消耗燃料。燃料耗尽意味着只能无助地随风漂流。\n   燃料可以在岛上购买，也可以从漂浮的木箱中找到。\n\n## Vibe Gaming Quality Bar\n\n本题的玩法、逻辑和验收锚点优先于下面的表达规范。不要重写或删减上面的核心\n机制；这些要求用于把同一玩法稳定地落成一个可玩的 Vibe Gaming 垂直切片。\n\n- **先玩后美化**：先保证开始、核心输入、状态变化、成功/失败和重玩闭环，再做视觉与动效。\n\
+    - **技术栈按玩法选最小充分方案**：\n  - 2D 规则游戏优先 `HTML5 Canvas 2D + Vanilla JS`；\n  - 面板、卡牌、对话和菜单密集时可用 `DOM + CSS + Vanilla JS`；\n  - 图标、线稿和几何动画可用 `纯 SVG + CSS 动画 + Vanilla JS`；\n  - 连续碰撞、镜头、粒子或街机物理可用 `PhaserJS`；\n  - 3D 或空间镜头可用 `Three.js + WebGL`；\n  - 只有确实需要 GPU 大规模并行或自定义 GPU 管线时才用原生 `WebGPU`；\n  - 可以混合 Canvas、DOM、CSS、SVG，但必须明确每层职责，禁止为了“技术炫技”增加无关复杂度。\n- **规则层独立**：`game_logic.js` 保存唯一真相，暴露 `createGame(opts)` 和\n  `advance(game, input, dt)`；渲染层只读取状态并呈现，不能偷偷维护第二套规则。\n- **每帧可解释**：输入要映射到明确动作，动作要产生可观察状态变化；无效输入、\n  边界条件、资源耗尽、受伤、胜利和失败都要有反馈。\n- **Vibe 不是装饰**：至少使用两种反馈通道（动画、位移、缩放、粒子、声音、\n  HUD 或镜头）表达关键动作；反馈不能遮挡目标或破坏可读性。\n- **移动端优先**：关键点击目标至少 44×44 CSS px，支持触摸和鼠标，不能依赖 hover；\n  390×844、360×800、430×932 和 1280×800 不得横向滚动或出现控件重叠。\n- **确定性与测试**：随机内容使用 seed；至少验证核心规则、胜负条件、重开/恢复、\n  输入边界和一个异常状态；不要用截图存在或文字出现冒充功能完成。\n- **原创与合规**：使用原创名称、角色、图形、音效和关卡，或明确许可的素材；\n  不复制任何原作商标、角色、文本、美术、音乐、关卡数据或代码。\n\n完成后报告：实际文件路径、启动命令、测试命令与结果、关键截图、已知限制、\n技术栈取舍和原创资产来源。\n\n## HTML 提交格式\n\n用两个文件交付一个可独立运行的浏览器游戏：\n\n- `index.html` - 完整可玩的呈现层。使用\
+    \ HTML Canvas 2D 或 Three.js/WebGL 完成可玩呈现。\n- `game_logic.js` - 确定性的状态与规则层，使用经典脚本格式并暴露\n  `createGame(opts)` 和 `advance(game, input, dt)`；可选暴露\n  `render(gameState, renderCtx)`。\n\n页面无需构建步骤或本地服务器即可打开，普通笔记本应在三秒内完成首屏渲染。\n资源必须在运行时自包含生成，不得请求网络：可以使用程序化几何体、Canvas2D\n绘制并编码为 `data:` URI 的纹理、离屏 Canvas 粒子精灵、Web Audio API 合成音效、\n着色器、后处理和 CSS。不得嵌入或运行时获取外部图片、模型、视频或音频文件。\nThree.js 可以从固定版本的官方 CDN 加载；如使用后处理，只能加载同一 Three.js\n版本下固定的 `examples/jsm/postprocessing/*` 模块。\n\n交互方案（both）：根据玩法同时支持键盘和指针交互；移动/动作使用键盘，空间选择、菜单和目标操作使用鼠标。\n完整游戏区和 HUD 在 1280x720 下应清晰可读。需要有明确的开始流程、简短游戏内\n引导、暂停与重开控制、完整胜负/计分结果闭环，以及每项关键操作的可见反馈。\n\n`index.html` 不得使用 `fetch()` 或 `XMLHttpRequest` 请求外部 URL；只允许上述\n固定版本 Three.js CDN。`index.html` ≤ 400 KB；`game_logic.js` 行数限制仅作\n建议，不作为 BUILD 失败条件。\n\n### 逻辑与渲染脚手架\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // 主循环调用 advance；render(game, { THREE, scene, ... }) 可选。\n</script>\n```\n\n\
+    ```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` 必须是纯函数，不访问 DOM 或 Three.js 对象；可选的 `render()` 由\n主循环调用并负责把状态映射到场景、材质、粒子和后处理。"
 static:
 - kind: required_file
   role: entry
@@ -95,5 +53,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: both
+  start_keys:
+  - Enter
+  - Space
 language: zh
 base_task_id: mz_openworld-airship-trader

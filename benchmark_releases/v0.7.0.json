@@ -1,0 +1,24 @@
+{
+  "release": "v0.7.0",
+  "benchmark": "momozi-VibeGamingBench",
+  "benchmark_type": "agent",
+  "schema_version": 1,
+  "code_tag": "v0.7.0",
+  "static_evaluation": true,
+  "dynamic_evaluation": true,
+  "multimodal_evaluation": true,
+  "evaluation_protocol": "agent-v2",
+  "result_schema_version": 2,
+  "task_manifest_sha256": "95c84e0bfb36f92f3b0c6e4658582017fbe304c1d40a8271c1d1358911d419a0",
+  "runtime_version": "1.1",
+  "judge_version": "1.1",
+  "scoring_version": "1.1",
+  "statistics_version": "1.0",
+  "hidden_split": "private",
+  "task_semantics": "711 concepts x EN/ZH paired instances",
+  "task_count": 1422,
+  "concept_count": 711,
+  "additional_sources": [
+    "Feishu Prompt Catalog"
+  ]
+}

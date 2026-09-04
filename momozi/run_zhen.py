@@ -50,7 +50,14 @@ def build_gate_product(prod: Path) -> dict:
         else:
             reasons.append("no <canvas>/WebGL signal")
         # 外链(不允许 three.js CDN 之外): fetch/XMLHttpRequest/img的http
-        heavy = re.findall(r"(?:fetch\(|XMLHttpRequest|src=\"http[^\"]*\.(?:png|jpg|mp3|wav|mp4)\")", txt)
+        heavy = re.findall(
+            r"(?:fetch\(|XMLHttpRequest|"
+            r"(?:src|href)\s*=\s*['\"]https?://[^'\"]*\."
+            r"(?:png|jpe?g|gif|webp|svg|mp3|wav|ogg|m4a|mp4|webm)"
+            r"['\"])",
+            txt,
+            flags=re.IGNORECASE,
+        )
         if heavy:
             checks["no_external_heavy_refs"] = False
             reasons.append(f"external runtime refs: {heavy[:3]}")

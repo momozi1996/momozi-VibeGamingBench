@@ -29,8 +29,13 @@ class RuntimeSmokeTests(unittest.TestCase):
                 self.skipTest(result["failure_details"])
             self.assertEqual(result["status"], "pass", result)
             self.assertEqual(result["viewport"], {"width": 1280, "height": 720})
-            self.assertEqual(len(result["screenshots"]), 1)
-            self.assertTrue(Path(result["screenshots"][0]["path"]).is_file())
+            self.assertGreaterEqual(len(result["screenshots"]), 3)
+            self.assertTrue(
+                Path(result["screenshots"][0]["path"]).is_file()
+            )
+            self.assertTrue(
+                Path(result["screenshots"][-1]["path"]).is_file()
+            )
 
     def test_console_errors_are_fatal(self):
         with tempfile.TemporaryDirectory() as directory:

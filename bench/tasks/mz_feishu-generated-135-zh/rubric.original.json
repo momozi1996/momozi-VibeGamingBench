@@ -1,0 +1,118 @@
+{
+  "score_formula": "BUILD * (0.15*((M1+M2+M3)/3) + 0.35*((D1+D2+D3+D4)/4) + 0.15*((V1+V2+V3)/3) + 0.35*((A1+A2+A3+A4)/4))",
+  "max_demos": 10,
+  "max_demo_seconds": 20,
+  "build_check": {
+    "id": "BUILD",
+    "cmd": "momozi HTML static BUILD gate",
+    "description": "index.html and game_logic.js exist, a canvas/WebGL/WebGPU renderer signal is present, and no disallowed heavy runtime asset references are used."
+  },
+  "categories": [
+    {
+      "name": "Core Mechanics",
+      "items": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "name": "Content Depth",
+      "items": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "name": "Functional Visuals",
+      "items": [
+        "V1",
+        "V2",
+        "V3"
+      ]
+    },
+    {
+      "name": "Presentation & Art",
+      "items": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "M1",
+      "agg": "max",
+      "description": "原始玩法简报的核心循环必须可玩并可由玩家输入完成：3D 软萌云朵小岛飞行 Demo，Three.js+importmap。玩家操控小小的飞行小精灵，在漂浮云朵群岛之间飞行；柔和飞行物理，升降转向；收集散落在云朵上的星光碎片；拜访各个浮空小岛，遇见友好云精灵 NPC；没有敌人，主打放松漫游。美术：马卡龙天空，蓬松程序化云朵，柔光。验收标准：飞行手感流畅，收集全部星光碎片完成通关，记录收集进度。输出单个完整自包含 HTML 文件，使用 importmap 引入 threejs，零外部资源，具备完整游戏闭环：开始界面、游玩循环、剧情推进、结算界面；localStorage 存储进度；禁止半成品 Demo。"
+    },
+    {
+      "id": "M2",
+      "agg": "max",
+      "description": "核心输入、规则、状态变化、成功条件和失败条件必须在 game_logic.js 中形成确定性状态机，而非静态按钮或装饰。"
+    },
+    {
+      "id": "M3",
+      "agg": "max",
+      "description": "至少一个核心动作必须展示合法/无效输入、边界条件、即时反馈和恢复或重置结果。"
+    },
+    {
+      "id": "D1",
+      "agg": "max",
+      "description": "至少实现三段递进流程，并让资源、计时、生命、分数、库存、冷却或其他与题材相符的状态改变决策。"
+    },
+    {
+      "id": "D2",
+      "agg": "max",
+      "description": "至少提供三种功能不同的内容、对象、关卡、敌人、谜题或策略选择，不能只是换颜色或换文案。"
+    },
+    {
+      "id": "D3",
+      "agg": "max",
+      "description": "实现暂停、重开、结算、localStorage 恢复和至少一种可观察的持久化或重玩结果。"
+    },
+    {
+      "id": "D4",
+      "agg": "max",
+      "description": "第三阶段必须综合至少两项前置机制，并提供清晰成功、失败和再次挑战流程。"
+    },
+    {
+      "id": "V1",
+      "agg": "mean",
+      "description": "HUD 清楚展示当前目标、关键资源、阶段、进度和危险，且信息与实时状态同步。"
+    },
+    {
+      "id": "V2",
+      "agg": "mean",
+      "description": "有效、无效、受伤、成功、失败和状态变化均有可区分的即时反馈。"
+    },
+    {
+      "id": "V3",
+      "agg": "mean",
+      "description": "从开始、引导、进行中到结算、重试的完整游戏闭环无需刷新页面即可完成。"
+    },
+    {
+      "id": "A1",
+      "agg": "mean",
+      "description": "使用统一且有辨识度的原创视觉方向，技术栈服务于主题而非堆叠默认控件。"
+    },
+    {
+      "id": "A2",
+      "agg": "mean",
+      "description": "镜头、构图、层级、光照或平面布局经过设计，重要对象与目标易于阅读。"
+    },
+    {
+      "id": "A3",
+      "agg": "mean",
+      "description": "角色、目标、危险、工具和 UI 符号拥有清晰轮廓和不同功能状态。"
+    },
+    {
+      "id": "A4",
+      "agg": "mean",
+      "description": "移动、命中、转场、警报、完成和界面变化使用多帧动画、粒子、镜头或声音反馈。"
+    }
+  ]
+}

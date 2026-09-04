@@ -97,7 +97,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "The project has a coherent authored art direction: Readable targets and projectiles, disciplined muzzle and impact effects, strong cover silhouettes, useful depth cues, and camera treatment that supports aiming. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes."
+      "description": "The project has a coherent authored art direction: Readable targets and projectiles, disciplined muzzle and impact effects, strong cover silhouettes, useful depth cues, and camera treatment that supports aiming. Score 0 if the presentation is dominated by default controls, unlit primitives, inconsistent materials, or abrupt unanimated state changes. Full credit may be earned with runtime-authored procedural textures, layered materials, deliberate multi-light rigs, particles, synthesized audio, or post-processing; external asset files are not required."
     },
     {
       "id": "A2",

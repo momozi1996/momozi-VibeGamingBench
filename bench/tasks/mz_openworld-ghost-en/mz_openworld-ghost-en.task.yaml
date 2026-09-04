@@ -1,84 +1,21 @@
 id: mz_openworld-ghost-en
 title: openworld ghost (English)
 family: openworld
-difficulty: medium
+difficulty: high
 engine: html
 provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # Open-World Ghost Hunting
-
-    Build a **2D open-world ghost hunting game** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
-    This is not a prototype. It is a **complete, shippable micro-game** that could
-    sit on an itch.io page or Steam as a polished vertical slice.
-
-    ## Core Vision
-
-    The player explores haunted locations across an open-world town, using
-    specialised equipment to detect, track, and capture ghosts. The game feels
-    **atmospheric, tense, and investigative** -- think *Phasmophobia* meets
-    *A Short Hike* at a smaller scale. The art style must be **coherent and
-    dark-atmospheric**: muted palettes, fog overlays, flickering light sources,
-    and readable sprites against shadowy backgrounds.
-
-    ## What the Player Experiences
-
-    1. **Title and Entry** -- The player arrives at a styled title screen with a
-       spooky backdrop (foggy graveyard, flickering lantern, silhouette of a house)
-       and a "Begin Hunt" or "Play" button. Starting drops them into the open-world
-       town hub.
-
-    2. **The Haunted World** -- The player walks freely across an open-world town
-       with at least four visually distinct haunted locations: an abandoned mansion
-       (dark, broken windows, overgrown garden), a haunted forest (twisted trees,
-       fog, glowing eyes), an old lighthouse (coastal, waves, creaking wood), and a
-       derelict hospital (corridors, flickering lights, wheelchairs). Each location
-       has its own atmosphere and ghost type.
-
-    3. **Detection Equipment** -- The player carries at least three tools: an EMF
-       reader (beep frequency increases near ghosts), a thermal camera (shows cold
-       spots as blue overlays), and a spirit box (captures ghost voices as text).
-       Each tool has distinct visual and audio feedback. Ghosts are invisible
-       without equipment -- the tools are the only way to find them.
-
-    4. **Ghost Types and Evidence** -- At least four distinct ghost types with
-       unique behaviours: poltergeist (throws objects), wraith (freezing breath,
-       walks through walls), banshee (screams before attacking), and shade (hides
-       in darkness, afraid of light). Each type leaves specific evidence that the
-       player must collect and cross-reference on an evidence board to identify it.
-
-    5. **The Hunt Phase** -- When enough evidence is collected, the ghost becomes
-       aggressive: lights flicker, the environment distorts, and a hunt timer
-       counts down. The player must use defensive items (crucifix, salt circle,
-       flashlight) to survive and capture the ghost before time runs out.
-
-    6. **Sanity and Pressure** -- A sanity meter drops in darkness, when seeing
-       ghost activity, or when alone too long. Low sanity causes hallucinations
-       (false readings, fake shadows) and makes the ghost more aggressive. Light
-       sources and safe rooms restore sanity, creating a push-pull between
-       investigation and self-preservation.
-
-    ## HTML Submission Format
-
-    You must deliver **two files**:
-
-    - `index.html` — one self-contained page, uses `three.js` from CDN
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      opens by double-clicking in any modern browser. **No build step, no `npm install`,
-      no Python server.** It must render within 3 seconds on a normal laptop.
-    - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
-      imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
-
-    Constraints:
-    - All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
-    - Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
-    - `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
-    - Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
-
-    Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
-    CLI invocation, no download, no runtime dependency.
+  spec: "# Open-World Ghost Hunting\n\nBuild a **2D open-world ghost hunting game** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).\nThis is not a prototype. It is a **complete, shippable micro-game** that could\nsit on an itch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nThe player explores haunted locations across an open-world town, using\nspecialised equipment to detect, track, and capture ghosts. The game feels\n**atmospheric, tense, and investigative** -- think *Phasmophobia* meets\n*A Short Hike* at a smaller scale. The art style must be **coherent and\ndark-atmospheric**: muted palettes, fog overlays, flickering light sources,\nand readable sprites against shadowy backgrounds.\n\n## What the Player Experiences\n\n1. **Title and Entry** -- The player arrives at a styled title screen with a\n   spooky backdrop (foggy graveyard, flickering lantern, silhouette of a house)\n   and a \"Begin Hunt\" or \"Play\" button. Starting\
+    \ drops them into the open-world\n   town hub.\n\n2. **The Haunted World** -- The player walks freely across an open-world town\n   with at least four visually distinct haunted locations: an abandoned mansion\n   (dark, broken windows, overgrown garden), a haunted forest (twisted trees,\n   fog, glowing eyes), an old lighthouse (coastal, waves, creaking wood), and a\n   derelict hospital (corridors, flickering lights, wheelchairs). Each location\n   has its own atmosphere and ghost type.\n\n3. **Detection Equipment** -- The player carries at least three tools: an EMF\n   reader (beep frequency increases near ghosts), a thermal camera (shows cold\n   spots as blue overlays), and a spirit box (captures ghost voices as text).\n   Each tool has distinct visual and audio feedback. Ghosts are invisible\n   without equipment -- the tools are the only way to find them.\n\n4. **Ghost Types and Evidence** -- At least four distinct ghost types with\n   unique behaviours: poltergeist (throws objects),\
+    \ wraith (freezing breath,\n   walks through walls), banshee (screams before attacking), and shade (hides\n   in darkness, afraid of light). Each type leaves specific evidence that the\n   player must collect and cross-reference on an evidence board to identify it.\n\n5. **The Hunt Phase** -- When enough evidence is collected, the ghost becomes\n   aggressive: lights flicker, the environment distorts, and a hunt timer\n   counts down. The player must use defensive items (crucifix, salt circle,\n   flashlight) to survive and capture the ghost before time runs out.\n\n6. **Sanity and Pressure** -- A sanity meter drops in darkness, when seeing\n   ghost activity, or when alone too long. Low sanity causes hallucinations\n   (false readings, fake shadows) and makes the ghost more aggressive. Light\n   sources and safe rooms restore sanity, creating a push-pull between\n   investigation and self-preservation.\n\n## Vibe Gaming Quality Bar\n\nThe gameplay, logic, and acceptance anchors above\
+    \ take priority over this\npresentation contract. Do not rewrite or remove the core mechanics above; use\nthese rules to turn the same brief into a playable Vibe Gaming vertical slice.\n\n- **Play first, polish second:** establish start, core input, state changes,\n  success/failure, and replay before adding visual polish or effects.\n- **Choose the smallest sufficient stack**:\n  - `HTML5 Canvas 2D + Vanilla JS` for 2D rule-driven games;\n  - `DOM + CSS + Vanilla JS` for card, dialogue, menu, and information-heavy games;\n  - `pure SVG + CSS animation + Vanilla JS` for icons, diagrams, and geometric motion;\n  - `PhaserJS` for continuous collision, cameras, particles, or arcade physics;\n  - `Three.js + WebGL` for 3D or spatial camera experiences;\n  - native `WebGPU` only when large-scale GPU parallelism or a custom GPU pipeline is genuinely required;\n  - Canvas, DOM, CSS, and SVG may be mixed when each layer has a clear responsibility.\n    Do not add complexity for technology spectacle.\n\
+    - **Keep rules independent:** `game_logic.js` is the single source of truth and\n  exposes `createGame(opts)` and `advance(game, input, dt)`. Rendering reads state;\n  it must not maintain a second hidden rules system.\n- **Make every frame explainable:** inputs map to explicit actions, actions\n  produce observable state changes, and invalid input, edge cases, resource\n  depletion, damage, victory, and failure are visible.\n- **Vibe is not decoration:** use at least two feedback channels (animation,\n  motion, scale, particles, audio, HUD, or camera) for important actions without\n  obscuring the goal or reducing readability.\n- **Mobile first:** pointer targets are at least 44×44 CSS px, touch and mouse\n  both work, hover is never required, and 390×844, 360×800, 430×932, and\n  1280×800 have no horizontal scrolling or overlapping controls.\n- **Determinism and tests:** seed random content; verify the core rule, outcome\n  conditions, restart/restoration, input boundaries, and at\
+    \ least one error state.\n  Do not treat a screenshot or visible label as proof of functionality.\n- **Originality and compliance:** use original names, characters, graphics,\n  audio, and levels, or explicitly licensed assets. Do not copy trademarks,\n  characters, text, artwork, music, level data, or source code.\n\nFinish by reporting actual file paths, launch and test commands/results, key\nscreenshots, known limitations, stack tradeoffs, and original-asset provenance.\n\n## HTML Submission Format\n\nDeliver a self-contained browser game in two files:\n\n- `index.html` - the complete playable presentation. Use HTML Canvas 2D or Three.js/WebGL for the playable presentation.\n- `game_logic.js` - the deterministic state and rules layer. Use a classic script\n  and expose `createGame(opts)` and `advance(game, input, dt)`; an optional\n  `render(gameState, renderCtx)` hook may be exposed.\n\nThe page must open without a build step or local server and render within three\nseconds on a\
+    \ normal laptop. Assets must be generated at runtime with no network\nrequests: procedural geometry, Canvas2D-drawn textures encoded as `data:` URIs,\noffscreen-canvas particle sprites, Web Audio API synthesized sound, shaders,\npost-processing, and CSS are all allowed and encouraged. Do not embed or fetch\nexternal image, model, video, or audio files at runtime. Three.js may be loaded\nfrom its pinned official CDN; if post-processing is used, pin the matching\n`examples/jsm/postprocessing/*` modules to the same Three.js version.\n\nInteraction scheme (both): Support both keyboard and pointer controls: use keyboard for movement or actions and the pointer for spatial selection, menus, or targeting.\nKeep the complete play area and HUD readable at 1280x720. Include a clear start\nflow, concise in-game guidance, pause and restart controls, a complete win/loss\nor scored outcome loop, and visible feedback for every important action.\n\n`index.html` must not use `fetch()` or `XMLHttpRequest`\
+    \ for external URLs; only\nthe pinned Three.js CDN above is allowed. Keep `index.html` at or below 400 KB.\nThe `game_logic.js` line count is advisory and is not a BUILD-gate failure.\n\n### Logic and rendering scaffold\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // The loop calls advance; render(game, { THREE, scene, ... }) is optional.\n</script>\n```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` must be pure and must not access DOM or Three.js objects.\
+    \ The optional\n`render()` hook is called by the main loop and may map state to scenes, materials,\nparticles, and post-processing."
 static:
 - kind: required_file
   role: entry
@@ -127,5 +64,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: both
+  start_keys:
+  - Enter
+  - Space
 language: en
 base_task_id: mz_openworld-ghost

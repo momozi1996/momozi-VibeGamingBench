@@ -1,0 +1,68 @@
+{
+  "status": "pass",
+  "root": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench",
+  "source_file_count": 5941,
+  "parse": {
+    "counts": {
+      "txt": 1,
+      "md": 1439,
+      "yaml": 1424,
+      "json": 2890,
+      "mjs": 2,
+      "tsv": 1,
+      "py": 52,
+      "js": 26,
+      "sh": 1,
+      "csv": 1
+    },
+    "errors": []
+  },
+  "syntax": {
+    "checked": {
+      "python": 52,
+      "node": 28,
+      "shell": 1
+    },
+    "errors": {
+      "python": [],
+      "node": [],
+      "shell": []
+    }
+  },
+  "tasks": {
+    "status": "pass",
+    "concept_count": 711,
+    "task_count": 1422,
+    "language_counts": {
+      "en": 711,
+      "zh": 711
+    },
+    "pair_count": 711,
+    "bad_pairs": {},
+    "schema_errors": 0,
+    "rubric_missing": 0,
+    "duplicate_groups": 0
+  },
+  "release": {
+    "release": "v0.7.0",
+    "release_hash": "95c84e0bfb36f92f3b0c6e4658582017fbe304c1d40a8271c1d1358911d419a0",
+    "computed_hash": "95c84e0bfb36f92f3b0c6e4658582017fbe304c1d40a8271c1d1358911d419a0",
+    "match": true,
+    "manifest_task_files": 5688,
+    "concept_count": 711,
+    "task_count": 1422
+  },
+  "docs": {
+    "markdown_files": 1439,
+    "broken_relative_links": [],
+    "stale_release_docs": []
+  },
+  "generated_artifacts": {
+    "git_repo": true,
+    "tracked_generated_files": 50244,
+    "tracked_runs_files": 19,
+    "tracked_workspaces_files": 50225,
+    "warning": "runs/ and workspaces/ are ignored for new files but historical files are still tracked; exclude them from a freeze archive or remove from the release index explicitly."
+  },
+  "errors": []
+}

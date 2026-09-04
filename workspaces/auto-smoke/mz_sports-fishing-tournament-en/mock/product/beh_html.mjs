@@ -1,6 +1,8 @@
 // Generic two-file browser-game contract check.
 // Usage: node beh_html.mjs <product_dir>
 import { pathToFileURL } from 'node:url';
+import { readFile } from 'node:fs/promises';
+import vm from 'node:vm';
 
 const product = process.argv[2];
 const results = [];
@@ -16,9 +18,26 @@ let logic;
 try {
   logic = await import(pathToFileURL(`${product}/game_logic.js`).href);
 } catch (error) {
-  record('logic_import', false, error.message);
-  console.log(JSON.stringify(results));
-  process.exit(0);
+  logic = null;
+}
+
+// A classic script is intentionally supported so artifacts work from file://
+// without the browser's ES-module CORS restriction.
+if (!logic || typeof logic.createGame !== 'function' || typeof logic.advance !== 'function') {
+  try {
+    const source = await readFile(`${product}/game_logic.js`, 'utf8');
+    const context = { console };
+    context.window = context;
+    context.globalThis = context;
+    vm.runInNewContext(source, context, {
+      filename: `${product}/game_logic.js`,
+    });
+    logic = context.GameLogic || context.module?.exports || {};
+  } catch (error) {
+    record('logic_import', false, error.message);
+    console.log(JSON.stringify(results));
+    process.exit(0);
+  }
 }
 
 record('exports_create_game', typeof logic.createGame === 'function', 'createGame export');

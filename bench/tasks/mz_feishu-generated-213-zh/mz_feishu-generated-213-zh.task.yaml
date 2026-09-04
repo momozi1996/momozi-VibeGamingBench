@@ -1,0 +1,158 @@
+id: mz_feishu-generated-213-zh
+title: WebGPU 3D 隧道弹幕射击 (中文)
+family: shooter
+difficulty: medium
+engine: html
+language: zh
+base_task_id: mz_feishu-generated-213
+provenance:
+  kind: adapted_feishu_game_prompt
+  source_name: Feishu Prompt Catalog
+  source_workbook_url: https://wvixbzgc0u7.feishu.cn/wiki/Il2IwLfZtiU3Nqk4K4acsQQKndf?sheet=Z03L1A
+  source_workbook_token: GBYhs8lZchFZe0tFvjUcXbz2nOS
+  source_sheet_id: Z03L1A
+  source_sheet_name: 直接生成
+  source_index: 213
+  source_capture_date: '2026-09-04'
+  source_snapshot_sha256: 3cd222c74028bd7ed484c150c7ec8fc64a85be40fd866035f8a3666098716d0b
+  source_prompt_kind: full_prompt
+  source_title: WebGPU 3D 隧道弹幕射击
+  source_title_en: WebGPU 3D tunnel barrage shooting
+  source_technology: 原生 WebGPU，GPU 实例化子弹，高速运动物理，视角隧道畸变
+  adaptation: Vibe Gaming wrapper preserving source mechanics and technical intent; adds deterministic state-machine, UX, testing, and clean-room requirements.
+rounds:
+- name: R1
+  spec: |
+    # WebGPU 3D 隧道弹幕射击
+
+    你是一名资深 Vibe Gaming 设计师、游戏程序员、交互设计师和 QA 工程师。
+    请把下面的题目证据实现成一个**完整、可运行、可测试、可重玩的原创浏览器游戏**，
+    而不是静态 Demo 或只展示视觉效果的样片。
+
+    ## 任务身份
+
+    - 基准家族：射击游戏
+    - 题目维度：3D
+    - 指定技术栈：原生 WebGPU，GPU 实例化子弹，高速运动物理，视角隧道畸变
+    - 来源：飞书《提示词大全》· 直接生成 · 原始序号 213
+
+    ## 原始玩法简报（语义不可删改）
+
+    > 原生 WebGPU 制作 3D 隧道弹幕射击 Demo。GPU 批量实例化子弹、敌机；隧道透视畸变着色器；玩家操控、射击、命中判定、计分系统。验收标准：高并发弹幕不卡顿、渲染稳定、游戏闭环完整。输出单个完整自包含 HTML 文件，零外部资源，完整游戏闭环，禁止半成品。
+
+    以上简报是本题的玩法与逻辑锚点。你可以为了浏览器垂直切片压缩内容数量，
+    但不得删除、替换或弱化其中的核心输入、规则、状态、目标、失败条件或技术约束。
+    当简报只给出类型和技术种子时，请明确标注你的合理化假设，并实现一个最小但
+    闭环完整的同类玩法；不要假装题目提供了未提供的隐藏规则。
+
+    ## Vibe Gaming 实现要求
+
+    1. 先输出一页实现规格，然后直接创建文件、运行页面和执行测试，不停在方案阶段。
+    2. 把原始简报拆成可验证的状态机：标题、引导、进行中、暂停、失败、胜利/结算、
+       重开和恢复；每个状态都有输入、状态变化、退出条件和可见反馈。
+    3. 建立清晰的核心循环：开始 -> 理解目标 -> 通过主要输入完成动作 -> 即时反馈 ->
+       资源/进度更新 -> 成功或失败 -> 下一局、重试或返回标题。
+    4. 至少实现三段递进流程：第一段教会核心动作，第二段组合核心动作与压力，
+       第三段用综合场景验证掌握；如果原始简报已有明确关卡数量，优先遵守原数量。
+    5. 每个重要动作必须有至少两种反馈（位移、缩放、粒子、颜色、声音、HUD 或镜头），
+       无效输入、受伤、失败、成功和持久状态变化必须可区分。
+    6. HUD 只显示必要信息，并在稳定区域展示目标、关键资源、选择状态、进度、危险、
+       计时/分数和当前阶段；关键状态不得只靠颜色区分。
+    7. 所有主要交互支持单手/键盘可用的清晰输入，点击目标至少 44x44 CSS px；
+       触控与鼠标输入不能依赖 hover 才能完成。
+    8. 使用原创名称、原创程序化图形、原创音效或明确许可资产。不得复制原作商标、
+       角色、剧情文本、美术、音乐、音效、关卡数据、服务器或反编译代码。
+    9. 使用 localStorage 保存设置、最佳成绩和允许持久化的进度；不要上传个人数据，
+       不接真实支付、广告或未审核的多人服务。
+
+    ## HTML 提交合同
+
+    交付两个文件：`index.html` 和 `game_logic.js`。3D 呈现可使用
+    原生 WebGPU，GPU 实例化子弹，高速运动物理，视角隧道畸变，但规则层必须与 DOM、Canvas、WebGL 或 WebGPU 渲染解耦。
+
+    页面无需构建步骤即可打开，首屏三秒内出现可操作内容。禁止运行时请求图片、
+    模型、视频或音频；允许程序化几何、Canvas2D、SVG、CSS、Web Audio、Shader、
+    固定版本库和 `data:` URI。若使用 CDN，只允许固定版本的官方库依赖。
+
+    交互方案（keyboard-first）：以键盘为主，提供方向键或 WASD、Space、Enter、Esc；自然需要时加入鼠标。
+    完整游戏区和 HUD 在 1280x720 下清晰可读；手机 390x844、360x800 和 430x932
+    不得出现横向滚动或关键控件溢出。必须有开始、进行中、暂停、失败/胜利、重开
+    和状态恢复流程。
+
+    `index.html` 负责呈现与输入，`game_logic.js` 负责确定性状态与规则，并暴露：
+
+    ```javascript
+    (function (root) {
+      function createGame(opts) { return { phase: "title", score: 0 }; }
+      function advance(game, input, dt) { return game; }
+      const api = { createGame, advance };
+      if (typeof module !== "undefined" && module.exports) module.exports = api;
+      else root.GameLogic = api;
+    }(typeof window !== "undefined" ? window : globalThis));
+    ```
+
+    `advance()` 不得访问 DOM 或渲染对象。随机内容必须可用 seed 复现。
+
+
+    ## 验收标准
+
+    - 首次可操作时间不超过 3 秒，核心玩法 60 秒内可理解。
+    - 在 390x844、360x800、430x932、1280x800 四个视口无重叠、无横向滚动、
+      无截断文字和不可达按钮。
+    - `game_logic.js` 可由 Node 直接加载，`createGame({seed})` 与
+      `advance(game, input, dt)` 能稳定运行，规则层不依赖 DOM。
+    - 至少提供 12 个有意义的规则/状态测试和 5 条 Playwright 或等价端到端流程。
+    - README 说明启动、玩法、状态、测试、目录结构、技术取舍和与原始简报的差异。
+    - 完成后输出实际文件路径、启动命令、测试结果、截图路径、已知限制和原创资产说明。
+static:
+- kind: required_file
+  role: entry
+  path: index.html
+  weight: 1.0
+- kind: required_file
+  role: logic
+  path: game_logic.js
+  weight: 1.0
+behavior:
+  script: beh_html.mjs
+  timeout: 300
+evaluation:
+  input_scheme: keyboard-first
+  start_keys:
+  - Enter
+  - Space
+rubric:
+- id: completeness
+  weight: 0.15
+  max: 5
+  anchors:
+  - M1
+  - M2
+  - M3
+  rubric: Core requested mechanics are implemented and connected.
+- id: richness
+  weight: 0.35
+  max: 5
+  anchors:
+  - D1
+  - D2
+  - D3
+  - D4
+  rubric: Content depth, progression, persistence, and meaningful choices.
+- id: player_exp
+  weight: 0.15
+  max: 5
+  anchors:
+  - V1
+  - V2
+  - V3
+  rubric: Readable state, responsive feedback, and complete loop.
+- id: visual
+  weight: 0.35
+  max: 5
+  anchors:
+  - A1
+  - A2
+  - A3
+  - A4
+  rubric: Coherent authored presentation, composition, effects, and motion.

@@ -30,6 +30,7 @@ from typing import Any
 import yaml
 
 from task_metadata import classify_difficulty
+from prompt_contract import clean_yaml, input_scheme_for_family, render_contract
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -1166,61 +1167,14 @@ def _fixed_features(item: dict[str, Any], language: str) -> list[str]:
     ]
 
 
-def _presentation_contract(dimension: str, language: str) -> str:
-    if language == "en":
-        renderer = (
-            "Use Three.js and WebGL for the playable presentation."
-            if dimension in {"2.5D", "3D"}
-            else "Use HTML Canvas 2D or Three.js/WebGL for the playable presentation."
-        )
-        return f"""\
-## HTML Submission Format
-
-Deliver a self-contained browser game in two files:
-
-- `index.html` - the complete playable presentation. {renderer}
-- `game_logic.js` - the deterministic state and rules layer, exporting
-  `createGame(opts)` and `advance(game, input, dt)`.
-
-The page must open without a build step or local server and render within three
-seconds on a normal laptop. Use procedural geometry, generated textures, shaders,
-particles, synthesized audio, and CSS. Do not fetch external images, models,
-video, or audio at runtime. Three.js may be loaded from its official CDN when
-used; pin any permitted library to a specific version.
-
-Support keyboard and pointer input, with touch or gamepad added where appropriate.
-Keep the complete play area and HUD readable at 1280x720. Include a styled start
-flow, concise in-game guidance, pause and restart controls, a complete outcome
-loop, and visible feedback for every important action.
-
-`index.html` must not use `fetch()` or `XMLHttpRequest`. Keep `index.html` under
-160 KB and `game_logic.js` under 320 lines.
-"""
-    renderer = (
-        "使用 Three.js 和 WebGL 完成可玩呈现。"
-        if dimension in {"2.5D", "3D"}
-        else "使用 HTML Canvas 2D 或 Three.js/WebGL 完成可玩呈现。"
+def _presentation_contract(family: str, dimension: str, language: str) -> str:
+    # The shared v0.6 contract keeps generated source families in sync with the
+    # migrated checked-in task pool.
+    return render_contract(
+        language,
+        family,
+        dimension,
     )
-    return f"""\
-## HTML 提交格式
-
-用两个文件交付一个可独立运行的浏览器游戏：
-
-- `index.html` - 完整可玩的呈现层。{renderer}
-- `game_logic.js` - 确定性的状态与规则层，导出 `createGame(opts)` 和
-  `advance(game, input, dt)`。
-
-页面不能依赖构建步骤或本地服务器，普通笔记本应在三秒内完成首屏渲染。使用程序化
-几何体、生成纹理、着色器、粒子、合成音频和 CSS；运行时不得获取外部图片、模型、
-视频或音频。使用 Three.js 时可以从官方 CDN 加载；允许的库必须锁定具体版本。
-
-必须支持键盘和鼠标，并按玩法需要加入触摸或手柄控制。完整游戏区与 HUD 在
-1280x720 下应清晰可读。需要有经过设计的开始流程、简短游戏内引导、暂停与重开控制、
-完整结果闭环，以及每项关键操作的明确反馈。
-
-`index.html` 不得使用 `fetch()` 或 `XMLHttpRequest`。`index.html` 控制在
-160 KB 以内，`game_logic.js` 控制在 320 行以内。
-"""
 
 
 def _prompt(item: dict[str, Any], language: str) -> str:
@@ -1273,7 +1227,7 @@ buttons, menus, or visual demonstrations.
 
 {art}
 
-{_presentation_contract(dimension, "en")}""".strip()
+{_presentation_contract(family, dimension, "en")}""".strip()
 
     numbered = "\n".join(
         f"{index}. **系统 {index}** - {feature}"
@@ -1316,7 +1270,7 @@ buttons, menus, or visual demonstrations.
 
 {art}
 
-{_presentation_contract(dimension, "zh")}""".strip()
+{_presentation_contract(family, dimension, "zh")}""".strip()
 
 
 def _requirement(req_id: str, description: str, category: str) -> dict[str, Any]:
@@ -1345,6 +1299,12 @@ def _requirement(req_id: str, description: str, category: str) -> dict[str, Any]
             " Score 0 if the presentation is dominated by default controls, unlit "
             "primitives, inconsistent materials, or abrupt unanimated state changes."
         )
+        if req_id == "A1":
+            suffix += (
+                " Full credit may be earned with runtime-authored procedural textures, "
+                "layered materials, deliberate multi-light rigs, particles, synthesized "
+                "audio, or post-processing; external asset files are not required."
+            )
         agg = "mean"
     return {"id": req_id, "agg": agg, "description": description + suffix}
 
@@ -1488,6 +1448,10 @@ def _task_yaml(item: dict[str, Any], language: str, prompt: str) -> dict[str, An
             {"kind": "required_file", "role": "logic", "path": "game_logic.js", "weight": 1.0},
         ],
         "behavior": {"script": "beh_html.mjs", "timeout": 300},
+        "evaluation": {
+            "input_scheme": input_scheme_for_family(item["family"]),
+            "start_keys": ["Enter", "Space"],
+        },
         "rubric": [
             {
                 "id": "completeness",
@@ -1525,14 +1489,17 @@ def _render_files(item: dict[str, Any], language: str) -> dict[str, str]:
     prompt = _prompt(item, language)
     _validate_no_ip(prompt, f"{item['base_id']}.{language}.prompt")
     task_id = f"{item['base_id']}-{language}"
-    return {
-        f"{task_id}.task.yaml": yaml.dump(
+    task_yaml = clean_yaml(
+        yaml.dump(
             _task_yaml(item, language, prompt),
             Dumper=LiteralDumper,
             allow_unicode=True,
             sort_keys=False,
             width=1000,
-        ),
+        )
+    )
+    return {
+        f"{task_id}.task.yaml": task_yaml,
         "prompt.md": prompt + "\n",
         "rubric.mapping.json": json.dumps(RUBRIC_MAPPING, ensure_ascii=False, indent=2) + "\n",
         "rubric.original.json": json.dumps(_rubric(item), ensure_ascii=False, indent=2) + "\n",

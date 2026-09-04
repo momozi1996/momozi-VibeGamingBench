@@ -4,7 +4,10 @@
 # mock 是内置测试用,直接复刻参考实现,0 token。
 claude:
   label: claude-code
-  argv: [claude, -p, $PROMPT_FILE]
+  model: sonnet
+  model_version: claude-sonnet-pinned
+  agent_version: claude-code-cli
+  argv: [claude, --model, sonnet, -p, $PROMPT]
   write_args:
     - --permission-mode
     - acceptEdits
@@ -16,5 +19,8 @@ claude:
 
 codex:
   label: codex
-  argv: [codex, exec, --sandbox, workspace-write, --skip-git-repo-check, $PROMPT_FILE]
+  model: gpt-5
+  model_version: gpt-5-pinned
+  agent_version: codex-cli
+  argv: [codex, exec, -c, model_reasoning_effort=high, --model, gpt-5, --sandbox, workspace-write, --skip-git-repo-check, $PROMPT]
   timeout: 1800

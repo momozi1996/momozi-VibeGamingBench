@@ -1,13 +1,27 @@
 # Automatic Evaluation Protocol
 
-This document describes the v0.5 `agent-v2` evaluation path for
+This document describes the v0.6 `agent-v2` evaluation path for
 VibeGamingBench. The legacy v0.x runner and `auto-v1` result records remain
 readable for continuity, but new publishable runs should use this protocol.
 
 ## 1. Scoring Key
 
-The default code and screenshot judge is `deepseek-v4-flash`. Create `.env` in
-the repository root:
+The judges use OpenAI-compatible Chat Completions. For screenshot judging,
+configure an official Doubao/Ark deployment that accepts image input and strict
+JSON output; legacy DeepSeek variables remain supported:
+
+```env
+MOMOZI_JUDGE_API_KEY=your-key
+MOMOZI_JUDGE_PROVIDER=ark
+MOMOZI_JUDGE_MODEL=your-endpoint-model-id
+MOMOZI_JUDGE_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
+MOMOZI_VLM_API_KEY=your-key
+MOMOZI_VLM_PROVIDER=ark
+MOMOZI_VLM_MODEL=your-vision-endpoint-model-id
+MOMOZI_VLM_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
+```
+
+Legacy configuration:
 
 ```env
 DEEPSEEK_API_KEY=sk-your-key
@@ -20,6 +34,8 @@ DEEPSEEK_VLM_BASE_URL=https://api.deepseek.com
 `DEEPSEEK_API_KEY` is the only secret and is ignored by git. Do not place a
 real key in source files, result JSON, or shell history. `--judge-model`,
 `--judge-base-url`, `--vlm-model`, and `--vlm-base-url` override these values.
+`--judge-samples` and `--vlm-samples` default to three and use a per-dimension
+median to reduce single-call variance.
 
 ## 2. Agent Harness
 
@@ -78,8 +94,10 @@ For each task:
 2. `StaticEvaluator` runs the deterministic BUILD gate and Node contract.
 3. The code judge scores the legacy four dimensions when deterministic gates allow it.
 4. Chromium runtime smoke starts a local server, loads the page, observes errors,
-   attempts `ArrowRight`, and captures `boot.png`.
-5. The multimodal judge scores the screenshot on Functional Visual and Presentation.
+   sends the task's family-aware start/input probe, and captures `boot.png`,
+   `gameplay_start.png`, and `gameplay_mid.png`.
+5. The multimodal judge scores all available gameplay screenshots on Functional
+   Visual and Presentation using a three-sample median.
 6. `momozi.scoring` fuses components and applies diagnostic hard caps.
 7. Results are written with schema v2 and aggregated into the release-aware leaderboard.
 
@@ -89,7 +107,7 @@ full gameplay verification.
 
 ## 5. Scores
 
-Component weights are fixed by scoring version `1.0`:
+Component weights are fixed by scoring version `1.1`:
 
 | Component | Weight |
 |---|---:|
@@ -138,12 +156,12 @@ is not leaderboard eligible.
 
 ## 7. Result Schema
 
-Each v0.5 result contains at least:
+Each v0.7 result contains at least:
 
 ```json
 {
   "schema_version": 2,
-  "benchmark_release": "v0.5.0",
+  "benchmark_release": "v0.7.0",
   "evaluation_protocol": "agent-v2",
   "task_id": "…-en",
   "base_task_id": "…",

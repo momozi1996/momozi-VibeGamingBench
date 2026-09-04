@@ -7,87 +7,15 @@ provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # Arcborne
-
-    Build **Arcborne**, a 2D **grappling-hook swing-momentum platformer** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).: a time-attack about chaining pendulum swings across deadly
-    terrain, releasing at the perfect instant to soar, and hooking again before
-    gravity wins.
-
-    This is not a prototype. It is a **complete, shippable micro-game** that could
-    sit on an itch.io page or Steam as a polished vertical slice.
-
-    ## Core Vision
-
-    Fly, don't walk. The player is an acrobat who crosses chasms by firing a
-    grappling hook, swinging on the line, and releasing at the apex to launch into a
-    soaring arc -- then hooking again to chain momentum across the course. The
-    fantasy is momentum mastery: gravity, swing arcs, and well-timed releases
-    compound into speed, and the difference between a clumsy crawl and a flowing
-    chain of perfect swings is visceral. One clean run of linked swings feels
-    glorious; one mistimed release drops you into the spikes.
-
-    The pressure comes from the clock. Every course is a time-attack where the
-    player reads terrain, picks anchor points, commits to a swing, and decides the
-    exact frame to let go. Multiple hook modes add tactical depth -- sometimes you
-    need raw pendulum momentum, sometimes a direct yank to reposition -- and the
-    worlds themselves bend the rules of motion so mastery in one biome doesn't
-    guarantee mastery in the next.
-
-    ## What the Player Experiences
-
-    1. **Title and Entry** -- The player arrives at a styled title screen that
-       establishes the acrobatic, high-velocity tone. Starting a run drops them into
-       the first world with a visible clock already ticking.
-
-    2. **Swing and Chain** -- The core sensation is physical: fire a hook at an
-       overhead anchor, feel gravity pull the arc, build speed at the bottom of the
-       pendulum, and release to fling forward. A fresh hook mid-flight chains one
-       swing into the next without touching the ground. The player shapes each swing
-       -- pumping, reeling, steering -- so skilled play looks fluid and fast while
-       beginners flail and recover.
-
-    3. **Multiple Hook Modes** -- The player discovers they have more than one kind
-       of hook. A swing line carries pendulum momentum; a pull line yanks them
-       straight to an anchor for tight climbs or recoveries. Switching between modes
-       becomes second nature as the terrain demands it.
-
-    4. **Worlds that Change the Rules** -- The journey carries the player through
-       escalating worlds with distinct environments. Each world introduces its own
-       anchor types, hazards, and an environmental modifier that alters how swinging
-       feels -- gusts that shove mid-arc, conveyors that drag on the ground, low
-       gravity that stretches every launch into a long glide. The player must adapt
-       their timing and technique to each new set of physics.
-
-    5. **Danger and Recovery** -- Pits, spikes, blades, and moving hazards punish
-       mistimed releases. Hitting a hazard or falling sends the player back to a
-       checkpoint with clear feedback. The course is forgiving enough to learn but
-       punishing enough that a clean run feels earned.
-
-    6. **Resolution** -- Reaching the goal ends the course with a result showing
-       time and medal. The player can retry for a better time or advance to the next
-       course. The full loop -- title, play, result, retry or advance -- flows
-       without restarting the application.
-
-    ## HTML Submission Format
-
-    You must deliver **two files**:
-
-    - `index.html` — one self-contained page, uses `three.js` from CDN
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      opens by double-clicking in any modern browser. **No build step, no `npm install`,
-      no Python server.** It must render within 3 seconds on a normal laptop.
-    - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
-      imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
-
-    Constraints:
-    - All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
-    - Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
-    - `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
-    - Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
-
-    Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
-    CLI invocation, no download, no runtime dependency.
+  spec: "# Arcborne\n\nBuild **Arcborne**, a 2D **grappling-hook swing-momentum platformer** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).: a time-attack about chaining pendulum swings across deadly\nterrain, releasing at the perfect instant to soar, and hooking again before\ngravity wins.\n\nThis is not a prototype. It is a **complete, shippable micro-game** that could\nsit on an itch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nFly, don't walk. The player is an acrobat who crosses chasms by firing a\ngrappling hook, swinging on the line, and releasing at the apex to launch into a\nsoaring arc -- then hooking again to chain momentum across the course. The\nfantasy is momentum mastery: gravity, swing arcs, and well-timed releases\ncompound into speed, and the difference between a clumsy crawl and a flowing\nchain of perfect swings is visceral. One clean run of linked swings feels\nglorious; one mistimed release drops you\
+    \ into the spikes.\n\nThe pressure comes from the clock. Every course is a time-attack where the\nplayer reads terrain, picks anchor points, commits to a swing, and decides the\nexact frame to let go. Multiple hook modes add tactical depth -- sometimes you\nneed raw pendulum momentum, sometimes a direct yank to reposition -- and the\nworlds themselves bend the rules of motion so mastery in one biome doesn't\nguarantee mastery in the next.\n\n## What the Player Experiences\n\n1. **Title and Entry** -- The player arrives at a styled title screen that\n   establishes the acrobatic, high-velocity tone. Starting a run drops them into\n   the first world with a visible clock already ticking.\n\n2. **Swing and Chain** -- The core sensation is physical: fire a hook at an\n   overhead anchor, feel gravity pull the arc, build speed at the bottom of the\n   pendulum, and release to fling forward. A fresh hook mid-flight chains one\n   swing into the next without touching the ground. The player\
+    \ shapes each swing\n   -- pumping, reeling, steering -- so skilled play looks fluid and fast while\n   beginners flail and recover.\n\n3. **Multiple Hook Modes** -- The player discovers they have more than one kind\n   of hook. A swing line carries pendulum momentum; a pull line yanks them\n   straight to an anchor for tight climbs or recoveries. Switching between modes\n   becomes second nature as the terrain demands it.\n\n4. **Worlds that Change the Rules** -- The journey carries the player through\n   escalating worlds with distinct environments. Each world introduces its own\n   anchor types, hazards, and an environmental modifier that alters how swinging\n   feels -- gusts that shove mid-arc, conveyors that drag on the ground, low\n   gravity that stretches every launch into a long glide. The player must adapt\n   their timing and technique to each new set of physics.\n\n5. **Danger and Recovery** -- Pits, spikes, blades, and moving hazards punish\n   mistimed releases. Hitting\
+    \ a hazard or falling sends the player back to a\n   checkpoint with clear feedback. The course is forgiving enough to learn but\n   punishing enough that a clean run feels earned.\n\n6. **Resolution** -- Reaching the goal ends the course with a result showing\n   time and medal. The player can retry for a better time or advance to the next\n   course. The full loop -- title, play, result, retry or advance -- flows\n   without restarting the application.\n\n## Vibe Gaming Quality Bar\n\nThe gameplay, logic, and acceptance anchors above take priority over this\npresentation contract. Do not rewrite or remove the core mechanics above; use\nthese rules to turn the same brief into a playable Vibe Gaming vertical slice.\n\n- **Play first, polish second:** establish start, core input, state changes,\n  success/failure, and replay before adding visual polish or effects.\n- **Choose the smallest sufficient stack**:\n  - `HTML5 Canvas 2D + Vanilla JS` for 2D rule-driven games;\n  - `DOM + CSS\
+    \ + Vanilla JS` for card, dialogue, menu, and information-heavy games;\n  - `pure SVG + CSS animation + Vanilla JS` for icons, diagrams, and geometric motion;\n  - `PhaserJS` for continuous collision, cameras, particles, or arcade physics;\n  - `Three.js + WebGL` for 3D or spatial camera experiences;\n  - native `WebGPU` only when large-scale GPU parallelism or a custom GPU pipeline is genuinely required;\n  - Canvas, DOM, CSS, and SVG may be mixed when each layer has a clear responsibility.\n    Do not add complexity for technology spectacle.\n- **Keep rules independent:** `game_logic.js` is the single source of truth and\n  exposes `createGame(opts)` and `advance(game, input, dt)`. Rendering reads state;\n  it must not maintain a second hidden rules system.\n- **Make every frame explainable:** inputs map to explicit actions, actions\n  produce observable state changes, and invalid input, edge cases, resource\n  depletion, damage, victory, and failure are visible.\n- **Vibe is not decoration:**\
+    \ use at least two feedback channels (animation,\n  motion, scale, particles, audio, HUD, or camera) for important actions without\n  obscuring the goal or reducing readability.\n- **Mobile first:** pointer targets are at least 44×44 CSS px, touch and mouse\n  both work, hover is never required, and 390×844, 360×800, 430×932, and\n  1280×800 have no horizontal scrolling or overlapping controls.\n- **Determinism and tests:** seed random content; verify the core rule, outcome\n  conditions, restart/restoration, input boundaries, and at least one error state.\n  Do not treat a screenshot or visible label as proof of functionality.\n- **Originality and compliance:** use original names, characters, graphics,\n  audio, and levels, or explicitly licensed assets. Do not copy trademarks,\n  characters, text, artwork, music, level data, or source code.\n\nFinish by reporting actual file paths, launch and test commands/results, key\nscreenshots, known limitations, stack tradeoffs, and original-asset\
+    \ provenance.\n\n## HTML Submission Format\n\nDeliver a self-contained browser game in two files:\n\n- `index.html` - the complete playable presentation. Use HTML Canvas 2D or Three.js/WebGL for the playable presentation.\n- `game_logic.js` - the deterministic state and rules layer. Use a classic script\n  and expose `createGame(opts)` and `advance(game, input, dt)`; an optional\n  `render(gameState, renderCtx)` hook may be exposed.\n\nThe page must open without a build step or local server and render within three\nseconds on a normal laptop. Assets must be generated at runtime with no network\nrequests: procedural geometry, Canvas2D-drawn textures encoded as `data:` URIs,\noffscreen-canvas particle sprites, Web Audio API synthesized sound, shaders,\npost-processing, and CSS are all allowed and encouraged. Do not embed or fetch\nexternal image, model, video, or audio files at runtime. Three.js may be loaded\nfrom its pinned official CDN; if post-processing is used, pin the matching\n\
+    `examples/jsm/postprocessing/*` modules to the same Three.js version.\n\nInteraction scheme (keyboard-first): Use arrows or WASD plus clear Space, Enter, and Escape actions; add pointer input where it naturally improves aiming or menus.\nKeep the complete play area and HUD readable at 1280x720. Include a clear start\nflow, concise in-game guidance, pause and restart controls, a complete win/loss\nor scored outcome loop, and visible feedback for every important action.\n\n`index.html` must not use `fetch()` or `XMLHttpRequest` for external URLs; only\nthe pinned Three.js CDN above is allowed. Keep `index.html` at or below 400 KB.\nThe `game_logic.js` line count is advisory and is not a BUILD-gate failure.\n\n### Logic and rendering scaffold\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // The loop calls advance; render(game, { THREE, scene, ... }) is optional.\n</script>\n\
+    ```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` must be pure and must not access DOM or Three.js objects. The optional\n`render()` hook is called by the main loop and may map state to scenes, materials,\nparticles, and post-processing."
 static:
 - kind: required_file
   role: entry
@@ -136,5 +64,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: keyboard-first
+  start_keys:
+  - Enter
+  - Space
 language: en
 base_task_id: mz_platformer-arcborne

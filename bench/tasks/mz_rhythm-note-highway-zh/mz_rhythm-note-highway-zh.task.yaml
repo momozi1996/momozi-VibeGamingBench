@@ -7,55 +7,10 @@ provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # 节奏音符轨道（Rhythm Note Highway）
-
-    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个节奏音符轨道游戏。
-    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
-    纵向切片放到 itch.io 页面或 Steam 上。
-
-    ## 核心构想
-
-    音符沿着一条多轨道的音符轨道倾泻而下，奔向屏幕底部的判定线。玩家必须在每个
-    音符越过判定线的一瞬间，精准按下对应轨道的按键。准确度会积累出连击倍率来
-    放大得分；失误则会中断连击，并消耗一条生命条。游戏的幻想核心是举办一场
-    演唱会——在流畅的心流状态中打准每一个音符，同时背景舞台灯光会随你的准确度
-    作出反应。一整套程序化定时的歌曲战役提供了数小时不断升级的挑战。
-
-    ## 玩家体验流程
-
-    1. **标题画面** —— 一片霓虹灯照亮的舞台背景，游戏名采用粗体风格化字体，配有
-       一个战役按钮和一个自由演奏按钮。不要出现纯灰。
-    2. **选曲** —— 一份可滚动的列表，至少 10 首歌曲，标有难度评级（简单/中等/
-       困难）、最佳得分和通关评级（S/A/B/C/F）。歌曲会随战役进程依次解锁。
-    3. **轨道** —— 4 条轨道，颜色编码的音符宝石朝判定条落下。玩家按 D/F/J/K
-       （或方向键）来击中音符。判定窗口分为 Perfect、Great、Good、Miss——各有
-       截然不同的视觉反馈（爆裂、发光、震动）。
-    4. **连击系统** —— 连续命中会让连击计数器递增。倍率（x2、x4、x8）会放大得分。
-       中断连击会重置计数器，并伴有可见的碎裂特效。
-    5. **生命条** —— 失误会消耗生命值。生命值归零时歌曲失败，出现显示统计数据的
-       游戏结束画面。Perfect 判定会回复少量生命值。
-    6. **长按音符与滑动音符** —— 有些音符需要按住按键持续其时长（带有一条拖尾）。
-       还有些音符会横跨轨道滑动，要求玩家用手指位置跟随。
-    7. **结算画面** —— 每首歌结束后显示：总得分、最大连击、准确率百分比、评级，
-       以及 Perfect/Great/Good/Miss 各判定数量的明细。刷新最高分会触发一段庆祝
-       动画。
-
-    ## 提交格式（HTML）
-
-    交付物 **两个文件**：
-
-    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
-    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
-      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
-
-    约束：
-    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
-    - 键盘输入 `WASD + 空格 + Enter + ESC`。
-    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
-    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+  spec: "# 节奏音符轨道（Rhythm Note Highway）\n\n用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个节奏音符轨道游戏。\n这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为\n纵向切片放到 itch.io 页面或 Steam 上。\n\n## 核心构想\n\n音符沿着一条多轨道的音符轨道倾泻而下，奔向屏幕底部的判定线。玩家必须在每个\n音符越过判定线的一瞬间，精准按下对应轨道的按键。准确度会积累出连击倍率来\n放大得分；失误则会中断连击，并消耗一条生命条。游戏的幻想核心是举办一场\n演唱会——在流畅的心流状态中打准每一个音符，同时背景舞台灯光会随你的准确度\n作出反应。一整套程序化定时的歌曲战役提供了数小时不断升级的挑战。\n\n## 玩家体验流程\n\n1. **标题画面** —— 一片霓虹灯照亮的舞台背景，游戏名采用粗体风格化字体，配有\n   一个战役按钮和一个自由演奏按钮。不要出现纯灰。\n2. **选曲** —— 一份可滚动的列表，至少 10 首歌曲，标有难度评级（简单/中等/\n   困难）、最佳得分和通关评级（S/A/B/C/F）。歌曲会随战役进程依次解锁。\n3. **轨道** —— 4 条轨道，颜色编码的音符宝石朝判定条落下。玩家按 D/F/J/K\n   （或方向键）来击中音符。判定窗口分为 Perfect、Great、Good、Miss——各有\n   截然不同的视觉反馈（爆裂、发光、震动）。\n4. **连击系统** —— 连续命中会让连击计数器递增。倍率（x2、x4、x8）会放大得分。\n   中断连击会重置计数器，并伴有可见的碎裂特效。\n5. **生命条** —— 失误会消耗生命值。生命值归零时歌曲失败，出现显示统计数据的\n   游戏结束画面。Perfect 判定会回复少量生命值。\n6. **长按音符与滑动音符** —— 有些音符需要按住按键持续其时长（带有一条拖尾）。\n   还有些音符会横跨轨道滑动，要求玩家用手指位置跟随。\n7. **结算画面** —— 每首歌结束后显示：总得分、最大连击、准确率百分比、评级，\n   以及 Perfect/Great/Good/Miss 各判定数量的明细。刷新最高分会触发一段庆祝\n\
+    \   动画。\n\n## Vibe Gaming Quality Bar\n\n本题的玩法、逻辑和验收锚点优先于下面的表达规范。不要重写或删减上面的核心\n机制；这些要求用于把同一玩法稳定地落成一个可玩的 Vibe Gaming 垂直切片。\n\n- **先玩后美化**：先保证开始、核心输入、状态变化、成功/失败和重玩闭环，再做视觉与动效。\n- **技术栈按玩法选最小充分方案**：\n  - 2D 规则游戏优先 `HTML5 Canvas 2D + Vanilla JS`；\n  - 面板、卡牌、对话和菜单密集时可用 `DOM + CSS + Vanilla JS`；\n  - 图标、线稿和几何动画可用 `纯 SVG + CSS 动画 + Vanilla JS`；\n  - 连续碰撞、镜头、粒子或街机物理可用 `PhaserJS`；\n  - 3D 或空间镜头可用 `Three.js + WebGL`；\n  - 只有确实需要 GPU 大规模并行或自定义 GPU 管线时才用原生 `WebGPU`；\n  - 可以混合 Canvas、DOM、CSS、SVG，但必须明确每层职责，禁止为了“技术炫技”增加无关复杂度。\n- **规则层独立**：`game_logic.js` 保存唯一真相，暴露 `createGame(opts)` 和\n  `advance(game, input, dt)`；渲染层只读取状态并呈现，不能偷偷维护第二套规则。\n- **每帧可解释**：输入要映射到明确动作，动作要产生可观察状态变化；无效输入、\n  边界条件、资源耗尽、受伤、胜利和失败都要有反馈。\n- **Vibe 不是装饰**：至少使用两种反馈通道（动画、位移、缩放、粒子、声音、\n  HUD 或镜头）表达关键动作；反馈不能遮挡目标或破坏可读性。\n- **移动端优先**：关键点击目标至少 44×44 CSS px，支持触摸和鼠标，不能依赖 hover；\n  390×844、360×800、430×932 和 1280×800 不得横向滚动或出现控件重叠。\n- **确定性与测试**：随机内容使用 seed；至少验证核心规则、胜负条件、重开/恢复、\n  输入边界和一个异常状态；不要用截图存在或文字出现冒充功能完成。\n- **原创与合规**：使用原创名称、角色、图形、音效和关卡，或明确许可的素材；\n\
+    \  不复制任何原作商标、角色、文本、美术、音乐、关卡数据或代码。\n\n完成后报告：实际文件路径、启动命令、测试命令与结果、关键截图、已知限制、\n技术栈取舍和原创资产来源。\n\n## HTML 提交格式\n\n用两个文件交付一个可独立运行的浏览器游戏：\n\n- `index.html` - 完整可玩的呈现层。使用 HTML Canvas 2D 或 Three.js/WebGL 完成可玩呈现。\n- `game_logic.js` - 确定性的状态与规则层，使用经典脚本格式并暴露\n  `createGame(opts)` 和 `advance(game, input, dt)`；可选暴露\n  `render(gameState, renderCtx)`。\n\n页面无需构建步骤或本地服务器即可打开，普通笔记本应在三秒内完成首屏渲染。\n资源必须在运行时自包含生成，不得请求网络：可以使用程序化几何体、Canvas2D\n绘制并编码为 `data:` URI 的纹理、离屏 Canvas 粒子精灵、Web Audio API 合成音效、\n着色器、后处理和 CSS。不得嵌入或运行时获取外部图片、模型、视频或音频文件。\nThree.js 可以从固定版本的官方 CDN 加载；如使用后处理，只能加载同一 Three.js\n版本下固定的 `examples/jsm/postprocessing/*` 模块。\n\n交互方案（keyboard-first）：本题材以键盘交互为主：提供方向键或 WASD、Space、Enter、Esc 等清晰按键，并在自然需要时加入鼠标。\n完整游戏区和 HUD 在 1280x720 下应清晰可读。需要有明确的开始流程、简短游戏内\n引导、暂停与重开控制、完整胜负/计分结果闭环，以及每项关键操作的可见反馈。\n\n`index.html` 不得使用 `fetch()` 或 `XMLHttpRequest` 请求外部 URL；只允许上述\n固定版本 Three.js CDN。`index.html` ≤ 400 KB；`game_logic.js` 行数限制仅作\n建议，不作为 BUILD 失败条件。\n\n### 逻辑与渲染脚手架\n\n```html\n<script src=\"./game_logic.js\"></script>\n\
+    <script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // 主循环调用 advance；render(game, { THREE, scene, ... }) 可选。\n</script>\n```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` 必须是纯函数，不访问 DOM 或 Three.js 对象；可选的 `render()` 由\n主循环调用并负责把状态映射到场景、材质、粒子和后处理。"
 static:
 - kind: required_file
   role: entry
@@ -99,5 +54,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: keyboard-first
+  start_keys:
+  - Enter
+  - Space
 language: zh
 base_task_id: mz_rhythm-note-highway

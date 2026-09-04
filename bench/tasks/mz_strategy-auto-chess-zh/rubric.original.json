@@ -116,7 +116,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: units, board, shop, UI panels, menus, results, and effects share a fantasy-arena visual language and palette. 0 if styles clash, read as default plain grey, or rely on mixed placeholders/programmatic shapes."
+      "description": "Overall art coherence: units, board, shop, UI panels, menus, results, and effects share a fantasy-arena visual language and palette. 0 if styles clash, read as default plain grey, or rely on mixed placeholders/programmatic shapes. Full credit may be earned with runtime-authored procedural textures, layered materials, deliberate multi-light rigs, particles, synthesized audio, or post-processing; external asset files are not required."
     },
     {
       "id": "A2",

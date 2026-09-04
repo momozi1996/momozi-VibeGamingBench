@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Western CRPG</title>
+  <style>
+    :root { color-scheme: dark; --accent: #f472b6; --bg: #07111f; --panel: rgba(9, 20, 35, .9); }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: #eef6ff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    body { display: grid; place-items: center; overflow: hidden; }
+    .shell { position: relative; width: min(100vw, 1100px); height: min(100vh, 760px); min-height: 520px; overflow: hidden; background: #0b1728; }
+    canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+    .hud { position: absolute; inset: 16px 16px auto; display: flex; justify-content: space-between; gap: 12px; pointer-events: none; }
+    .panel { border: 1px solid rgba(170, 210, 255, .18); background: var(--panel); box-shadow: 0 12px 35px rgba(0,0,0,.25); border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(10px); }
+    .eyebrow { color: var(--accent); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+    .title { margin-top: 3px; font-size: clamp(17px, 3vw, 24px); font-weight: 800; }
+    .stats { display: flex; gap: 16px; font-size: 13px; text-align: right; }
+    .stats strong { display: block; color: #fff; font-size: 18px; }
+    .controls { position: absolute; inset: auto 16px 16px; display: flex; justify-content: space-between; align-items: end; gap: 12px; }
+    .hint { max-width: 58ch; font-size: 13px; line-height: 1.35; color: #c1d2e9; }
+    button { min-width: 48px; min-height: 44px; border: 1px solid rgba(255,255,255,.22); border-radius: 10px; color: #fff; background: rgba(15,31,52,.94); padding: 10px 14px; font: inherit; cursor: pointer; }
+    button.primary { background: var(--accent); color: #06101d; border-color: transparent; font-weight: 800; }
+    button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .overlay { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(180deg, rgba(3,10,20,.18), rgba(3,10,20,.72)); }
+    .overlay[hidden] { display: none; }
+    .card { width: min(440px, calc(100vw - 36px)); padding: 24px; border: 1px solid rgba(255,255,255,.18); border-radius: 16px; background: rgba(5,15,28,.93); box-shadow: 0 22px 70px rgba(0,0,0,.45); }
+    .card h1 { margin: 0 0 8px; font-size: clamp(25px, 7vw, 42px); }
+    .card p { color: #c1d2e9; line-height: 1.5; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    @media (max-width: 640px) {
+      .shell { width: 100vw; height: 100vh; min-height: 0; }
+      .hud { inset: 12px 12px auto; }
+      .controls { inset: auto 12px 12px; }
+      .hint { max-width: 46vw; font-size: 12px; }
+      .stats { gap: 8px; font-size: 12px; }
+      .stats strong { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" data-family="rpg" data-task="mz_feishu-structured-004-en">
+    <canvas id="game" aria-label="Playable benchmark smoke game"></canvas>
+    <section class="hud" aria-live="polite">
+      <div class="panel"><div class="eyebrow">rpg</div><div class="title">Western CRPG</div></div>
+      <div class="panel stats">
+        <div><span>Score</span><strong id="score">0</strong></div>
+        <div><span>Goal</span><strong id="goal">5</strong></div>
+        <div><span>State</span><strong id="state">TITLE</strong></div>
+      </div>
+    </section>
+    <section class="controls">
+      <div class="panel hint" id="hint">Press Start, then use arrows/WASD or click the arena. Complete five actions to finish the smoke scenario.</div>
+      <div class="actions">
+        <button id="pauseButton" type="button">Pause</button>
+        <button id="restartButton" type="button">Restart</button>
+      </div>
+    </section>
+    <section class="overlay" id="overlay">
+      <div class="card">
+        <div class="eyebrow">VibeGamingBench self smoke</div>
+        <h1>Western CRPG</h1>
+        <p>A deterministic original micro-game used only to validate the benchmark artifact contract, browser runtime, screenshots, and score fusion.</p>
+        <div class="actions"><button class="primary" id="startButton" type="button">Start game</button></div>
+      </div>
+    </section>
+  </main>
+  <script src="./game_logic.js"></script>
+  <script>
+    (() => {
+      const canvas = document.querySelector('#game');
+      const ctx = canvas.getContext('2d');
+      const overlay = document.querySelector('#overlay');
+      const scoreNode = document.querySelector('#score');
+      const stateNode = document.querySelector('#state');
+      const hintNode = document.querySelector('#hint');
+      const game = window.GameLogic.createGame({ seed: 20260904 });
+      let last = performance.now();
+      let pointer = { x: .5, y: .5 };
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(canvas.clientWidth * dpr);
+        canvas.height = Math.floor(canvas.clientHeight * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function inputFor(action) {
+        return { action, pointer };
+      }
+      function apply(action) {
+        window.GameLogic.advance(game, inputFor(action), 1 / 60);
+      }
+      function draw(now) {
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        const gradient = ctx.createLinearGradient(0, 0, w, h);
+        gradient.addColorStop(0, '#09182a'); gradient.addColorStop(1, '#102d44');
+        ctx.fillStyle = gradient; ctx.fillRect(0, 0, w, h);
+        ctx.globalAlpha = .22; ctx.strokeStyle = '#f472b6';
+        for (let x = 0; x < w; x += 48) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+        for (let y = 0; y < h; y += 48) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+        const t = now / 1000;
+        const gx = w * (.5 + Math.sin(t * .8) * .18);
+        const gy = h * (.54 + Math.cos(t * .7) * .12);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#f472b6'; ctx.shadowColor = '#f472b6'; ctx.shadowBlur = 22;
+        ctx.beginPath(); ctx.arc(gx, gy, 18 + game.score * 2, 0, Math.PI * 2); ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#f7fbff';
+        ctx.beginPath(); ctx.arc(w * pointer.x, h * pointer.y, 9, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#f7fbff'; ctx.globalAlpha = .7;
+        ctx.beginPath(); ctx.arc(w * pointer.x, h * pointer.y, 18, 0, Math.PI * 2); ctx.stroke();
+        ctx.globalAlpha = 1;
+        scoreNode.textContent = String(game.score);
+        stateNode.textContent = String(game.phase).toUpperCase();
+        overlay.hidden = game.phase !== 'title' && game.phase !== 'win' && game.phase !== 'lose';
+        if (game.phase === 'win') hintNode.textContent = 'Smoke scenario complete. Restart to replay the deterministic loop.';
+        else if (game.phase === 'lose') hintNode.textContent = 'Scenario ended. Restart to run it again.';
+        requestAnimationFrame(draw);
+      }
+      function tick(now) {
+        const dt = Math.min(.1, (now - last) / 1000); last = now;
+        if (game.phase === 'playing') window.GameLogic.advance(game, { pointer }, dt);
+        requestAnimationFrame(tick);
+      }
+      window.addEventListener('resize', resize);
+      window.addEventListener('keydown', (event) => {
+        if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d'].includes(event.key)) {
+          event.preventDefault(); apply(event.key);
+        }
+        if (event.key === 'Enter') apply('start');
+        if (event.key === 'Escape') apply('pause');
+      });
+      canvas.addEventListener('pointermove', (event) => {
+        const rect = canvas.getBoundingClientRect();
+        pointer = { x: Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)), y: Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height)) };
+      });
+      canvas.addEventListener('pointerdown', () => apply('pointer'));
+      document.querySelector('#startButton').addEventListener('click', () => apply('start'));
+      document.querySelector('#pauseButton').addEventListener('click', () => apply('pause'));
+      document.querySelector('#restartButton').addEventListener('click', () => apply('restart'));
+      resize(); requestAnimationFrame(draw); requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>

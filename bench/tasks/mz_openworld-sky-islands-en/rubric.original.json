@@ -91,7 +91,7 @@
     {
       "id": "A1",
       "agg": "max",
-      "description": "A title screen is present and styled: it shows the game name in a themed font, has at minimum a play button that is interactive and transitions to the game world, and uses a non-default background (floating islands in a bright sky with clouds) — not plain plain grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional."
+      "description": "A title screen is present and styled: it shows the game name in a themed font, has at minimum a play button that is interactive and transitions to the game world, and uses a non-default background (floating islands in a bright sky with clouds) — not plain plain grey or a solid-colour fill. Score 0 if the game launches directly into gameplay with no title screen, or if the start button is non-functional. Full credit may be earned with runtime-authored procedural textures, layered materials, deliberate multi-light rigs, particles, synthesized audio, or post-processing; external asset files are not required."
     },
     {
       "id": "A2",

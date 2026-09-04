@@ -16,15 +16,22 @@ directory:
 ```
 
 `index.html` must contain the browser game entry point and a Canvas/WebGL
-rendering signal. `game_logic.js` must export:
+rendering signal. `game_logic.js` must expose:
 
 ```javascript
-export function createGame(opts) {}
-export function advance(game, input, dt) {}
+(function (root) {
+  function createGame(opts) {}
+  function advance(game, input, dt) {}
+  const api = { createGame, advance };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  else root.GameLogic = api;
+}(typeof window !== "undefined" ? window : globalThis));
 ```
 
 The rules layer should remain independent of DOM and rendering code so the
-public Node behavior suite can import it deterministically.
+public Node behavior suite can load it deterministically from either ESM or a
+classic script. `advance()` is pure; an optional `render(gameState, renderCtx)`
+hook may access the browser renderer when called by the main loop.
 
 ## Command Contract
 
@@ -102,14 +109,14 @@ The harness is not responsible for assigning benchmark scores. VibeGamingBench
 performs:
 
 1. Static BUILD and contract evaluation.
-2. Dynamic runtime smoke and screenshot capture.
+2. Dynamic runtime smoke and gameplay screenshot capture.
 3. Code and screenshot-grounded judge calls.
 4. Score fusion, hard caps, balanced aggregation, and confidence intervals.
 
 Dynamic evaluation is intentionally lightweight. A runtime pass means the page
 loaded, remained alive during the bounded observation window, accepted the
-generic probe when enabled, and produced a screenshot. It does not establish
-full gameplay competence.
+family-aware start/input probe when enabled, and produced boot plus gameplay
+screenshots. It does not establish full gameplay competence.
 
 ## Failure Handling
 

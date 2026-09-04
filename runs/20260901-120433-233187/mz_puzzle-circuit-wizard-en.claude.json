@@ -1,0 +1,33 @@
+{
+  "benchmark": "momozi-VibeGamingBench",
+  "version": "0.6.0",
+  "task": "mz_puzzle-circuit-wizard-en",
+  "task_path": "bench/tasks/mz_puzzle-circuit-wizard-en/mz_puzzle-circuit-wizard-en.task.yaml",
+  "base_task_id": "mz_puzzle-circuit-wizard",
+  "language": "en",
+  "title": "puzzle circuit wizard (English)",
+  "family": "puzzle",
+  "difficulty": "low",
+  "engine": "html",
+  "agent": "claude",
+  "timestamp": "20260901-120433-233187",
+  "scores": {
+    "rubric_score": 0.0,
+    "dimensions": null
+  },
+  "build_gate": {
+    "ok": false,
+    "checks": {
+      "index_html_present": false,
+      "game_logic_present": false,
+      "canvas_or_webgl": false,
+      "no_external_heavy_refs": true
+    },
+    "reasons": [
+      "index.html missing"
+    ],
+    "detail": "index.html missing"
+  },
+  "gen_ok": false,
+  "workspace": "/Users/jyxc-dz-0100378/Downloads/stepcli-water18/momozi-VibeGamingBench/workspaces/20260901-120433-233187/mz_puzzle-circuit-wizard-en/claude"
+}

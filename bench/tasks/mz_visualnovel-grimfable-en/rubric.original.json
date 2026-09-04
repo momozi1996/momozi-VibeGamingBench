@@ -121,7 +121,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall visual style is coherent and authored across title, scenes, choices, and endings: a consistent dark-storybook art direction with a deliberate palette, typography, and framing. The game should look like a published visual novel, not a debug screen of text. Strong submissions rely on real illustrated or pixel-art treatment; a scene built mainly from ColorRects, circles, silhouettes, and flat primitive shapes should be judged low even if the colors are coherent. Score 0 if the screen is dominated by default default widgets, untextured rectangles, or placeholder text."
+      "description": "Overall visual style is coherent and authored across title, scenes, choices, and endings: a consistent dark-storybook art direction with a deliberate palette, typography, and framing. The game should look like a published visual novel, not a debug screen of text. Strong submissions rely on real illustrated or pixel-art treatment; a scene built mainly from ColorRects, circles, silhouettes, and flat primitive shapes should be judged low even if the colors are coherent. Score 0 if the screen is dominated by default default widgets, untextured rectangles, or placeholder text. Full credit may be earned with runtime-authored procedural textures, layered materials, deliberate multi-light rigs, particles, synthesized audio, or post-processing; external asset files are not required."
     },
     {
       "id": "A2",

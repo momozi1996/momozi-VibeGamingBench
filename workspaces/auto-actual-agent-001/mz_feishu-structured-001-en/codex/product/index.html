@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Gloomvault: Retro Turn RPG</title>
+<style>
+  html, body { height:100%; margin:0; background:#0e0f12; color:#e8e5da; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+  .wrap { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:8px; padding:8px; }
+  .topbar { width:100%; max-width:1280px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; }
+  .hud { font-size:14px; line-height:1.2; display:flex; gap:10px; flex-wrap:wrap; }
+  .hud .bar { width:160px; height:14px; border:2px solid #3a3a44; position:relative; }
+  .hud .bar .fill { position:absolute; left:0; top:0; bottom:0; background:#6b9c6b; }
+  .hud .bar.mp .fill { background:#6b7b9c; }
+  .hud .pill { padding:4px 8px; background:#1b1d24; border:1px solid #3a3a44; border-radius:6px; }
+  #canvas { image-rendering: pixelated; background:#0b0c10; border:2px solid #3a3a44; width: min(96vw, 960px); height: calc(min(96vw,960px) * 9/16); max-height: 80vh; }
+  .buttons { display:flex; gap:8px; flex-wrap:wrap; }
+  .btn { min-width: 120px; min-height:44px; padding:8px 12px; background:#1b1d24; color:#e8e5da; border:1px solid #3a3a44; border-radius:8px; cursor:pointer; }
+  .btn:active { transform:translateY(1px); }
+  .title { text-align:center; margin-top:8px; }
+  .note { opacity:0.8; font-size:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="hud">
+      <div class="pill" id="hudPhase">phase</div>
+      <div class="pill" id="hudObj">Objective</div>
+      <div class="pill" id="hudFloor">F1</div>
+      <div class="pill" id="hudScore">Score 0</div>
+      <div class="bar" title="HP"><div class="fill" id="hpFill" style="width:0%"></div></div>
+      <div class="bar mp" title="MP"><div class="fill" id="mpFill" style="width:0%"></div></div>
+      <div class="pill" id="hudLVL">LVL 1</div>
+      <div class="pill" id="hudInv">Inv</div>
+    </div>
+    <div class="buttons">
+      <button class="btn" id="btnStart">Start</button>
+      <button class="btn" id="btnLoad">Load</button>
+      <button class="btn" id="btnSave">Save</button>
+      <button class="btn" id="btnPause">Pause</button>
+      <button class="btn" id="btnMute">Audio</button>
+    </div>
+  </div>
+  <canvas id="canvas" width="960" height="540"></canvas>
+  <div class="title">
+    <div><strong>Gloomvault</strong> — a 16-bit style turn-based dungeon RPG</div>
+    <div class="note">Keyboard: Arrows/WASD move, Space interact, I inventory, Esc pause. In battle: 1 Attack, 2 Fire, 3 Shield, 4 Item, 5 Run. Click big on-canvas buttons/tile to interact.</div>
+  </div>
+</div>
+<script src="game_logic.js"></script>
+<script>
+(function(){
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+  var ui = { hpFill: document.getElementById('hpFill'), mpFill: document.getElementById('mpFill'),
+             hudPhase: document.getElementById('hudPhase'), hudObj: document.getElementById('hudObj'), hudFloor: document.getElementById('hudFloor'),
+             hudScore: document.getElementById('hudScore'), hudLVL: document.getElementById('hudLVL'), hudInv: document.getElementById('hudInv'),
+             btnStart: document.getElementById('btnStart'), btnLoad: document.getElementById('btnLoad'), btnSave: document.getElementById('btnSave'), btnPause: document.getElementById('btnPause'), btnMute: document.getElementById('btnMute') };
+
+  var sKey = 'retro_rpg_save_v1';
+  var game = GameLogic.createGame({seed: 123456789});
+  var last = performance.now();
+  var muted = true; var audioCtx = null; var masterGain = null;
+
+  function ensureAudio(){ if(audioCtx) return; audioCtx = new (window.AudioContext||window.webkitAudioContext)(); masterGain = audioCtx.createGain(); masterGain.gain.value = 0.2; masterGain.connect(audioCtx.destination); }
+  function sfx(type){ if(muted||!audioCtx) return; var t=audioCtx.currentTime; var o=audioCtx.createOscillator(); var g=audioCtx.createGain(); o.connect(g); g.connect(masterGain); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.3,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+0.12);
+    o.type= (type==='hit'?'square': type==='heal'?'sine': type==='menu'?'triangle':'sawtooth'); var f=(type==='hit'?220: type==='heal'?330: type==='menu'?440:500); o.frequency.setValueAtTime(f,t); o.start(t); o.stop(t+0.15); }
+  function noise(type){ if(muted||!audioCtx) return; var buffer = audioCtx.createBuffer(1, audioCtx.sampleRate*0.12, audioCtx.sampleRate); var data = buffer.getChannelData(0); for(var i=0;i<data.length;i++){ data[i]=(Math.random()*2-1)* (type==='crit'?0.6:0.3); } var src=audioCtx.createBufferSource(); src.buffer=buffer; var g=audioCtx.createGain(); g.gain.value=0.2; src.connect(g); g.connect(masterGain); src.start(); }
+
+  function save(){ try{ var snap = JSON.stringify(game); localStorage.setItem(sKey, snap); ui.hudObj.textContent='Saved'; }catch(e){ console.warn(e);} }
+  function load(){ try{ var snap=localStorage.getItem(sKey); if(snap){ var obj=JSON.parse(snap); game = GameLogic.createGame({seed: obj.seed, snapshot: obj}); ui.hudObj.textContent='Loaded'; } }catch(e){ console.warn(e);} }
+
+  ui.btnStart.addEventListener('click', function(){ ensureAudio(); muted=false; var seed=Math.floor(Math.random()*0xFFFFFFFF); game = GameLogic.createGame({seed:seed}); game = GameLogic.advance(game,{type:'start'},0); sfx('menu'); });
+  ui.btnLoad.addEventListener('click', function(){ ensureAudio(); muted=false; load(); sfx('menu'); });
+  ui.btnSave.addEventListener('click', function(){ save(); sfx('menu'); });
+  ui.btnPause.addEventListener('click', function(){ game = GameLogic.advance(game,{type:'pause'},0); sfx('menu'); });
+  ui.btnMute.addEventListener('click', function(){ ensureAudio(); muted=!muted; ui.btnMute.textContent = muted? 'Audio Off':'Audio On'; if(!audioCtx) ensureAudio(); sfx('menu'); });
+
+  var keys={};
+  window.addEventListener('keydown', function(e){ keys[e.key]=true; if(e.key===' '||e.key==='Spacebar'){ e.preventDefault(); } });
+  window.addEventListener('keyup', function(e){ keys[e.key]=false; });
+
+  canvas.addEventListener('click', function(e){ var rect=canvas.getBoundingClientRect(); var mx=(e.clientX-rect.left)*(canvas.width/rect.width); var my=(e.clientY-rect.top)*(canvas.height/rect.height); handleClick(mx,my); });
+  function handleClick(mx,my){
+    // In battle: clickable action buttons on right
+    if(game.phase==='battle'){
+      var btns = battleButtonsLayout();
+      for(var i=0;i<btns.length;i++){ var b=btns[i]; if(mx>=b.x&&my>=b.y&&mx<b.x+b.w&&my<b.y+b.h){ triggerBattleButton(i); return; }}
+    } else {
+      // in-map click: translate to tile and attempt move towards that tile by one step
+      var tile = screenToTile(mx,my); if(tile){ var p=game.playerPos||{x:0,y:0}; var dx = Math.sign(tile.x - p.x); var dy = Math.sign(tile.y - p.y); if(Math.abs(dx)+Math.abs(dy)===2){ dy=0; } game = GameLogic.advance(game,{type:'move', dir: dx>0?'right': dx<0?'left': dy<0?'up': dy>0?'down':'none'}, 0); }
+    }
+  }
+
+  function triggerBattleButton(i){ ensureAudio(); if(i===0){ sfx('hit'); game = GameLogic.advance(game,{ battleAction:{type:'attack', targetIndex:0} }, 0); }
+    else if(i===1){ sfx('hit'); game = GameLogic.advance(game,{ battleAction:{type:'skill', id:'fire', targetIndex:0} }, 0); noise('crit'); }
+    else if(i===2){ sfx('menu'); game = GameLogic.advance(game,{ battleAction:{type:'skill', id:'shield'} }, 0); }
+    else if(i===3){ sfx('heal'); game = GameLogic.advance(game,{ battleAction:{type:'item', id:'potion'} }, 0); }
+    else if(i===4){ sfx('menu'); game = GameLogic.advance(game,{ battleAction:{type:'item', id:'ether'} }, 0); }
+    else if(i===5){ sfx('menu'); game = GameLogic.advance(game,{ battleAction:{type:'run'} }, 0); }
+  }
+
+  function screenToTile(mx,my){ var m=getMap(); if(!m) return null; var tileSize = Math.floor(Math.min(W, H)/24); var offX=(W - m.w*tileSize)>>1; var offY=(H - m.h*tileSize)>>1; var x=Math.floor((mx-offX)/tileSize); var y=Math.floor((my-offY)/tileSize); if(x>=0&&y>=0&&x<m.w&&y<m.h) return {x:x,y:y}; return null; }
+
+  function getMap(){ try { return GameLogic && game && game.world ? game.world.maps['f'+game.world.floor] || null : null; } catch(e){ return null; } }
+
+  function update(dt){
+    // keyboard controls
+    if(game.phase==='title'){
+      if(keys['Enter']){ ensureAudio(); muted=false; game = GameLogic.advance(game,{type:'start'}, 0); sfx('menu'); keys['Enter']=false; }
+      if(keys['l']||keys['L']){ ensureAudio(); muted=false; load(); keys['l']=keys['L']=false; }
+    } else if(game.phase==='onboarding'){
+      if(keys['Enter']||keys[' ']){ game = GameLogic.advance(game,{type:'confirm'},0); sfx('menu'); keys['Enter']=keys[' ']=false; }
+    } else if(game.phase==='playing'){
+      if(keys['Escape']){ game = GameLogic.advance(game,{type:'pause'},0); sfx('menu'); keys['Escape']=false; }
+      var moved=false;
+      if(keys['ArrowUp']||keys['w']||keys['W']){ game = GameLogic.advance(game,{type:'move', dir:'up'},0); moved=true; keys['ArrowUp']=keys['w']=keys['W']=false; }
+      else if(keys['ArrowDown']||keys['s']||keys['S']){ game = GameLogic.advance(game,{type:'move', dir:'down'},0); moved=true; keys['ArrowDown']=keys['s']=keys['S']=false; }
+      else if(keys['ArrowLeft']||keys['a']||keys['A']){ game = GameLogic.advance(game,{type:'move', dir:'left'},0); moved=true; keys['ArrowLeft']=keys['a']=keys['A']=false; }
+      else if(keys['ArrowRight']||keys['d']||keys['D']){ game = GameLogic.advance(game,{type:'move', dir:'right'},0); moved=true; keys['ArrowRight']=keys['d']=keys['D']=false; }
+      if(moved){ ensureAudio(); sfx('menu'); }
+      if(keys[' ']||keys['Enter']){ game = GameLogic.advance(game,{type:'interact'},0); sfx('menu'); keys[' ']=keys['Enter']=false; }
+    } else if(game.phase==='pause'){
+      if(keys['Escape']){ game = GameLogic.advance(game,{type:'resume'},0); sfx('menu'); keys['Escape']=false; }
+    } else if(game.phase==='battle'){
+      if(keys['1']){ triggerBattleButton(0); keys['1']=false; }
+      if(keys['2']){ triggerBattleButton(1); keys['2']=false; }
+      if(keys['3']){ triggerBattleButton(2); keys['3']=false; }
+      if(keys['4']){ triggerBattleButton(3); keys['4']=false; }
+      if(keys['5']){ triggerBattleButton(5); keys['5']=false; }
+    }
+
+    game = GameLogic.advance(game, null, dt);
+  }
+
+  function draw(){
+    ctx.fillStyle = '#0b0c10'; ctx.fillRect(0,0,W,H);
+    ctx.save();
+    if(game.phase==='title') drawTitle();
+    else if(game.phase==='onboarding') drawOnboarding();
+    else if(game.phase==='playing') drawMap();
+    else if(game.phase==='pause') drawPause();
+    else if(game.phase==='battle') { drawMap(true); drawBattle(); }
+    else if(game.phase==='victory') drawVictory();
+    else if(game.phase==='defeat') drawDefeat();
+    ctx.restore();
+
+    // HUD update
+    ui.hudPhase.textContent = game.phase;
+    ui.hudFloor.textContent = 'F'+game.world.floor;
+    ui.hudScore.textContent = 'Score '+(game.score||0);
+    ui.hudLVL.textContent = 'LVL '+game.player.lvl;
+    ui.hudInv.textContent = 'Inv '+game.player.inventory.map(function(i){return i.name+'x'+i.qty;}).join(', ');
+    ui.hudObj.textContent = game.world.message || (game.world.atStairs? 'Interact to descend': 'Explore');
+    var hpPct = Math.max(0, Math.min(1, game.player.hp / game.player.maxHp));
+    var mpPct = Math.max(0, Math.min(1, game.player.mp / game.player.maxMp));
+    ui.hpFill.style.width = (hpPct*100).toFixed(1)+'%';
+    ui.mpFill.style.width = (mpPct*100).toFixed(1)+'%';
+  }
+
+  function palette(){ return ['#0b0c10','#1b1d24','#2d2f3a','#3a3a44','#4f5361','#6b7b9c','#6b9c6b','#b0b394','#e8e5da','#a05555','#5580a0','#a08a55']; }
+  function drawTitle(){ var p=palette(); ctx.fillStyle=p[2]; ctx.fillRect(0,0,W,H); ctx.fillStyle=p[6]; ctx.fillRect(0,H*0.5-80,W,160); ctx.fillStyle=p[8]; ctx.font='32px monospace'; ctx.textAlign='center'; ctx.fillText('GLOOMVAULT', W/2, H/2-40); ctx.font='16px monospace'; ctx.fillText('Press Enter or Start', W/2, H/2+0); ctx.fillText('Load with L or button', W/2, H/2+24); }
+  function drawOnboarding(){ var p=palette(); ctx.fillStyle=p[1]; ctx.fillRect(0,0,W,H); ctx.fillStyle=p[8]; ctx.font='18px monospace'; ctx.textAlign='center'; var t='Learn the basics: Move with arrows, interact with Space. Descend to F3 and defeat the Warden.'; wrapText(t, W/2, H/2-20, 600); ctx.fillText('Press Enter to begin', W/2, H/2+80); }
+  function wrapText(text, x, y, width){ var words=text.split(' '), line='', lh=18; for(var n=0;n<words.length;n++){ var test=line+words[n]+' '; var m=ctx.measureText(test); if(m.width>width && n>0){ ctx.fillText(line,x,y); line=words[n]+' '; y+=lh; } else { line=test; } } ctx.fillText(line,x,y); }
+
+  function drawPause(){ var p=palette(); ctx.fillStyle=p[1]; ctx.fillRect(0,0,W,H); ctx.fillStyle=p[8]; ctx.textAlign='center'; ctx.font='24px monospace'; ctx.fillText('Paused', W/2, H/2-20); ctx.font='16px monospace'; ctx.fillText('Press Esc to resume. Use Save in topbar.', W/2, H/2+10); }
+  function drawVictory(){ var p=palette(); ctx.fillStyle=p[6]; ctx.fillRect(0,0,W,H); ctx.fillStyle=p[8]; ctx.textAlign='center'; ctx.font='28px monospace'; ctx.fillText('Victory!', W/2, H/2-40); ctx.font='16px monospace'; ctx.fillText('Score '+(game.score||0), W/2, H/2); ctx.fillText('Refresh to restart', W/2, H/2+24); }
+  function drawDefeat(){ var p=palette(); ctx.fillStyle=p[9]; ctx.fillRect(0,0,W,H); ctx.fillStyle=p[8]; ctx.textAlign='center'; ctx.font='28px monospace'; ctx.fillText('Defeat', W/2, H/2-40); ctx.font='16px monospace'; ctx.fillText('Score '+(game.score||0), W/2, H/2); ctx.fillText('Refresh to try again', W/2, H/2+24); }
+
+  function drawMap(dim){ var m=getMap(); if(!m){ ctx.fillStyle='#222'; ctx.fillRect(0,0,W,H); return; } var t = Math.floor(Math.min(W, H)/24); var offX=(W - m.w*t)>>1; var offY=(H - m.h*t)>>1; var p=palette();
+    for(var y=0;y<m.h;y++){
+      for(var x=0;x<m.w;x++){
+        var tile = m.tiles[y][x];
+        if(tile===0){ ctx.fillStyle='#171821'; ctx.fillRect(offX+x*t, offY+y*t, t, t); ctx.fillStyle='#12131a'; ctx.fillRect(offX+x*t+2, offY+y*t+2, t-4, t-4); }
+        if(tile===1){ ctx.fillStyle='#2d2f3a'; ctx.fillRect(offX+x*t, offY+y*t, t, t); if(((x+y)&1)===0){ ctx.fillStyle='#262833'; ctx.fillRect(offX+x*t+1, offY+y*t+1, t-2, t-2); } }
+        if(tile===2){ ctx.fillStyle='#6b7b9c'; ctx.fillRect(offX+x*t, offY+y*t, t, t); ctx.fillStyle='#e8e5da'; ctx.fillRect(offX+x*t+4, offY+y*t+4, t-8, t-8); }
+        if(tile===3){ ctx.fillStyle='#6b9c6b'; ctx.fillRect(offX+x*t, offY+y*t, t, t); ctx.fillStyle='#b0b394'; ctx.fillRect(offX+x*t+4, offY+y*t+4, t-8, t-8); }
+        if(tile===4){ ctx.fillStyle='#a08a55'; ctx.fillRect(offX+x*t, offY+y*t, t, t); ctx.fillStyle='#e8e5da'; ctx.fillRect(offX+x*t+6, offY+y*t+6, t-12, t-12); }
+      }
+    }
+    // player
+    var px = game.playerPos? game.playerPos.x: m.spawn.x; var py = game.playerPos? game.playerPos.y: m.spawn.y; ctx.fillStyle='#e8e5da'; ctx.fillRect(offX+px*t+4, offY+py*t+4, t-8, t-8);
+    // floating texts
+    for(var i=0;i<game.floating.length;i++){ var f=game.floating[i]; var alpha=Math.max(0,1-f.t); ctx.globalAlpha=alpha; ctx.fillStyle=(f.kind==='dmg'?'#a05555': f.kind==='heal'?'#6b9c6b': f.kind==='crit'?'#e8e5da': f.kind==='debuff'?'#a05555':'#b0b394'); ctx.font='14px monospace'; ctx.fillText(f.text, offX+px*t + 0, offY+py*t - f.t*20); ctx.globalAlpha=1; }
+  }
+
+  function battleButtonsLayout(){ var w=220, h=44; var x=W- w - 20; var y= H*0.25; var arr=[]; var labs=['Attack','Fire','Shield','Potion','Ether','Run']; for(var i=0;i<labs.length;i++){ arr.push({x:x,y:y+i*(h+8),w:w,h:h,label:labs[i]}); } return arr; }
+  function drawBattle(){ var p=palette(); ctx.fillStyle='rgba(0,0,0,0.4)'; ctx.fillRect(0,0,W,H);
+    // Enemy card display
+    if(game.battle){ var e = game.battle.enemies[0]; ctx.fillStyle=p[1]; ctx.fillRect(40,40,240,120); ctx.strokeStyle=p[3]; ctx.strokeRect(40,40,240,120); ctx.fillStyle=p[8]; ctx.font='16px monospace'; ctx.fillText(e.name, 52, 64); ctx.fillText('HP '+e.hp+'/'+e.maxHp, 52, 88); }
+    // Action buttons
+    var btns=battleButtonsLayout(); ctx.font='16px monospace';
+    for(var i=0;i<btns.length;i++){ var b=btns[i]; ctx.fillStyle=p[1]; ctx.fillRect(b.x,b.y,b.w,b.h); ctx.strokeStyle=p[3]; ctx.strokeRect(b.x,b.y,b.w,b.h); ctx.fillStyle=p[8]; ctx.fillText((i+1)+' '+b.label, b.x+10, b.y+28); }
+  }
+
+  function loop(t){ var dt=(t-last)/1000; last=t; update(dt); draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

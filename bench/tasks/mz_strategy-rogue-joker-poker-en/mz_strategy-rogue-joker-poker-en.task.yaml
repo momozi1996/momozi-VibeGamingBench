@@ -7,78 +7,15 @@ provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # Rogue Joker Poker
-
-    Build **Rogue Joker Poker**, a compact **poker-hand roguelite score-chaser** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). The player builds a scoring engine from poker
-    hands, strange jokers, and shop upgrades to beat escalating blind targets in a
-    single high-stakes run.
-
-    This is not a prototype. It is a **complete, shippable micro-game** that could
-    sit on an itch.io page or Steam as a polished vertical slice.
-
-    ## Core Vision
-
-    The player sits at a surreal felt table trying to beat a rising sequence of
-    score targets using nothing but poker hands and a growing roster of bizarre
-    jokers. Every round is a readable tactical choice: which cards to hold, which
-    to discard, when to spend a hand versus fishing for a better combination, and
-    how the current joker lineup warps the value of a flush, straight, pair, or
-    high-card play. The pressure comes from limited hands and discards per round,
-    escalating blind targets, and boss rules that twist the scoring math. The tone
-    is **sleek, strange, casino-arcade, and score-hungry**: felt tables, neon chips,
-    animated cards, odd joker portraits, compact tooltips, and clear score math
-    should make the game feel designed rather than assembled from default controls.
-
-    Do not clone a named commercial game's exact UI, art, copy, card names, or
-    iconography. Use original terminology, jokers, rules, palette, and screen
-    composition while preserving the broad genre fantasy of poker scoring plus
-    roguelite modifiers.
-
-    ## What the Player Experiences
-
-    The run opens on a styled title screen that sets the casino-arcade mood and
-    invites the player to begin. Once started, the player faces a sequence of
-    blinds with rising score targets. Each round deals a hand of cards showing
-    rank, suit, and selection state. The player studies the hand, selects cards to
-    form a poker combination, and either plays them to score or discards unwanted
-    cards to draw replacements, burning limited resources either way.
-
-    When a hand is played, the scoring moment unfolds visibly: the poker hand type
-    is identified, base chips and multiplier are calculated, and then each active
-    joker fires in sequence, visibly altering the math. The score animates toward
-    the blind target. The player watches the joker row like a machine, learning
-    which combinations trigger which bonuses.
-
-    Between blinds, a shop offers new jokers, deck modifications, and upgrades.
-    Purchases reshape the scoring engine for future rounds. The run escalates
-    through small blinds, big blinds, and boss blinds. Boss rounds introduce
-    special rules that force the player to rethink hand evaluation: a disabled
-    suit, a discard tax, a hand-size cap, or a reversed joker.
-
-    Victory means beating the final target. Defeat means running out of hands
-    below a blind. Either way, a styled result screen offers retry or return to
-    title.
-
-    ## HTML Submission Format
-
-    You must deliver **two files**:
-
-    - `index.html` — one self-contained page, uses `three.js` from CDN
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      opens by double-clicking in any modern browser. **No build step, no `npm install`,
-      no Python server.** It must render within 3 seconds on a normal laptop.
-    - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
-      imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
-
-    Constraints:
-    - All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
-    - Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
-    - `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
-    - Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
-
-    Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
-    CLI invocation, no download, no runtime dependency.
+  spec: "# Rogue Joker Poker\n\nBuild **Rogue Joker Poker**, a compact **poker-hand roguelite score-chaser** as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`). The player builds a scoring engine from poker\nhands, strange jokers, and shop upgrades to beat escalating blind targets in a\nsingle high-stakes run.\n\nThis is not a prototype. It is a **complete, shippable micro-game** that could\nsit on an itch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nThe player sits at a surreal felt table trying to beat a rising sequence of\nscore targets using nothing but poker hands and a growing roster of bizarre\njokers. Every round is a readable tactical choice: which cards to hold, which\nto discard, when to spend a hand versus fishing for a better combination, and\nhow the current joker lineup warps the value of a flush, straight, pair, or\nhigh-card play. The pressure comes from limited hands and discards per round,\nescalating blind\
+    \ targets, and boss rules that twist the scoring math. The tone\nis **sleek, strange, casino-arcade, and score-hungry**: felt tables, neon chips,\nanimated cards, odd joker portraits, compact tooltips, and clear score math\nshould make the game feel designed rather than assembled from default controls.\n\nDo not clone a named commercial game's exact UI, art, copy, card names, or\niconography. Use original terminology, jokers, rules, palette, and screen\ncomposition while preserving the broad genre fantasy of poker scoring plus\nroguelite modifiers.\n\n## What the Player Experiences\n\nThe run opens on a styled title screen that sets the casino-arcade mood and\ninvites the player to begin. Once started, the player faces a sequence of\nblinds with rising score targets. Each round deals a hand of cards showing\nrank, suit, and selection state. The player studies the hand, selects cards to\nform a poker combination, and either plays them to score or discards unwanted\ncards to draw replacements,\
+    \ burning limited resources either way.\n\nWhen a hand is played, the scoring moment unfolds visibly: the poker hand type\nis identified, base chips and multiplier are calculated, and then each active\njoker fires in sequence, visibly altering the math. The score animates toward\nthe blind target. The player watches the joker row like a machine, learning\nwhich combinations trigger which bonuses.\n\nBetween blinds, a shop offers new jokers, deck modifications, and upgrades.\nPurchases reshape the scoring engine for future rounds. The run escalates\nthrough small blinds, big blinds, and boss blinds. Boss rounds introduce\nspecial rules that force the player to rethink hand evaluation: a disabled\nsuit, a discard tax, a hand-size cap, or a reversed joker.\n\nVictory means beating the final target. Defeat means running out of hands\nbelow a blind. Either way, a styled result screen offers retry or return to\ntitle.\n\n## Vibe Gaming Quality Bar\n\nThe gameplay, logic, and acceptance anchors\
+    \ above take priority over this\npresentation contract. Do not rewrite or remove the core mechanics above; use\nthese rules to turn the same brief into a playable Vibe Gaming vertical slice.\n\n- **Play first, polish second:** establish start, core input, state changes,\n  success/failure, and replay before adding visual polish or effects.\n- **Choose the smallest sufficient stack**:\n  - `HTML5 Canvas 2D + Vanilla JS` for 2D rule-driven games;\n  - `DOM + CSS + Vanilla JS` for card, dialogue, menu, and information-heavy games;\n  - `pure SVG + CSS animation + Vanilla JS` for icons, diagrams, and geometric motion;\n  - `PhaserJS` for continuous collision, cameras, particles, or arcade physics;\n  - `Three.js + WebGL` for 3D or spatial camera experiences;\n  - native `WebGPU` only when large-scale GPU parallelism or a custom GPU pipeline is genuinely required;\n  - Canvas, DOM, CSS, and SVG may be mixed when each layer has a clear responsibility.\n    Do not add complexity for technology\
+    \ spectacle.\n- **Keep rules independent:** `game_logic.js` is the single source of truth and\n  exposes `createGame(opts)` and `advance(game, input, dt)`. Rendering reads state;\n  it must not maintain a second hidden rules system.\n- **Make every frame explainable:** inputs map to explicit actions, actions\n  produce observable state changes, and invalid input, edge cases, resource\n  depletion, damage, victory, and failure are visible.\n- **Vibe is not decoration:** use at least two feedback channels (animation,\n  motion, scale, particles, audio, HUD, or camera) for important actions without\n  obscuring the goal or reducing readability.\n- **Mobile first:** pointer targets are at least 44×44 CSS px, touch and mouse\n  both work, hover is never required, and 390×844, 360×800, 430×932, and\n  1280×800 have no horizontal scrolling or overlapping controls.\n- **Determinism and tests:** seed random content; verify the core rule, outcome\n  conditions, restart/restoration, input boundaries,\
+    \ and at least one error state.\n  Do not treat a screenshot or visible label as proof of functionality.\n- **Originality and compliance:** use original names, characters, graphics,\n  audio, and levels, or explicitly licensed assets. Do not copy trademarks,\n  characters, text, artwork, music, level data, or source code.\n\nFinish by reporting actual file paths, launch and test commands/results, key\nscreenshots, known limitations, stack tradeoffs, and original-asset provenance.\n\n## HTML Submission Format\n\nDeliver a self-contained browser game in two files:\n\n- `index.html` - the complete playable presentation. Use HTML Canvas 2D or Three.js/WebGL for the playable presentation.\n- `game_logic.js` - the deterministic state and rules layer. Use a classic script\n  and expose `createGame(opts)` and `advance(game, input, dt)`; an optional\n  `render(gameState, renderCtx)` hook may be exposed.\n\nThe page must open without a build step or local server and render within three\nseconds\
+    \ on a normal laptop. Assets must be generated at runtime with no network\nrequests: procedural geometry, Canvas2D-drawn textures encoded as `data:` URIs,\noffscreen-canvas particle sprites, Web Audio API synthesized sound, shaders,\npost-processing, and CSS are all allowed and encouraged. Do not embed or fetch\nexternal image, model, video, or audio files at runtime. Three.js may be loaded\nfrom its pinned official CDN; if post-processing is used, pin the matching\n`examples/jsm/postprocessing/*` modules to the same Three.js version.\n\nInteraction scheme (pointer-first): Use click, hover, drag, or selection as the primary controls; add keyboard shortcuts only where they are natural.\nKeep the complete play area and HUD readable at 1280x720. Include a clear start\nflow, concise in-game guidance, pause and restart controls, a complete win/loss\nor scored outcome loop, and visible feedback for every important action.\n\n`index.html` must not use `fetch()` or `XMLHttpRequest` for external\
+    \ URLs; only\nthe pinned Three.js CDN above is allowed. Keep `index.html` at or below 400 KB.\nThe `game_logic.js` line count is advisory and is not a BUILD-gate failure.\n\n### Logic and rendering scaffold\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // The loop calls advance; render(game, { THREE, scene, ... }) is optional.\n</script>\n```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` must be pure and must not access DOM or Three.js objects. The optional\n\
+    `render()` hook is called by the main loop and may map state to scenes, materials,\nparticles, and post-processing."
 static:
 - kind: required_file
   role: entry
@@ -127,5 +64,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: pointer-first
+  start_keys:
+  - Enter
+  - Space
 language: en
 base_task_id: mz_strategy-rogue-joker-poker

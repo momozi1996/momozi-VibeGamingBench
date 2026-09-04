@@ -7,66 +7,14 @@ provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # Open-World Necromancer
-
-    Build an **Open-World Necromancer** game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
-    This is not a prototype. It is a **complete, shippable micro-game** that could
-    sit on an itch.io page or Steam as a polished vertical slice.
-
-    ## Core Vision
-
-    The player is a necromancer wandering a dark fantasy world, raising the dead from
-    fallen enemies to build an ever-growing undead army. The fantasy is forbidden
-    power: every battlefield becomes a recruitment ground, every graveyard a goldmine.
-    Tension comes from hero NPCs who hunt you — paladins, witch-hunters, and
-    adventuring parties that grow stronger as your infamy rises. You must conquer
-    territory, fortify positions with undead garrisons, and choose which minions to
-    raise based on the corpses available.
-
-    ## What the Player Experiences
-
-    1. **Title Screen** — A dark, atmospheric title with the game name in gothic
-       lettering over a misty graveyard scene. A play button pulses with eerie light.
-    2. **The World** — The player moves freely across a dark open world with villages,
-       graveyards, forests, and ruined keeps. Each area has different enemy types and
-       corpse quality.
-    3. **Combat** — Enemies (guards, militia, wildlife) attack on sight. The player
-       has a dark magic attack and commands their undead minions to fight. Combat is
-       real-time with simple click-to-attack and ability hotkeys.
-    4. **Raising the Dead** — After enemies fall, their corpses remain on the ground.
-       The player channels a raise spell on corpses to add them to their army. Different
-       corpse types yield different undead: skeleton warriors, zombie brutes, spectral
-       archers.
-    5. **Army Management** — A minion panel shows the current army composition, health,
-       and count. The player can dismiss weak undead to make room for stronger ones.
-       Army size is capped by the player's necromantic power level.
-    6. **Territory Conquest** — Capturing a village or keep turns it into a dark
-       stronghold. Garrisoned undead defend it. Conquered territory generates soul
-       energy over time.
-    7. **Hero Hunters** — As infamy grows, hero NPCs spawn and hunt the player. They
-       are powerful, have unique abilities, and require strategy to defeat. Defeating
-       them yields elite corpses.
-
-    ## HTML Submission Format
-
-    You must deliver **two files**:
-
-    - `index.html` — one self-contained page, uses `three.js` from CDN
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      opens by double-clicking in any modern browser. **No build step, no `npm install`,
-      no Python server.** It must render within 3 seconds on a normal laptop.
-    - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
-      imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
-
-    Constraints:
-    - All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
-    - Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
-    - `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
-    - Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
-
-    Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
-    CLI invocation, no download, no runtime dependency.
+  spec: "# Open-World Necromancer\n\nBuild an **Open-World Necromancer** game as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).\nThis is not a prototype. It is a **complete, shippable micro-game** that could\nsit on an itch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nThe player is a necromancer wandering a dark fantasy world, raising the dead from\nfallen enemies to build an ever-growing undead army. The fantasy is forbidden\npower: every battlefield becomes a recruitment ground, every graveyard a goldmine.\nTension comes from hero NPCs who hunt you — paladins, witch-hunters, and\nadventuring parties that grow stronger as your infamy rises. You must conquer\nterritory, fortify positions with undead garrisons, and choose which minions to\nraise based on the corpses available.\n\n## What the Player Experiences\n\n1. **Title Screen** — A dark, atmospheric title with the game name in gothic\n   lettering over a misty graveyard\
+    \ scene. A play button pulses with eerie light.\n2. **The World** — The player moves freely across a dark open world with villages,\n   graveyards, forests, and ruined keeps. Each area has different enemy types and\n   corpse quality.\n3. **Combat** — Enemies (guards, militia, wildlife) attack on sight. The player\n   has a dark magic attack and commands their undead minions to fight. Combat is\n   real-time with simple click-to-attack and ability hotkeys.\n4. **Raising the Dead** — After enemies fall, their corpses remain on the ground.\n   The player channels a raise spell on corpses to add them to their army. Different\n   corpse types yield different undead: skeleton warriors, zombie brutes, spectral\n   archers.\n5. **Army Management** — A minion panel shows the current army composition, health,\n   and count. The player can dismiss weak undead to make room for stronger ones.\n   Army size is capped by the player's necromantic power level.\n6. **Territory Conquest** — Capturing\
+    \ a village or keep turns it into a dark\n   stronghold. Garrisoned undead defend it. Conquered territory generates soul\n   energy over time.\n7. **Hero Hunters** — As infamy grows, hero NPCs spawn and hunt the player. They\n   are powerful, have unique abilities, and require strategy to defeat. Defeating\n   them yields elite corpses.\n\n## Vibe Gaming Quality Bar\n\nThe gameplay, logic, and acceptance anchors above take priority over this\npresentation contract. Do not rewrite or remove the core mechanics above; use\nthese rules to turn the same brief into a playable Vibe Gaming vertical slice.\n\n- **Play first, polish second:** establish start, core input, state changes,\n  success/failure, and replay before adding visual polish or effects.\n- **Choose the smallest sufficient stack**:\n  - `HTML5 Canvas 2D + Vanilla JS` for 2D rule-driven games;\n  - `DOM + CSS + Vanilla JS` for card, dialogue, menu, and information-heavy games;\n  - `pure SVG + CSS animation + Vanilla JS` for icons,\
+    \ diagrams, and geometric motion;\n  - `PhaserJS` for continuous collision, cameras, particles, or arcade physics;\n  - `Three.js + WebGL` for 3D or spatial camera experiences;\n  - native `WebGPU` only when large-scale GPU parallelism or a custom GPU pipeline is genuinely required;\n  - Canvas, DOM, CSS, and SVG may be mixed when each layer has a clear responsibility.\n    Do not add complexity for technology spectacle.\n- **Keep rules independent:** `game_logic.js` is the single source of truth and\n  exposes `createGame(opts)` and `advance(game, input, dt)`. Rendering reads state;\n  it must not maintain a second hidden rules system.\n- **Make every frame explainable:** inputs map to explicit actions, actions\n  produce observable state changes, and invalid input, edge cases, resource\n  depletion, damage, victory, and failure are visible.\n- **Vibe is not decoration:** use at least two feedback channels (animation,\n  motion, scale, particles, audio, HUD, or camera) for important\
+    \ actions without\n  obscuring the goal or reducing readability.\n- **Mobile first:** pointer targets are at least 44×44 CSS px, touch and mouse\n  both work, hover is never required, and 390×844, 360×800, 430×932, and\n  1280×800 have no horizontal scrolling or overlapping controls.\n- **Determinism and tests:** seed random content; verify the core rule, outcome\n  conditions, restart/restoration, input boundaries, and at least one error state.\n  Do not treat a screenshot or visible label as proof of functionality.\n- **Originality and compliance:** use original names, characters, graphics,\n  audio, and levels, or explicitly licensed assets. Do not copy trademarks,\n  characters, text, artwork, music, level data, or source code.\n\nFinish by reporting actual file paths, launch and test commands/results, key\nscreenshots, known limitations, stack tradeoffs, and original-asset provenance.\n\n## HTML Submission Format\n\nDeliver a self-contained browser game in two files:\n\n- `index.html`\
+    \ - the complete playable presentation. Use HTML Canvas 2D or Three.js/WebGL for the playable presentation.\n- `game_logic.js` - the deterministic state and rules layer. Use a classic script\n  and expose `createGame(opts)` and `advance(game, input, dt)`; an optional\n  `render(gameState, renderCtx)` hook may be exposed.\n\nThe page must open without a build step or local server and render within three\nseconds on a normal laptop. Assets must be generated at runtime with no network\nrequests: procedural geometry, Canvas2D-drawn textures encoded as `data:` URIs,\noffscreen-canvas particle sprites, Web Audio API synthesized sound, shaders,\npost-processing, and CSS are all allowed and encouraged. Do not embed or fetch\nexternal image, model, video, or audio files at runtime. Three.js may be loaded\nfrom its pinned official CDN; if post-processing is used, pin the matching\n`examples/jsm/postprocessing/*` modules to the same Three.js version.\n\nInteraction scheme (both): Support both keyboard\
+    \ and pointer controls: use keyboard for movement or actions and the pointer for spatial selection, menus, or targeting.\nKeep the complete play area and HUD readable at 1280x720. Include a clear start\nflow, concise in-game guidance, pause and restart controls, a complete win/loss\nor scored outcome loop, and visible feedback for every important action.\n\n`index.html` must not use `fetch()` or `XMLHttpRequest` for external URLs; only\nthe pinned Three.js CDN above is allowed. Keep `index.html` at or below 400 KB.\nThe `game_logic.js` line count is advisory and is not a BUILD-gate failure.\n\n### Logic and rendering scaffold\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // The loop calls advance; render(game, { THREE, scene, ... }) is optional.\n</script>\n```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n \
+    \ function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` must be pure and must not access DOM or Three.js objects. The optional\n`render()` hook is called by the main loop and may map state to scenes, materials,\nparticles, and post-processing."
 static:
 - kind: required_file
   role: entry
@@ -109,5 +57,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: both
+  start_keys:
+  - Enter
+  - Space
 language: en
 base_task_id: mz_openworld-necromancer

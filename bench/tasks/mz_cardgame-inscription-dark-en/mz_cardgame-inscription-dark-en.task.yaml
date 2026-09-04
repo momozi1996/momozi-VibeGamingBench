@@ -7,72 +7,15 @@ provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # Cardgame Inscription Dark
-
-    Build a Cardgame Inscription Dark as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).
-    This is not a prototype. It is a **complete, shippable micro-game** that could
-    sit on an itch.io page or Steam as a polished vertical slice.
-
-    ## Core Vision
-
-    A dark and atmospheric card battle game where creatures are summoned by
-    sacrificing other creatures. The player places cards on a grid battlefield,
-    but powerful cards demand blood — weaker creatures must be sacrificed to fuel
-    stronger summons. Each card bears sigils (passive abilities) that create
-    emergent interactions: a card with "Airborne" flies over blockers; one with
-    "Bifurcated Strike" hits two lanes. An overworld map connects encounters with
-    branching paths, and a creeping meta-narrative unfolds through environmental
-    storytelling. The fantasy is the unsettling thrill of sacrificing your own
-    creatures for power, wrapped in a cabin-horror atmosphere.
-
-    ## What the Player Experiences
-
-    1. **Title Screen** — A dimly lit wooden table with the game name scratched
-       into the surface in rough lettering, a flickering candle, and a "Begin"
-       card the player clicks. No plain HTML grey.
-    2. **The Table** — Battles take place on a 4-lane grid. The player's row faces
-       the opponent's row. Cards are played from hand into lanes. Each card has
-       attack power, health, a blood cost, and zero or more sigils.
-    3. **Sacrifice Mechanic** — To play a card costing 2 blood, the player must
-       first sacrifice 2 of their own creatures already on the field. Sacrificed
-       creatures die with a visual effect. Free cards (0 cost) serve as sacrifice
-       fodder. This creates a constant tension between board presence and power.
-    4. **Sigils** — At least 8 distinct sigils with unique icons: Airborne (attacks
-       directly), Bifurcated Strike (hits adjacent lanes too), Mighty Leap (blocks
-       Airborne), Stinky (adjacent enemies lose 1 attack), Unkillable (returns to
-       hand on death), Fledgling (evolves after 1 turn), Touch of Death (kills
-       anything it damages), Many Lives (has 3 extra lives).
-    5. **Damage Scale** — A balance scale tips as damage is dealt. When one side
-       takes 5 more total damage than the other, that side loses. The scale
-       visually tips with each hit, creating tension as it approaches the tipping
-       point.
-    6. **Overworld Map** — Between battles, a branching path map shows nodes:
-       card battles, totem poles (add a sigil to a card), campfires (merge two
-       cards), and traders (buy/sell cards). The player chooses their route.
-    7. **Atmosphere** — Dark, muted colour palette. Cards look hand-drawn on
-       parchment. The opponent is a shadowy figure whose eyes glow. Ambient
-       effects (dust motes, candle flicker) reinforce the unsettling mood.
-
-    ## HTML Submission Format
-
-    You must deliver **two files**:
-
-    - `index.html` — one self-contained page, uses `three.js` from CDN
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      opens by double-clicking in any modern browser. **No build step, no `npm install`,
-      no Python server.** It must render within 3 seconds on a normal laptop.
-    - `game_logic.js` — pure logic layer (`createGame(opts)` / `advance(game, input, dt)`),
-      imported by `index.html`. Keep the rules layer independent of DOM and rendering code.
-
-    Constraints:
-    - All assets procedural (colors, cubes, spheres); no external images/audio fetched at runtime.
-    - Keyboard-only input handled via `keydown`/`keyup`. WASD + space + enter + ESC.
-    - `index.html` must not `fetch()` / `XMLHttpRequest` any URL; only CDN allowed is three.js.
-    - Size budget: `game_logic.js` ≤ 220 lines, `index.html` ≤ 120 KB.
-
-    Judge reads `index.html` (headless Chromium screenshot) + `game_logic.js`; there is no
-    CLI invocation, no download, no runtime dependency.
+  spec: "# Cardgame Inscription Dark\n\nBuild a Cardgame Inscription Dark as a self-contained, double-click-to-play HTML page (files: `index.html`, `game_logic.js`).\nThis is not a prototype. It is a **complete, shippable micro-game** that could\nsit on an itch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nA dark and atmospheric card battle game where creatures are summoned by\nsacrificing other creatures. The player places cards on a grid battlefield,\nbut powerful cards demand blood — weaker creatures must be sacrificed to fuel\nstronger summons. Each card bears sigils (passive abilities) that create\nemergent interactions: a card with \"Airborne\" flies over blockers; one with\n\"Bifurcated Strike\" hits two lanes. An overworld map connects encounters with\nbranching paths, and a creeping meta-narrative unfolds through environmental\nstorytelling. The fantasy is the unsettling thrill of sacrificing your own\ncreatures for power, wrapped in a cabin-horror atmosphere.\n\
+    \n## What the Player Experiences\n\n1. **Title Screen** — A dimly lit wooden table with the game name scratched\n   into the surface in rough lettering, a flickering candle, and a \"Begin\"\n   card the player clicks. No plain HTML grey.\n2. **The Table** — Battles take place on a 4-lane grid. The player's row faces\n   the opponent's row. Cards are played from hand into lanes. Each card has\n   attack power, health, a blood cost, and zero or more sigils.\n3. **Sacrifice Mechanic** — To play a card costing 2 blood, the player must\n   first sacrifice 2 of their own creatures already on the field. Sacrificed\n   creatures die with a visual effect. Free cards (0 cost) serve as sacrifice\n   fodder. This creates a constant tension between board presence and power.\n4. **Sigils** — At least 8 distinct sigils with unique icons: Airborne (attacks\n   directly), Bifurcated Strike (hits adjacent lanes too), Mighty Leap (blocks\n   Airborne), Stinky (adjacent enemies lose 1 attack), Unkillable\
+    \ (returns to\n   hand on death), Fledgling (evolves after 1 turn), Touch of Death (kills\n   anything it damages), Many Lives (has 3 extra lives).\n5. **Damage Scale** — A balance scale tips as damage is dealt. When one side\n   takes 5 more total damage than the other, that side loses. The scale\n   visually tips with each hit, creating tension as it approaches the tipping\n   point.\n6. **Overworld Map** — Between battles, a branching path map shows nodes:\n   card battles, totem poles (add a sigil to a card), campfires (merge two\n   cards), and traders (buy/sell cards). The player chooses their route.\n7. **Atmosphere** — Dark, muted colour palette. Cards look hand-drawn on\n   parchment. The opponent is a shadowy figure whose eyes glow. Ambient\n   effects (dust motes, candle flicker) reinforce the unsettling mood.\n\n## Vibe Gaming Quality Bar\n\nThe gameplay, logic, and acceptance anchors above take priority over this\npresentation contract. Do not rewrite or remove the core\
+    \ mechanics above; use\nthese rules to turn the same brief into a playable Vibe Gaming vertical slice.\n\n- **Play first, polish second:** establish start, core input, state changes,\n  success/failure, and replay before adding visual polish or effects.\n- **Choose the smallest sufficient stack**:\n  - `HTML5 Canvas 2D + Vanilla JS` for 2D rule-driven games;\n  - `DOM + CSS + Vanilla JS` for card, dialogue, menu, and information-heavy games;\n  - `pure SVG + CSS animation + Vanilla JS` for icons, diagrams, and geometric motion;\n  - `PhaserJS` for continuous collision, cameras, particles, or arcade physics;\n  - `Three.js + WebGL` for 3D or spatial camera experiences;\n  - native `WebGPU` only when large-scale GPU parallelism or a custom GPU pipeline is genuinely required;\n  - Canvas, DOM, CSS, and SVG may be mixed when each layer has a clear responsibility.\n    Do not add complexity for technology spectacle.\n- **Keep rules independent:** `game_logic.js` is the single source of truth\
+    \ and\n  exposes `createGame(opts)` and `advance(game, input, dt)`. Rendering reads state;\n  it must not maintain a second hidden rules system.\n- **Make every frame explainable:** inputs map to explicit actions, actions\n  produce observable state changes, and invalid input, edge cases, resource\n  depletion, damage, victory, and failure are visible.\n- **Vibe is not decoration:** use at least two feedback channels (animation,\n  motion, scale, particles, audio, HUD, or camera) for important actions without\n  obscuring the goal or reducing readability.\n- **Mobile first:** pointer targets are at least 44×44 CSS px, touch and mouse\n  both work, hover is never required, and 390×844, 360×800, 430×932, and\n  1280×800 have no horizontal scrolling or overlapping controls.\n- **Determinism and tests:** seed random content; verify the core rule, outcome\n  conditions, restart/restoration, input boundaries, and at least one error state.\n  Do not treat a screenshot or visible label as proof\
+    \ of functionality.\n- **Originality and compliance:** use original names, characters, graphics,\n  audio, and levels, or explicitly licensed assets. Do not copy trademarks,\n  characters, text, artwork, music, level data, or source code.\n\nFinish by reporting actual file paths, launch and test commands/results, key\nscreenshots, known limitations, stack tradeoffs, and original-asset provenance.\n\n## HTML Submission Format\n\nDeliver a self-contained browser game in two files:\n\n- `index.html` - the complete playable presentation. Use HTML Canvas 2D or Three.js/WebGL for the playable presentation.\n- `game_logic.js` - the deterministic state and rules layer. Use a classic script\n  and expose `createGame(opts)` and `advance(game, input, dt)`; an optional\n  `render(gameState, renderCtx)` hook may be exposed.\n\nThe page must open without a build step or local server and render within three\nseconds on a normal laptop. Assets must be generated at runtime with no network\nrequests:\
+    \ procedural geometry, Canvas2D-drawn textures encoded as `data:` URIs,\noffscreen-canvas particle sprites, Web Audio API synthesized sound, shaders,\npost-processing, and CSS are all allowed and encouraged. Do not embed or fetch\nexternal image, model, video, or audio files at runtime. Three.js may be loaded\nfrom its pinned official CDN; if post-processing is used, pin the matching\n`examples/jsm/postprocessing/*` modules to the same Three.js version.\n\nInteraction scheme (pointer-first): Use click, hover, drag, or selection as the primary controls; add keyboard shortcuts only where they are natural.\nKeep the complete play area and HUD readable at 1280x720. Include a clear start\nflow, concise in-game guidance, pause and restart controls, a complete win/loss\nor scored outcome loop, and visible feedback for every important action.\n\n`index.html` must not use `fetch()` or `XMLHttpRequest` for external URLs; only\nthe pinned Three.js CDN above is allowed. Keep `index.html` at or below\
+    \ 400 KB.\nThe `game_logic.js` line count is advisory and is not a BUILD-gate failure.\n\n### Logic and rendering scaffold\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // The loop calls advance; render(game, { THREE, scene, ... }) is optional.\n</script>\n```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` must be pure and must not access DOM or Three.js objects. The optional\n`render()` hook is called by the main loop and may map state to scenes, materials,\n\
+    particles, and post-processing."
 static:
 - kind: required_file
   role: entry
@@ -116,5 +59,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: pointer-first
+  start_keys:
+  - Enter
+  - Space
 language: en
 base_task_id: mz_cardgame-inscription-dark

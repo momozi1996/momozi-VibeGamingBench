@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 from .screenshot import capture_screenshot
 
 
-RUNTIME_VERSION = "1.0"
+RUNTIME_VERSION = "1.1"
 DEFAULT_ALLOWED_HOSTS = ("unpkg.com", "cdn.jsdelivr.net", "cdnjs.cloudflare.com")
 
 
@@ -34,6 +34,11 @@ class RuntimeConfig:
     stabilization_ms: int = 1000
     input_probe: bool = True
     capture_after_input: bool = False
+    capture_gameplay: bool = True
+    auto_start: bool = True
+    input_scheme: str = "auto"
+    start_keys: tuple[str, ...] = ("Enter", "Space")
+    gameplay_actions: int = 4
     allow_external_network: bool = False
     allowed_hosts: tuple[str, ...] = DEFAULT_ALLOWED_HOSTS
 
@@ -135,6 +140,10 @@ def run_runtime_smoke(
             "device_scale_factor": config.device_scale_factor,
             "stabilization_ms": config.stabilization_ms,
             "input_probe": config.input_probe,
+            "auto_start": config.auto_start,
+            "input_scheme": config.input_scheme,
+            "start_keys": list(config.start_keys),
+            "gameplay_actions": config.gameplay_actions,
             "network_policy": (
                 "unrestricted"
                 if config.allow_external_network
@@ -251,10 +260,79 @@ def run_runtime_smoke(
                 if config.input_probe:
                     result.input_probe["attempted"] = True
                     try:
-                        page.keyboard.press("ArrowRight")
-                        page.wait_for_timeout(150)
+                        if config.auto_start:
+                            # Pointer-native tasks often expose a visible start
+                            # button instead of binding Enter/Space.
+                            for selector in (
+                                "#btnStartCampaign",
+                                "#startButton",
+                                "button:has-text('Start')",
+                                "button:has-text('开始')",
+                            ):
+                                try:
+                                    locator = page.locator(selector)
+                                    if locator.count():
+                                        locator.first.click()
+                                        page.wait_for_timeout(120)
+                                        break
+                                except Exception:
+                                    continue
+                            for key in config.start_keys:
+                                page.keyboard.press(key)
+                                page.wait_for_timeout(80)
+                        page.wait_for_timeout(180)
                         result.input_probe["success"] = True
-                        if config.capture_after_input:
+                        if config.capture_gameplay:
+                            gameplay_start = capture_screenshot(
+                                page,
+                                evidence_dir / "gameplay_start.png",
+                                width=config.viewport_width,
+                                height=config.viewport_height,
+                                browser="chromium",
+                                browser_version=browser.version,
+                                timeout_ms=config.action_timeout_ms,
+                            )
+                            result.screenshots.append(gameplay_start.to_dict())
+                        scheme = config.input_scheme
+                        if scheme == "auto":
+                            scheme = "keyboard"
+                        if scheme in {
+                            "pointer",
+                            "pointer-first",
+                            "both",
+                        }:
+                            width = config.viewport_width
+                            height = config.viewport_height
+                            page.mouse.click(width * 0.5, height * 0.52)
+                            page.mouse.move(width * 0.25, height * 0.52)
+                            page.mouse.down()
+                            page.mouse.move(width * 0.75, height * 0.52, steps=6)
+                            page.mouse.up()
+                            page.mouse.click(width * 0.68, height * 0.42)
+                        if scheme in {"keyboard", "keyboard-first", "both"}:
+                            keys = (
+                                "ArrowRight",
+                                "ArrowDown",
+                                "ArrowLeft",
+                                "ArrowUp",
+                                "Space",
+                            )
+                            for index in range(max(1, config.gameplay_actions)):
+                                page.keyboard.press(keys[index % len(keys)])
+                                page.wait_for_timeout(90)
+                        page.wait_for_timeout(180)
+                        if config.capture_gameplay:
+                            gameplay_mid = capture_screenshot(
+                                page,
+                                evidence_dir / "gameplay_mid.png",
+                                width=config.viewport_width,
+                                height=config.viewport_height,
+                                browser="chromium",
+                                browser_version=browser.version,
+                                timeout_ms=config.action_timeout_ms,
+                            )
+                            result.screenshots.append(gameplay_mid.to_dict())
+                        elif config.capture_after_input:
                             after_input = capture_screenshot(
                                 page,
                                 evidence_dir / "after_input.png",

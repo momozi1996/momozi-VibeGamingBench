@@ -116,7 +116,7 @@
     {
       "id": "A1",
       "agg": "mean",
-      "description": "Overall art coherence: cards, map, territories, UI panels, and effects belong to a consistent parchment-and-ink medieval visual language. 0 if the screen mixes incompatible styles or reads as plain default plain grey. Programmatic shapes/solid fills/untextured geometry cap at 0.5."
+      "description": "Overall art coherence: cards, map, territories, UI panels, and effects belong to a consistent parchment-and-ink medieval visual language. 0 if the screen mixes incompatible styles or reads as plain default plain grey. Programmatic shapes/solid fills/untextured geometry cap at 0.5. Full credit may be earned with runtime-authored procedural textures, layered materials, deliberate multi-light rigs, particles, synthesized audio, or post-processing; external asset files are not required."
     },
     {
       "id": "A2",

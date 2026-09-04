@@ -1,0 +1,264 @@
+{
+  "benchmark_release": "v0.7.0",
+  "judge": "temporary-self-smoke",
+  "leaderboard_eligible": false,
+  "tasks": [
+    "mz_feishu-structured-001-en",
+    "mz_feishu-structured-002-en",
+    "mz_feishu-structured-003-en",
+    "mz_feishu-structured-004-en",
+    "mz_feishu-structured-005-en"
+  ],
+  "results": [
+    {
+      "task_id": "mz_feishu-structured-001-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-001-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:10.760441+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-001-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:11.465779+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-001-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:12.219943+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "task_id": "mz_feishu-structured-002-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-002-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:13.178506+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-002-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:13.863628+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-002-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:14.589676+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "task_id": "mz_feishu-structured-003-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-003-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:15.691620+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-003-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:16.377880+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-003-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:17.102137+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "task_id": "mz_feishu-structured-004-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-004-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:18.161655+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-004-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:18.829200+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-004-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:19.548101+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "task_id": "mz_feishu-structured-005-en",
+      "family": "rpg",
+      "language": "en",
+      "build_ok": true,
+      "runtime_status": "pass",
+      "contract_pass_rate": 1.0,
+      "final_score": 78.7,
+      "screenshots": [
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-005-en/evidence/boot.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:20.628750+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-005-en/evidence/gameplay_start.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:21.294912+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        },
+        {
+          "path": "reports/self_smoke/v0.7.0-final2/mz_feishu-structured-005-en/evidence/gameplay_mid.png",
+          "width": 1280,
+          "height": 720,
+          "timestamp": "2026-09-04T12:35:22.012604+00:00",
+          "browser": "chromium",
+          "browser_version": "145.0.7632.6",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "version": "1.0"
+        }
+      ]
+    }
+  ]
+}

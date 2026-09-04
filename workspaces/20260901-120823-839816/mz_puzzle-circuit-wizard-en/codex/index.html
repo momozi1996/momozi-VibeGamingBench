@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Circuit Wizard</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #0a0f14; color: #d8e7ff; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; }
+    .root { height: 100%; display: grid; grid-template-rows: auto 1fr auto; }
+    .topbar { display:flex; align-items:center; gap:12px; padding: 10px 14px; background: #0e1620; border-bottom: 1px solid #1b2a3a; }
+    .brand { font-weight: 800; letter-spacing: 0.5px; }
+    .spacer { flex: 1; }
+    .btn { background:#16324a; color:#d8e7ff; border:1px solid #20405c; border-radius: 8px; padding: 8px 12px; cursor: pointer; user-select: none; }
+    .btn:disabled { opacity: 0.5; cursor: default; }
+    .btn.primary { background:#1a6cff; border-color:#1a6cff; color:white; }
+    .btn.warn { background:#472323; border-color:#943d3d; }
+    .hud { display:flex; align-items:center; gap:8px; }
+    .main { display:grid; grid-template-columns: 280px 1fr 280px; gap: 0; min-height: 0; }
+    .panel { background:#0e1620; border-right: 1px solid #1b2a3a; padding: 10px; overflow:auto; }
+    .panel.right { border-left: 1px solid #1b2a3a; border-right: none; }
+    .panel h3 { margin: 6px 0 8px; font-size: 14px; color:#9ec9ff; }
+    .toolbox { display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; }
+    .tool { background:#101d2a; border:1px solid #23425e; border-radius:10px; padding:8px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; }
+    .tool .label { font-weight: 600; }
+    .tool.selected { outline:2px solid #1a6cff; }
+    .tool .count { opacity:0.9; font-size:12px; color:#9ec9ff; }
+    .legend { font-size:12px; color:#9ec9ff; opacity:0.9; }
+    .canvas-wrap { position:relative; background:#061018; }
+    canvas { display:block; width:100%; height:100%; background: radial-gradient(1000px 600px at 60% -10%, #123, transparent 60%), #071019; }
+    .overlay { position:absolute; inset: 0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+    .title-card, .win-card, .help-card { pointer-events:auto; background: linear-gradient(180deg, #0e1a26, #0a121a); border:1px solid #1b2a3a; border-radius:14px; padding: 20px; width: min(720px, 92%); box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.03); }
+    .title-card h1 { margin: 6px 0 10px; }
+    .title-card p { margin: 6px 0; color:#b8d1f3; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .kbd { background:#0b121a; border:1px solid #1c2a38; padding:2px 6px; border-radius:6px; font-size:12px; color:#9ec9ff; }
+    .stat { padding:6px 10px; border-radius:8px; background:#0f1c29; border:1px solid #23384d; color:#9ec9ff; }
+    .muted { color:#88a7cc; font-size:12px; }
+    .footer { display:flex; align-items:center; justify-content:center; gap:12px; padding:8px 10px; background:#0e1620; border-top:1px solid #1b2a3a; font-size:12px; color:#8db6ff; }
+    a, a:visited { color:#b5d3ff; }
+  </style>
+  <script src="./game_logic.js"></script>
+  <script>
+    // Canvas helpers
+    function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+    function lerp(a,b,t){ return a+(b-a)*t; }
+  </script>
+  </head>
+<body>
+  <div class="root">
+    <div class="topbar">
+      <div class="brand">⚡ Circuit Wizard</div>
+      <div class="stat" id="levelStat">Level 1: </div>
+      <div class="stat" id="msgStat">Ready</div>
+      <div class="spacer"></div>
+      <div class="hud">
+        <button class="btn" id="btnHelp">Help</button>
+        <button class="btn" id="btnUndo" title="Undo">Undo</button>
+        <button class="btn warn" id="btnReset">Reset</button>
+        <button class="btn primary" id="btnRun">Run Test</button>
+        <button class="btn" id="btnNext" disabled>Next ▶</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="panel">
+        <h3>Toolbox</h3>
+        <div id="toolbox" class="toolbox"></div>
+        <h3>Actions</h3>
+        <div class="toolbox">
+          <div class="tool" id="toolWire"><span class="label">Wire</span><span class="count">W</span></div>
+          <div class="tool" id="toolErase"><span class="label">Erase</span><span class="count">Del</span></div>
+        </div>
+        <p class="legend">
+          - Click a gate to select, then click a grid cell to place.<br>
+          - Wire: click an output dot, then an input dot.<br>
+          - Click an input dot again to remove its wire.<br>
+          - Outputs turn green when matching the target.
+        </p>
+      </div>
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="gameCanvas" width="1280" height="720"></canvas>
+        <div class="overlay" id="titleOverlay" style="display:none">
+          <div class="title-card">
+            <h1>⚡ Circuit Wizard</h1>
+            <p>Build logic circuits to match target signals. Place gates, wire inputs to outputs, and test your design.</p>
+            <p class="muted">Campaign: basic logic → arithmetic → timing</p>
+            <div class="row" style="margin-top:10px;">
+              <button class="btn primary" id="btnStartCampaign">Start Campaign</button>
+              <button class="btn" id="btnSandbox">Sandbox</button>
+            </div>
+          </div>
+        </div>
+        <div class="overlay" id="winOverlay" style="display:none">
+          <div class="win-card">
+            <h2>✔ Level Complete</h2>
+            <div class="row" style="margin: 8px 0;">
+              <div class="stat" id="statGates"></div>
+              <div class="stat" id="statScore"></div>
+            </div>
+            <div class="row">
+              <button class="btn primary" id="btnNext2">Next Level ▶</button>
+              <button class="btn" id="btnReplay">Replay</button>
+            </div>
+          </div>
+        </div>
+        <div class="overlay" id="helpOverlay" style="display:none">
+          <div class="help-card">
+            <h2>How To Play</h2>
+            <p>- Select a gate in the left toolbox and click an empty grid cell to place it.</p>
+            <p>- Click Wire, then click an output dot (right side of a gate or input terminal), then an input dot (left side of a gate or output terminal).</p>
+            <p>- Run Test to watch signals flow across several steps. If your outputs match the target at every step, you win.</p>
+            <p>- Click an input dot again to remove its wire. Use Erase to delete a gate.</p>
+            <p class="muted">Tips: NOT inverts, AND needs two inputs, XOR is exclusive-or, DEL delays the signal by one step.</p>
+            <div class="row"><button class="btn" id="btnCloseHelp">Close</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel right">
+        <h3>Level Info</h3>
+        <div id="levelInfo" class="legend"></div>
+        <h3>Targets</h3>
+        <div id="targetsInfo" class="legend"></div>
+      </div>
+    </div>
+    <div class="footer">Made for the browser. No assets, pure Canvas. © Circuit Wizard</div>
+  </div>
+
+<script>
+  const { createGame, advance } = window.GameLogic;
+
+  // State
+  let game = createGame({});
+  let ui = {
+    selected: { kind: 'tool', tool: 'WIRE', gate: null },
+    pendingWire: null, // { nodeId, pin }
+    hover: null,
+    hist: [],
+    message: '',
+    pixelsPerCell: 56,
+  };
+
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const wrap = document.getElementById('canvasWrap');
+  const toolboxEl = document.getElementById('toolbox');
+  const btnWire = document.getElementById('toolWire');
+  const btnErase = document.getElementById('toolErase');
+  const btnRun = document.getElementById('btnRun');
+  const btnReset = document.getElementById('btnReset');
+  const btnUndo = document.getElementById('btnUndo');
+  const btnNext = document.getElementById('btnNext');
+  const btnNext2 = document.getElementById('btnNext2');
+  const btnReplay = document.getElementById('btnReplay');
+  const btnStart = document.getElementById('btnStartCampaign');
+  const btnSandbox = document.getElementById('btnSandbox');
+  const btnHelp = document.getElementById('btnHelp');
+  const btnCloseHelp = document.getElementById('btnCloseHelp');
+  const titleOverlay = document.getElementById('titleOverlay');
+  const winOverlay = document.getElementById('winOverlay');
+  const helpOverlay = document.getElementById('helpOverlay');
+  const levelStat = document.getElementById('levelStat');
+  const msgStat = document.getElementById('msgStat');
+  const levelInfo = document.getElementById('levelInfo');
+  const targetsInfo = document.getElementById('targetsInfo');
+  const statGates = document.getElementById('statGates');
+  const statScore = document.getElementById('statScore');
+
+  // Audio
+  let acx = null; function ensureAudio(){ if(!acx){ acx = new (window.AudioContext||window.webkitAudioContext)(); }}
+  function beep(freq=880, dur=0.12){ ensureAudio(); const o=acx.createOscillator(); const g=acx.createGain(); o.type='sine'; o.frequency.value=freq; o.connect(g); g.connect(acx.destination); const t=acx.currentTime; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.2, t+0.01); g.gain.exponentialRampToValueAtTime(0.0001, t+dur); o.start(t); o.stop(t+dur+0.02); }
+
+  // UI helpers
+  function deepCopy(o){
+    if(o===null || typeof o!=='object') return o;
+    if(Array.isArray(o)) return o.map(deepCopy);
+    const out={}; for(const k of Object.keys(o)) out[k]=deepCopy(o[k]); return out;
+  }
+  function pushHistory(){ ui.hist.push(deepCopy(game)); if(ui.hist.length>50) ui.hist.shift(); }
+  function popHistory(){ if(!ui.hist.length) return; game = ui.hist.pop(); refreshSidebars(); }
+  function selectTool(tool){ ui.selected = { kind:'tool', tool, gate: null }; updateToolHighlights(); }
+  function selectGate(gate){ ui.selected = { kind:'gate', tool:'PLACE', gate }; updateToolHighlights(); }
+  function updateToolHighlights(){
+    // Clear
+    [...toolboxEl.querySelectorAll('.tool')].forEach(el=>el.classList.remove('selected'));
+    btnWire.classList.remove('selected'); btnErase.classList.remove('selected');
+    if(ui.selected.kind==='gate'){
+      const el=document.querySelector(`[data-gate="${ui.selected.gate}"]`); if(el) el.classList.add('selected');
+    } else if(ui.selected.tool==='WIRE'){ btnWire.classList.add('selected'); }
+    else if(ui.selected.tool==='ERASE'){ btnErase.classList.add('selected'); }
+  }
+
+  function gridToPx(x,y){ const s=ui.pixelsPerCell; const ox=40, oy=40; return { x: Math.round(ox + x*s), y: Math.round(oy + y*s) }; }
+  function pxToGrid(px,py){ const s=ui.pixelsPerCell; const ox=40, oy=40; return { x: Math.round((px-ox)/s), y: Math.round((py-oy)/s) }; }
+
+  function buildToolbox(){ toolboxEl.innerHTML=''; const avail=game.board.toolbox;
+    const gates=['AND','OR','NOT','XOR','DEL'];
+    gates.forEach(g=>{
+      if(avail[g]===undefined) return; const left=avail[g]- (game.board.used[g]||0);
+      const el=document.createElement('div'); el.className='tool'; el.dataset.gate=g; el.innerHTML=`<span class="label">${g}</span><span class="count">${left}</span>`; el.onclick=()=>selectGate(g);
+      toolboxEl.appendChild(el);
+    });
+  }
+
+  // Rendering
+  function draw(){
+    const w=canvas.width, h=canvas.height; ctx.clearRect(0,0,w,h);
+    // Grid
+    const cols=game.board.width, rows=game.board.height; const s=ui.pixelsPerCell; const ox=40, oy=40;
+    ctx.save(); ctx.translate(0.5,0.5); ctx.strokeStyle = '#122334'; ctx.lineWidth=1;
+    for(let x=0;x<=cols;x++){ const px=ox+x*s; ctx.beginPath(); ctx.moveTo(px, oy); ctx.lineTo(px, oy+rows*s); ctx.stroke(); }
+    for(let y=0;y<=rows;y++){ const py=oy+y*s; ctx.beginPath(); ctx.moveTo(ox, py); ctx.lineTo(ox+cols*s, py); ctx.stroke(); }
+    ctx.restore();
+
+    // Labels
+    ctx.fillStyle='#8db6ff'; ctx.font='12px system-ui'; ctx.fillText(`Target: ${game.level.targetDesc}`, 16, 22);
+
+    // Draw wires first (under nodes)
+    const wireColor0 = '#213c56';
+    const wireColor1 = '#3de37b';
+    const wires = game.board.wires;
+    ctx.lineWidth=3; ctx.lineCap='round';
+    for(const w1 of wires){
+      const from=game.board.nodes[w1.from.nodeId]; const to=game.board.nodes[w1.to.nodeId]; if(!from||!to) continue;
+      const fp = portPixel(from, 'out', w1.from.pin);
+      const tp = portPixel(to, 'in', w1.to.pin);
+      const val = (game.sim && game.sim.lastValues && game.sim.lastValues[w1.from.nodeId]===1) ? 1 : 0;
+      ctx.strokeStyle = val? wireColor1 : wireColor0;
+      ctx.beginPath();
+      const midx = (fp.x + tp.x)/2;
+      ctx.moveTo(fp.x, fp.y);
+      ctx.bezierCurveTo(lerp(fp.x,midx,0.6), fp.y, lerp(tp.x,midx,0.4), tp.y, tp.x, tp.y);
+      ctx.stroke();
+    }
+
+    // Draw nodes
+    for(const id in game.board.nodes){ drawNode(game.board.nodes[id]); }
+
+    // Pending wire preview
+    if(ui.selected.tool==='WIRE' && ui.pendingWire){
+      const from=game.board.nodes[ui.pendingWire.nodeId]; if(from){
+        const fp=portPixel(from,'out',ui.pendingWire.pin); const mx=mouse.x, my=mouse.y;
+        ctx.strokeStyle='#88a7cc'; ctx.setLineDash([6,6]); ctx.beginPath(); ctx.moveTo(fp.x,fp.y); ctx.lineTo(mx,my); ctx.stroke(); ctx.setLineDash([]);
+      }
+    }
+
+    // Simulation progress / outputs status
+    drawOutputsStatus();
+  }
+
+  function drawNode(n){
+    const p = gridToPx(n.pos.x, n.pos.y); const s=ui.pixelsPerCell; const w = s*0.9, h = s*0.6; const x=p.x - w/2, y=p.y - h/2;
+    // Body
+    ctx.fillStyle = n.kind==='IN' || n.kind==='OUT' ? '#0f1c29' : '#0e2436';
+    ctx.strokeStyle = '#23425e'; ctx.lineWidth=2; roundRect(ctx, x,y,w,h, 10, true, true);
+    // Title
+    ctx.fillStyle = '#b5d3ff'; ctx.font='12px system-ui';
+    const title = n.kind==='IN' || n.kind==='OUT' ? n.label : n.kind;
+    ctx.fillText(title, x+8, y+14);
+    // Ports
+    drawPorts(n);
+  }
+
+  function drawPorts(n){
+    const outPos = portPixel(n, 'out', 0); const inCount = n.in||0; const outCount=n.out||0;
+    // Inputs
+    for(let i=0;i<inCount;i++){
+      const ip = portPixel(n,'in',i); dot(ip.x, ip.y, '#9ec9ff');
+      // indicator if wired
+      const wired = !!game.board.wireByTarget[`${n.id}:in:${i}`];
+      if(wired){ ctx.fillStyle='#3de37b'; ctx.fillRect(ip.x-2, ip.y-2, 4,4); }
+    }
+    // Outputs
+    for(let o=0;o<outCount;o++){
+      const op = portPixel(n,'out',o); const val = (game.sim && game.sim.lastValues && game.sim.lastValues[n.id]===1)?1:0; dot(op.x, op.y, val? '#3de37b':'#9ec9ff');
+    }
+  }
+
+  function portPixel(n, side, idx){
+    const p = gridToPx(n.pos.x, n.pos.y); const s=ui.pixelsPerCell; const w = s*0.9, h = s*0.6;
+    const x=p.x - w/2, y=p.y - h/2;
+    if(side==='out') return { x: x+w+8, y: y+h/2 };
+    // inputs: stack vertically
+    const inCount = n.in||0; const gap = h/(inCount+1); const py = y + gap*(idx+1);
+    return { x: x-8, y: py };
+  }
+
+  function dot(x,y,color){ ctx.fillStyle=color; ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill(); ctx.strokeStyle='#23425e'; ctx.lineWidth=1; ctx.stroke(); }
+  function roundRect(ctx, x, y, w, h, r, fill, stroke) {
+    if (w < 2 * r) r = w / 2; if (h < 2 * r) r = h / 2; ctx.beginPath();
+    ctx.moveTo(x+r, y); ctx.arcTo(x+w, y,   x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x,   y+h, r); ctx.arcTo(x,   y+h, x, y,   r); ctx.arcTo(x,   y,   x+w, y,   r);
+    ctx.closePath(); if (fill) ctx.fill(); if (stroke) ctx.stroke();
+  }
+
+  function drawOutputsStatus(){
+    const s=ui.pixelsPerCell;
+    for(const id in game.board.nodes){ const n = game.board.nodes[id]; if(n.kind!=='OUT') continue;
+      const p=gridToPx(n.pos.x, n.pos.y); const y=p.y+s*0.4; const x=p.x; const res = game.sim && game.sim.compare && game.sim.compare[n.label];
+      if(res){ ctx.fillStyle = res.ok? '#3de37b':'#ff6464'; ctx.font='12px system-ui'; ctx.textAlign='center'; ctx.fillText(res.ok? 'OK':'Mismatch', x, y+18); ctx.textAlign='left'; }
+    }
+  }
+
+  // Hit testing
+  const mouse = { x:0, y:0 };
+  function findPortAt(px,py){
+    for(const id in game.board.nodes){ const n=game.board.nodes[id];
+      // outputs
+      const op=portPixel(n,'out',0); if(dist(px,py,op.x,op.y)<=7) return { nodeId:n.id, side:'out', pin:0 };
+      for(let i=0;i<(n.in||0);i++){ const ip=portPixel(n,'in',i); if(dist(px,py,ip.x,ip.y)<=7) return { nodeId:n.id, side:'in', pin:i }; }
+    }
+    return null;
+  }
+  function findNodeAtGrid(gx,gy){ for(const id in game.board.nodes){ const n=game.board.nodes[id]; if(n.pos.x===gx && n.pos.y===gy) return n; } return null; }
+  function dist(ax,ay,bx,by){ const dx=ax-bx, dy=ay-by; return Math.hypot(dx,dy); }
+
+  // Input -> engine action wiring
+  function dispatch(actions){
+    // maintain undo history only when state-changing actions exist
+    if(actions.some(a=>a.type!=='Tick')) pushHistory();
+    game = advance(game, { actions }, dtSinceLast, performance.now());
+    refreshSidebars();
+  }
+
+  function refreshSidebars(){
+    levelStat.textContent = `Level ${game.levelIndex+1}: ${game.level.name}`;
+    msgStat.textContent = game.message || 'Ready';
+    levelInfo.innerHTML = [
+      `<div>Board: ${game.board.width}×${game.board.height}</div>`,
+      `<div>Available: ${Object.entries(game.board.toolbox).map(([k,v])=>`${k}:${v}`).join('  ')}</div>`,
+      `<div>Used: ${Object.entries(game.board.used).map(([k,v])=>`${k}:${v}`).join('  ')}</div>`
+    ].join('');
+    // Targets
+    const outs = game.level.outputs.map(o=>`<div><b>${o.label}</b> — ${o.desc}</div>`).join('');
+    targetsInfo.innerHTML = outs;
+    buildToolbox(); updateToolHighlights();
+    // Overlays
+    titleOverlay.style.display = game.phase==='title' ? '' : 'none';
+    const won = game.phase==='win';
+    winOverlay.style.display = won ? '' : 'none';
+    btnNext.disabled = !won;
+    if(won){
+      statGates.textContent = `Gates used: ${Object.values(game.board.used).reduce((a,b)=>a+b,0)}`;
+      statScore.textContent = `Steps matched: ${game.level.steps}`;
+    }
+  }
+
+  // Event handlers
+  function canvasPoint(e){
+    const r=canvas.getBoundingClientRect();
+    return {
+      x:(e.clientX-r.left)*(canvas.width/r.width),
+      y:(e.clientY-r.top)*(canvas.height/r.height),
+    };
+  }
+  wrap.addEventListener('mousemove', (e)=>{ const p=canvasPoint(e); mouse.x=p.x; mouse.y=p.y; });
+  wrap.addEventListener('mousedown', (e)=>{
+    const p=canvasPoint(e); const mx=p.x, my=p.y; const g=pxToGrid(mx,my);
+    const port = findPortAt(mx,my);
+    if(ui.selected.kind==='gate'){
+      dispatch([{ type:'PlaceGate', gateType: ui.selected.gate, pos:{x:g.x,y:g.y} }]); beep(740,0.04);
+      return;
+    }
+    if(ui.selected.tool==='ERASE'){
+      if(port && port.side==='in') { dispatch([{ type:'RemoveWireAtInput', nodeId: port.nodeId, pin: port.pin }]); beep(420,0.04); return; }
+      const n=findNodeAtGrid(g.x,g.y); if(n && n.kind!=='IN' && n.kind!=='OUT'){ dispatch([{ type:'DeleteNode', nodeId:n.id }]); beep(420,0.04); return; }
+      return;
+    }
+    if(ui.selected.tool==='WIRE'){
+      if(!ui.pendingWire){
+        if(port && port.side==='out'){ ui.pendingWire = { nodeId: port.nodeId, pin: port.pin }; beep(640,0.04); }
+      } else {
+        if(port && port.side==='in'){
+          dispatch([{ type:'Connect', from: ui.pendingWire, to: { nodeId: port.nodeId, pin: port.pin } }]); beep(880,0.04);
+        }
+        ui.pendingWire=null;
+      }
+      return;
+    }
+  });
+
+  btnReset.onclick = ()=>{ dispatch([{ type:'ResetLevel' }]); };
+  btnUndo.onclick = ()=>{ popHistory(); };
+  btnWire.onclick = ()=>{ selectTool('WIRE'); };
+  btnErase.onclick = ()=>{ selectTool('ERASE'); };
+  btnRun.onclick = ()=>{ dispatch([{ type: game.sim && game.sim.running ? 'StopTest' : 'StartTest' }]); if(game.sim && game.sim.running) beep(540,0.08); else beep(340,0.06); };
+  btnNext.onclick = ()=>{ dispatch([{ type:'NextLevel' }]); };
+  btnNext2.onclick = ()=>{ dispatch([{ type:'NextLevel' }]); };
+  btnReplay.onclick = ()=>{ dispatch([{ type:'ResetLevel' }]); };
+  btnHelp.onclick = ()=>{ helpOverlay.style.display=''; };
+  btnCloseHelp.onclick = ()=>{ helpOverlay.style.display='none'; };
+  btnStart.onclick = ()=>{ dispatch([{ type:'StartCampaign' }]); };
+  btnSandbox.onclick = ()=>{ dispatch([{ type:'StartSandbox' }]); };
+
+  // Loop
+  let lastT = performance.now(); let dtSinceLast = 0;
+  function loop(t){ dtSinceLast = Math.min(0.1, (t-lastT)/1000); lastT=t; // clamp dt
+    // Tick simulation
+    const actions = [{ type:'Tick' }];
+    game = advance(game, { actions }, dtSinceLast, t);
+    // Victory beep once
+    if(game.justWon){ beep(600,0.08); setTimeout(()=>beep(760,0.1), 90); setTimeout(()=>beep(940,0.12), 180); game.justWon=false; }
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  // Initialize
+  refreshSidebars();
+  updateToolHighlights();
+  requestAnimationFrame(loop);
+
+</script>
+</body>
+</html>

@@ -2,9 +2,9 @@
 
 The script is intentionally idempotent:
 
-- On an unsplit 491-concept pool, it validates every prompt and writes 982 tasks
+- On an unsplit concept pool, it validates every prompt and writes two language tasks per concept
   when called with ``--write``.
-- On the current split pool, it validates the 491 language pairs and exits.
+- On the current split pool, it validates all language pairs and exits.
 
 ``prompt.md`` is the canonical generation prompt. The selected language text is
 also written to ``rounds[0].spec`` so every runner entry point sees identical
@@ -26,7 +26,7 @@ BENCH = ROOT / "bench"
 TASKS = BENCH / "tasks"
 STAGING = BENCH / ".tasks_split_staging"
 BACKUP = BENCH / ".tasks_unsplit_backup"
-EXPECTED_BASE_TASKS = 491
+EXPECTED_BASE_TASKS = None
 ZH_MARKER = re.compile(r"^# 中文版提示词\s*$", re.MULTILINE)
 LANGUAGES = {
     "en": {"title_suffix": " (English)"},
@@ -80,10 +80,8 @@ def _load_single_yaml(task_dir: Path) -> tuple[Path, dict]:
 
 
 def _validate_unsplit(task_dirs: list[Path]) -> None:
-    if len(task_dirs) != EXPECTED_BASE_TASKS:
-        raise ValueError(
-            f"expected {EXPECTED_BASE_TASKS} unsplit tasks, found {len(task_dirs)}"
-        )
+    if not task_dirs:
+        raise ValueError("expected at least one unsplit task")
     for task_dir in task_dirs:
         prompt_path = task_dir / "prompt.md"
         if not prompt_path.is_file():
@@ -95,9 +93,8 @@ def _validate_unsplit(task_dirs: list[Path]) -> None:
 
 
 def _validate_split(task_dirs: list[Path]) -> None:
-    expected = EXPECTED_BASE_TASKS * len(LANGUAGES)
-    if len(task_dirs) != expected:
-        raise ValueError(f"expected {expected} split tasks, found {len(task_dirs)}")
+    if not task_dirs:
+        raise ValueError("expected at least one split task")
 
     pairs: dict[str, set[str]] = {}
     for task_dir in task_dirs:
@@ -126,10 +123,9 @@ def _validate_split(task_dirs: list[Path]) -> None:
             raise ValueError(f"{yaml_path}: rounds[0].spec differs from prompt.md")
 
     bad_pairs = {base: langs for base, langs in pairs.items() if langs != set(LANGUAGES)}
-    if len(pairs) != EXPECTED_BASE_TASKS or bad_pairs:
+    if bad_pairs:
         raise ValueError(
-            f"expected {EXPECTED_BASE_TASKS} complete language pairs; "
-            f"found {len(pairs)}, incomplete={bad_pairs}"
+            f"expected complete language pairs; found {len(pairs)}, incomplete={bad_pairs}"
         )
 
 
@@ -206,7 +202,7 @@ def main(argv=None) -> int:
     parser.add_argument(
         "--write",
         action="store_true",
-        help="replace a bilingual 491-task pool with 982 language-specific tasks",
+        help="replace an unsplit bilingual task pool with language-specific tasks",
     )
     args = parser.parse_args(argv)
 
@@ -216,7 +212,7 @@ def main(argv=None) -> int:
         _validate_split(task_dirs)
         print(
             f"validated {len(task_dirs)} tasks: "
-            f"{EXPECTED_BASE_TASKS} concepts x {len(LANGUAGES)} languages"
+            f"{len(task_dirs) // len(LANGUAGES)} concepts x {len(LANGUAGES)} languages"
         )
         return 0
     if split_count:
@@ -232,8 +228,8 @@ def main(argv=None) -> int:
 
     _replace_pool(task_dirs)
     print(
-        f"split complete: {EXPECTED_BASE_TASKS} concepts x "
-        f"{len(LANGUAGES)} languages = {EXPECTED_BASE_TASKS * len(LANGUAGES)} tasks"
+        f"split complete: {len(task_dirs)} concepts x "
+        f"{len(LANGUAGES)} languages = {len(task_dirs) * len(LANGUAGES)} tasks"
     )
     return 0
 

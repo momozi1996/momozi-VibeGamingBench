@@ -7,55 +7,10 @@ provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # 滑板公园（Sports Skateboard Park）
-
-    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**滑板公园**游戏。
-    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
-    纵向切片放到 itch.io 页面或 Steam 上。
-
-    ## 核心构想
-
-    玩家在各个公园里滑行，做出特技连击来刷高分，解锁新特技并搭建自定义公园。
-    这里的幻想是"心流状态"：在一段不间断的连击中把磨轨串进翻板、再串进平衡滑行，
-    看着分数倍率一路攀升。张力来自落地——一个特技没掐准时机就意味着一次摔车，
-    连击随之清零。生涯目标推动玩家去精通特定的特技，并在主题公园里达成目标分数。
-
-    ## 玩家体验流程
-
-    1. **标题画面** —— 一个涂鸦风格的标题，游戏名称采用喷漆字体，压在一个半管的
-       剪影之上。一个轮子形状的开始按钮。
-    2. **公园选择** —— 多个布局各异的公园：街式场地（栏杆、台阶、边沿）、垂直坡道
-       （半管、碗池），以及一个综合公园（所有元素合而为一）。它们逐步解锁。
-    3. **滑行** —— 玩家用左/右移动，带有动量物理。速度在下坡时积攒，在上坡时流失。
-       滑手拥有流畅的滚动动画，并会对地形做出反应。
-    4. **特技系统** —— 按键组合触发特技：翻板特技（轻按按键）、磨轨特技（靠近栏杆
-       时按下）、抓板特技（在空中按住）。每个特技都有一个名字弹出在屏幕上。特技可以
-       串成连击，并带有可见的倍率。
-    5. **分数倍率** —— 在不触地、不摔车的前提下把特技连起来，倍率就会提升。干净
-       落地会把分数入袋；摔车则丢掉当前连击。一个连击计量条显示当前的连接长度和
-       潜在得分。
-    6. **生涯目标** —— 每个公园都有特定挑战："在一次连击中得到 10,000 分"、
-       "落成一个 kickflip 接磨轨"、"完成一次全管旋转"。完成目标可解锁新的特技和
-       公园。
-    7. **公园编辑器** —— 玩家可以摆放坡道、栏杆和障碍物来创建自定义公园。摆放的
-       元素会吸附到网格上。自定义公园可立即游玩。
-
-    ## 提交格式（HTML）
-
-    交付物 **两个文件**：
-
-    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
-    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
-      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
-
-    约束：
-    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
-    - 键盘输入 `WASD + 空格 + Enter + ESC`。
-    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
-    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+  spec: "# 滑板公园（Sports Skateboard Park）\n\n用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**滑板公园**游戏。\n这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为\n纵向切片放到 itch.io 页面或 Steam 上。\n\n## 核心构想\n\n玩家在各个公园里滑行，做出特技连击来刷高分，解锁新特技并搭建自定义公园。\n这里的幻想是\"心流状态\"：在一段不间断的连击中把磨轨串进翻板、再串进平衡滑行，\n看着分数倍率一路攀升。张力来自落地——一个特技没掐准时机就意味着一次摔车，\n连击随之清零。生涯目标推动玩家去精通特定的特技，并在主题公园里达成目标分数。\n\n## 玩家体验流程\n\n1. **标题画面** —— 一个涂鸦风格的标题，游戏名称采用喷漆字体，压在一个半管的\n   剪影之上。一个轮子形状的开始按钮。\n2. **公园选择** —— 多个布局各异的公园：街式场地（栏杆、台阶、边沿）、垂直坡道\n   （半管、碗池），以及一个综合公园（所有元素合而为一）。它们逐步解锁。\n3. **滑行** —— 玩家用左/右移动，带有动量物理。速度在下坡时积攒，在上坡时流失。\n   滑手拥有流畅的滚动动画，并会对地形做出反应。\n4. **特技系统** —— 按键组合触发特技：翻板特技（轻按按键）、磨轨特技（靠近栏杆\n   时按下）、抓板特技（在空中按住）。每个特技都有一个名字弹出在屏幕上。特技可以\n   串成连击，并带有可见的倍率。\n5. **分数倍率** —— 在不触地、不摔车的前提下把特技连起来，倍率就会提升。干净\n   落地会把分数入袋；摔车则丢掉当前连击。一个连击计量条显示当前的连接长度和\n   潜在得分。\n6. **生涯目标** —— 每个公园都有特定挑战：\"在一次连击中得到 10,000 分\"、\n   \"落成一个 kickflip 接磨轨\"、\"完成一次全管旋转\"。完成目标可解锁新的特技和\n   公园。\n7. **公园编辑器** —— 玩家可以摆放坡道、栏杆和障碍物来创建自定义公园。摆放的\n   元素会吸附到网格上。自定义公园可立即游玩。\n\n## Vibe Gaming Quality\
+    \ Bar\n\n本题的玩法、逻辑和验收锚点优先于下面的表达规范。不要重写或删减上面的核心\n机制；这些要求用于把同一玩法稳定地落成一个可玩的 Vibe Gaming 垂直切片。\n\n- **先玩后美化**：先保证开始、核心输入、状态变化、成功/失败和重玩闭环，再做视觉与动效。\n- **技术栈按玩法选最小充分方案**：\n  - 2D 规则游戏优先 `HTML5 Canvas 2D + Vanilla JS`；\n  - 面板、卡牌、对话和菜单密集时可用 `DOM + CSS + Vanilla JS`；\n  - 图标、线稿和几何动画可用 `纯 SVG + CSS 动画 + Vanilla JS`；\n  - 连续碰撞、镜头、粒子或街机物理可用 `PhaserJS`；\n  - 3D 或空间镜头可用 `Three.js + WebGL`；\n  - 只有确实需要 GPU 大规模并行或自定义 GPU 管线时才用原生 `WebGPU`；\n  - 可以混合 Canvas、DOM、CSS、SVG，但必须明确每层职责，禁止为了“技术炫技”增加无关复杂度。\n- **规则层独立**：`game_logic.js` 保存唯一真相，暴露 `createGame(opts)` 和\n  `advance(game, input, dt)`；渲染层只读取状态并呈现，不能偷偷维护第二套规则。\n- **每帧可解释**：输入要映射到明确动作，动作要产生可观察状态变化；无效输入、\n  边界条件、资源耗尽、受伤、胜利和失败都要有反馈。\n- **Vibe 不是装饰**：至少使用两种反馈通道（动画、位移、缩放、粒子、声音、\n  HUD 或镜头）表达关键动作；反馈不能遮挡目标或破坏可读性。\n- **移动端优先**：关键点击目标至少 44×44 CSS px，支持触摸和鼠标，不能依赖 hover；\n  390×844、360×800、430×932 和 1280×800 不得横向滚动或出现控件重叠。\n- **确定性与测试**：随机内容使用 seed；至少验证核心规则、胜负条件、重开/恢复、\n  输入边界和一个异常状态；不要用截图存在或文字出现冒充功能完成。\n- **原创与合规**：使用原创名称、角色、图形、音效和关卡，或明确许可的素材；\n  不复制任何原作商标、角色、文本、美术、音乐、关卡数据或代码。\n\
+    \n完成后报告：实际文件路径、启动命令、测试命令与结果、关键截图、已知限制、\n技术栈取舍和原创资产来源。\n\n## HTML 提交格式\n\n用两个文件交付一个可独立运行的浏览器游戏：\n\n- `index.html` - 完整可玩的呈现层。使用 HTML Canvas 2D 或 Three.js/WebGL 完成可玩呈现。\n- `game_logic.js` - 确定性的状态与规则层，使用经典脚本格式并暴露\n  `createGame(opts)` 和 `advance(game, input, dt)`；可选暴露\n  `render(gameState, renderCtx)`。\n\n页面无需构建步骤或本地服务器即可打开，普通笔记本应在三秒内完成首屏渲染。\n资源必须在运行时自包含生成，不得请求网络：可以使用程序化几何体、Canvas2D\n绘制并编码为 `data:` URI 的纹理、离屏 Canvas 粒子精灵、Web Audio API 合成音效、\n着色器、后处理和 CSS。不得嵌入或运行时获取外部图片、模型、视频或音频文件。\nThree.js 可以从固定版本的官方 CDN 加载；如使用后处理，只能加载同一 Three.js\n版本下固定的 `examples/jsm/postprocessing/*` 模块。\n\n交互方案（both）：根据玩法同时支持键盘和指针交互；移动/动作使用键盘，空间选择、菜单和目标操作使用鼠标。\n完整游戏区和 HUD 在 1280x720 下应清晰可读。需要有明确的开始流程、简短游戏内\n引导、暂停与重开控制、完整胜负/计分结果闭环，以及每项关键操作的可见反馈。\n\n`index.html` 不得使用 `fetch()` 或 `XMLHttpRequest` 请求外部 URL；只允许上述\n固定版本 Three.js CDN。`index.html` ≤ 400 KB；`game_logic.js` 行数限制仅作\n建议，不作为 BUILD 失败条件。\n\n### 逻辑与渲染脚手架\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n\
+    \  const game = createGame({});\n  // 主循环调用 advance；render(game, { THREE, scene, ... }) 可选。\n</script>\n```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` 必须是纯函数，不访问 DOM 或 Three.js 对象；可选的 `render()` 由\n主循环调用并负责把状态映射到场景、材质、粒子和后处理。"
 static:
 - kind: required_file
   role: entry
@@ -98,5 +53,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: both
+  start_keys:
+  - Enter
+  - Space
 language: zh
 base_task_id: mz_sports-skateboard-park

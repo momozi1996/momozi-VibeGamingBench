@@ -1,0 +1,352 @@
+[
+  {
+    "task": "mz_aiga-world-0002c65b-en",
+    "family": "survival",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-0002c65b-zh",
+    "family": "survival",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-00ab8e9e-en",
+    "family": "openworld",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-00ab8e9e-zh",
+    "family": "openworld",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-01fa9a14-en",
+    "family": "rpg",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-01fa9a14-zh",
+    "family": "rpg",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-0480d03a-en",
+    "family": "strategy",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-0480d03a-zh",
+    "family": "strategy",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-059c3a15-en",
+    "family": "simulation",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-059c3a15-zh",
+    "family": "simulation",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-06b97118-en",
+    "family": "strategy",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-06b97118-zh",
+    "family": "strategy",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-07460b91-en",
+    "family": "openworld",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-07460b91-zh",
+    "family": "openworld",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-07c73ef1-en",
+    "family": "adventure",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-07c73ef1-zh",
+    "family": "adventure",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-08707e8a-en",
+    "family": "openworld",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-08707e8a-zh",
+    "family": "openworld",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-0ce32e5e-en",
+    "family": "racing",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-0ce32e5e-zh",
+    "family": "racing",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-10c25e80-en",
+    "family": "strategy",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-10c25e80-zh",
+    "family": "strategy",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-1493b04f-en",
+    "family": "strategy",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-1493b04f-zh",
+    "family": "strategy",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-1b4c8819-en",
+    "family": "simulation",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-1b4c8819-zh",
+    "family": "simulation",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-1da77e43-en",
+    "family": "openworld",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-1da77e43-zh",
+    "family": "openworld",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-1de64b8b-en",
+    "family": "openworld",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-1de64b8b-zh",
+    "family": "openworld",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-20cc20ef-en",
+    "family": "action",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-20cc20ef-zh",
+    "family": "action",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-21a068ed-en",
+    "family": "rpg",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-21a068ed-zh",
+    "family": "rpg",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-21ce8e9f-en",
+    "family": "rpg",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-21ce8e9f-zh",
+    "family": "rpg",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-22f5ea6b-en",
+    "family": "narrative",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-22f5ea6b-zh",
+    "family": "narrative",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-246587eb-en",
+    "family": "openworld",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-246587eb-zh",
+    "family": "openworld",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-279fa325-en",
+    "family": "openworld",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-279fa325-zh",
+    "family": "openworld",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-2b5b5a28-en",
+    "family": "survival",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-2b5b5a28-zh",
+    "family": "survival",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-2c016241-en",
+    "family": "adventure",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-2c016241-zh",
+    "family": "adventure",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-2c2e71f5-en",
+    "family": "adventure",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-2c2e71f5-zh",
+    "family": "adventure",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-2d42058d-en",
+    "family": "openworld",
+    "language": "en",
+    "ok": true,
+    "build_gate_ok": true
+  },
+  {
+    "task": "mz_aiga-world-2d42058d-zh",
+    "family": "openworld",
+    "language": "zh",
+    "ok": true,
+    "build_gate_ok": true
+  }
+]

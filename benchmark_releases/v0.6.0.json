@@ -1,0 +1,19 @@
+{
+  "release": "v0.6.0",
+  "benchmark": "momozi-VibeGamingBench",
+  "benchmark_type": "agent",
+  "schema_version": 1,
+  "code_tag": "v0.6.0",
+  "static_evaluation": true,
+  "dynamic_evaluation": true,
+  "multimodal_evaluation": true,
+  "evaluation_protocol": "agent-v2",
+  "result_schema_version": 2,
+  "task_manifest_sha256": "c81571a9dc0e3339e74c8227725820feaf0992822736db713cb8453e76d4f354",
+  "runtime_version": "1.1",
+  "judge_version": "1.1",
+  "scoring_version": "1.1",
+  "statistics_version": "1.0",
+  "hidden_split": "private",
+  "task_semantics": "491 concepts x EN/ZH paired instances"
+}

@@ -27,7 +27,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--public-out",
         type=Path,
-        default=ROOT / "benchmark_releases" / "v0.5.0-split.public.json",
+        default=ROOT / "benchmark_releases" / "v0.7.0-split.public.json",
     )
     parser.add_argument(
         "--private-out",
@@ -35,20 +35,26 @@ def main(argv: list[str] | None = None) -> int:
         required=True,
         help="private path for hidden IDs; never commit this file",
     )
-    parser.add_argument("--seed", type=int, default=20260829)
-    parser.add_argument("--dev", type=int, default=DEFAULT_COUNTS["DEV"])
-    parser.add_argument("--public", type=int, default=DEFAULT_COUNTS["PUBLIC"])
-    parser.add_argument("--hidden", type=int, default=DEFAULT_COUNTS["HIDDEN"])
+    parser.add_argument("--seed", type=int, default=20260904)
+    parser.add_argument("--dev", type=int, default=None)
+    parser.add_argument("--public", type=int, default=None)
+    parser.add_argument("--hidden", type=int, default=None)
     args = parser.parse_args(argv)
     base_ids = set()
     for path in args.tasks_root.glob("*/*.task.yaml"):
         raw = yaml.safe_load(path.read_text(encoding="utf-8"))
         if raw.get("base_task_id"):
             base_ids.add(raw["base_task_id"])
+    total = len(base_ids)
+    # Preserve the historical DEV/PUBLIC/HIDDEN proportions while deriving a
+    # valid deterministic split for any expanded pool.
+    dev = args.dev if args.dev is not None else round(total * 0.611)
+    public = args.public if args.public is not None else round(total * 0.204)
+    hidden = args.hidden if args.hidden is not None else total - dev - public
     split = split_concepts(
         base_ids,
         seed=args.seed,
-        counts={"DEV": args.dev, "PUBLIC": args.public, "HIDDEN": args.hidden},
+        counts={"DEV": dev, "PUBLIC": public, "HIDDEN": hidden},
     )
     args.public_out.parent.mkdir(parents=True, exist_ok=True)
     args.private_out.parent.mkdir(parents=True, exist_ok=True)

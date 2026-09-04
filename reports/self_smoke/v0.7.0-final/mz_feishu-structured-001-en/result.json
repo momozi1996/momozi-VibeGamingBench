@@ -1,0 +1,379 @@
+{
+  "benchmark": "momozi-VibeGamingBench",
+  "version": "0.7.0",
+  "schema_version": 2,
+  "benchmark_release": "v0.7.0",
+  "evaluation_protocol": "agent-v2",
+  "run_id": "v0.7.0-final",
+  "timestamp": "2026-09-04T12:26:56.065710+00:00",
+  "model_label": "temporary-self-smoke",
+  "agent": {
+    "name": "temporary-self-smoke",
+    "version": "1.0",
+    "model": "self",
+    "model_version": "local-deterministic",
+    "harness": "scripts/self_smoke_harness.py"
+  },
+  "task": "mz_feishu-structured-001-en",
+  "task_id": "mz_feishu-structured-001-en",
+  "base_task_id": "mz_feishu-structured-001",
+  "family": "rpg",
+  "difficulty": "medium",
+  "language": "en",
+  "generation": {
+    "mode": "self-smoke-harness",
+    "ok": true,
+    "stdout": "{\"ok\": true, \"product_dir\": \"reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/product\", \"family\": \"rpg\"}\n",
+    "stderr": "",
+    "returncode": 0
+  },
+  "harness": {
+    "name": "self-smoke-harness",
+    "command": true,
+    "contract_version": 1
+  },
+  "static": {
+    "version": "1.0",
+    "status": "fail",
+    "build": {
+      "ok": true,
+      "checks": {
+        "index_html_present": true,
+        "game_logic_present": true,
+        "canvas_or_webgl": true,
+        "no_external_heavy_refs": true
+      },
+      "reasons": [],
+      "detail": "HTML static gates pass"
+    },
+    "contract": {
+      "pass_rate": 0.0,
+      "passed": 0,
+      "total": 1,
+      "results": [
+        {
+          "id": "logic_import",
+          "ok": false,
+          "detail": "ENOENT: no such file or directory, open 'reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/product/game_logic.js'"
+        }
+      ]
+    },
+    "failure_details": [
+      {
+        "code": "STATIC_CONTRACT_FAIL",
+        "detail": "0/1 contract checks passed"
+      }
+    ],
+    "score": 40.0,
+    "judge": {
+      "provider": "temporary-self-smoke",
+      "model": "self"
+    }
+  },
+  "dynamic": {
+    "status": "pass",
+    "server_start": true,
+    "page_load": true,
+    "runtime_stable": true,
+    "page_load_ms": 80,
+    "fatal_console_errors": 0,
+    "console_errors": [],
+    "page_errors": [],
+    "input_probe": {
+      "attempted": true,
+      "success": true
+    },
+    "screenshots": [
+      {
+        "path": "reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/evidence/boot.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:26:54.502672+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      },
+      {
+        "path": "reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/evidence/gameplay_start.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:26:55.208365+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      },
+      {
+        "path": "reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/evidence/gameplay_mid.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:26:55.926128+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      }
+    ],
+    "browser": {
+      "name": "chromium",
+      "version": "145.0.7632.6"
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "runtime_config": {
+      "locale": "en-US",
+      "timezone": "UTC",
+      "device_scale_factor": 1.0,
+      "stabilization_ms": 250,
+      "input_probe": true,
+      "auto_start": true,
+      "input_scheme": "both",
+      "start_keys": [
+        "Enter",
+        "Space"
+      ],
+      "gameplay_actions": 4,
+      "network_policy": "local-plus-pinned-threejs-cdn",
+      "allowed_hosts": [
+        "unpkg.com",
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com"
+      ]
+    },
+    "failure_code": null,
+    "failure_details": [],
+    "infrastructure_error": false,
+    "version": "1.1",
+    "score": 100.0
+  },
+  "runtime": {
+    "status": "pass",
+    "server_start": true,
+    "page_load": true,
+    "runtime_stable": true,
+    "page_load_ms": 80,
+    "fatal_console_errors": 0,
+    "console_errors": [],
+    "page_errors": [],
+    "input_probe": {
+      "attempted": true,
+      "success": true
+    },
+    "screenshots": [
+      {
+        "path": "reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/evidence/boot.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:26:54.502672+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      },
+      {
+        "path": "reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/evidence/gameplay_start.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:26:55.208365+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      },
+      {
+        "path": "reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/evidence/gameplay_mid.png",
+        "width": 1280,
+        "height": 720,
+        "timestamp": "2026-09-04T12:26:55.926128+00:00",
+        "browser": "chromium",
+        "browser_version": "145.0.7632.6",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "version": "1.0"
+      }
+    ],
+    "browser": {
+      "name": "chromium",
+      "version": "145.0.7632.6"
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "runtime_config": {
+      "locale": "en-US",
+      "timezone": "UTC",
+      "device_scale_factor": 1.0,
+      "stabilization_ms": 250,
+      "input_probe": true,
+      "auto_start": true,
+      "input_scheme": "both",
+      "start_keys": [
+        "Enter",
+        "Space"
+      ],
+      "gameplay_actions": 4,
+      "network_policy": "local-plus-pinned-threejs-cdn",
+      "allowed_hosts": [
+        "unpkg.com",
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com"
+      ]
+    },
+    "failure_code": null,
+    "failure_details": [],
+    "infrastructure_error": false,
+    "version": "1.1",
+    "score": 100.0
+  },
+  "visual": {
+    "functional_visual": {
+      "score": 3.0,
+      "evidence": [
+        "runtime screenshots captured by Chromium",
+        "temporary self-smoke judge"
+      ]
+    },
+    "presentation": {
+      "score": 5.0,
+      "evidence": [
+        "HTML/CSS/Canvas presentation signals",
+        "temporary self-smoke judge"
+      ]
+    },
+    "confidence": 0.25,
+    "score": 80.0,
+    "judge": {
+      "provider": "temporary-self-smoke",
+      "model": "self",
+      "version": "1.0"
+    }
+  },
+  "build_gate": {
+    "ok": true,
+    "checks": {
+      "index_html_present": true,
+      "game_logic_present": true,
+      "canvas_or_webgl": true,
+      "no_external_heavy_refs": true
+    },
+    "reasons": [],
+    "detail": "HTML static gates pass"
+  },
+  "contract": {
+    "pass_rate": 0.0,
+    "passed": 0,
+    "total": 1,
+    "results": [
+      {
+        "id": "logic_import",
+        "ok": false,
+        "detail": "ENOENT: no such file or directory, open 'reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/product/game_logic.js'"
+      }
+    ]
+  },
+  "dimensions": {
+    "completeness": {
+      "score": 0.0,
+      "reason": "Temporary deterministic self-smoke score based on artifact signals; not a human or external model quality judgment.",
+      "evidence": [
+        "task family=rpg",
+        "html_bytes=8543",
+        "logic_bytes=1571",
+        "runtime_status=pass"
+      ],
+      "missing": []
+    },
+    "richness": {
+      "score": 1.5,
+      "reason": "Temporary deterministic self-smoke score based on artifact signals; not a human or external model quality judgment.",
+      "evidence": [
+        "task family=rpg",
+        "html_bytes=8543",
+        "logic_bytes=1571",
+        "runtime_status=pass"
+      ],
+      "missing": []
+    },
+    "player_exp": {
+      "score": 3.0,
+      "reason": "Temporary deterministic self-smoke score based on artifact signals; not a human or external model quality judgment.",
+      "evidence": [
+        "task family=rpg",
+        "html_bytes=8543",
+        "logic_bytes=1571",
+        "runtime_status=pass"
+      ],
+      "missing": []
+    },
+    "visual": {
+      "score": 5.0,
+      "reason": "Temporary deterministic self-smoke score based on artifact signals; not a human or external model quality judgment.",
+      "evidence": [
+        "task family=rpg",
+        "html_bytes=8543",
+        "logic_bytes=1571",
+        "runtime_status=pass"
+      ],
+      "missing": []
+    }
+  },
+  "fatal_issues": [],
+  "confidence": 0.25,
+  "scores": {
+    "static": 40.0,
+    "dynamic": 100.0,
+    "visual": 80.0,
+    "design": 58.0,
+    "weights": {
+      "static": 0.4,
+      "dynamic": 0.25,
+      "visual": 0.2,
+      "design": 0.15
+    },
+    "raw": 65.7,
+    "final": 65.7,
+    "overall_score": 65.7,
+    "hard_cap": null,
+    "scoring_version": "1.1",
+    "rubric_score_100": 54.5,
+    "build_multiplier": 1.0,
+    "contract_multiplier": 0.0,
+    "legacy_overall_score": 0.0
+  },
+  "judge": {
+    "provider": "temporary-self-smoke",
+    "model": "self"
+  },
+  "leaderboard_eligible": false,
+  "evaluation_error": null,
+  "primary_failure": "STATIC_CONTRACT_FAIL",
+  "failure_details": [
+    {
+      "code": "STATIC_CONTRACT_FAIL",
+      "detail": "0/1 contract checks passed"
+    }
+  ],
+  "workspace": "reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en",
+  "product_dir": "reports/self_smoke/v0.7.0-final/mz_feishu-structured-001-en/product"
+}

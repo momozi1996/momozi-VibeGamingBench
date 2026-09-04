@@ -1,4 +1,4 @@
-# VibeGamingBench Design (v0.5.0)
+# VibeGamingBench Design (v0.7.0)
 
 ## 1. Positioning
 
@@ -28,15 +28,20 @@ runtime smoke test, not a full gameplay simulator.
 
 ## 2. Dataset Semantics
 
-The release keeps the existing pool:
+The release contains the existing pool plus the Feishu Prompt Catalog import:
 
-- 491 unique game concepts.
-- 982 evaluation instances: one English and one Chinese realization per concept.
+- 711 unique game concepts.
+- 1,422 evaluation instances: one English and one Chinese realization per concept.
 - 21 normalized game families.
 - Heuristic `low`, `medium`, and `high` implementation difficulty.
 
+The 220 added concepts come from the Feishu Prompt Catalog workbook: 100
+structured type/technology seeds from `直接1` and 120 full generation prompts
+from `直接生成`. Each is wrapped without changing its core gameplay intent,
+then paired as an English and Chinese task under the same contract and rubric.
+
 `base_task_id` is the concept-level statistical unit. EN and ZH are paired
-variants, not 982 independent concepts.
+variants, not 1,422 independent concepts.
 
 ## 3. Task Record
 
@@ -58,7 +63,7 @@ evaluation:
   primary_entrypoint: index.html
 ```
 
-When omitted, v0.5 defaults apply. No task embeds custom runtime evaluator
+When omitted, v0.6 defaults apply. No task embeds custom runtime evaluator
 code.
 
 ## 4. Artifact Contract
@@ -70,11 +75,13 @@ index.html
 game_logic.js
 ```
 
-The entry page must expose a Canvas or WebGL rendering path. The logic module
-must export `createGame(opts)` and `advance(game, input, dt)` and should remain
-independent of DOM/rendering code. Tasks prohibit build steps and runtime
-downloads of arbitrary assets; pinned Three.js CDN references are handled by
-the runtime network policy.
+The entry page must expose a Canvas or WebGL rendering path. The logic script
+must expose `createGame(opts)` and `advance(game, input, dt)` through
+`window.GameLogic` (with a CommonJS fallback) and should remain independent of
+DOM/rendering code. An optional `render(gameState, renderCtx)` hook owns visual
+side effects. Tasks prohibit build steps and arbitrary runtime downloads;
+procedurally generated data-URI textures and synthesized audio are allowed,
+while pinned Three.js CDN references are handled by the runtime policy.
 
 ## 5. Static Evaluation
 
@@ -84,7 +91,7 @@ Static evaluation answers **what the agent built**. It combines:
 2. Deterministic Node behavior contract.
 3. Existing code-based rubric judge for completeness, richness, player experience, and visual evidence.
 
-The legacy v0.x runner and result paths remain available. The v0.5
+The legacy v0.x runner and result paths remain available. The v0.6
 `StaticEvaluator` wraps the same deterministic checks instead of replacing them.
 
 ## 6. Dynamic Evaluation
@@ -97,8 +104,8 @@ runtime smoke runner:
 3. Uses a fixed 1280×720 viewport, `en-US`, `UTC`, and device scale factor 1.
 4. Loads the page and records browser version and page-load time.
 5. Captures console/page errors during a bounded stabilization window.
-6. Attempts a generic `ArrowRight` input probe unless disabled.
-7. Captures `boot.png` after stabilization.
+6. Uses the task's family-aware start key and pointer/keyboard probe unless disabled.
+7. Captures `boot.png`, `gameplay_start.png`, and `gameplay_mid.png`.
 
 Runtime failures remain structured (`D_SERVER_START_FAIL`,
 `D_PAGE_LOAD_FAIL`, `D_RUNTIME_FATAL`, `D_TIMEOUT`, `D_SCREENSHOT_FAIL`, and
@@ -107,7 +114,8 @@ related codes). A pass does not imply complete gameplay correctness.
 ## 7. Screenshot and VLM Judge
 
 The screenshot is inspectable runtime evidence. The multimodal judge receives
-the task prompt, high-level visual rubric, runtime facts, and screenshot. It
+the task prompt, high-level visual rubric, runtime facts, and gameplay
+screenshots. It
 must return strict JSON with two 0–5 dimensions:
 
 - `functional_visual`: visible game content, requested objects, readable UI,
@@ -182,12 +190,13 @@ static_false_positive_rate
 ## 11. Hidden Split and Releases
 
 `scripts/create_hidden_split.py` creates deterministic concept-level
-`DEV/PUBLIC/HIDDEN` partitions (default 300/100/91 for 491 concepts). The
+`DEV/PUBLIC/HIDDEN` partitions are derived from the current concept count while
+preserving the historical proportions. The
 public manifest is committed; the hidden manifest must be written to a private
 path and is not a secrecy boundary while the full task pool remains in a
 development checkout.
 
-`benchmark_releases/v0.5.0.json` records the task-manifest hash, code tag,
+`benchmark_releases/v0.7.0.json` records the task-manifest hash, code tag,
 runtime/judge/scoring versions, and paired task semantics. Published
 leaderboards must identify the release.
 

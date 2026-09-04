@@ -1,3 +1,5 @@
 # Runtime dependencies for task loading and dynamic browser smoke.
 PyYAML>=5.4
 playwright>=1.48,<2
+# Optional source-import tooling uses requests for resilient translation calls.
+requests>=2.31

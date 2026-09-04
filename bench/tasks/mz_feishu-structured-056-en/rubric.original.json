@@ -1,0 +1,118 @@
+{
+  "score_formula": "BUILD * (0.15*((M1+M2+M3)/3) + 0.35*((D1+D2+D3+D4)/4) + 0.15*((V1+V2+V3)/3) + 0.35*((A1+A2+A3+A4)/4))",
+  "max_demos": 10,
+  "max_demo_seconds": 20,
+  "build_check": {
+    "id": "BUILD",
+    "cmd": "momozi HTML static BUILD gate",
+    "description": "index.html and game_logic.js exist, a canvas/WebGL/WebGPU renderer signal is present, and no disallowed heavy runtime asset references are used."
+  },
+  "categories": [
+    {
+      "name": "Core Mechanics",
+      "items": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "name": "Content Depth",
+      "items": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    {
+      "name": "Functional Visuals",
+      "items": [
+        "V1",
+        "V2",
+        "V3"
+      ]
+    },
+    {
+      "name": "Presentation & Art",
+      "items": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "M1",
+      "agg": "max",
+      "description": "The core loop from the original brief is playable and completed through player input: Create a space simulation demo. Spaceship navigation; planetary gravity physics; resource collection; space roaming. Art: Deep Starry Sky. Acceptance criteria: Gravitational physics takes effect and resources are collected. Outputs a single complete self-contained HTML file, no external CDN, no external image and audio resources, all resources are generated programmatically; has a complete game closed loop: starting interface, play loop, victory and defeat settlement; local storage of progress/scores; semi-finished demos are prohibited."
+    },
+    {
+      "id": "M2",
+      "agg": "max",
+      "description": "Core inputs, rules, state transitions, success conditions, and failure conditions form a deterministic state machine in game_logic.js rather than static buttons or decoration."
+    },
+    {
+      "id": "M3",
+      "agg": "max",
+      "description": "At least one core action exposes valid/invalid input, edge conditions, immediate feedback, and recovery or reset behavior."
+    },
+    {
+      "id": "D1",
+      "agg": "max",
+      "description": "Implement three escalating phases and make theme-appropriate resources, timers, health, score, inventory, cooldowns, or other state change decisions."
+    },
+    {
+      "id": "D2",
+      "agg": "max",
+      "description": "Provide at least three functionally distinct contents, objects, levels, enemies, puzzles, or strategic choices; color/text swaps alone do not count."
+    },
+    {
+      "id": "D3",
+      "agg": "max",
+      "description": "Implement pause, restart, result, localStorage restoration, and at least one observable persistent or replay outcome."
+    },
+    {
+      "id": "D4",
+      "agg": "max",
+      "description": "The third phase combines at least two earlier mechanics and provides clear success, failure, and replay flows."
+    },
+    {
+      "id": "V1",
+      "agg": "mean",
+      "description": "The HUD clearly presents the objective, critical resources, phase, progress, and danger, synchronized with live state."
+    },
+    {
+      "id": "V2",
+      "agg": "mean",
+      "description": "Valid, invalid, damage, success, failure, and state changes have distinguishable immediate feedback."
+    },
+    {
+      "id": "V3",
+      "agg": "mean",
+      "description": "The complete start, onboarding, play, result, and retry loop works without a page refresh."
+    },
+    {
+      "id": "A1",
+      "agg": "mean",
+      "description": "Use a coherent, recognizable original art direction in which the chosen technology serves the theme rather than default controls."
+    },
+    {
+      "id": "A2",
+      "agg": "mean",
+      "description": "Camera, composition, layering, lighting, or 2D layout are deliberate and keep important objects and goals readable."
+    },
+    {
+      "id": "A3",
+      "agg": "mean",
+      "description": "Actors, goals, hazards, tools, and UI symbols have readable silhouettes and visibly different functional states."
+    },
+    {
+      "id": "A4",
+      "agg": "mean",
+      "description": "Movement, impacts, transitions, alerts, completion moments, and UI changes use multi-frame animation, particles, camera, or audio feedback."
+    }
+  ]
+}

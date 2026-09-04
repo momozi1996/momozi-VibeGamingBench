@@ -1,70 +1,16 @@
 id: mz_openworld-ghost-zh
 title: openworld ghost (中文)
 family: openworld
-difficulty: medium
+difficulty: high
 engine: html
 provenance:
   kind: existing_pool
 rounds:
 - name: R1
-  spec: |-
-    # 开放世界捉鬼（Open-World Ghost Hunting）
-
-    用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**2D 开放世界捉鬼游戏**。
-    这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
-    纵向切片放到 itch.io 页面或 Steam 上。
-
-    ## 核心构想
-
-    玩家探索一座开放世界小镇中各处闹鬼的地点，使用专门的器材来探测、追踪并捕捉
-    幽灵。游戏的感觉是**氛围浓厚、紧张、充满调查感**——可以想象成小体量的
-    *Phasmophobia* 结合 *A Short Hike*。美术风格必须**统一且具有黑暗氛围感**：
-    低饱和配色、雾气叠层、闪烁的光源，以及在阴影背景中依然清晰可辨的精灵图。
-
-    ## 玩家体验流程
-
-    1. **标题与进入** —— 玩家看到一个有设计感的标题画面，配有阴森的背景（雾气
-       笼罩的墓地、闪烁的提灯、一栋房子的剪影）以及一个"开始狩猎"或"开始游戏"
-       按钮。开始后玩家进入开放世界小镇枢纽。
-
-    2. **闹鬼的世界** —— 玩家在一座开放世界小镇中自由行走，其中至少有四个视觉上
-       截然不同的闹鬼地点：一栋废弃宅邸（黑暗、破窗、荒芜的花园）、一片鬼森林
-       （扭曲的树木、浓雾、发光的眼睛）、一座旧灯塔（临海、浪涛、吱呀作响的木头），
-       以及一所废弃医院（走廊、闪烁的灯、轮椅）。每个地点都有自己的氛围和幽灵类型。
-
-    3. **探测器材** —— 玩家携带至少三件工具：EMF 探测仪（靠近幽灵时蜂鸣频率升高）、
-       热成像相机（把低温区域显示为蓝色叠层）以及灵魂盒（把幽灵的声音转成文字）。
-       每件工具都有独特的视觉和音频反馈。没有器材时幽灵是不可见的——工具是找到
-       它们的唯一途径。
-
-    4. **幽灵类型与证据** —— 至少四种截然不同的幽灵类型，各有独特行为：骚灵
-       （投掷物体）、怨魂（冰冷的呼吸，可穿墙）、报丧女妖（攻击前尖叫）以及
-       暗影（藏身于黑暗，畏惧光）。每种类型都会留下特定的证据，玩家必须收集它们
-       并在证据板上交叉比对以确定其身份。
-
-    5. **狩猎阶段** —— 当收集到足够的证据后，幽灵会变得具有攻击性：灯光闪烁、
-       环境扭曲，狩猎计时器开始倒数。玩家必须使用防御道具（十字架、盐圈、手电筒）
-       来存活下来，并在时间耗尽前捕捉幽灵。
-
-    6. **理智与压力** —— 一条理智值量表会在黑暗中、目睹幽灵活动时或独处过久时
-       下降。低理智会引发幻觉（虚假读数、假的影子），并使幽灵更具攻击性。光源和
-       安全房间能恢复理智，从而在调查与自保之间形成一种拉扯。
-
-    ## 提交格式（HTML）
-
-    交付物 **两个文件**：
-
-    - `index.html` —— 双击即开的单文件页面, 走 CDN 引入 `three.js`
-      (`<script type="module">import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js'</script>`),
-      **不允许** `npm install` / 构建工具 / Python 服务器。普通笔记本 3 秒内必须渲染出来。
-    - `game_logic.js` —— 纯逻辑层 `createGame(opts)` / `advance(game, input, dt)`,
-      由 `index.html` import。规则层需独立于 DOM 和渲染代码。
-
-    约束：
-    - 全部资产程序化生成(颜色、立方体、球体), 不运行时外取图像/音频。
-    - 键盘输入 `WASD + 空格 + Enter + ESC`。
-    - `index.html` 不发生运行时 `fetch/XHR`; 除 three.js 外不引入别的 CDN。
-    - 体量：`game_logic.js ≤ 220 行`, `index.html ≤ 120 KB`。
+  spec: "# 开放世界捉鬼（Open-World Ghost Hunting）\n\n用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个**2D 开放世界捉鬼游戏**。\n这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为\n纵向切片放到 itch.io 页面或 Steam 上。\n\n## 核心构想\n\n玩家探索一座开放世界小镇中各处闹鬼的地点，使用专门的器材来探测、追踪并捕捉\n幽灵。游戏的感觉是**氛围浓厚、紧张、充满调查感**——可以想象成小体量的\n*Phasmophobia* 结合 *A Short Hike*。美术风格必须**统一且具有黑暗氛围感**：\n低饱和配色、雾气叠层、闪烁的光源，以及在阴影背景中依然清晰可辨的精灵图。\n\n## 玩家体验流程\n\n1. **标题与进入** —— 玩家看到一个有设计感的标题画面，配有阴森的背景（雾气\n   笼罩的墓地、闪烁的提灯、一栋房子的剪影）以及一个\"开始狩猎\"或\"开始游戏\"\n   按钮。开始后玩家进入开放世界小镇枢纽。\n\n2. **闹鬼的世界** —— 玩家在一座开放世界小镇中自由行走，其中至少有四个视觉上\n   截然不同的闹鬼地点：一栋废弃宅邸（黑暗、破窗、荒芜的花园）、一片鬼森林\n   （扭曲的树木、浓雾、发光的眼睛）、一座旧灯塔（临海、浪涛、吱呀作响的木头），\n   以及一所废弃医院（走廊、闪烁的灯、轮椅）。每个地点都有自己的氛围和幽灵类型。\n\n3. **探测器材** —— 玩家携带至少三件工具：EMF 探测仪（靠近幽灵时蜂鸣频率升高）、\n   热成像相机（把低温区域显示为蓝色叠层）以及灵魂盒（把幽灵的声音转成文字）。\n   每件工具都有独特的视觉和音频反馈。没有器材时幽灵是不可见的——工具是找到\n   它们的唯一途径。\n\n4. **幽灵类型与证据** —— 至少四种截然不同的幽灵类型，各有独特行为：骚灵\n   （投掷物体）、怨魂（冰冷的呼吸，可穿墙）、报丧女妖（攻击前尖叫）以及\n   暗影（藏身于黑暗，畏惧光）。每种类型都会留下特定的证据，玩家必须收集它们\n   并在证据板上交叉比对以确定其身份。\n\n5. **狩猎阶段** —— 当收集到足够的证据后，幽灵会变得具有攻击性：灯光闪烁、\n\
+    \   环境扭曲，狩猎计时器开始倒数。玩家必须使用防御道具（十字架、盐圈、手电筒）\n   来存活下来，并在时间耗尽前捕捉幽灵。\n\n6. **理智与压力** —— 一条理智值量表会在黑暗中、目睹幽灵活动时或独处过久时\n   下降。低理智会引发幻觉（虚假读数、假的影子），并使幽灵更具攻击性。光源和\n   安全房间能恢复理智，从而在调查与自保之间形成一种拉扯。\n\n## Vibe Gaming Quality Bar\n\n本题的玩法、逻辑和验收锚点优先于下面的表达规范。不要重写或删减上面的核心\n机制；这些要求用于把同一玩法稳定地落成一个可玩的 Vibe Gaming 垂直切片。\n\n- **先玩后美化**：先保证开始、核心输入、状态变化、成功/失败和重玩闭环，再做视觉与动效。\n- **技术栈按玩法选最小充分方案**：\n  - 2D 规则游戏优先 `HTML5 Canvas 2D + Vanilla JS`；\n  - 面板、卡牌、对话和菜单密集时可用 `DOM + CSS + Vanilla JS`；\n  - 图标、线稿和几何动画可用 `纯 SVG + CSS 动画 + Vanilla JS`；\n  - 连续碰撞、镜头、粒子或街机物理可用 `PhaserJS`；\n  - 3D 或空间镜头可用 `Three.js + WebGL`；\n  - 只有确实需要 GPU 大规模并行或自定义 GPU 管线时才用原生 `WebGPU`；\n  - 可以混合 Canvas、DOM、CSS、SVG，但必须明确每层职责，禁止为了“技术炫技”增加无关复杂度。\n- **规则层独立**：`game_logic.js` 保存唯一真相，暴露 `createGame(opts)` 和\n  `advance(game, input, dt)`；渲染层只读取状态并呈现，不能偷偷维护第二套规则。\n- **每帧可解释**：输入要映射到明确动作，动作要产生可观察状态变化；无效输入、\n  边界条件、资源耗尽、受伤、胜利和失败都要有反馈。\n- **Vibe 不是装饰**：至少使用两种反馈通道（动画、位移、缩放、粒子、声音、\n  HUD 或镜头）表达关键动作；反馈不能遮挡目标或破坏可读性。\n- **移动端优先**：关键点击目标至少 44×44 CSS px，支持触摸和鼠标，不能依赖\
+    \ hover；\n  390×844、360×800、430×932 和 1280×800 不得横向滚动或出现控件重叠。\n- **确定性与测试**：随机内容使用 seed；至少验证核心规则、胜负条件、重开/恢复、\n  输入边界和一个异常状态；不要用截图存在或文字出现冒充功能完成。\n- **原创与合规**：使用原创名称、角色、图形、音效和关卡，或明确许可的素材；\n  不复制任何原作商标、角色、文本、美术、音乐、关卡数据或代码。\n\n完成后报告：实际文件路径、启动命令、测试命令与结果、关键截图、已知限制、\n技术栈取舍和原创资产来源。\n\n## HTML 提交格式\n\n用两个文件交付一个可独立运行的浏览器游戏：\n\n- `index.html` - 完整可玩的呈现层。使用 HTML Canvas 2D 或 Three.js/WebGL 完成可玩呈现。\n- `game_logic.js` - 确定性的状态与规则层，使用经典脚本格式并暴露\n  `createGame(opts)` 和 `advance(game, input, dt)`；可选暴露\n  `render(gameState, renderCtx)`。\n\n页面无需构建步骤或本地服务器即可打开，普通笔记本应在三秒内完成首屏渲染。\n资源必须在运行时自包含生成，不得请求网络：可以使用程序化几何体、Canvas2D\n绘制并编码为 `data:` URI 的纹理、离屏 Canvas 粒子精灵、Web Audio API 合成音效、\n着色器、后处理和 CSS。不得嵌入或运行时获取外部图片、模型、视频或音频文件。\nThree.js 可以从固定版本的官方 CDN 加载；如使用后处理，只能加载同一 Three.js\n版本下固定的 `examples/jsm/postprocessing/*` 模块。\n\n交互方案（both）：根据玩法同时支持键盘和指针交互；移动/动作使用键盘，空间选择、菜单和目标操作使用鼠标。\n完整游戏区和 HUD 在 1280x720 下应清晰可读。需要有明确的开始流程、简短游戏内\n引导、暂停与重开控制、完整胜负/计分结果闭环，以及每项关键操作的可见反馈。\n\n`index.html` 不得使用 `fetch()` 或 `XMLHttpRequest` 请求外部\
+    \ URL；只允许上述\n固定版本 Three.js CDN。`index.html` ≤ 400 KB；`game_logic.js` 行数限制仅作\n建议，不作为 BUILD 失败条件。\n\n### 逻辑与渲染脚手架\n\n```html\n<script src=\"./game_logic.js\"></script>\n<script>\n  const { createGame, advance, render } = window.GameLogic;\n  const game = createGame({});\n  // 主循环调用 advance；render(game, { THREE, scene, ... }) 可选。\n</script>\n```\n\n```javascript\n(function (root) {\n  function createGame(opts) { return { phase: \"title\", score: 0 }; }\n  function advance(game, input, dt) { return game; }\n  function render(gameState, renderCtx) { /* optional visual hook */ }\n  const api = { createGame, advance, render };\n  if (typeof module !== \"undefined\" && module.exports) module.exports = api;\n  else root.GameLogic = api;\n}(typeof window !== \"undefined\" ? window : globalThis));\n```\n\n`advance()` 必须是纯函数，不访问 DOM 或 Three.js 对象；可选的 `render()` 由\n主循环调用并负责把状态映射到场景、材质、粒子和后处理。"
 static:
 - kind: required_file
   role: entry
@@ -113,5 +59,10 @@ rubric:
   - A2
   - A3
   - A4
+evaluation:
+  input_scheme: both
+  start_keys:
+  - Enter
+  - Space
 language: zh
 base_task_id: mz_openworld-ghost

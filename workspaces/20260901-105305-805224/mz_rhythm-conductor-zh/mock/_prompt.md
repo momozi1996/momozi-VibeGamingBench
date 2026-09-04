@@ -1,0 +1,82 @@
+# 节奏指挥官（Rhythm Conductor）
+
+用单文件 HTML 双击即开方式交付两个文件（`index.html`、`game_logic.js`） 开发一个节奏指挥官游戏。
+这不是原型，而是一个**完整、可发布的微型游戏**——其打磨程度应当足以作为
+纵向切片放到 itch.io 页面或 Steam 上。
+
+## 核心构想
+
+玩家是战场上的指挥官，向一支战士小队下达节奏性的指令。每一条指令——行军、
+进攻、防守、冲锋——都必须按特定的节奏模式敲击出来。时机拿捏精准，部队就会
+强力而精确地执行；一旦失手，他们就会踉跄陷入混乱。敌人以波次推进，玩家必须
+读懂战场，并在正确的速度下选出正确的指令。战斗之间，小队会升级并解锁节奏
+更复杂的新指令模式。
+
+## 玩家体验流程
+
+1. **标题画面** —— 一个以战鼓为主题的菜单，游戏名采用粗体军事风字体，配有
+   一个战役按钮，背景是行军的剪影。演出 GameX其灰色。
+2. **指令输入** —— 屏幕底部显示一条节奏条。玩家踩着节拍器的脉动敲出 4 拍的
+   模式（例如"进攻"是 敲-敲-长按-敲）。视觉反馈会逐拍显示时机准确度。
+3. **小队响应** —— 指令成功执行时，小队会以与时机准确度成正比的强度做出该
+   动作。完美时机会触发"狂热"版本，附带额外效果（额外伤害、更宽的护盾、
+   更快的行军速度）。
+4. **敌人波次** —— 敌人从右侧列队行进而来。不同敌人类型需要不同的应对策略：
+   持盾敌人需要用"冲锋"指令来突破；弓箭手需要用"防守"来挡住齐射；成群的
+   敌人需要用"进攻"造成范围伤害。
+5. **战场视图** —— 一个横向卷动的战场，玩家小队在左、敌人在右。各单位的动作
+   动画与节奏同步。每组单位上方都浮着血条。
+6. **升级** —— 在任务之间，玩家花费赚得的资源来升级单位类型（更强的攻击、
+   更快的移动）或解锁新的指令模式（一个 6 拍的治疗用"集结"，一个切分节奏的
+   暴击用"伏击"）。
+7. **Boss 遭遇战** —— Boss 敌人有自己的节奏模式，会干扰玩家的指令。玩家必须
+   一边维持自己的速度，一边适应 Boss 的干扰节拍。
+
+## HTML 提交格式
+
+用两个文件交付一个可独立运行的浏览器游戏：
+
+- `index.html` - 完整可玩的呈现层。使用 HTML Canvas 2D 或 Three.js/WebGL 完成可玩呈现。
+- `game_logic.js` - 确定性的状态与规则层，使用经典脚本格式并暴露
+  `createGame(opts)` 和 `advance(game, input, dt)`；可选暴露
+  `render(gameState, renderCtx)`。
+
+页面无需构建步骤或本地服务器即可打开，普通笔记本应在三秒内完成首屏渲染。
+资源必须在运行时自包含生成，不得请求网络：可以使用程序化几何体、Canvas2D
+绘制并编码为 `data:` URI 的纹理、离屏 Canvas 粒子精灵、Web Audio API 合成音效、
+着色器、后处理和 CSS。不得嵌入或运行时获取外部图片、模型、视频或音频文件。
+Three.js 可以从固定版本的官方 CDN 加载；如使用后处理，只能加载同一 Three.js
+版本下固定的 `examples/jsm/postprocessing/*` 模块。
+
+交互方案（keyboard-first）：本题材以键盘交互为主：提供方向键或 WASD、Space、Enter、Esc 等清晰按键，并在自然需要时加入鼠标。
+完整游戏区和 HUD 在 1280x720 下应清晰可读。需要有明确的开始流程、简短游戏内
+引导、暂停与重开控制、完整胜负/计分结果闭环，以及每项关键操作的可见反馈。
+
+`index.html` 不得使用 `fetch()` 或 `XMLHttpRequest` 请求外部 URL；只允许上述
+固定版本 Three.js CDN。`index.html` ≤ 400 KB；`game_logic.js` 行数限制仅作
+建议，不作为 BUILD 失败条件。
+
+### 逻辑与渲染脚手架
+
+```html
+<script src="./game_logic.js"></script>
+<script>
+  const { createGame, advance, render } = window.GameLogic;
+  const game = createGame({});
+  // 主循环调用 advance；render(game, { THREE, scene, ... }) 可选。
+</script>
+```
+
+```javascript
+(function (root) {
+  function createGame(opts) { return { phase: "title", score: 0 }; }
+  function advance(game, input, dt) { return game; }
+  function render(gameState, renderCtx) { /* optional visual hook */ }
+  const api = { createGame, advance, render };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  else root.GameLogic = api;
+}(typeof window !== "undefined" ? window : globalThis));
+```
+
+`advance()` 必须是纯函数，不访问 DOM 或 Three.js 对象；可选的 `render()` 由
+主循环调用并负责把状态映射到场景、材质、粒子和后处理。

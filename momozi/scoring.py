@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Any, Iterable
 
 
-SCORING_VERSION = "1.0"
+SCORING_VERSION = "1.1"
 COMPONENT_WEIGHTS = {
     "static": 0.40,
     "dynamic": 0.25,

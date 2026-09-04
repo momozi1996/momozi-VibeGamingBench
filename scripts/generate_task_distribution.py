@@ -15,7 +15,7 @@ from task_metadata import classify_difficulty
 ROOT = Path(__file__).resolve().parent.parent
 TASKS = ROOT / "bench" / "tasks"
 REPORT = ROOT / "bench" / "TASK_DISTRIBUTION.md"
-EXPECTED_CONCEPTS = 491
+EXPECTED_CONCEPTS = 711
 EXPECTED_LANGUAGES = {"en", "zh"}
 EXPECTED_TASK_FILES = {
     "prompt.md",
@@ -32,6 +32,8 @@ PROVENANCE_KINDS = {
     "adapted_cnblogs_prompt",
     "adapted_evolink_prompt",
     "adapted_aiga_shared_world",
+    "adapted_feishu_game_prompt",
+    "structured_feishu_game_seed",
 }
 
 
@@ -360,7 +362,7 @@ def _render_report(groups: dict[str, dict[str, dict]]) -> str:
             "",
             "## 一致性门禁",
             "",
-            "- 491 个完整的中英文概念对。",
+            f"- {len(concepts)} 个完整的中英文概念对。",
             "- 每个任务目录严格四个文件。",
             "- Task ID、目录名、语言后缀和 `base_task_id` 一致。",
             "- `prompt.md` 与 `rounds[0].spec` 完全一致。",
